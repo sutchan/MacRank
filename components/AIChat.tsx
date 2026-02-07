@@ -45,7 +45,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
       <button
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105 ${
-          isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100 bg-black text-white'
+          isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100 bg-black dark:bg-blue-600 text-white'
         }`}
       >
         <MessageSquare size={24} />
@@ -53,19 +53,19 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
       {/* Chat Window */}
       <div 
-        className={`fixed bottom-6 right-6 z-50 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col transition-all duration-300 transform origin-bottom-right overflow-hidden ${
+        className={`fixed bottom-6 right-6 z-50 w-[350px] sm:w-[400px] h-[500px] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 flex flex-col transition-all duration-300 transform origin-bottom-right overflow-hidden ${
           isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none translate-y-10'
         }`}
       >
         {/* Header */}
-        <div className="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-center">
+        <div className="bg-gray-50 dark:bg-gray-800 p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center transition-colors">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white">
               <Bot size={18} />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 text-sm">Mac Advisor</h3>
-              <p className="text-xs text-green-600 font-medium flex items-center gap-1">
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Mac Advisor</h3>
+              <p className="text-xs text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                 Powered by Gemini
               </p>
@@ -73,14 +73,14 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
           </div>
           <button 
             onClick={() => setIsOpen(false)}
-            className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-1.5 rounded-md transition-colors"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-md transition-colors"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white dark:bg-gray-900 transition-colors">
           {messages.map((msg, idx) => (
             <div 
               key={idx} 
@@ -89,8 +89,8 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
               <div 
                 className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                   msg.role === 'user' 
-                    ? 'bg-black text-white rounded-br-none' 
-                    : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                    ? 'bg-black dark:bg-blue-600 text-white rounded-br-none' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-bl-none'
                 }`}
               >
                 <div dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br/>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
@@ -99,7 +99,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
           ))}
           {isLoading && (
             <div className="flex justify-start">
-               <div className="bg-gray-50 rounded-2xl rounded-bl-none px-4 py-3 border border-gray-100">
+               <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl rounded-bl-none px-4 py-3 border border-gray-100 dark:border-gray-700">
                  <Loader2 size={16} className="animate-spin text-gray-400" />
                </div>
             </div>
@@ -108,14 +108,14 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="p-3 border-t border-gray-100 bg-gray-50">
+        <form onSubmit={handleSubmit} className="p-3 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 transition-colors">
           <div className="relative">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ex: Is M2 Air good for coding?"
-              className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 bg-white text-sm transition-all"
+              className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-white transition-all"
             />
             <button 
               type="submit"
