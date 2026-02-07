@@ -51,6 +51,7 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
                    <button 
                      onClick={(e) => { e.stopPropagation(); onToggleCompare(mac); }}
                      disabled={disabled}
+                     aria-label={`Compare ${mac.name}`}
                      className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${
                         selected 
                           ? 'bg-blue-500 border-blue-500 text-white' 

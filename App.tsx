@@ -46,6 +46,21 @@ const App: React.FC = () => {
 
   useEffect(() => {
     localStorage.setItem('language', language);
+    
+    // SEO: Dynamic Title Update based on Language
+    const titles: Record<Language, string> = {
+      en: "MacRank - Apple Silicon Performance Leaderboard & Tier List",
+      zh: "MacRank - 苹果电脑性能天梯榜 (M1/M2/M3/M4)",
+      es: "MacRank - Ranking de Rendimiento Apple Silicon",
+      fr: "MacRank - Classement de Performance Apple Silicon",
+      de: "MacRank - Apple Silicon Leistungs-Rangliste",
+      ja: "MacRank - Apple Silicon 性能ランキング",
+      pt: "MacRank - Ranking de Desempenho Apple Silicon",
+      ru: "MacRank - Рейтинг производительности Apple Silicon",
+      ko: "MacRank - Apple Silicon 성능 등급표",
+      hi: "MacRank - Apple Silicon प्रदर्शन टियर सूची"
+    };
+    document.title = titles[language] || titles['en'];
   }, [language]);
 
   // Theme State
@@ -112,20 +127,20 @@ const App: React.FC = () => {
         <header className="fixed w-full top-0 z-40 bg-[rgba(251,251,253,0.8)] dark:bg-[rgba(22,22,23,0.8)] backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-500">
           <div className="max-w-[980px] mx-auto px-4 h-12 flex items-center justify-between text-xs">
             <div className="flex items-center gap-4">
-               <a href="#" className="text-gray-900 dark:text-gray-100 opacity-80 hover:opacity-100 transition-opacity">
+               <a href="/" className="text-gray-900 dark:text-gray-100 opacity-80 hover:opacity-100 transition-opacity" aria-label="Home">
                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 9.6c-.7 0-1.7-.5-1.7-1.7s1-2.2 2-2.3c.1 0 .2 0 .2 0-1-1.3-2.6-1.5-3.2-1.5-1.4 0-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 1-3.9 2.4-1.6 2.4-.4 5.9 1.1 8 1 1.4 2 2.9 3.4 2.9.7 0 1-.2 1.9-.2.9 0 1.1.2 1.9.2 1.3 0 2.2-1.3 3.1-2.6.9-1.3 1.3-2.7 1.3-2.7s-2.1-1-2.2-2.9zM15 4.6c.6-.7 1-1.8 1-2.8 0-.1 0-.3 0-.4-.9.1-2 .7-2.6 1.4-.6.6-1 1.6-1 2.6 0 .1 0 .3 0 .4 1-.1 2.1-.6 2.6-1.2z"/></svg>
                </a>
                <span className="font-semibold text-gray-900 dark:text-white tracking-wide">{t('appTitle')}</span>
             </div>
             
-            <div className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
+            <nav className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
               <span className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block">{t('leaderboard')}</span>
               <span className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block">{t('charts')}</span>
               
               <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-700 pl-4">
                  {/* Language & Theme Controls - Minimalist */}
                  <div className="relative group">
-                    <button className="hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <button className="hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Select Language">
                       <Globe size={14} />
                     </button>
                     <div className="absolute right-0 top-full pt-4 hidden group-hover:block w-32">
@@ -139,11 +154,11 @@ const App: React.FC = () => {
                     </div>
                  </div>
                  
-                 <button onClick={toggleTheme} className="hover:text-gray-900 dark:hover:text-white transition-colors">
+                 <button onClick={toggleTheme} className="hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
                    {theme === 'light' ? <Moon size={14} /> : <Sun size={14} />}
                  </button>
               </div>
-            </div>
+            </nav>
           </div>
         </header>
 
@@ -151,9 +166,9 @@ const App: React.FC = () => {
           
           {/* Hero Section */}
           <div className="text-center space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-             <h2 className="text-5xl md:text-6xl font-semibold tracking-tight text-gray-900 dark:text-white">
+             <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-gray-900 dark:text-white">
                {t('heroTitle')}
-             </h2>
+             </h1>
              <p className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light max-w-2xl mx-auto leading-relaxed">
                {t('heroSubtitle')}
              </p>
@@ -172,6 +187,7 @@ const App: React.FC = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm text-gray-900 dark:text-white placeholder-gray-500 transition-all"
+                    aria-label="Search Models"
                   />
                 </div>
 
@@ -201,6 +217,7 @@ const App: React.FC = () => {
                           value={filterFamily}
                           onChange={(e) => setFilterFamily(e.target.value as any)}
                           className="appearance-none bg-transparent pl-2 pr-8 py-1 text-sm font-medium text-gray-900 dark:text-white focus:outline-none cursor-pointer hover:text-blue-500 transition-colors"
+                          aria-label="Filter by Chip Family"
                         >
                           <option value="All">{t('allChips')}</option>
                           <option value={ChipFamily.M4}>M4 Family</option>
@@ -237,7 +254,7 @@ const App: React.FC = () => {
           {/* List Section */}
           <section className="space-y-6">
             <div className="flex items-end justify-between">
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('leaderboard')}</h3>
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('leaderboard')}</h2>
               <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
                  {filteredData.length} {t('models')}
               </span>
