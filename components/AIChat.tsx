@@ -1,20 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { MessageSquare, Send, X, Bot, Loader2 } from 'lucide-react';
 import { ChatMessage, MacModel } from '../lib/types';
 import { getMacAdvice } from '../services/geminiService';
+import { LanguageContext } from '../App';
 
 interface AIChatProps {
   macData: MacModel[];
 }
 
 const AIChat: React.FC<AIChatProps> = ({ macData }) => {
+  const { t, language } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Hi! I\'m your Mac Expert. Ask me anything about performance, buying advice, or technical specs!' }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize welcome message when language changes or first load
+  useEffect(() => {
+    setMessages([{ role: 'model', text: t('chatWelcome') }]);
+  }, [language]); // Depend on language to update welcome text
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,7 +38,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsLoading(true);
 
-    const responseText = await getMacAdvice(userMsg, macData);
+    const responseText = await getMacAdvice(userMsg, macData, language);
 
     setMessages(prev => [...prev, { role: 'model', text: responseText }]);
     setIsLoading(false);
@@ -53,7 +58,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
       {/* Chat Window */}
       <div 
-        className={`fixed bottom-6 right-6 z-50 w-[350px] sm:w-[400px] h-[500px] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 flex flex-col transition-all duration-300 transform origin-bottom-right overflow-hidden ${
+        className={`fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[400px] h-[500px] max-h-[80vh] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 flex flex-col transition-all duration-300 transform origin-bottom-right overflow-hidden ${
           isOpen ? 'scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none translate-y-10'
         }`}
       >
@@ -64,10 +69,10 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
               <Bot size={18} />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Mac Advisor</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">{t('chatTitle')}</h3>
               <p className="text-xs text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                Powered by Gemini
+                {t('chatSubtitle')}
               </p>
             </div>
           </div>
@@ -114,7 +119,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ex: Is M2 Air good for coding?"
+              placeholder={t('chatPlaceholder')}
               className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 dark:border-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-white transition-all"
             />
             <button 

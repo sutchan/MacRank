@@ -1,12 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 import { MacModel } from '../lib/types';
+import { translations, Language } from '../lib/translations';
 
 // Initialize the API client
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getMacAdvice = async (
   query: string,
-  contextData: MacModel[]
+  contextData: MacModel[],
+  language: Language = 'en'
 ): Promise<string> => {
   try {
     const model = 'gemini-3-flash-preview';
@@ -16,16 +18,22 @@ export const getMacAdvice = async (
       `- ${m.name} (${m.chip}, ${m.releaseYear}): Single-Core ${m.singleCoreScore}, Multi-Core ${m.multiCoreScore}, GPU ${m.metalScore}, Price ~$${m.basePriceUSD}`
     ).join('\n');
 
+    // Get the language name for the prompt
+    const langName = translations[language]?.appTitle === 'MacRank' && language !== 'en' 
+        ? (language === 'zh' ? 'Chinese (Simplified)' : language) 
+        : 'English';
+
     const prompt = `
       You are an expert Apple Mac purchasing advisor and technical specialist.
       
       User Query: "${query}"
+      Target Language: ${langName}
 
       Here is the technical data for the available Mac models in our current database (Top 20 most relevant):
       ${specsContext}
 
       Instructions:
-      1. Answer the user's question directly and concisely.
+      1. Answer the user's question directly and concisely in **${langName}**.
       2. Use the provided data to support your arguments (quote scores or prices).
       3. If comparing, highlight the "sweet spot" for value vs performance.
       4. Keep the tone helpful, objective, and slightly enthusiastic about technology.
@@ -37,7 +45,7 @@ export const getMacAdvice = async (
       model: model,
       contents: prompt,
       config: {
-        systemInstruction: "You are a helpful assistant specialized in Apple hardware hardware comparisons.",
+        systemInstruction: "You are a helpful assistant specialized in Apple hardware comparisons.",
         thinkingConfig: { thinkingBudget: 0 } // Low latency preferred for chat
       }
     });
