@@ -669,6 +669,88 @@ export const macData: MacModel[] = [
     metalScore: 400, // Legacy support
     basePriceUSD: 2499,
     description: 'The last 17-inch MacBook Pro until the 16-inch arrived years later.'
+  },
+  {
+    id: 'intel-air-2011',
+    name: 'MacBook Air 13" (2011)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-2677M',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0, // HD 3000
+    memory: '4GB',
+    releaseYear: 2011,
+    singleCoreScore: 650,
+    multiCoreScore: 1400,
+    metalScore: 200,
+    basePriceUSD: 1299,
+    description: 'First Air with Thunderbolt and backlit keyboard return.'
+  },
+
+  // 2010
+  {
+    id: 'intel-imac-27-2010',
+    name: 'iMac 27" (2010)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-870',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // HD 5750
+    memory: '4GB - 32GB',
+    releaseYear: 2010,
+    singleCoreScore: 650,
+    multiCoreScore: 2400,
+    metalScore: 400,
+    basePriceUSD: 1999,
+    description: 'First iMac with Core i-series options. A significant leap from Core 2 Duo.'
+  },
+  {
+    id: 'intel-mbp-15-2010',
+    name: 'MacBook Pro 15" (2010)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-620M',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 10, // GT 330M
+    memory: '4GB - 8GB',
+    releaseYear: 2010,
+    singleCoreScore: 550,
+    multiCoreScore: 1300,
+    metalScore: 200,
+    basePriceUSD: 2199,
+    description: 'Introduced automatic graphics switching.'
+  },
+  {
+    id: 'intel-mbp-13-2010',
+    name: 'MacBook Pro 13" (2010)',
+    type: DeviceType.Laptop,
+    chip: 'Core 2 Duo P8600',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 5, // GeForce 320M
+    memory: '4GB - 16GB',
+    releaseYear: 2010,
+    singleCoreScore: 380,
+    multiCoreScore: 700,
+    metalScore: 150,
+    basePriceUSD: 1199,
+    description: 'The last Core 2 Duo MacBook Pro. Great battery life for its time.'
+  },
+  {
+    id: 'intel-air-2010',
+    name: 'MacBook Air 13" (2010)',
+    type: DeviceType.Laptop,
+    chip: 'Core 2 Duo SL9400',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 5, // GeForce 320M
+    memory: '2GB - 4GB',
+    releaseYear: 2010,
+    singleCoreScore: 350,
+    multiCoreScore: 650,
+    metalScore: 100,
+    basePriceUSD: 1299,
+    description: 'The redesign that defined the modern laptop form factor. Flash storage standard.'
   }
 ];
 

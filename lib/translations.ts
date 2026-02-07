@@ -16,7 +16,7 @@ export const languages: { code: Language; label: string; flag: string }[] = [
 export const translations = {
   en: {
     appTitle: 'MacRank',
-    leaderboard: 'Leaderboard',
+    leaderboard: 'Ladder',
     charts: 'Charts',
     searchPlaceholder: 'Search MacBook, iMac, M3 Max...',
     all: 'All',
@@ -56,7 +56,7 @@ export const translations = {
   },
   zh: {
     appTitle: 'MacRank',
-    leaderboard: '排行榜',
+    leaderboard: '性能天梯',
     charts: '图表',
     searchPlaceholder: '搜索 MacBook, iMac, M3 Max...',
     all: '全部',
