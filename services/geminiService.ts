@@ -2,19 +2,35 @@ import { GoogleGenAI } from "@google/genai";
 import { MacModel } from '../lib/types';
 import { translations, Language } from '../lib/translations';
 
-// Initialize the API client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const getMacAdvice = async (
   query: string,
   contextData: MacModel[],
   language: Language = 'en'
 ): Promise<string> => {
   try {
+    // FIX: Initialize client lazily inside the function.
+    // This prevents the entire app from crashing on load if the API key is missing in the environment.
+    const apiKey = process.env.API_KEY;
+    
+    if (!apiKey) {
+      console.warn("API Key is missing. Please check your .env file or deployment settings.");
+      return language === 'zh' 
+        ? "系统配置错误：未检测到 API Key。请联系管理员或检查部署设置。"
+        : "Configuration Error: API Key is missing. Please check deployment settings.";
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-3-flash-preview';
 
-    // Create a summarized context string to save tokens but provide necessary info
-    const specsContext = contextData.map(m => 
+    // OPTIMIZATION: Context Trimming
+    // Sort by release year (newest first) and then by performance to ensure the AI sees the most relevant models.
+    // Limit to top 40 items to avoid hitting token limits or increasing latency.
+    const optimizedContext = [...contextData]
+      .sort((a, b) => b.releaseYear - a.releaseYear || b.multiCoreScore - a.multiCoreScore)
+      .slice(0, 40);
+
+    // Create a summarized context string
+    const specsContext = optimizedContext.map(m => 
       `- ${m.name} (${m.chip}, ${m.releaseYear}): Single-Core ${m.singleCoreScore}, Multi-Core ${m.multiCoreScore}, GPU ${m.metalScore}, Price ~$${m.basePriceUSD}`
     ).join('\n');
 
@@ -29,7 +45,7 @@ export const getMacAdvice = async (
       User Query: "${query}"
       Target Language: ${langName}
 
-      Here is the technical data for the available Mac models in our current database (Top 20 most relevant):
+      Here is the technical data for the available Mac models in our current database (Top 40 most relevant):
       ${specsContext}
 
       Instructions:

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { getTierColor, calculateTierScore, getTierLabel } from '../lib/data';
+import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel } from '../lib/types';
 import { LanguageContext } from '../App';
 
@@ -63,11 +63,14 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data }) => {
           <Bar dataKey="compositeScore" radius={[0, 4, 4, 0]} barSize={22}>
             {chartData.map((entry, index) => {
                // Map tier label to actual hex colors approximately matching the tailwind classes in data.ts
-               let color = '#9ca3af';
-               if (entry.tier.startsWith('S')) color = '#a855f7'; // purple
-               else if (entry.tier.startsWith('A')) color = '#3b82f6'; // blue
-               else if (entry.tier.startsWith('B')) color = '#22c55e'; // green
-               else if (entry.tier.startsWith('C')) color = '#eab308'; // yellow
+               let color = '#9ca3af'; // Default Grey
+               
+               if (entry.tier === 'S+') color = '#db2777'; // Pink/Magenta for S+ (Matches the gradient end)
+               else if (entry.tier === 'S') color = '#9333ea'; // Purple for S
+               else if (entry.tier.startsWith('A')) color = '#3b82f6'; // Blue
+               else if (entry.tier.startsWith('B')) color = '#22c55e'; // Green
+               else if (entry.tier.startsWith('C')) color = '#eab308'; // Yellow
+               
                return <Cell key={`cell-${index}`} fill={color} />;
             })}
           </Bar>

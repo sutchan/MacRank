@@ -8,7 +8,8 @@ export enum ChipFamily {
 
 export enum DeviceType {
   Laptop = 'Laptop',
-  Desktop = 'Desktop'
+  Desktop = 'Desktop',
+  Tablet = 'Tablet'
 }
 
 export interface MacModel {

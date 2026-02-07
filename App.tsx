@@ -4,9 +4,10 @@ import { ChipFamily, DeviceType, MacModel } from './lib/types';
 import MacTable from './components/MacTable';
 import PerformanceChart from './components/PerformanceChart';
 import DetailModal from './components/DetailModal';
+import CompareModal from './components/CompareModal';
 import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
-import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown } from 'lucide-react';
+import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X } from 'lucide-react';
 
 // Create Language Context
 interface LanguageContextType {
@@ -23,6 +24,8 @@ export const LanguageContext = createContext<LanguageContextType>({
 
 const App: React.FC = () => {
   const [selectedModel, setSelectedModel] = useState<MacModel | null>(null);
+  const [compareList, setCompareList] = useState<MacModel[]>([]);
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<DeviceType | 'All'>('All');
   const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>('All');
@@ -67,6 +70,17 @@ const App: React.FC = () => {
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
+  const handleToggleCompare = (mac: MacModel) => {
+    setCompareList(prev => {
+      const exists = prev.find(p => p.id === mac.id);
+      if (exists) {
+        return prev.filter(p => p.id !== mac.id);
+      }
+      if (prev.length >= 2) return prev; // Max 2
+      return [...prev, mac];
+    });
   };
 
   const filteredData = useMemo(() => {
@@ -164,7 +178,7 @@ const App: React.FC = () => {
                 <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 no-scrollbar">
                     {/* Segmented Control */}
                     <div className="flex bg-gray-200/50 dark:bg-gray-800/50 p-1 rounded-lg">
-                      {(['All', DeviceType.Laptop, DeviceType.Desktop] as const).map((type) => (
+                      {(['All', DeviceType.Laptop, DeviceType.Desktop, DeviceType.Tablet] as const).map((type) => (
                         <button
                           key={type}
                           onClick={() => setFilterType(type)}
@@ -174,7 +188,7 @@ const App: React.FC = () => {
                               : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                           }`}
                         >
-                          {type === 'All' ? t('all') : type === DeviceType.Laptop ? t('laptops') : t('desktops')}
+                          {type === 'All' ? t('all') : type === DeviceType.Laptop ? t('laptops') : type === DeviceType.Desktop ? t('desktops') : t('tablets')}
                         </button>
                       ))}
                     </div>
@@ -228,7 +242,12 @@ const App: React.FC = () => {
                  {filteredData.length} {t('models')}
               </span>
             </div>
-            <MacTable data={filteredData} onSelect={setSelectedModel} />
+            <MacTable 
+              data={filteredData} 
+              onSelect={setSelectedModel} 
+              compareList={compareList}
+              onToggleCompare={handleToggleCompare}
+            />
           </section>
 
           {/* Footnote */}
@@ -239,7 +258,46 @@ const App: React.FC = () => {
 
         </main>
 
+        {/* Floating Compare Bar */}
+        {compareList.length > 0 && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-10 duration-300">
+             <div className="bg-white dark:bg-gray-800 rounded-full shadow-2xl border border-gray-200 dark:border-gray-700 p-2 pl-6 pr-2 flex items-center gap-6">
+                 <div className="flex items-center gap-3">
+                   <span className="text-sm font-medium text-gray-900 dark:text-white">
+                      {compareList.length} {t('selectToCompare')}
+                   </span>
+                   <div className="flex -space-x-2">
+                      {compareList.map(m => (
+                        <div key={m.id} className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 border-2 border-white dark:border-gray-800 flex items-center justify-center text-[10px] font-bold overflow-hidden">
+                           {m.chip.split(' ')[0]}
+                        </div>
+                      ))}
+                   </div>
+                 </div>
+                 <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => setCompareList([])}
+                      className="text-xs font-medium text-gray-500 hover:text-gray-900 dark:hover:text-white px-3 py-1.5"
+                    >
+                      {t('clear')}
+                    </button>
+                    <button 
+                      onClick={() => setIsCompareModalOpen(true)}
+                      disabled={compareList.length < 2}
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-5 py-2 text-sm font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                       <Scale size={16} />
+                       {t('compare')}
+                    </button>
+                 </div>
+             </div>
+          </div>
+        )}
+
         <DetailModal mac={selectedModel} onClose={() => setSelectedModel(null)} />
+        {isCompareModalOpen && (
+           <CompareModal models={compareList} onClose={() => setIsCompareModalOpen(false)} />
+        )}
         <AIChat macData={filteredData} />
       </div>
     </LanguageContext.Provider>

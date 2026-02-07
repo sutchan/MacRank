@@ -98,6 +98,22 @@ export const macData: MacModel[] = [
     basePriceUSD: 1399,
     description: 'A desktop powerhouse that rivals larger workstations in a compact footprint.'
   },
+  {
+    id: 'ipad-pro-m4-13',
+    name: 'iPad Pro 13" (M4)',
+    type: DeviceType.Tablet,
+    chip: 'M4',
+    family: ChipFamily.M4,
+    cores_cpu: '10 (4P+6E)',
+    cores_gpu: 10,
+    memory: '8GB - 16GB',
+    releaseYear: 2024,
+    singleCoreScore: 3700,
+    multiCoreScore: 14500,
+    metalScore: 53000,
+    basePriceUSD: 1299,
+    description: 'The thinnest Apple product ever. M4 brings massive neural engine improvements for AI tasks on the go.'
+  },
 
   // --- M3 Series (2023-2024) ---
   {
@@ -246,6 +262,38 @@ export const macData: MacModel[] = [
     basePriceUSD: 1299,
     description: 'Large screen, thin design, great battery life.'
   },
+  {
+    id: 'ipad-pro-m2-12',
+    name: 'iPad Pro 12.9" (M2)',
+    type: DeviceType.Tablet,
+    chip: 'M2',
+    family: ChipFamily.M2,
+    cores_cpu: '8 (4P+4E)',
+    cores_gpu: 10,
+    memory: '8GB - 16GB',
+    releaseYear: 2022,
+    singleCoreScore: 2600,
+    multiCoreScore: 9700,
+    metalScore: 46000,
+    basePriceUSD: 1099,
+    description: 'The last iPad Pro with the classic design. Still an absolute powerhouse for illustration and video.'
+  },
+   {
+    id: 'ipad-air-m2',
+    name: 'iPad Air 13" (M2)',
+    type: DeviceType.Tablet,
+    chip: 'M2',
+    family: ChipFamily.M2,
+    cores_cpu: '8 (4P+4E)',
+    cores_gpu: 10,
+    memory: '8GB',
+    releaseYear: 2024,
+    singleCoreScore: 2590,
+    multiCoreScore: 10000,
+    metalScore: 42000,
+    basePriceUSD: 799,
+    description: 'Brings M2 power to a more affordable large-screen tablet.'
+  },
 
   // --- M1 Series (2020-2022) ---
   {
@@ -311,6 +359,22 @@ export const macData: MacModel[] = [
     metalScore: 20000,
     basePriceUSD: 999,
     description: 'The legend that started the Apple Silicon revolution. Still viable for basic tasks.'
+  },
+  {
+    id: 'ipad-pro-m1',
+    name: 'iPad Pro 12.9" (M1)',
+    type: DeviceType.Tablet,
+    chip: 'M1',
+    family: ChipFamily.M1,
+    cores_cpu: '8 (4P+4E)',
+    cores_gpu: 8,
+    memory: '8GB - 16GB',
+    releaseYear: 2021,
+    singleCoreScore: 2300,
+    multiCoreScore: 8400,
+    metalScore: 32000,
+    basePriceUSD: 1099,
+    description: 'The first iPad to use a Mac chip, revolutionizing tablet performance expectations.'
   },
 
   // --- Intel Era (2010 - 2020) ---
@@ -756,15 +820,15 @@ export const macData: MacModel[] = [
 
 // Helper to calculate a synthetic "Tier Score" for ranking
 export const calculateTierScore = (mac: MacModel) => {
-  // Weighted score: 30% Single Core, 40% Multi Core, 30% Metal
+  // Weighted score: 35% Single Core, 45% Multi Core, 20% Metal
   // We normalize slightly based on max observed values (approx) to keep them in readable ranges
   const sc = mac.singleCoreScore / 4000;
   const mc = mac.multiCoreScore / 25000;
   const mt = mac.metalScore / 200000;
   
-  // Weights
+  // Weights (Sums to 100)
   const total = (sc * 35) + (mc * 45) + (mt * 20); 
-  return Math.round(total * 100);
+  return Math.round(total);
 };
 
 export const getTierLabel = (score: number) => {

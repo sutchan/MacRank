@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-02-22
+
+### Added
+- **Comparison Mode**: New feature allowing users to select two Mac models and compare their specs and performance side-by-side.
+- **Comparison Modal**: detailed visual comparison with bar charts for Single-Core, Multi-Core, and Metal scores.
+- **Floating Action Bar**: Contextual bottom bar for managing comparison selections.
+
+### Optimized
+- **AI Context**: Limited the context injection for Gemini API to the top 40 relevant models to prevent token overflow and improve response latency.
+
 ## [0.1.0] - 2025-02-22
 
 ### Added
