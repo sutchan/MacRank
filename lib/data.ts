@@ -1,7 +1,7 @@
 import { MacModel, ChipFamily, DeviceType } from './types';
 
 export const macData: MacModel[] = [
-  // --- M4 Series ---
+  // --- M4 Series (2024) ---
   {
     id: 'm4-max-16-16-40',
     name: 'MacBook Pro 16" (Late 2024)',
@@ -66,7 +66,7 @@ export const macData: MacModel[] = [
     basePriceUSD: 1299,
     description: 'The definitive all-in-one for general use and moderate creative work.'
   },
-    {
+  {
     id: 'm4-mini',
     name: 'Mac Mini (2024)',
     type: DeviceType.Desktop,
@@ -99,7 +99,7 @@ export const macData: MacModel[] = [
     description: 'A desktop powerhouse that rivals larger workstations in a compact footprint.'
   },
 
-  // --- M3 Series ---
+  // --- M3 Series (2023-2024) ---
   {
     id: 'm3-max-16-40',
     name: 'MacBook Pro 16" (Late 2023)',
@@ -164,9 +164,9 @@ export const macData: MacModel[] = [
     basePriceUSD: 1299,
     description: 'A colorful all-in-one with the efficient M3 chip.'
   },
-    {
+  {
     id: 'm3-air-13',
-    name: 'MacBook Air 13" (2024)',
+    name: 'MacBook Air 13"/15" (2024)',
     type: DeviceType.Laptop,
     chip: 'M3',
     family: ChipFamily.M3,
@@ -181,7 +181,7 @@ export const macData: MacModel[] = [
     description: 'The world\'s most popular laptop, now with M3 speed and dual display support (lid closed).'
   },
 
-  // --- M2 Series ---
+  // --- M2 Series (2022-2023) ---
   {
     id: 'm2-ultra-studio',
     name: 'Mac Studio (2023)',
@@ -247,7 +247,7 @@ export const macData: MacModel[] = [
     description: 'Large screen, thin design, great battery life.'
   },
 
-  // --- M1 Series ---
+  // --- M1 Series (2020-2022) ---
   {
     id: 'm1-ultra-studio',
     name: 'Mac Studio (2022)',
@@ -313,23 +313,9 @@ export const macData: MacModel[] = [
     description: 'The legend that started the Apple Silicon revolution. Still viable for basic tasks.'
   },
 
-  // --- Intel Series (Historical Comparison) ---
-  {
-    id: 'intel-macpro-2019',
-    name: 'Mac Pro (2019)',
-    type: DeviceType.Desktop,
-    chip: 'Xeon W (28-core)',
-    family: ChipFamily.Intel,
-    cores_cpu: '28',
-    cores_gpu: 60, // Approx CUs for W6800X
-    memory: '32GB - 1.5TB',
-    releaseYear: 2019,
-    singleCoreScore: 1350,
-    multiCoreScore: 20500,
-    metalScore: 140000,
-    basePriceUSD: 12999,
-    description: 'The last Intel modular workstation. Still powerful for specific workflows, but outclassed by Apple Silicon in efficiency and single-core speed.'
-  },
+  // --- Intel Era (2010 - 2020) ---
+  
+  // 2020
   {
     id: 'intel-imac-27-2020',
     name: 'iMac 27" (2020)',
@@ -337,14 +323,48 @@ export const macData: MacModel[] = [
     chip: 'Core i9-10910',
     family: ChipFamily.Intel,
     cores_cpu: '10',
-    cores_gpu: 40, // Approx CUs for 5700 XT
+    cores_gpu: 40,
     memory: '8GB - 128GB',
     releaseYear: 2020,
     singleCoreScore: 1650,
     multiCoreScore: 9000,
     metalScore: 55000,
     basePriceUSD: 2699,
-    description: 'The final 27-inch iMac. A beautiful 5K display and decent performance, but runs much hotter and louder than M-series.'
+    description: 'The final 27-inch iMac. A beautiful 5K display, but runs much hotter than M-series.'
+  },
+  {
+    id: 'intel-mbp-13-2020',
+    name: 'MacBook Pro 13" (2020)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-1068NG7',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 64, // Iris Plus
+    memory: '16GB - 32GB',
+    releaseYear: 2020,
+    singleCoreScore: 1250,
+    multiCoreScore: 4500,
+    metalScore: 9000,
+    basePriceUSD: 1999,
+    description: 'The last 13-inch Intel MacBook Pro. Quickly overshadowed by the M1.'
+  },
+
+  // 2019
+  {
+    id: 'intel-macpro-2019',
+    name: 'Mac Pro (2019)',
+    type: DeviceType.Desktop,
+    chip: 'Xeon W (28-core)',
+    family: ChipFamily.Intel,
+    cores_cpu: '28',
+    cores_gpu: 60,
+    memory: '32GB - 1.5TB',
+    releaseYear: 2019,
+    singleCoreScore: 1350,
+    multiCoreScore: 20500,
+    metalScore: 140000,
+    basePriceUSD: 12999,
+    description: 'The modular "Cheese Grater". Extremely expensive, but expandable.'
   },
   {
     id: 'intel-mbp-16-2019',
@@ -353,30 +373,302 @@ export const macData: MacModel[] = [
     chip: 'Core i9-9980HK',
     family: ChipFamily.Intel,
     cores_cpu: '8',
-    cores_gpu: 24, // Approx CUs for 5500M
+    cores_gpu: 24,
     memory: '16GB - 64GB',
     releaseYear: 2019,
     singleCoreScore: 1380,
     multiCoreScore: 7100,
     metalScore: 28000,
     basePriceUSD: 2799,
-    description: 'The last Intel MacBook Pro. Improved keyboard over the butterfly era, but suffers from significant thermal throttling under load.'
+    description: 'Fixed the butterfly keyboard but suffered from significant thermal throttling.'
   },
   {
-    id: 'intel-mba-2020',
-    name: 'MacBook Air (Early 2020)',
+    id: 'intel-imac-21-2019',
+    name: 'iMac 21.5" (2019)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-8700',
+    family: ChipFamily.Intel,
+    cores_cpu: '6',
+    cores_gpu: 20, // Vega 20
+    memory: '8GB - 32GB',
+    releaseYear: 2019,
+    singleCoreScore: 1400,
+    multiCoreScore: 6000,
+    metalScore: 22000,
+    basePriceUSD: 1499,
+    description: 'A solid mid-range desktop for its time.'
+  },
+
+  // 2018
+  {
+    id: 'intel-mini-2018',
+    name: 'Mac Mini (2018)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-8700B',
+    family: ChipFamily.Intel,
+    cores_cpu: '6',
+    cores_gpu: 0, // Integrated
+    memory: '8GB - 64GB',
+    releaseYear: 2018,
+    singleCoreScore: 1400,
+    multiCoreScore: 6000,
+    metalScore: 4000,
+    basePriceUSD: 1099,
+    description: 'Space Gray finish. A very popular headless Mac for servers and farms.'
+  },
+  {
+    id: 'intel-air-2018',
+    name: 'MacBook Air (2018)',
     type: DeviceType.Laptop,
-    chip: 'Core i5-1030NG7',
+    chip: 'Core i5-8210Y',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB - 16GB',
+    releaseYear: 2018,
+    singleCoreScore: 950,
+    multiCoreScore: 1900,
+    metalScore: 3500,
+    basePriceUSD: 1199,
+    description: 'The first Retina MacBook Air. Beautiful screen but weak performance.'
+  },
+
+  // 2017
+  {
+    id: 'intel-imac-pro-2017',
+    name: 'iMac Pro (2017)',
+    type: DeviceType.Desktop,
+    chip: 'Xeon W (10-core)',
+    family: ChipFamily.Intel,
+    cores_cpu: '10',
+    cores_gpu: 56, // Vega 56
+    memory: '32GB - 128GB',
+    releaseYear: 2017,
+    singleCoreScore: 1300,
+    multiCoreScore: 10000,
+    metalScore: 55000,
+    basePriceUSD: 4999,
+    description: 'Space Gray all-in-one workstation. Bridged the gap before the 2019 Mac Pro.'
+  },
+  {
+    id: 'intel-mbp-15-2017',
+    name: 'MacBook Pro 15" (2017)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-7920HQ',
     family: ChipFamily.Intel,
     cores_cpu: '4',
-    cores_gpu: 64, // Execution Units (Iris Plus)
-    memory: '8GB - 16GB',
-    releaseYear: 2020,
+    cores_gpu: 16,
+    memory: '16GB',
+    releaseYear: 2017,
     singleCoreScore: 1100,
+    multiCoreScore: 4500,
+    metalScore: 14000,
+    basePriceUSD: 2799,
+    description: 'Touch Bar era refinement. Kaby Lake processors.'
+  },
+  {
+    id: 'intel-macbook-12-2017',
+    name: 'MacBook 12" (2017)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-7Y54',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB - 16GB',
+    releaseYear: 2017,
+    singleCoreScore: 800,
+    multiCoreScore: 1600,
+    metalScore: 3000,
+    basePriceUSD: 1299,
+    description: 'The final iteration of the ultra-portable 12-inch MacBook.'
+  },
+
+  // 2016
+  {
+    id: 'intel-mbp-15-2016',
+    name: 'MacBook Pro 15" (2016)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-6920HQ',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 16,
+    memory: '16GB',
+    releaseYear: 2016,
+    singleCoreScore: 1000,
+    multiCoreScore: 3800,
+    metalScore: 11000,
+    basePriceUSD: 2799,
+    description: 'Introduced the Touch Bar and USB-C only design.'
+  },
+
+  // 2015
+  {
+    id: 'intel-imac-27-2015',
+    name: 'iMac 27" 5K (2015)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-6700K',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 24, // R9 M395X
+    memory: '8GB - 64GB',
+    releaseYear: 2015,
+    singleCoreScore: 1300,
+    multiCoreScore: 4800,
+    metalScore: 15000,
+    basePriceUSD: 2299,
+    description: 'The refined 5K iMac with Skylake processors.'
+  },
+  {
+    id: 'intel-mbp-15-2015',
+    name: 'MacBook Pro 15" (Mid 2015)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-4980HQ',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // R9 M370X
+    memory: '16GB',
+    releaseYear: 2015,
+    singleCoreScore: 950,
+    multiCoreScore: 3600,
+    metalScore: 9000,
+    basePriceUSD: 2499,
+    description: 'Widely considered one of the best MacBook Pros ever made due to its port selection.'
+  },
+
+  // 2014
+  {
+    id: 'intel-mini-2014',
+    name: 'Mac Mini (2014)',
+    type: DeviceType.Desktop,
+    chip: 'Core i5-4278U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '4GB - 16GB',
+    releaseYear: 2014,
+    singleCoreScore: 900,
+    multiCoreScore: 1900,
+    metalScore: 2500,
+    basePriceUSD: 699,
+    description: 'Removed the quad-core option from 2012, making it controversial.'
+  },
+
+  // 2013
+  {
+    id: 'intel-macpro-2013',
+    name: 'Mac Pro (2013)',
+    type: DeviceType.Desktop,
+    chip: 'Xeon E5 12-Core',
+    family: ChipFamily.Intel,
+    cores_cpu: '12',
+    cores_gpu: 64, // Dual D700 (simulated)
+    memory: '12GB - 64GB',
+    releaseYear: 2013,
+    singleCoreScore: 800,
+    multiCoreScore: 7000,
+    metalScore: 30000,
+    basePriceUSD: 2999,
+    description: 'The "Trash Can". Innovative design but thermally constrained.'
+  },
+  {
+    id: 'intel-mbp-15-2013',
+    name: 'MacBook Pro 15" (Late 2013)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-4960HQ',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // GT 750M
+    memory: '16GB',
+    releaseYear: 2013,
+    singleCoreScore: 900,
+    multiCoreScore: 3400,
+    metalScore: 2000,
+    basePriceUSD: 2599,
+    description: 'Solid Retina model with Haswell processors.'
+  },
+  {
+    id: 'intel-air-2013',
+    name: 'MacBook Air (2013)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-4650U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '4GB - 8GB',
+    releaseYear: 2013,
+    singleCoreScore: 800,
+    multiCoreScore: 1600,
+    metalScore: 1500,
+    basePriceUSD: 1299,
+    description: 'Massive battery life improvement over 2012.'
+  },
+
+  // 2012
+  {
+    id: 'intel-mini-2012',
+    name: 'Mac Mini (2012)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-3720QM',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 0,
+    memory: '4GB - 16GB',
+    releaseYear: 2012,
+    singleCoreScore: 800,
+    multiCoreScore: 3000,
+    metalScore: 500,
+    basePriceUSD: 799,
+    description: 'Last user-upgradable quad-core mini for many years. Cult classic.'
+  },
+  {
+    id: 'intel-mbp-15-2012-retina',
+    name: 'MacBook Pro 15" Retina (2012)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-3720QM',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 8, // GT 650M
+    memory: '8GB - 16GB',
+    releaseYear: 2012,
+    singleCoreScore: 800,
+    multiCoreScore: 3000,
+    metalScore: 1000,
+    basePriceUSD: 2199,
+    description: 'The very first Retina MacBook Pro.'
+  },
+
+  // 2011
+  {
+    id: 'intel-imac-27-2011',
+    name: 'iMac 27" (2011)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-2600',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // HD 6970M
+    memory: '4GB - 32GB',
+    releaseYear: 2011,
+    singleCoreScore: 800,
     multiCoreScore: 2800,
-    metalScore: 8500,
-    basePriceUSD: 1099,
-    description: 'Included for historical comparison. The M1 Air that replaced it just months later is nearly 3x faster.'
+    metalScore: 500, // Legacy support
+    basePriceUSD: 1999,
+    description: 'Thick chassis design, notoriously hot running GPU.'
+  },
+  {
+    id: 'intel-mbp-17-2011',
+    name: 'MacBook Pro 17" (2011)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-2720QM',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 8, // HD 6750M
+    memory: '4GB - 16GB',
+    releaseYear: 2011,
+    singleCoreScore: 750,
+    multiCoreScore: 2700,
+    metalScore: 400, // Legacy support
+    basePriceUSD: 2499,
+    description: 'The last 17-inch MacBook Pro until the 16-inch arrived years later.'
   }
 ];
 

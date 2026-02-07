@@ -1,20 +1,89 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# MacRank - Apple Silicon Performance Leaderboard
 
-# Run and deploy your AI Studio app
+[中文文档](./README_zh-CN.md) | **English**
 
-This contains everything you need to run your app locally.
+**MacRank** is a comprehensive performance leaderboard and tier list for Apple Mac computers (M1-M4 series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect Mac for their workflow.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1waWp62IQTgSR1AIQFCYbz3bDXY1QEDyd
+![MacRank Preview](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
-## Run Locally
+## ✨ Features
 
-**Prerequisites:**  Node.js
+- **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, and Mac Studio based on synthetic tier scores.
+- **Interactive Charts**: Visual comparison of top models using Recharts.
+- **Detailed Specs**: Deep dive into CPU/GPU cores, memory configurations, and benchmark scores (Geekbench 6 & Metal).
+- **AI Advisor**: Integrated chat interface powered by **Google Gemini 3 Flash** to answer buying questions and provide technical advice.
+- **Tier System**: Visual ranking from S+ (Top Tier) to D, based on a weighted composite score of Single-Core, Multi-Core, and GPU performance.
+- **Dark Mode**: Fully responsive UI with automatic and manual light/dark theme switching.
+- **Internationalization**: Support for 10 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese, Russian, Korean, Hindi).
 
+## 🛠 Tech Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **AI SDK**: [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)
+- **Charts**: [Recharts](https://recharts.org/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- A Google Gemini API Key (Get one at [Google AI Studio](https://aistudio.google.com/))
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/macrank.git
+   cd macrank
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**
+   Create a `.env` file in the root directory and add your Google Gemini API Key:
+   ```env
+   API_KEY=your_actual_api_key_here
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. Open your browser and navigate to `http://localhost:5173`.
+
+## 📂 Project Structure
+
+```
+macrank/
+├── components/       # UI Components (Table, Chart, Chat, Modal)
+├── lib/             
+│   ├── data.ts       # Static Mac model database
+│   ├── translations.ts # i18n dictionaries
+│   └── types.ts      # TypeScript interfaces
+├── services/         # API integrations (Gemini AI)
+├── App.tsx           # Main application logic
+├── main.tsx          # Entry point
+└── index.html        # HTML template
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
