@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { X, Cpu, Layers, HardDrive, Monitor, Zap, CheckCircle2 } from 'lucide-react';
+import { X, Cpu, Layers, HardDrive, CheckCircle2 } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel } from '../lib/types';
 import { LanguageContext } from '../App';
+import TierBadge from './TierBadge';
 
 interface DetailModalProps {
   mac: MacModel | null;
@@ -18,121 +19,122 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
   const tier = getTierLabel(score);
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-[rgba(50,50,50,0.4)] dark:bg-[rgba(0,0,0,0.7)] backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
-      <div className="relative w-full max-w-2xl bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 border border-transparent dark:border-gray-800 max-h-[90vh] flex flex-col">
-        {/* Header Image/Banner Area */}
-        <div className="h-28 sm:h-32 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 w-full relative flex-shrink-0">
-          <button 
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 bg-white/80 dark:bg-gray-900/80 hover:bg-white dark:hover:bg-gray-900 rounded-full shadow-sm transition-all text-gray-600 dark:text-gray-300 z-10"
-          >
-            <X size={20} />
-          </button>
-          <div className="absolute -bottom-8 left-6 sm:left-8 flex items-end">
-             <div className="bg-white dark:bg-gray-900 p-2 rounded-2xl shadow-lg">
-                <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold text-white shadow-inner ${
-                    tier.startsWith('S') ? 'bg-purple-500' : 
-                    tier.startsWith('A') ? 'bg-blue-500' :
-                    tier.startsWith('B') ? 'bg-green-500' : 'bg-yellow-500'
-                }`}>
-                    {tier}
-                </div>
+      <div className="relative w-full max-w-3xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="p-8 pb-0 flex justify-between items-start">
+             <div>
+                 <div className="flex items-center gap-3 mb-2">
+                    <TierBadge tier={tier} />
+                    <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{mac.type}</span>
+                 </div>
+                 <h2 className="text-4xl font-semibold text-gray-900 dark:text-white tracking-tight leading-tight">{mac.name}</h2>
+                 <p className="text-xl text-gray-500 dark:text-gray-400 mt-2 font-light">{mac.chip} <span className="mx-2">•</span> {mac.releaseYear}</p>
              </div>
-             <div className="ml-4 mb-2">
-                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white line-clamp-1">{mac.name}</h2>
-                 <p className="text-gray-500 dark:text-gray-400 font-medium text-sm sm:text-base">{mac.releaseYear} • {mac.chip}</p>
-             </div>
-          </div>
+             <button 
+                onClick={onClose}
+                className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+             >
+                <X size={20} />
+             </button>
         </div>
 
-        {/* Content - Scrollable */}
-        <div className="px-6 sm:px-8 pt-12 pb-8 overflow-y-auto custom-scrollbar">
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-8 text-sm sm:text-base">
+        {/* Scrollable Content */}
+        <div className="p-8 overflow-y-auto custom-scrollbar space-y-10">
+            
+            {/* Description */}
+            <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 font-light">
                 {mac.description}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                    <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{t('specs')}</h3>
-                    
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 transition-colors">
-                        <Cpu className="text-blue-500 flex-shrink-0" size={20} />
-                        <div>
-                            <p className="text-xs text-gray-400 dark:text-gray-500">{t('processor')}</p>
-                            <p className="font-semibold text-gray-800 dark:text-gray-200">{mac.chip}</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">{mac.cores_cpu} Cores</p>
+            {/* Grid Specs */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                
+                {/* Column 1: Core Specs */}
+                <div>
+                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">{t('specs')}</h3>
+                   <div className="space-y-6">
+                        <div className="flex gap-4">
+                            <Cpu className="text-gray-400 w-6 h-6 shrink-0" strokeWidth={1.5} />
+                            <div>
+                                <p className="font-medium text-gray-900 dark:text-white">{mac.chip}</p>
+                                <p className="text-sm text-gray-500">{mac.cores_cpu} Cores</p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 transition-colors">
-                        <Layers className="text-purple-500 flex-shrink-0" size={20} />
-                        <div>
-                            <p className="text-xs text-gray-400 dark:text-gray-500">{t('graphics')}</p>
-                            <p className="font-semibold text-gray-800 dark:text-gray-200">{mac.cores_gpu} Core GPU</p>
+                        <div className="flex gap-4">
+                            <Layers className="text-gray-400 w-6 h-6 shrink-0" strokeWidth={1.5} />
+                            <div>
+                                <p className="font-medium text-gray-900 dark:text-white">{mac.cores_gpu} Core GPU</p>
+                                <p className="text-sm text-gray-500">{t('graphics')}</p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 transition-colors">
-                        <HardDrive className="text-green-500 flex-shrink-0" size={20} />
-                        <div>
-                            <p className="text-xs text-gray-400 dark:text-gray-500">{t('memory')}</p>
-                            <p className="font-semibold text-gray-800 dark:text-gray-200">{mac.memory}</p>
+                        <div className="flex gap-4">
+                            <HardDrive className="text-gray-400 w-6 h-6 shrink-0" strokeWidth={1.5} />
+                            <div>
+                                <p className="font-medium text-gray-900 dark:text-white">{mac.memory}</p>
+                                <p className="text-sm text-gray-500">{t('memory')}</p>
+                            </div>
                         </div>
-                    </div>
+                   </div>
                 </div>
 
-                <div className="space-y-4">
-                    <h3 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">{t('benchmarkScores')}</h3>
-                    
-                     <div className="space-y-3">
-                        <div>
-                            <div className="flex justify-between text-sm mb-1">
-                                <span className="text-gray-600 dark:text-gray-400">{t('singleCore')}</span>
-                                <span className="font-mono font-medium text-gray-900 dark:text-white">{mac.singleCoreScore}</span>
-                            </div>
-                            <div className="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-400 rounded-full" style={{ width: `${(mac.singleCoreScore / 4500) * 100}%`}}></div>
-                            </div>
+                {/* Column 2: Performance Bars */}
+                <div>
+                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">{t('benchmarkScores')}</h3>
+                   
+                   <div className="space-y-6">
+                        {/* Single Core */}
+                        <div className="space-y-2">
+                             <div className="flex justify-between text-sm">
+                                <span className="text-gray-500 dark:text-gray-400">{t('singleCore')}</span>
+                                <span className="font-mono text-gray-900 dark:text-white">{mac.singleCoreScore}</span>
+                             </div>
+                             <div className="h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(mac.singleCoreScore / 4500) * 100}%`}}></div>
+                             </div>
                         </div>
 
-                        <div>
-                            <div className="flex justify-between text-sm mb-1">
-                                <span className="text-gray-600 dark:text-gray-400">{t('multiCore')}</span>
-                                <span className="font-mono font-medium text-gray-900 dark:text-white">{mac.multiCoreScore}</span>
-                            </div>
-                            <div className="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-600 rounded-full" style={{ width: `${(mac.multiCoreScore / 30000) * 100}%`}}></div>
-                            </div>
+                        {/* Multi Core */}
+                        <div className="space-y-2">
+                             <div className="flex justify-between text-sm">
+                                <span className="text-gray-500 dark:text-gray-400">{t('multiCore')}</span>
+                                <span className="font-mono text-gray-900 dark:text-white">{mac.multiCoreScore}</span>
+                             </div>
+                             <div className="h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div className="h-full bg-purple-500 rounded-full" style={{ width: `${(mac.multiCoreScore / 30000) * 100}%`}}></div>
+                             </div>
                         </div>
 
-                        <div>
-                            <div className="flex justify-between text-sm mb-1">
-                                <span className="text-gray-600 dark:text-gray-400">{t('metal')}</span>
-                                <span className="font-mono font-medium text-gray-900 dark:text-white">{mac.metalScore}</span>
-                            </div>
-                            <div className="w-full h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-purple-500 rounded-full" style={{ width: `${(mac.metalScore / 250000) * 100}%`}}></div>
-                            </div>
+                        {/* Metal */}
+                        <div className="space-y-2">
+                             <div className="flex justify-between text-sm">
+                                <span className="text-gray-500 dark:text-gray-400">{t('metal')}</span>
+                                <span className="font-mono text-gray-900 dark:text-white">{mac.metalScore}</span>
+                             </div>
+                             <div className="h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div className="h-full bg-teal-500 rounded-full" style={{ width: `${(mac.metalScore / 250000) * 100}%`}}></div>
+                             </div>
                         </div>
-                     </div>
+                   </div>
                 </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                     <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide">{t('launchPrice')}</p>
-                     <p className="text-xl font-bold text-gray-900 dark:text-white">${mac.basePriceUSD}</p>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-lg text-sm font-medium border border-green-100 dark:border-green-900/30 w-full sm:w-auto justify-center">
+            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                 <div className="text-center sm:text-left">
+                    <div className="text-xs text-gray-500 uppercase font-semibold">{t('launchPrice')}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">${mac.basePriceUSD}</div>
+                 </div>
+                 <div className="flex items-center gap-2 text-green-600 dark:text-green-400 text-sm font-medium">
                     <CheckCircle2 size={16} />
                     {t('verifiedSpecs')}
-                </div>
+                 </div>
             </div>
+
         </div>
       </div>
     </div>
