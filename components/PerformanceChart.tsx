@@ -42,25 +42,25 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data }) => {
   };
 
   return (
-    <div className="w-full h-[350px] md:h-[400px] bg-white dark:bg-gray-900 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 transition-colors">
+    <div className="w-full h-[600px] bg-white dark:bg-gray-900 p-4 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 transition-colors">
       <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4 ml-2">{t('topIndex')}</h3>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={chartData}
           layout="vertical"
-          margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
+          margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#374151" strokeOpacity={0.2} />
+          <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#374151" strokeOpacity={0.1} />
           <XAxis type="number" hide />
           <YAxis 
             type="category" 
             dataKey="chip" 
-            width={100} 
+            width={95} 
             tick={{ fontSize: 11, fill: '#6b7280' }} 
             interval={0}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(156, 163, 175, 0.1)' }} />
-          <Bar dataKey="compositeScore" radius={[0, 4, 4, 0]} barSize={18}>
+          <Bar dataKey="compositeScore" radius={[0, 4, 4, 0]} barSize={22}>
             {chartData.map((entry, index) => {
                // Map tier label to actual hex colors approximately matching the tailwind classes in data.ts
                let color = '#9ca3af';
