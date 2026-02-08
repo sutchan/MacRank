@@ -4,6 +4,7 @@ import { MacModel } from '../lib/types';
 import TierBadge from './TierBadge';
 import { ChevronRight, Check } from 'lucide-react';
 import { LanguageContext } from '../App';
+import { formatCurrency } from '../lib/translations';
 
 interface MacTableProps {
   data: MacModel[];
@@ -13,7 +14,7 @@ interface MacTableProps {
 }
 
 const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onToggleCompare }) => {
-  const { t } = useContext(LanguageContext);
+  const { t, language } = useContext(LanguageContext);
 
   const isSelected = (id: string) => compareList.some(c => c.id === id);
   const isMaxSelected = compareList.length >= 2;
@@ -27,6 +28,7 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
             <th className="py-4 pl-4 w-10 text-center">
               {/* Checkbox Header */}
             </th>
+            <th className="py-4 pr-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-12 text-center">#</th>
             <th className="py-4 pr-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-16 text-center">{t('rank')}</th>
             <th className="py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('modelChip')}</th>
             
@@ -43,7 +45,7 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
           </tr>
         </thead>
         <tbody>
-          {data.map((mac) => {
+          {data.map((mac, index) => {
             const score = calculateTierScore(mac);
             const tier = getTierLabel(score);
             const selected = isSelected(mac.id);
@@ -70,6 +72,9 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
                      {selected && <Check size={12} strokeWidth={3} />}
                    </button>
                 </td>
+                <td className="py-4 md:py-6 pr-4 text-center text-sm text-gray-500 font-mono">
+                  {index + 1}
+                </td>
                 <td className="py-4 md:py-6 pr-4 text-center cursor-pointer" onClick={() => onSelect(mac)}>
                   <TierBadge tier={tier} />
                 </td>
@@ -94,7 +99,7 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
 
                 {/* Hidden on mobile */}
                 <td className="hidden md:table-cell py-6 pl-4 text-right cursor-pointer" onClick={() => onSelect(mac)}>
-                  <span className="text-sm text-gray-500 dark:text-gray-400 tabular-nums">${mac.basePriceUSD}</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 tabular-nums">{formatCurrency(mac.basePriceUSD, language)}</span>
                 </td>
 
                 <td className="py-4 md:py-6 text-center text-gray-300 dark:text-gray-600 group-hover:text-blue-500 transition-colors cursor-pointer" onClick={() => onSelect(mac)}>

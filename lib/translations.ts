@@ -13,6 +13,30 @@ export const languages: { code: Language; label: string; flag: string }[] = [
   { code: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
 ];
 
+// Approximate exchange rates relative to USD (1.0)
+const currencyMap: Record<Language, { rate: number; symbol: string; code: string }> = {
+  en: { rate: 1, symbol: '$', code: 'USD' },
+  zh: { rate: 7.2, symbol: '¥', code: 'CNY' },
+  es: { rate: 0.92, symbol: '€', code: 'EUR' },
+  fr: { rate: 0.92, symbol: '€', code: 'EUR' },
+  de: { rate: 0.92, symbol: '€', code: 'EUR' },
+  ja: { rate: 150, symbol: '¥', code: 'JPY' },
+  pt: { rate: 5.0, symbol: 'R$', code: 'BRL' },
+  ru: { rate: 92, symbol: '₽', code: 'RUB' },
+  ko: { rate: 1380, symbol: '₩', code: 'KRW' },
+  hi: { rate: 84, symbol: '₹', code: 'INR' },
+};
+
+export const formatCurrency = (priceUSD: number, language: Language) => {
+  const { rate, symbol, code } = currencyMap[language] || currencyMap['en'];
+  const converted = Math.round(priceUSD * rate);
+  
+  // Format with commas
+  const formattedNumber = new Intl.NumberFormat(language === 'en' ? 'en-US' : language).format(converted);
+  
+  return `${symbol}${formattedNumber}`;
+};
+
 export const translations = {
   en: {
     appTitle: 'MacRank',
@@ -64,7 +88,10 @@ export const translations = {
     chart_composite: 'Composite',
     chart_single: 'Single-Core',
     chart_multi: 'Multi-Core',
-    chart_metal: 'Metal GPU'
+    chart_metal: 'Metal GPU',
+    chart_value: 'Value (Scatter)',
+    chart_ratio: 'Points per $',
+    clickToDetail: 'Click bar for details'
   },
   zh: {
     appTitle: 'MacRank',
@@ -116,7 +143,10 @@ export const translations = {
     chart_composite: '综合评分',
     chart_single: '单核性能',
     chart_multi: '多核性能',
-    chart_metal: '图形性能'
+    chart_metal: '图形性能',
+    chart_value: '性价比分布',
+    chart_ratio: '每元得分',
+    clickToDetail: '点击查看详情'
   },
   es: {
     appTitle: 'MacRank',
@@ -168,7 +198,10 @@ export const translations = {
     chart_composite: 'Compuesto',
     chart_single: 'Núcleo Único',
     chart_multi: 'Multinúcleo',
-    chart_metal: 'Metal GPU'
+    chart_metal: 'Metal GPU',
+    chart_value: 'Valor (Dispersión)',
+    chart_ratio: 'Puntos por $',
+    clickToDetail: 'Clic para detalles'
   },
   fr: {
     appTitle: 'MacRank',
@@ -220,7 +253,10 @@ export const translations = {
     chart_composite: 'Mixte',
     chart_single: 'Cœur unique',
     chart_multi: 'Multi-cœurs',
-    chart_metal: 'Metal GPU'
+    chart_metal: 'Metal GPU',
+    chart_value: 'Valeur (Nuage)',
+    chart_ratio: 'Points par $',
+    clickToDetail: 'Cliquez pour détails'
   },
   de: {
     appTitle: 'MacRank',
@@ -272,7 +308,10 @@ export const translations = {
     chart_composite: 'Gesamt',
     chart_single: 'Single-Core',
     chart_multi: 'Multi-Core',
-    chart_metal: 'Metal GPU'
+    chart_metal: 'Metal GPU',
+    chart_value: 'Preis-Leistung (Scatter)',
+    chart_ratio: 'Punkte pro $',
+    clickToDetail: 'Klicken für Details'
   },
   ja: {
     appTitle: 'MacRank',
@@ -324,7 +363,10 @@ export const translations = {
     chart_composite: '総合スコア',
     chart_single: 'シングルコア',
     chart_multi: 'マルチコア',
-    chart_metal: 'GPU (Metal)'
+    chart_metal: 'GPU (Metal)',
+    chart_value: 'コストパフォーマンス分布',
+    chart_ratio: 'コスパ (点数/$)',
+    clickToDetail: 'クリックで詳細表示'
   },
   pt: {
     appTitle: 'MacRank',
@@ -376,7 +418,10 @@ export const translations = {
     chart_composite: 'Composto',
     chart_single: 'Single-Core',
     chart_multi: 'Multi-Core',
-    chart_metal: 'GPU Metal'
+    chart_metal: 'GPU Metal',
+    chart_value: 'Dispersão de Valor',
+    chart_ratio: 'Pontos por $',
+    clickToDetail: 'Clique para detalhes'
   },
   ru: {
     appTitle: 'MacRank',
@@ -428,7 +473,10 @@ export const translations = {
     chart_composite: 'Общий',
     chart_single: 'Single-Core',
     chart_multi: 'Multi-Core',
-    chart_metal: 'Metal GPU'
+    chart_metal: 'Metal GPU',
+    chart_value: 'Цена/Качество',
+    chart_ratio: 'Очки за $',
+    clickToDetail: 'Клик для деталей'
   },
   ko: {
     appTitle: 'MacRank',
@@ -480,7 +528,10 @@ export const translations = {
     chart_composite: '종합 점수',
     chart_single: '싱글 코어',
     chart_multi: '멀티 코어',
-    chart_metal: 'GPU (Metal)'
+    chart_metal: 'GPU (Metal)',
+    chart_value: '가성비 분포',
+    chart_ratio: '가성비 (점수/$)',
+    clickToDetail: '상세보기 클릭'
   },
   hi: {
     appTitle: 'MacRank',
@@ -532,6 +583,9 @@ export const translations = {
     chart_composite: 'समग्र स्कोर',
     chart_single: 'सिंगल कोर',
     chart_multi: 'मल्टी कोर',
-    chart_metal: 'GPU (Metal)'
+    chart_metal: 'GPU (Metal)',
+    chart_value: 'मूल्य (Price/Perf)',
+    chart_ratio: 'अंक प्रति $',
+    clickToDetail: 'विवरण के लिए क्लिक करें'
   }
 };

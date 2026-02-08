@@ -9,7 +9,7 @@ import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
 import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X } from 'lucide-react';
 
-const APP_VERSION = '0.1.3';
+const APP_VERSION = '0.1.5';
 
 // Create Language Context
 interface LanguageContextType {
@@ -121,6 +121,22 @@ const App: React.FC = () => {
     });
   }, [searchTerm, filterType, filterFamily, sortBy, macData]);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 140; // Header (48px) + Sticky Controls (~60px) + Padding
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       <div className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans">
@@ -132,12 +148,12 @@ const App: React.FC = () => {
                <a href="/" className="text-gray-900 dark:text-gray-100 opacity-80 hover:opacity-100 transition-opacity" aria-label="Home">
                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 9.6c-.7 0-1.7-.5-1.7-1.7s1-2.2 2-2.3c.1 0 .2 0 .2 0-1-1.3-2.6-1.5-3.2-1.5-1.4 0-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 1-3.9 2.4-1.6 2.4-.4 5.9 1.1 8 1 1.4 2 2.9 3.4 2.9.7 0 1-.2 1.9-.2.9 0 1.1.2 1.9.2 1.3 0 2.2-1.3 3.1-2.6.9-1.3 1.3-2.7 1.3-2.7s-2.1-1-2.2-2.9zM15 4.6c.6-.7 1-1.8 1-2.8 0-.1 0-.3 0-.4-.9.1-2 .7-2.6 1.4-.6.6-1 1.6-1 2.6 0 .1 0 .3 0 .4 1-.1 2.1-.6 2.6-1.2z"/></svg>
                </a>
-               <span className="font-semibold text-gray-900 dark:text-white tracking-wide">{t('appTitle')}</span>
+               <span className="font-semibold text-gray-900 dark:text-white tracking-wide cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>{t('appTitle')}</span>
             </div>
             
             <nav className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
-              <span className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block">{t('leaderboard')}</span>
-              <span className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block">{t('charts')}</span>
+              <button onClick={() => scrollToSection('leaderboard')} className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block font-medium">{t('leaderboard')}</button>
+              <button onClick={() => scrollToSection('charts')} className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block font-medium">{t('charts')}</button>
               
               <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-700 pl-4">
                  {/* Language & Theme Controls - Minimalist */}
@@ -245,16 +261,16 @@ const App: React.FC = () => {
           </section>
 
           {/* Charts Section - Clean & Minimal */}
-          <section className="py-8 border-b border-gray-200 dark:border-gray-800">
+          <section id="charts" className="py-8 border-b border-gray-200 dark:border-gray-800 scroll-mt-32">
              <div className="mb-8">
                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('topIndex')}</h3>
                <p className="text-gray-500 dark:text-gray-400 text-sm">{t('performance')} (Geekbench 6 & Metal)</p>
              </div>
-            <PerformanceChart data={filteredData} />
+            <PerformanceChart data={filteredData} onSelect={setSelectedModel} />
           </section>
 
           {/* List Section */}
-          <section className="space-y-6">
+          <section id="leaderboard" className="space-y-6 scroll-mt-32">
             <div className="flex items-end justify-between">
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('leaderboard')}</h2>
               <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -264,8 +280,8 @@ const App: React.FC = () => {
             <MacTable 
               data={filteredData} 
               onSelect={setSelectedModel} 
-              compareList={compareList}
-              onToggleCompare={handleToggleCompare}
+              compareList={compareList} 
+              onToggleCompare={handleToggleCompare} 
             />
           </section>
 

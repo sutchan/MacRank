@@ -4,6 +4,7 @@ import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel } from '../lib/types';
 import { LanguageContext } from '../App';
 import TierBadge from './TierBadge';
+import { formatCurrency } from '../lib/translations';
 
 interface DetailModalProps {
   mac: MacModel | null;
@@ -11,7 +12,7 @@ interface DetailModalProps {
 }
 
 const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
-  const { t } = useContext(LanguageContext);
+  const { t, language } = useContext(LanguageContext);
 
   if (!mac) return null;
 
@@ -127,7 +128,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
             <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
                  <div className="text-center sm:text-left">
                     <div className="text-xs text-gray-500 uppercase font-semibold">{t('launchPrice')}</div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white">${mac.basePriceUSD}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">{formatCurrency(mac.basePriceUSD, language)}</div>
                  </div>
                  <div className="flex items-center gap-2 text-green-600 dark:text-green-400 text-sm font-medium">
                     <CheckCircle2 size={16} />

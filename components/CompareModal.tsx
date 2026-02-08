@@ -4,6 +4,7 @@ import { MacModel } from '../lib/types';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { LanguageContext } from '../App';
 import TierBadge from './TierBadge';
+import { formatCurrency } from '../lib/translations';
 
 interface CompareModalProps {
   models: MacModel[];
@@ -11,7 +12,7 @@ interface CompareModalProps {
 }
 
 const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
-  const { t } = useContext(LanguageContext);
+  const { t, language } = useContext(LanguageContext);
 
   if (models.length !== 2) return null;
 
@@ -20,44 +21,59 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
   const score2 = calculateTierScore(m2);
 
   const getBarColor = (val1: number, val2: number) => {
-    if (val1 > val2) return 'bg-blue-500';
-    if (val1 < val2) return 'bg-gray-300 dark:bg-gray-700';
-    return 'bg-blue-400';
+    if (val1 > val2) return 'bg-blue-600 dark:bg-blue-500';
+    if (val1 < val2) return 'bg-gray-400 dark:bg-gray-600';
+    return 'bg-blue-400 dark:bg-blue-400';
   };
 
-  const ComparisonRow = ({ label, val1, val2, suffix = '', maxVal }: { label: string, val1: number, val2: number, suffix?: string, maxVal: number }) => {
-    const p1 = Math.min((val1 / maxVal) * 100, 100);
-    const p2 = Math.min((val2 / maxVal) * 100, 100);
+  const ComparisonRow = ({ label, val1, val2, suffix = '' }: { label: string, val1: number, val2: number, suffix?: string }) => {
+    const max = Math.max(val1, val2);
+    const safeMax = max === 0 ? 1 : max;
+    
+    // Calculate percentage relative to the local maximum (winner)
+    const p1 = (val1 / safeMax) * 100;
+    const p2 = (val2 / safeMax) * 100;
+    
     const diff = val1 - val2;
-    const diffPercent = Math.round((Math.abs(diff) / Math.min(val1, val2)) * 100);
+    // Handle division by zero for diffPercent
+    const minVal = Math.min(val1, val2);
+    const diffPercent = minVal > 0 ? Math.round((Math.abs(diff) / minVal) * 100) : 100;
 
     return (
       <div className="mb-6">
         <div className="flex justify-between items-end mb-2">
            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{label}</span>
            {diff !== 0 && (
-             <span className="text-xs font-medium text-gray-400">
+             <span className={`text-xs font-bold ${diff > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'}`}>
                 {diff > 0 ? m1.name : m2.name} +{diffPercent}%
              </span>
            )}
         </div>
         
         {/* Model 1 Bar */}
-        <div className="flex items-center gap-3 mb-1.5">
+        <div className="flex items-center gap-3 mb-2">
            <div className="w-24 text-right text-xs font-medium truncate text-gray-600 dark:text-gray-300">{m1.chip}</div>
-           <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+           <div className="relative flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
              <div className={`h-full rounded-full transition-all duration-500 ${getBarColor(val1, val2)}`} style={{ width: `${p1}%` }}></div>
+             {/* Marker on Winner Bar showing Loser's position */}
+             {val1 > val2 && (
+                <div className="absolute top-0 bottom-0 w-[2px] bg-white/40 dark:bg-black/30 z-10 shadow-[0_0_2px_rgba(0,0,0,0.2)]" style={{ left: `${p2}%` }}></div>
+             )}
            </div>
-           <div className="w-16 text-right text-sm font-bold text-gray-900 dark:text-white tabular-nums">{val1.toLocaleString()}{suffix}</div>
+           <div className="w-20 text-right text-sm font-bold text-gray-900 dark:text-white tabular-nums">{val1.toLocaleString()}{suffix}</div>
         </div>
 
         {/* Model 2 Bar */}
         <div className="flex items-center gap-3">
            <div className="w-24 text-right text-xs font-medium truncate text-gray-600 dark:text-gray-300">{m2.chip}</div>
-           <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+           <div className="relative flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
              <div className={`h-full rounded-full transition-all duration-500 ${getBarColor(val2, val1)}`} style={{ width: `${p2}%` }}></div>
+             {/* Marker on Winner Bar showing Loser's position */}
+             {val2 > val1 && (
+                <div className="absolute top-0 bottom-0 w-[2px] bg-white/40 dark:bg-black/30 z-10 shadow-[0_0_2px_rgba(0,0,0,0.2)]" style={{ left: `${p1}%` }}></div>
+             )}
            </div>
-           <div className="w-16 text-right text-sm font-bold text-gray-900 dark:text-white tabular-nums">{val2.toLocaleString()}{suffix}</div>
+           <div className="w-20 text-right text-sm font-bold text-gray-900 dark:text-white tabular-nums">{val2.toLocaleString()}{suffix}</div>
         </div>
       </div>
     );
@@ -92,7 +108,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
                     <TierBadge tier={getTierLabel(calculateTierScore(m))} />
                     <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-white leading-tight px-4">{m.name}</h3>
                     <p className="text-sm text-gray-500 mt-1">{m.chip} ({m.releaseYear})</p>
-                    <div className="mt-4 text-2xl font-semibold text-gray-900 dark:text-white">${m.basePriceUSD}</div>
+                    <div className="mt-4 text-2xl font-semibold text-gray-900 dark:text-white">{formatCurrency(m.basePriceUSD, language)}</div>
                 </div>
              ))}
              
@@ -132,25 +148,21 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
                  label={t('composite')} 
                  val1={score1} 
                  val2={score2} 
-                 maxVal={120} // Slightly above S+
               />
               <ComparisonRow 
                  label={t('singleCore')} 
                  val1={m1.singleCoreScore} 
                  val2={m2.singleCoreScore} 
-                 maxVal={4500} 
               />
               <ComparisonRow 
                  label={t('multiCore')} 
                  val1={m1.multiCoreScore} 
                  val2={m2.multiCoreScore} 
-                 maxVal={30000} 
               />
               <ComparisonRow 
                  label={t('metal')} 
                  val1={m1.metalScore} 
                  val2={m2.metalScore} 
-                 maxVal={250000} 
               />
           </div>
 
