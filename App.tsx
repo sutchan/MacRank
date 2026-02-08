@@ -9,6 +9,8 @@ import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
 import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X } from 'lucide-react';
 
+const APP_VERSION = '0.1.3';
+
 // Create Language Context
 interface LanguageContextType {
   language: Language;
@@ -271,6 +273,7 @@ const App: React.FC = () => {
           <footer className="text-xs text-gray-400 dark:text-gray-600 py-12 border-t border-gray-200 dark:border-gray-800 text-center">
              <p>MacRank uses synthetic scores based on Geekbench 6 data. Prices reflect launch MSRP in USD.</p>
              <p className="mt-2">Copyright © 2025 MacRank. Not affiliated with Apple Inc.</p>
+             <p className="mt-2 font-mono text-[10px] opacity-40">v{APP_VERSION}</p>
           </footer>
 
         </main>

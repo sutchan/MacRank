@@ -60,7 +60,11 @@ export const translations = {
     clear: 'Clear',
     vs: 'vs',
     winner: 'Winner',
-    difference: 'Difference'
+    difference: 'Difference',
+    chart_composite: 'Composite',
+    chart_single: 'Single-Core',
+    chart_multi: 'Multi-Core',
+    chart_metal: 'Metal GPU'
   },
   zh: {
     appTitle: 'MacRank',
@@ -108,7 +112,11 @@ export const translations = {
     clear: '清空',
     vs: 'vs',
     winner: '胜出',
-    difference: '差距'
+    difference: '差距',
+    chart_composite: '综合评分',
+    chart_single: '单核性能',
+    chart_multi: '多核性能',
+    chart_metal: '图形性能'
   },
   es: {
     appTitle: 'MacRank',
@@ -156,7 +164,11 @@ export const translations = {
     clear: 'Borrar',
     vs: 'vs',
     winner: 'Ganador',
-    difference: 'Diferencia'
+    difference: 'Diferencia',
+    chart_composite: 'Compuesto',
+    chart_single: 'Núcleo Único',
+    chart_multi: 'Multinúcleo',
+    chart_metal: 'Metal GPU'
   },
   fr: {
     appTitle: 'MacRank',
@@ -204,7 +216,11 @@ export const translations = {
     clear: 'Effacer',
     vs: 'vs',
     winner: 'Gagnant',
-    difference: 'Différence'
+    difference: 'Différence',
+    chart_composite: 'Mixte',
+    chart_single: 'Cœur unique',
+    chart_multi: 'Multi-cœurs',
+    chart_metal: 'Metal GPU'
   },
   de: {
     appTitle: 'MacRank',
@@ -252,7 +268,11 @@ export const translations = {
     clear: 'Leeren',
     vs: 'vs',
     winner: 'Gewinner',
-    difference: 'Unterschied'
+    difference: 'Unterschied',
+    chart_composite: 'Gesamt',
+    chart_single: 'Single-Core',
+    chart_multi: 'Multi-Core',
+    chart_metal: 'Metal GPU'
   },
   ja: {
     appTitle: 'MacRank',
@@ -300,7 +320,11 @@ export const translations = {
     clear: 'クリア',
     vs: 'vs',
     winner: '勝者',
-    difference: '差'
+    difference: '差',
+    chart_composite: '総合スコア',
+    chart_single: 'シングルコア',
+    chart_multi: 'マルチコア',
+    chart_metal: 'GPU (Metal)'
   },
   pt: {
     appTitle: 'MacRank',
@@ -348,7 +372,11 @@ export const translations = {
     clear: 'Limpar',
     vs: 'vs',
     winner: 'Vencedor',
-    difference: 'Diferença'
+    difference: 'Diferença',
+    chart_composite: 'Composto',
+    chart_single: 'Single-Core',
+    chart_multi: 'Multi-Core',
+    chart_metal: 'GPU Metal'
   },
   ru: {
     appTitle: 'MacRank',
@@ -396,7 +424,11 @@ export const translations = {
     clear: 'Очистить',
     vs: 'vs',
     winner: 'Победитель',
-    difference: 'Разница'
+    difference: 'Разница',
+    chart_composite: 'Общий',
+    chart_single: 'Single-Core',
+    chart_multi: 'Multi-Core',
+    chart_metal: 'Metal GPU'
   },
   ko: {
     appTitle: 'MacRank',
@@ -444,7 +476,11 @@ export const translations = {
     clear: '지우기',
     vs: 'vs',
     winner: '승자',
-    difference: '차이'
+    difference: '차이',
+    chart_composite: '종합 점수',
+    chart_single: '싱글 코어',
+    chart_multi: '멀티 코어',
+    chart_metal: 'GPU (Metal)'
   },
   hi: {
     appTitle: 'MacRank',
@@ -492,6 +528,10 @@ export const translations = {
     clear: 'साफ़ करें',
     vs: 'बनाम',
     winner: 'विजेता',
-    difference: 'अंतर'
+    difference: 'अंतर',
+    chart_composite: 'समग्र स्कोर',
+    chart_single: 'सिंगल कोर',
+    chart_multi: 'मल्टी कोर',
+    chart_metal: 'GPU (Metal)'
   }
 };
