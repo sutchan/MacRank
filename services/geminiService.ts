@@ -8,18 +8,8 @@ export const getMacAdvice = async (
   language: Language = 'en'
 ): Promise<string> => {
   try {
-    // FIX: Initialize client lazily inside the function.
-    // This prevents the entire app from crashing on load if the API key is missing in the environment.
-    const apiKey = process.env.API_KEY;
-    
-    if (!apiKey) {
-      console.warn("API Key is missing. Please check your .env file or deployment settings.");
-      return language === 'zh' 
-        ? "系统配置错误：未检测到 API Key。请联系管理员或检查部署设置。"
-        : "Configuration Error: API Key is missing. Please check deployment settings.";
-    }
-
-    const ai = new GoogleGenAI({ apiKey });
+    // Guidelines: API key must be obtained exclusively from process.env.API_KEY and used directly.
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const model = 'gemini-3-flash-preview';
 
     // OPTIMIZATION: Context Trimming

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2025-02-22
+
+### Added
+- **PWA Support**: Enabled Progressive Web App capabilities. Users can now install MacRank to their home screen.
+- **Offline Caching**: Configured `vite-plugin-pwa` for asset caching.
+- **App Icons**: Added scalable SVG icons for PWA manifest.
+
+### Optimized
+- **Mobile View**: Improved `MacTable` responsiveness by hiding CPU/GPU/Price columns on vertical mobile screens to prevent horizontal scrolling.
+
+### Fixed
+- **Build Configuration**: Fixed `process.env` access issue in `vite.config.ts`.
+- **API Security**: strictly enforced `process.env.API_KEY` usage in `GeminiService` to comply with SDK guidelines.
+
 ## [0.1.1] - 2025-02-22
 
 ### Added
