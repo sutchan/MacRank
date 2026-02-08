@@ -1,52 +1,53 @@
-# 技术栈与架构文档
+# 技术栈与架构深度文档
 
-## 1. 核心框架
-*   **基础库**: React 19
-*   **开发语言**: TypeScript (TSX)
-*   **模块系统**: ES Modules (ESM)
-    *   *选型理由*: 应用通过 `esm.sh` 直接在浏览器中加载原生 ES 模块。这种方式消除了复杂的本地构建步骤，非常适合快速原型开发和无构建环境的即时预览。
+## 1. 核心框架与运行时
+*   **React 19**: 利用最新的 Hooks API (`useMemo` 深度优化过滤逻辑, `useContext` 管理全局状态)。
+*   **ES Modules (ESM)**: 浏览器原生模块加载。
+    *   *优势*: 零编译启动，极速开发体验。
+    *   *实现*: 通过 `importmap` 映射 `react`, `react-dom`, `recharts` 等到 `esm.sh` CDN。
 
-## 2. 用户界面 (UI) 与样式
-*   **CSS 框架**: Tailwind CSS (v3.4)
-    *   *实现方式*: 通过 CDN (`cdn.tailwindcss.com`) 运行时加载。
-    *   *配置*: 扩展了 Apple 风格的配色板 (`gray-50` 等) 和字体栈 (`-apple-system`, `SF Pro Text`)。支持 `class` 策略的深色模式。
-*   **图标库**: Lucide React
-    *   *选型理由*: 轻量级、风格统一且支持 Tree-shaking 的 SVG 图标库。
-*   **字体**: Inter / Apple System Fonts
-    *   *选型理由*: 保持与 macOS/iOS 原生体验一致的视觉感受。
+## 2. PWA 与离线能力 (Progressive Web App)
+*   **插件**: `vite-plugin-pwa`
+*   **配置策略**:
+    *   `registerType: 'autoUpdate'`: 自动更新 Service Worker。
+    *   **Manifest**: 定义了名称、图标、主题色，支持 "Standalone" 模式（隐藏浏览器地址栏，类原生体验）。
+    *   **缓存策略 (Runtime Caching)**:
+        *   **CDN 资源**: 针对 `esm.sh` 和 `tailwindcss.com` 配置 `CacheFirst` 策略，缓存时长 30 天-1 年。这确保了应用在无网环境下加载核心库的能力。
+        *   **静态资源**: 图片、图标等本地资源自动缓存。
 
-## 3. 数据可视化
-*   **图表库**: Recharts
-    *   *选型理由*: 专为 React 设计的声明式图表库。能够高效处理 SVG 渲染，并完美支持响应式容器 (`ResponsiveContainer`)，用于绘制性能天梯图。
+## 3. 数据流与状态管理
+*   **全局上下文 (Context)**:
+    *   `LanguageContext`: 管理当前语言 (`en`, `zh` 等) 及翻译函数 `t()`。
+*   **本地状态 (Local State)**:
+    *   `compareList`: 数组存储选中的 `MacModel` 对象 (Max length = 2)。
+    *   `filter/sort`: 存储用户的筛选偏好。
+*   **计算属性 (Derived State)**:
+    *   使用 `useMemo` 基于原始 `macData` + `searchTerm` + `filters` 实时计算 `filteredData`，避免在大数据量（含Intel旧机型）下的渲染卡顿。
 
-## 4. 人工智能 (AI)
-*   **SDK**: `@google/genai` (Google GenAI SDK)
-*   **模型**: `gemini-3-flash-preview`
-*   **集成模式**:
-    *   **客户端直连**: 浏览器端直接调用 Gemini API。
-    *   **上下文注入 (RAG-lite)**: 将结构化的 Mac 机型数据（名称、芯片、跑分、价格）序列化为文本，注入到系统提示词中，使 AI 具备最新的硬件知识库。
-    *   **延迟初始化**: SDK 实例在 `getMacAdvice` 函数被调用时才创建，并包含完整的错误捕获机制，确保 API Key 缺失不会阻塞 UI 渲染。
-    *   **参数调优**: `thinkingBudget: 0` (关闭思维链以降低延迟)。
+## 4. AI 架构与优化 (RAG-Lite)
+*   **SDK**: `@google/genai`
+*   **上下文注入策略**:
+    *   **动态剪裁**: 为了防止 Token 超限和降低延迟，不发送整个数据库。而是先按“年份”和“多核跑分”降序排列，截取 **Top 40** 热门机型。
+    *   **序列化**: 将机型对象转化为精简的文本描述 (`Name (Chip): Score, Price`) 注入 System Prompt。
+*   **延迟优化**:
+    *   `thinkingBudget: 0`: 强制关闭 Gemini 的思维链模式，优先保证聊天响应速度。
+    *   **客户端直连**: 减少中间层转发延迟。
 
-## 5. 状态管理
-*   **方案**: React Hooks (`useState`, `useMemo`, `useEffect`, `useContext`)
-    *   **Context API**: 用于全局管理 `LanguageContext` (多语言状态)。
-    *   **本地状态**: 用于管理过滤条件、搜索词、对比列表和聊天记录。
-    *   **性能优化**: 使用 `useMemo` 对高频触发的数据过滤和排序逻辑进行缓存。
+## 5. 数据可视化技术
+*   **库**: Recharts
+*   **实现细节**:
+    *   **响应式**: 使用 `ResponsiveContainer` 确保图表随窗口缩放。
+    *   **动态填充**: Bar Chart 的颜色根据评分段位 (`Tier`) 动态计算 (S+ 为紫色渐变, A 为蓝色等)。
+    *   **散点图**: 使用 `ScatterChart` 实现价格(X)与性能(Y)的二维分析，并绘制平均值参考线 (`ReferenceLine`) 划分象限。
 
-## 6. 依赖映射 (Import Map)
-应用通过 `index.html` 中的 Import Map 定义依赖来源：
+## 6. 国际化 (i18n)
+*   **实现**: 不依赖第三方重型库 (如 i18next)，使用轻量级 TypeScript 对象字典 (`lib/translations.ts`)。
+*   **功能**:
+    *   支持 10 种语言。
+    *   **货币格式化**: 根据语言环境 (`Intl.NumberFormat`) 自动转换货币符号及汇率估算（静态汇率）。
+    *   **SEO**: 根据当前语言动态更新 `document.title`。
 
-| 包名 | 来源 | 版本 | 用途 |
-| :--- | :--- | :--- | :--- |
-| `react` | esm.sh | ^19.2.4 | UI 核心 |
-| `react-dom` | esm.sh | ^19.2.4 | DOM 渲染 |
-| `@google/genai` | esm.sh | ^1.40.0 | AI 逻辑 |
-| `lucide-react` | esm.sh | ^0.563.0 | 图标资源 |
-| `recharts` | esm.sh | ^3.7.0 | 图表绘制 |
-| `vite` | esm.sh | ^7.3.1 | 开发服务器 |
-
-## 7. 性能与优化
-*   **上下文裁剪**: 发送给 AI 的上下文被限制为“相关性最高的前 40 款机型”，并按年份倒序排列，以减少 Token 消耗并提升首字生成速度。
-*   **无二进制资源**: 所有图标均为 SVG 代码，无本地图片资源，依赖全部 CDN 化，确保秒级加载。
-*   **移动端适配**: 表格和图表区域支持横向滚动，确保在小屏设备上的可用性。
+## 7. 性能优化
+*   **代码分割**: 数据文件按芯片架构拆分 (`data-silicon.ts`, `data-intel.ts`)，虽然目前全量加载，但为未来按需加载打下基础。
+*   **虚拟列表替代方案**: 当前数据量 (~60条) 尚不需要虚拟列表，但通过 `content-visibility: auto` 和 `will-change` 属性优化了表格滚动性能。
+*   **无阻塞渲染**: 详情模态框和聊天窗口使用 React Portal 或固定定位层，避免触发主文档流重排。

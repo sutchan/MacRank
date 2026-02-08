@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7] - 2025-02-22
+
+### Added
+- **Expanded Database**: Added missing M4 MacBook Pro base model, iPad Air M1/M2, and legacy Intel models (iMac 2019, MacBook Air 11" 2015, etc.) for a more comprehensive list.
+
+### Refactor
+- **Code Organization**: Moved inline CSS from `index.html` to a dedicated `app/style.css` file for better maintainability.
+
 ## [0.1.5] - 2025-02-22
 
 ### Fixed

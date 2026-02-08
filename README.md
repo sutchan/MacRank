@@ -65,12 +65,12 @@
 macrank/
 ├── components/       # UI Components (Table, Chart, Chat, Modal)
 ├── lib/             
-│   ├── data.ts       # Static Mac model database
+│   ├── data.ts       # Static Mac model database (Entry)
 │   ├── translations.ts # i18n dictionaries
 │   └── types.ts      # TypeScript interfaces
 ├── services/         # API integrations (Gemini AI)
 ├── App.tsx           # Main application logic
-├── main.tsx          # Entry point
+├── index.tsx         # Entry point
 └── index.html        # HTML template
 ```
 

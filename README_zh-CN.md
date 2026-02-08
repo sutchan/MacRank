@@ -65,12 +65,12 @@
 macrank/
 ├── components/       # UI 组件 (表格, 图表, 聊天窗口, 详情弹窗)
 ├── lib/             
-│   ├── data.ts       # 静态 Mac 机型数据库
+│   ├── data.ts       # 静态 Mac 机型数据库 (统一入口)
 │   ├── translations.ts # 国际化翻译字典
 │   └── types.ts      # TypeScript 类型定义
 ├── services/         # API 服务集成 (Gemini AI)
 ├── App.tsx           # 主应用逻辑
-├── main.tsx          # 入口文件
+├── index.tsx         # 入口文件
 └── index.html        # HTML 模板
 ```
 

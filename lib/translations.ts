@@ -91,7 +91,16 @@ export const translations = {
     chart_metal: 'Metal GPU',
     chart_value: 'Value (Scatter)',
     chart_ratio: 'Points per $',
-    clickToDetail: 'Click bar for details'
+    clickToDetail: 'Click bar for details',
+    footer_disclaimer: 'MacRank uses synthetic scores based on Geekbench 6 data. Prices reflect launch MSRP in USD.',
+    footer_copyright: 'Copyright © 2025 MacRank. Not affiliated with Apple Inc.',
+    family_m4: 'M4 Family',
+    family_m3: 'M3 Family',
+    family_m2: 'M2 Family',
+    family_m1: 'M1 Family',
+    family_intel: 'Intel Series',
+    chart_value_desc: 'Price vs. Performance (Top Left = Best Value)',
+    chart_ratio_desc: 'Performance Points per Dollar (Higher is Better)'
   },
   zh: {
     appTitle: 'MacRank',
@@ -146,7 +155,16 @@ export const translations = {
     chart_metal: '图形性能',
     chart_value: '性价比分布',
     chart_ratio: '每元得分',
-    clickToDetail: '点击查看详情'
+    clickToDetail: '点击查看详情',
+    footer_disclaimer: 'MacRank 使用基于 Geekbench 6 数据的合成评分。价格反映发售时的美元建议零售价。',
+    footer_copyright: '版权所有 © 2025 MacRank。与 Apple Inc. 无关。',
+    family_m4: 'M4 系列',
+    family_m3: 'M3 系列',
+    family_m2: 'M2 系列',
+    family_m1: 'M1 系列',
+    family_intel: 'Intel 系列',
+    chart_value_desc: '价格 vs 性能 (左上角 = 性价比最高)',
+    chart_ratio_desc: '每美元性能得分 (越高越好)'
   },
   es: {
     appTitle: 'MacRank',
@@ -201,7 +219,16 @@ export const translations = {
     chart_metal: 'Metal GPU',
     chart_value: 'Valor (Dispersión)',
     chart_ratio: 'Puntos por $',
-    clickToDetail: 'Clic para detalles'
+    clickToDetail: 'Clic para detalles',
+    footer_disclaimer: 'MacRank utiliza puntuaciones sintéticas basadas en datos de Geekbench 6. Los precios reflejan el PVP de lanzamiento en USD.',
+    footer_copyright: 'Copyright © 2025 MacRank. No afiliado a Apple Inc.',
+    family_m4: 'Familia M4',
+    family_m3: 'Familia M3',
+    family_m2: 'Familia M2',
+    family_m1: 'Familia M1',
+    family_intel: 'Serie Intel',
+    chart_value_desc: 'Precio vs. Rendimiento (Arriba Izq. = Mejor Valor)',
+    chart_ratio_desc: 'Puntos de Rendimiento por Dólar (Más alto es mejor)'
   },
   fr: {
     appTitle: 'MacRank',
@@ -256,7 +283,16 @@ export const translations = {
     chart_metal: 'Metal GPU',
     chart_value: 'Valeur (Nuage)',
     chart_ratio: 'Points par $',
-    clickToDetail: 'Cliquez pour détails'
+    clickToDetail: 'Cliquez pour détails',
+    footer_disclaimer: 'MacRank utilise des scores synthétiques basés sur les données Geekbench 6. Les prix reflètent le PDSF de lancement en USD.',
+    footer_copyright: 'Copyright © 2025 MacRank. Non affilié à Apple Inc.',
+    family_m4: 'Famille M4',
+    family_m3: 'Famille M3',
+    family_m2: 'Famille M2',
+    family_m1: 'Famille M1',
+    family_intel: 'Série Intel',
+    chart_value_desc: 'Prix vs Performance (Haut Gauche = Meilleure Valeur)',
+    chart_ratio_desc: 'Points de performance par dollar (Plus élevé est mieux)'
   },
   de: {
     appTitle: 'MacRank',
@@ -311,7 +347,16 @@ export const translations = {
     chart_metal: 'Metal GPU',
     chart_value: 'Preis-Leistung (Scatter)',
     chart_ratio: 'Punkte pro $',
-    clickToDetail: 'Klicken für Details'
+    clickToDetail: 'Klicken für Details',
+    footer_disclaimer: 'MacRank verwendet synthetische Scores basierend auf Geekbench 6 Daten. Preise spiegeln die UVP zum Start in USD wider.',
+    footer_copyright: 'Copyright © 2025 MacRank. Nicht verbunden mit Apple Inc.',
+    family_m4: 'M4 Familie',
+    family_m3: 'M3 Familie',
+    family_m2: 'M2 Familie',
+    family_m1: 'M1 Familie',
+    family_intel: 'Intel Serie',
+    chart_value_desc: 'Preis vs. Leistung (Oben Links = Bester Wert)',
+    chart_ratio_desc: 'Leistungspunkte pro Dollar (Höher ist besser)'
   },
   ja: {
     appTitle: 'MacRank',
@@ -366,7 +411,16 @@ export const translations = {
     chart_metal: 'GPU (Metal)',
     chart_value: 'コストパフォーマンス分布',
     chart_ratio: 'コスパ (点数/$)',
-    clickToDetail: 'クリックで詳細表示'
+    clickToDetail: 'クリックで詳細表示',
+    footer_disclaimer: 'MacRankはGeekbench 6データに基づく合成スコアを使用しています。価格は発売時の米ドルMSRPを反映しています。',
+    footer_copyright: 'Copyright © 2025 MacRank. Apple Inc.とは関係ありません。',
+    family_m4: 'M4 ファミリー',
+    family_m3: 'M3 ファミリー',
+    family_m2: 'M2 ファミリー',
+    family_m1: 'M1 ファミリー',
+    family_intel: 'Intel シリーズ',
+    chart_value_desc: '価格 vs パフォーマンス (左上 = 最高コスパ)',
+    chart_ratio_desc: '1ドルあたりのパフォーマンス (高いほど良い)'
   },
   pt: {
     appTitle: 'MacRank',
@@ -421,7 +475,16 @@ export const translations = {
     chart_metal: 'GPU Metal',
     chart_value: 'Dispersão de Valor',
     chart_ratio: 'Pontos por $',
-    clickToDetail: 'Clique para detalhes'
+    clickToDetail: 'Clique para detalhes',
+    footer_disclaimer: 'MacRank usa pontuações sintéticas baseadas em dados do Geekbench 6. Preços refletem o MSRP de lançamento em USD.',
+    footer_copyright: 'Copyright © 2025 MacRank. Não afiliado à Apple Inc.',
+    family_m4: 'Família M4',
+    family_m3: 'Família M3',
+    family_m2: 'Família M2',
+    family_m1: 'Família M1',
+    family_intel: 'Série Intel',
+    chart_value_desc: 'Preço vs. Desempenho (Canto Sup. Esq. = Melhor Valor)',
+    chart_ratio_desc: 'Pontos de Desempenho por Dólar (Mais alto é melhor)'
   },
   ru: {
     appTitle: 'MacRank',
@@ -476,7 +539,16 @@ export const translations = {
     chart_metal: 'Metal GPU',
     chart_value: 'Цена/Качество',
     chart_ratio: 'Очки за $',
-    clickToDetail: 'Клик для деталей'
+    clickToDetail: 'Клик для деталей',
+    footer_disclaimer: 'MacRank использует синтетические оценки на основе данных Geekbench 6. Цены отражают MSRP запуска в USD.',
+    footer_copyright: 'Copyright © 2025 MacRank. Не связано с Apple Inc.',
+    family_m4: 'Семейство M4',
+    family_m3: 'Семейство M3',
+    family_m2: 'Семейство M2',
+    family_m1: 'Семейство M1',
+    family_intel: 'Серия Intel',
+    chart_value_desc: 'Цена vs Производительность (Левый верх = Лучший выбор)',
+    chart_ratio_desc: 'Очки производительности на доллар (Выше - лучше)'
   },
   ko: {
     appTitle: 'MacRank',
@@ -531,7 +603,16 @@ export const translations = {
     chart_metal: 'GPU (Metal)',
     chart_value: '가성비 분포',
     chart_ratio: '가성비 (점수/$)',
-    clickToDetail: '상세보기 클릭'
+    clickToDetail: '상세보기 클릭',
+    footer_disclaimer: 'MacRank는 Geekbench 6 데이터를 기반으로 한 종합 점수를 사용합니다. 가격은 출시 당시 USD 권장소비자가격을 반영합니다.',
+    footer_copyright: 'Copyright © 2025 MacRank. Apple Inc.와 관련 없음.',
+    family_m4: 'M4 패밀리',
+    family_m3: 'M3 패밀리',
+    family_m2: 'M2 패밀리',
+    family_m1: 'M1 패밀리',
+    family_intel: 'Intel 시리즈',
+    chart_value_desc: '가격 대 성능 (좌측 상단 = 최고 가성비)',
+    chart_ratio_desc: '달러당 성능 점수 (높을수록 좋음)'
   },
   hi: {
     appTitle: 'MacRank',
@@ -586,6 +667,15 @@ export const translations = {
     chart_metal: 'GPU (Metal)',
     chart_value: 'मूल्य (Price/Perf)',
     chart_ratio: 'अंक प्रति $',
-    clickToDetail: 'विवरण के लिए क्लिक करें'
+    clickToDetail: 'विवरण के लिए क्लिक करें',
+    footer_disclaimer: 'MacRank Geekbench 6 डेटा पर आधारित सिंथेटिक स्कोर का उपयोग करता है। कीमतें USD में लॉन्च MSRP को दर्शाती हैं।',
+    footer_copyright: 'कॉपीराइट © 2025 MacRank। Apple Inc. से संबद्ध नहीं।',
+    family_m4: 'M4 परिवार',
+    family_m3: 'M3 परिवार',
+    family_m2: 'M2 परिवार',
+    family_m1: 'M1 परिवार',
+    family_intel: 'Intel सीरीज़',
+    chart_value_desc: 'मूल्य बनाम प्रदर्शन (ऊपर बाएं = सर्वोत्तम मूल्य)',
+    chart_ratio_desc: 'प्रदर्शन अंक प्रति डॉलर (उच्चतर बेहतर है)'
   }
 };

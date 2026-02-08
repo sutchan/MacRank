@@ -9,7 +9,7 @@ import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
 import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X } from 'lucide-react';
 
-const APP_VERSION = '0.1.6';
+const APP_VERSION = '0.1.7';
 
 // Create Language Context
 interface LanguageContextType {
@@ -238,11 +238,11 @@ const App: React.FC = () => {
                           aria-label="Filter by Chip Family"
                         >
                           <option value="All">{t('allChips')}</option>
-                          <option value={ChipFamily.M4}>M4 Family</option>
-                          <option value={ChipFamily.M3}>M3 Family</option>
-                          <option value={ChipFamily.M2}>M2 Family</option>
-                          <option value={ChipFamily.M1}>M1 Family</option>
-                          <option value={ChipFamily.Intel}>Intel Series</option>
+                          <option value={ChipFamily.M4}>{t('family_m4')}</option>
+                          <option value={ChipFamily.M3}>{t('family_m3')}</option>
+                          <option value={ChipFamily.M2}>{t('family_m2')}</option>
+                          <option value={ChipFamily.M1}>{t('family_m1')}</option>
+                          <option value={ChipFamily.Intel}>{t('family_intel')}</option>
                         </select>
                         <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={12} />
                     </div>
@@ -287,8 +287,8 @@ const App: React.FC = () => {
 
           {/* Footnote */}
           <footer className="text-xs text-gray-400 dark:text-gray-600 py-12 border-t border-gray-200 dark:border-gray-800 text-center">
-             <p>MacRank uses synthetic scores based on Geekbench 6 data. Prices reflect launch MSRP in USD.</p>
-             <p className="mt-2">Copyright © 2025 MacRank. Not affiliated with Apple Inc.</p>
+             <p>{t('footer_disclaimer')}</p>
+             <p className="mt-2">{t('footer_copyright')}</p>
              <p className="mt-2 font-mono text-[10px] opacity-40">v{APP_VERSION}</p>
           </footer>
 

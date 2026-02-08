@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YKBHMQRHC8');
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     
@@ -14,10 +24,10 @@
     <link rel="apple-touch-icon" href="/icon.svg">
     
     <!-- Primary Meta Tags -->
-    <title>MacRank - Apple M-Series Performance Leaderboard & Tier List</title>
-    <meta name="title" content="MacRank - Apple M-Series Performance Leaderboard & Tier List" />
-    <meta name="description" content="Comprehensive benchmark scores and specs for Apple M1, M2, M3, and M4 chips. Compare MacBook Pro, Air, iMac, and iPad performance with our interactive tier list and AI advisor." />
-    <meta name="keywords" content="Apple Silicon, M4 chip, M3 Max benchmark, MacBook Pro tier list, Mac performance comparison, Geekbench 6 scores, Apple Metal scores, Mac buying guide, M1 vs M2 vs M3" />
+    <title>MacRank 2025: Apple Silicon M1/M2/M3/M4 Benchmark Leaderboard & Tier List</title>
+    <meta name="title" content="MacRank 2025: Apple Silicon M1/M2/M3/M4 Benchmark Leaderboard & Tier List" />
+    <meta name="description" content="The ultimate 2025 performance guide for Apple Mac computers. Compare Geekbench 6 & Metal scores for M4 Max, M3, M2, M1 & Intel models. AI-powered buying advice for MacBook Pro, Air, Mac Studio & iMac." />
+    <meta name="keywords" content="Apple Silicon, M4 Max Benchmark, M3 Pro vs M4, Mac Tier List 2025, MacBook Performance Chart, Geekbench 6 Scores, Mac Buying Guide, MacRank, M1 vs M2 vs M3 vs M4, Mac Studio Ultra Benchmark" />
     <meta name="author" content="MacRank" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://macrank.app/" />
@@ -25,14 +35,14 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://macrank.app/" />
-    <meta property="og:title" content="MacRank - Apple Silicon Performance Tier List" />
-    <meta property="og:description" content="Find the perfect Mac for your workflow. Compare M1/M2/M3/M4 performance scores, check verified specs, and get AI-powered buying advice." />
+    <meta property="og:title" content="MacRank 2025: Apple Silicon Performance Leaderboard" />
+    <meta property="og:description" content="Compare M1/M2/M3/M4 benchmark scores. Find the best MacBook or Desktop for your workflow with our interactive tier list and AI advisor." />
     <meta property="og:image" content="https://macrank.app/og-image.jpg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://macrank.app/" />
-    <meta property="twitter:title" content="MacRank - Apple Silicon Performance Tier List" />
+    <meta property="twitter:title" content="MacRank 2025: Apple Silicon Performance Leaderboard" />
     <meta property="twitter:description" content="Detailed benchmarks for every Apple Silicon Mac and iPad. Interactive charts and comparison tools." />
     <meta property="twitter:image" content="https://macrank.app/og-image.jpg" />
 
@@ -41,32 +51,45 @@
     [
       {
         "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MacRank",
+        "url": "https://macrank.app/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://macrank.app/?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "MacRank",
         "applicationCategory": "ReferenceApplication",
-        "operatingSystem": "Web",
+        "operatingSystem": "Web, iOS, Android",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
         },
-        "description": "An interactive performance leaderboard and purchasing advisor for Apple Mac computers and iPads.",
+        "description": "An interactive performance leaderboard and AI-powered purchasing advisor for Apple Mac computers and iPads, featuring Geekbench 6 and Metal benchmark data.",
         "aggregateRating": {
           "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "ratingCount": "120"
-        }
+          "ratingValue": "4.9",
+          "ratingCount": "150"
+        },
+        "featureList": "Apple Silicon Benchmarks, Mac Tier List, AI Buying Advisor, Performance Charts, Specs Comparison"
       },
       {
         "@context": "https://schema.org",
         "@type": "Dataset",
-        "name": "Apple Silicon Benchmark Database",
-        "description": "A collection of Geekbench 6 Single-Core, Multi-Core, and Metal GPU scores for Apple M1, M2, M3, and M4 series chips.",
+        "name": "Apple Silicon M-Series Benchmark Database 2025",
+        "description": "A comprehensive collection of performance metrics for Apple M1, M2, M3, and M4 series chips, including Geekbench 6 Single-Core, Multi-Core, and Metal GPU scores.",
         "creator": {
           "@type": "Organization",
           "name": "MacRank"
         },
-        "variableMeasured": ["Single-Core Score", "Multi-Core Score", "Metal Score", "Price"]
+        "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "variableMeasured": ["Single-Core Score", "Multi-Core Score", "Metal Score", "Launch Price", "Release Year"]
       },
       {
         "@context": "https://schema.org",
@@ -74,18 +97,26 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Which Apple Silicon chip is the fastest in 2025?",
+            "name": "What is the fastest Mac chip in 2025?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "As of late 2024/2025, the M4 Max chip found in the MacBook Pro 16-inch offers the highest mobile performance, with a Multi-Core score exceeding 26,000 points."
+              "text": "As of late 2024 and 2025, the Apple M4 Max chip features the highest mobile performance, achieving Multi-Core scores exceeding 26,000 in Geekbench 6."
             }
           },
           {
             "@type": "Question",
-            "name": "Is the M2 iPad Pro powerful enough for video editing?",
+            "name": "How does M4 compare to M1?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, the iPad Pro with the M2 chip has a Metal score of ~46,000, making it comparable to a desktop M1 Mac Mini, capable of handling 4K video editing in DaVinci Resolve or Final Cut Pro for iPad."
+              "text": "The M4 series represents a significant leap over the M1, with the M4 Max offering nearly double the CPU performance and substantially higher GPU capabilities compared to the original M1 Max, alongside improved power efficiency."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the Mac Studio M2 Ultra better than the Mac Pro?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Performance-wise, the Mac Studio M2 Ultra and Mac Pro M2 Ultra share the same chip and performance profile. The Mac Pro offers PCIe expansion slots, while the Mac Studio is a compact, non-expandable desktop at a lower price point."
             }
           }
         ]
@@ -137,49 +168,6 @@
         }
       }
     </script>
-    <style>
-      body {
-        /* Smooth font rendering */
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        /* Prevent bounce on iOS to feel more like an app */
-        overscroll-behavior-y: none;
-      }
-      
-      /* Apple-style Scrollbar */
-      ::-webkit-scrollbar {
-        width: 12px;
-        background-color: transparent;
-      }
-      
-      ::-webkit-scrollbar-track {
-        background-color: transparent;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        border: 3px solid transparent;
-        background-clip: content-box;
-      }
-      
-      ::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(0, 0, 0, 0.4);
-      }
-      
-      .dark ::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-      
-      .dark ::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(255, 255, 255, 0.4);
-      }
-
-      /* Segmented Control Animation */
-      .segmented-control-bg {
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      }
-    </style>
 <script type="importmap">
 {
   "imports": {

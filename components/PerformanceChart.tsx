@@ -143,9 +143,9 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
              {metric === 'value' 
-                ? 'Price vs. Performance (Top Left = Best Value)' 
+                ? t('chart_value_desc')
                 : metric === 'value-ratio'
-                   ? 'Performance Points per Dollar (Higher is Better)'
+                   ? t('chart_ratio_desc')
                    : `${t('showing')} Top 15 • ${t('clickToDetail')}`}
              {metric === 'value' && <MousePointerClick size={10} />}
           </p>
