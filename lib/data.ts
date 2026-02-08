@@ -562,10 +562,10 @@ export const macData: MacModel[] = [
   },
 
   // ==========================================
-  // Intel Era (2015 - 2020) - Comprehensive
+  // Intel Era (2010 - 2020)
   // ==========================================
   
-  // 2020
+  // --- 2020 ---
   {
     id: 'intel-imac-27-2020-i9',
     name: 'iMac 27" (2020)',
@@ -647,7 +647,7 @@ export const macData: MacModel[] = [
     description: 'Finally fixed the keyboard (Scissor switch), but thermal throttling was severe.'
   },
 
-  // 2019
+  // --- 2019 ---
   {
     id: 'intel-macpro-2019',
     name: 'Mac Pro (2019)',
@@ -713,6 +713,22 @@ export const macData: MacModel[] = [
     description: 'The base model 16-inch.'
   },
   {
+    id: 'intel-mbp-13-2019',
+    name: 'MacBook Pro 13" (2019)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-8279U',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 48, // Iris Plus 655
+    memory: '8GB - 16GB',
+    releaseYear: 2019,
+    singleCoreScore: 1050,
+    multiCoreScore: 4100,
+    metalScore: 7000,
+    basePriceUSD: 1799,
+    description: 'Updated with Touch Bar for all models.'
+  },
+  {
     id: 'intel-imac-21-2019',
     name: 'iMac 21.5" 4K (2019)',
     type: DeviceType.Desktop,
@@ -745,7 +761,7 @@ export const macData: MacModel[] = [
     description: 'Butterfly keyboard era peak.'
   },
 
-  // 2018
+  // --- 2018 ---
   {
     id: 'intel-mini-2018',
     name: 'Mac Mini (2018)',
@@ -761,6 +777,38 @@ export const macData: MacModel[] = [
     metalScore: 4000,
     basePriceUSD: 1099,
     description: 'Space Gray finish. A very popular headless Mac for servers and farms.'
+  },
+  {
+    id: 'intel-mbp-15-2018',
+    name: 'MacBook Pro 15" (2018)',
+    type: DeviceType.Laptop,
+    chip: 'Core i9-8950HK',
+    family: ChipFamily.Intel,
+    cores_cpu: '6',
+    cores_gpu: 20, // Radeon Pro 560X
+    memory: '16GB - 32GB',
+    releaseYear: 2018,
+    singleCoreScore: 1250,
+    multiCoreScore: 5400,
+    metalScore: 24000,
+    basePriceUSD: 2799,
+    description: 'First i9 in a MacBook. Notorious for thermal throttling at launch.'
+  },
+  {
+    id: 'intel-mbp-13-2018',
+    name: 'MacBook Pro 13" (2018)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-8559U',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 48, // Iris Plus 655
+    memory: '8GB - 16GB',
+    releaseYear: 2018,
+    singleCoreScore: 1000,
+    multiCoreScore: 4000,
+    metalScore: 6500,
+    basePriceUSD: 1799,
+    description: 'First Quad-core 13-inch MacBook Pro.'
   },
   {
     id: 'intel-air-2018',
@@ -779,7 +827,7 @@ export const macData: MacModel[] = [
     description: 'The first Retina MacBook Air. Beautiful screen but weak performance.'
   },
 
-  // 2017
+  // --- 2017 ---
   {
     id: 'intel-imac-pro-2017',
     name: 'iMac Pro (2017)',
@@ -810,7 +858,23 @@ export const macData: MacModel[] = [
     multiCoreScore: 4500,
     metalScore: 14000,
     basePriceUSD: 2799,
-    description: 'Touch Bar era refinement.'
+    description: 'Touch Bar era refinement (Kaby Lake).'
+  },
+  {
+    id: 'intel-mbp-13-2017-ntb',
+    name: 'MacBook Pro 13" (2017)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-7360U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB - 16GB',
+    releaseYear: 2017,
+    singleCoreScore: 950,
+    multiCoreScore: 2100,
+    metalScore: 4500,
+    basePriceUSD: 1299,
+    description: 'Non-Touch Bar model. Popular for its physical function keys.'
   },
   {
     id: 'intel-imac-27-2017',
@@ -844,8 +908,24 @@ export const macData: MacModel[] = [
     basePriceUSD: 1299,
     description: 'Underpowered but impossibly light. The design precursor to the modern Air.'
   },
+  {
+    id: 'intel-air-2017',
+    name: 'MacBook Air 13" (2017)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-5350U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB',
+    releaseYear: 2017,
+    singleCoreScore: 780,
+    multiCoreScore: 1600,
+    metalScore: 1500,
+    basePriceUSD: 999,
+    description: 'The last gasp of the classic non-Retina Air design.'
+  },
 
-  // 2016
+  // --- 2016 ---
   {
     id: 'intel-mbp-15-2016',
     name: 'MacBook Pro 15" (2016)',
@@ -878,8 +958,24 @@ export const macData: MacModel[] = [
     basePriceUSD: 1499,
     description: 'The "Escape" key model (no Touch Bar).'
   },
+  {
+    id: 'intel-macbook-12-2016',
+    name: 'MacBook 12" (2016)',
+    type: DeviceType.Laptop,
+    chip: 'Core m5-6Y54',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB',
+    releaseYear: 2016,
+    singleCoreScore: 700,
+    multiCoreScore: 1400,
+    metalScore: 2500,
+    basePriceUSD: 1299,
+    description: 'Second generation of the 12-inch MacBook.'
+  },
 
-  // 2015
+  // --- 2015 ---
   {
     id: 'intel-imac-27-2015',
     name: 'iMac 27" 5K (2015)',
@@ -906,8 +1002,8 @@ export const macData: MacModel[] = [
     cores_gpu: 10, // R9 M370X
     memory: '16GB',
     releaseYear: 2015,
-    singleCoreScore: 950,
-    multiCoreScore: 3600,
+    singleCoreScore: 1050,
+    multiCoreScore: 3900,
     metalScore: 9000,
     basePriceUSD: 2499,
     description: 'The "Holy Grail" MacBook Pro. Last with MagSafe 2, HDMI, and USB-A until 2021.'
@@ -928,8 +1024,74 @@ export const macData: MacModel[] = [
     basePriceUSD: 1299,
     description: 'A very reliable workhorse that lasted many people 7+ years.'
   },
+  {
+    id: 'intel-macbook-12-2015',
+    name: 'MacBook 12" (2015)',
+    type: DeviceType.Laptop,
+    chip: 'Core M-5Y71',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB',
+    releaseYear: 2015,
+    singleCoreScore: 600,
+    multiCoreScore: 1200,
+    metalScore: 2000,
+    basePriceUSD: 1299,
+    description: 'The debut of the ultra-thin, fanless design and the controversial butterfly keyboard.'
+  },
 
-  // Older Classics (Brief)
+  // --- 2014 ---
+  {
+    id: 'intel-imac-5k-2014',
+    name: 'iMac 27" 5K (Late 2014)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-4790K',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 20, // R9 M295X
+    memory: '8GB - 32GB',
+    releaseYear: 2014,
+    singleCoreScore: 1200,
+    multiCoreScore: 4300,
+    metalScore: 12000,
+    basePriceUSD: 2499,
+    description: 'The world\'s first 5K desktop. A stunning display that set the standard.'
+  },
+  {
+    id: 'intel-mbp-15-2014',
+    name: 'MacBook Pro 15" (Mid 2014)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-4870HQ',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // GT 750M
+    memory: '16GB',
+    releaseYear: 2014,
+    singleCoreScore: 980,
+    multiCoreScore: 3700,
+    metalScore: 5000,
+    basePriceUSD: 2499,
+    description: 'Small speed bump over the 2013 model.'
+  },
+  {
+    id: 'intel-mini-2014',
+    name: 'Mac Mini (2014)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-4578U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB - 16GB',
+    releaseYear: 2014,
+    singleCoreScore: 850,
+    multiCoreScore: 1800,
+    metalScore: 1500,
+    basePriceUSD: 999,
+    description: 'Lost the quad-core option, disappointing many power users.'
+  },
+
+  // --- 2013 ---
   {
     id: 'intel-macpro-2013',
     name: 'Mac Pro (2013)',
@@ -944,7 +1106,73 @@ export const macData: MacModel[] = [
     multiCoreScore: 7000,
     metalScore: 30000,
     basePriceUSD: 2999,
-    description: 'The "Trash Can".'
+    description: 'The "Trash Can". Innovative design but thermally constrained.'
+  },
+  {
+    id: 'intel-mbp-15-2013',
+    name: 'MacBook Pro 15" (Late 2013)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-4850HQ',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // GT 750M
+    memory: '16GB',
+    releaseYear: 2013,
+    singleCoreScore: 900,
+    multiCoreScore: 3500,
+    metalScore: 4500,
+    basePriceUSD: 2599,
+    description: 'Excellent Haswell-era performance.'
+  },
+  {
+    id: 'intel-mbp-13-2013',
+    name: 'MacBook Pro 13" (Late 2013)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-4258U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB',
+    releaseYear: 2013,
+    singleCoreScore: 750,
+    multiCoreScore: 1500,
+    metalScore: 1200,
+    basePriceUSD: 1299,
+    description: 'Thinner and lighter than early Retina models.'
+  },
+  {
+    id: 'intel-air-2013',
+    name: 'MacBook Air 13" (2013)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-4650U',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '8GB',
+    releaseYear: 2013,
+    singleCoreScore: 700,
+    multiCoreScore: 1400,
+    metalScore: 1000,
+    basePriceUSD: 1299,
+    description: 'Legendary "12-hour battery life" model.'
+  },
+
+  // --- 2012 ---
+  {
+    id: 'intel-mbp-15-2012-retina',
+    name: 'MacBook Pro 15" (Mid 2012)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-3720QM',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 8, // GT 650M
+    memory: '8GB - 16GB',
+    releaseYear: 2012,
+    singleCoreScore: 800,
+    multiCoreScore: 3200,
+    metalScore: 2000,
+    basePriceUSD: 2199,
+    description: 'The first Retina MacBook Pro. A massive leap in display technology.'
   },
   {
     id: 'intel-mini-2012',
@@ -960,7 +1188,123 @@ export const macData: MacModel[] = [
     multiCoreScore: 3000,
     metalScore: 500,
     basePriceUSD: 799,
-    description: 'Last user-upgradable quad-core mini for many years.'
+    description: 'Last user-upgradable quad-core mini for many years. Cult classic.'
+  },
+  {
+    id: 'intel-imac-27-2012',
+    name: 'iMac 27" (Late 2012)',
+    type: DeviceType.Desktop,
+    chip: 'Core i7-3770',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 10, // GTX 680MX
+    memory: '8GB - 32GB',
+    releaseYear: 2012,
+    singleCoreScore: 900,
+    multiCoreScore: 3100,
+    metalScore: 3000,
+    basePriceUSD: 2199,
+    description: 'Introduced the ultra-slim tapered edge design.'
+  },
+  {
+    id: 'intel-mbp-13-2012-unibody',
+    name: 'MacBook Pro 13" (Mid 2012)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-3210M',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '4GB - 8GB',
+    releaseYear: 2012,
+    singleCoreScore: 600,
+    multiCoreScore: 1300,
+    metalScore: 400,
+    basePriceUSD: 1199,
+    description: 'The last "Unibody" Pro with optical drive. Upgradeable RAM/SSD made it live forever.'
+  },
+
+  // --- 2011 ---
+  {
+    id: 'intel-mbp-15-2011',
+    name: 'MacBook Pro 15" (Late 2011)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-2760QM',
+    family: ChipFamily.Intel,
+    cores_cpu: '4',
+    cores_gpu: 5, // HD 6770M
+    memory: '4GB - 16GB',
+    releaseYear: 2011,
+    singleCoreScore: 650,
+    multiCoreScore: 2600,
+    metalScore: 800,
+    basePriceUSD: 2199,
+    description: 'Sandy Bridge quad-core power.'
+  },
+  {
+    id: 'intel-air-2011',
+    name: 'MacBook Air 13" (Mid 2011)',
+    type: DeviceType.Laptop,
+    chip: 'Core i5-2557M',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0,
+    memory: '4GB',
+    releaseYear: 2011,
+    singleCoreScore: 500,
+    multiCoreScore: 1000,
+    metalScore: 250,
+    basePriceUSD: 1299,
+    description: 'The model that made the Air mainstream with Thunderbolt and backlit keyboard.'
+  },
+
+  // --- 2010 ---
+  {
+    id: 'intel-macpro-2010',
+    name: 'Mac Pro (Mid 2010)',
+    type: DeviceType.Desktop,
+    chip: '2x Xeon X5650',
+    family: ChipFamily.Intel,
+    cores_cpu: '12',
+    cores_gpu: 40, // Upgradable (e.g., RX 580)
+    memory: '6GB - 128GB',
+    releaseYear: 2010,
+    singleCoreScore: 600,
+    multiCoreScore: 4500,
+    metalScore: 35000, // With modern GPU upgrade
+    basePriceUSD: 4999,
+    description: 'The legendary "Cheese Grater" 5,1. Highly upgradable and still used by some today.'
+  },
+  {
+    id: 'intel-mbp-15-2010',
+    name: 'MacBook Pro 15" (Mid 2010)',
+    type: DeviceType.Laptop,
+    chip: 'Core i7-620M',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 2, // GT 330M
+    memory: '4GB - 8GB',
+    releaseYear: 2010,
+    singleCoreScore: 400,
+    multiCoreScore: 900,
+    metalScore: 150,
+    basePriceUSD: 2199,
+    description: 'First MacBook Pro with Core i5/i7 processors (Arrandale).'
+  },
+  {
+    id: 'intel-macbook-2010',
+    name: 'MacBook (Mid 2010)',
+    type: DeviceType.Laptop,
+    chip: 'Core 2 Duo P8600',
+    family: ChipFamily.Intel,
+    cores_cpu: '2',
+    cores_gpu: 0, // GeForce 320M
+    memory: '2GB - 16GB',
+    releaseYear: 2010,
+    singleCoreScore: 300,
+    multiCoreScore: 550,
+    metalScore: 50,
+    basePriceUSD: 999,
+    description: 'The classic white polycarbonate unibody model.'
   }
 ];
 
