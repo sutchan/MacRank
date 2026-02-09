@@ -109,7 +109,12 @@ export const translations = {
     core_gpu: 'Core GPU',
     genai_assistant: 'GenAI Assistant',
     ask_placeholder: 'Ask about Macs...',
-    perf_subtitle: 'Performance (Geekbench 6 & Metal)'
+    perf_subtitle: 'Performance (Geekbench 6 & Metal)',
+    type_laptop: 'Laptop',
+    type_desktop: 'Desktop',
+    type_tablet: 'Tablet',
+    close: 'Close',
+    pts_per_10: 'pts/$10',
   },
   zh: {
     appTitle: 'MacRank',
@@ -182,7 +187,12 @@ export const translations = {
     core_gpu: '核图形处理器',
     genai_assistant: 'GenAI 助手',
     ask_placeholder: '询问关于 Mac 的问题...',
-    perf_subtitle: '性能表现 (Geekbench 6 & Metal)'
+    perf_subtitle: '性能表现 (Geekbench 6 & Metal)',
+    type_laptop: '笔记本',
+    type_desktop: '台式机',
+    type_tablet: '平板',
+    close: '关闭',
+    pts_per_10: '分/$10',
   },
   es: {
     appTitle: 'MacRank',
@@ -255,7 +265,12 @@ export const translations = {
     core_gpu: 'Núcleos GPU',
     genai_assistant: 'Asistente GenAI',
     ask_placeholder: 'Pregunta sobre Macs...',
-    perf_subtitle: 'Rendimiento (Geekbench 6 & Metal)'
+    perf_subtitle: 'Rendimiento (Geekbench 6 & Metal)',
+    type_laptop: 'Portátil',
+    type_desktop: 'Sobremesa',
+    type_tablet: 'Tablet',
+    close: 'Cerrar',
+    pts_per_10: 'pts/$10',
   },
   fr: {
     appTitle: 'MacRank',
@@ -328,7 +343,12 @@ export const translations = {
     core_gpu: 'Cœurs GPU',
     genai_assistant: 'Assistant GenAI',
     ask_placeholder: 'Posez vos questions sur les Mac...',
-    perf_subtitle: 'Performance (Geekbench 6 & Metal)'
+    perf_subtitle: 'Performance (Geekbench 6 & Metal)',
+    type_laptop: 'Portable',
+    type_desktop: 'Bureau',
+    type_tablet: 'Tablette',
+    close: 'Fermer',
+    pts_per_10: 'pts/10$',
   },
   de: {
     appTitle: 'MacRank',
@@ -401,7 +421,12 @@ export const translations = {
     core_gpu: 'GPU-Kerne',
     genai_assistant: 'GenAI Assistent',
     ask_placeholder: 'Fragen zu Macs...',
-    perf_subtitle: 'Leistung (Geekbench 6 & Metal)'
+    perf_subtitle: 'Leistung (Geekbench 6 & Metal)',
+    type_laptop: 'Laptop',
+    type_desktop: 'Desktop',
+    type_tablet: 'Tablet',
+    close: 'Schließen',
+    pts_per_10: 'Pkt/10$',
   },
   ja: {
     appTitle: 'MacRank',
@@ -474,7 +499,12 @@ export const translations = {
     core_gpu: 'コアGPU',
     genai_assistant: 'GenAI アシスタント',
     ask_placeholder: 'Macについて質問...',
-    perf_subtitle: 'パフォーマンス (Geekbench 6 & Metal)'
+    perf_subtitle: 'パフォーマンス (Geekbench 6 & Metal)',
+    type_laptop: 'ノートPC',
+    type_desktop: 'デスクトップ',
+    type_tablet: 'タブレット',
+    close: '閉じる',
+    pts_per_10: '点/10ドル',
   },
   pt: {
     appTitle: 'MacRank',
@@ -547,7 +577,12 @@ export const translations = {
     core_gpu: 'Núcleos GPU',
     genai_assistant: 'Assistente GenAI',
     ask_placeholder: 'Pergunte sobre Macs...',
-    perf_subtitle: 'Desempenho (Geekbench 6 & Metal)'
+    perf_subtitle: 'Desempenho (Geekbench 6 & Metal)',
+    type_laptop: 'Laptop',
+    type_desktop: 'Desktop',
+    type_tablet: 'Tablet',
+    close: 'Fechar',
+    pts_per_10: 'pts/$10',
   },
   ru: {
     appTitle: 'MacRank',
@@ -620,7 +655,12 @@ export const translations = {
     core_gpu: 'Ядер GPU',
     genai_assistant: 'Ассистент GenAI',
     ask_placeholder: 'Спросите о Mac...',
-    perf_subtitle: 'Производительность (Geekbench 6 & Metal)'
+    perf_subtitle: 'Производительность (Geekbench 6 & Metal)',
+    type_laptop: 'Ноутбук',
+    type_desktop: 'Настольный',
+    type_tablet: 'Планшет',
+    close: 'Закрыть',
+    pts_per_10: 'очк/$10',
   },
   ko: {
     appTitle: 'MacRank',
@@ -693,7 +733,12 @@ export const translations = {
     core_gpu: '코어 GPU',
     genai_assistant: 'GenAI 어시스턴트',
     ask_placeholder: 'Mac에 대해 질문하세요...',
-    perf_subtitle: '성능 (Geekbench 6 & Metal)'
+    perf_subtitle: '성능 (Geekbench 6 & Metal)',
+    type_laptop: '노트북',
+    type_desktop: '데스크탑',
+    type_tablet: '태블릿',
+    close: '닫기',
+    pts_per_10: '점/$10',
   },
   hi: {
     appTitle: 'MacRank',
@@ -766,6 +811,11 @@ export const translations = {
     core_gpu: 'GPU कोर',
     genai_assistant: 'GenAI सहायक',
     ask_placeholder: 'Mac के बारे में पूछें...',
-    perf_subtitle: 'प्रदर्शन (Geekbench 6 & Metal)'
+    perf_subtitle: 'प्रदर्शन (Geekbench 6 & Metal)',
+    type_laptop: 'लैपटॉप',
+    type_desktop: 'डेस्कटॉप',
+    type_tablet: 'टैबलेट',
+    close: 'बंद करें',
+    pts_per_10: 'अंक/$10',
   }
 };

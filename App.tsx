@@ -9,7 +9,7 @@ import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
 import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X, Github } from 'lucide-react';
 
-const APP_VERSION = '0.1.10';
+const APP_VERSION = '0.1.12';
 
 // Create Language Context
 interface LanguageContextType {

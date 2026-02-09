@@ -94,7 +94,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
 
             <div className={`flex justify-between gap-4 ${metric === 'value-ratio' ? 'font-bold text-green-600 dark:text-green-400' : 'text-gray-500'}`}>
               <span>{t('chart_ratio')}:</span>
-              <span>{(d.valueRatio * 10).toFixed(2)} pts/$10</span>
+              <span>{(d.valueRatio * 10).toFixed(2)} {t('pts_per_10')}</span>
             </div>
 
             <div className="flex justify-between gap-4 text-gray-600 dark:text-gray-400">

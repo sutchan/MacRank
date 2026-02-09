@@ -93,6 +93,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</h2>
            <button 
               onClick={onClose}
+              aria-label={t('close')}
               className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
            >
               <X size={20} />

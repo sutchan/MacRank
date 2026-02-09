@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.12] - 2025-02-22
+
+### Added
+- **Detailed UI Translations**: Added multi-language support for the Close button (ARIA label) and Chart Tooltip units (pts/$10), improving accessibility and localization accuracy in Detail and Compare modals.
+
+## [0.1.11] - 2025-02-22
+
+### Added
+- **UI Translation**: Translated device type labels (Laptop, Desktop, Tablet) in the detail modal for all supported languages.
+
 ## [0.1.10] - 2025-02-22
 
 ### Maintenance

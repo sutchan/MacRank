@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2 } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
-import { MacModel } from '../lib/types';
+import { MacModel, DeviceType } from '../lib/types';
 import { LanguageContext } from '../App';
 import TierBadge from './TierBadge';
 import { formatCurrency } from '../lib/translations';
@@ -19,6 +19,15 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
   const score = calculateTierScore(mac);
   const tier = getTierLabel(score);
 
+  const getTypeLabel = (type: DeviceType) => {
+    switch (type) {
+      case DeviceType.Laptop: return t('type_laptop');
+      case DeviceType.Desktop: return t('type_desktop');
+      case DeviceType.Tablet: return t('type_tablet');
+      default: return type;
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
@@ -32,13 +41,14 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
              <div>
                  <div className="flex items-center gap-3 mb-2">
                     <TierBadge tier={tier} />
-                    <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{mac.type}</span>
+                    <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{getTypeLabel(mac.type)}</span>
                  </div>
                  <h2 className="text-4xl font-semibold text-gray-900 dark:text-white tracking-tight leading-tight">{mac.name}</h2>
                  <p className="text-xl text-gray-500 dark:text-gray-400 mt-2 font-light">{mac.chip} <span className="mx-2">•</span> {mac.releaseYear}</p>
              </div>
              <button 
                 onClick={onClose}
+                aria-label={t('close')}
                 className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
              >
                 <X size={20} />
