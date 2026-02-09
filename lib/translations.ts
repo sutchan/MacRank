@@ -100,7 +100,16 @@ export const translations = {
     family_m1: 'M1 Family',
     family_intel: 'Intel Series',
     chart_value_desc: 'Price vs. Performance (Top Left = Best Value)',
-    chart_ratio_desc: 'Performance Points per Dollar (Higher is Better)'
+    chart_ratio_desc: 'Performance Points per Dollar (Higher is Better)',
+    avgPrice: 'Avg Price',
+    avgScore: 'Avg Score',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'Cores',
+    core_gpu: 'Core GPU',
+    genai_assistant: 'GenAI Assistant',
+    ask_placeholder: 'Ask about Macs...',
+    perf_subtitle: 'Performance (Geekbench 6 & Metal)'
   },
   zh: {
     appTitle: 'MacRank',
@@ -164,7 +173,16 @@ export const translations = {
     family_m1: 'M1 系列',
     family_intel: 'Intel 系列',
     chart_value_desc: '价格 vs 性能 (左上角 = 性价比最高)',
-    chart_ratio_desc: '每美元性能得分 (越高越好)'
+    chart_ratio_desc: '每美元性能得分 (越高越好)',
+    avgPrice: '均价',
+    avgScore: '平均分',
+    label_single: '单核',
+    label_multi: '多核',
+    cores: '核心',
+    core_gpu: '核图形处理器',
+    genai_assistant: 'GenAI 助手',
+    ask_placeholder: '询问关于 Mac 的问题...',
+    perf_subtitle: '性能表现 (Geekbench 6 & Metal)'
   },
   es: {
     appTitle: 'MacRank',
@@ -228,7 +246,16 @@ export const translations = {
     family_m1: 'Familia M1',
     family_intel: 'Serie Intel',
     chart_value_desc: 'Precio vs. Rendimiento (Arriba Izq. = Mejor Valor)',
-    chart_ratio_desc: 'Puntos de Rendimiento por Dólar (Más alto es mejor)'
+    chart_ratio_desc: 'Puntos de Rendimiento por Dólar (Más alto es mejor)',
+    avgPrice: 'Precio Medio',
+    avgScore: 'Puntuación Media',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'Núcleos',
+    core_gpu: 'Núcleos GPU',
+    genai_assistant: 'Asistente GenAI',
+    ask_placeholder: 'Pregunta sobre Macs...',
+    perf_subtitle: 'Rendimiento (Geekbench 6 & Metal)'
   },
   fr: {
     appTitle: 'MacRank',
@@ -292,7 +319,16 @@ export const translations = {
     family_m1: 'Famille M1',
     family_intel: 'Série Intel',
     chart_value_desc: 'Prix vs Performance (Haut Gauche = Meilleure Valeur)',
-    chart_ratio_desc: 'Points de performance par dollar (Plus élevé est mieux)'
+    chart_ratio_desc: 'Points de performance par dollar (Plus élevé est mieux)',
+    avgPrice: 'Prix Moyen',
+    avgScore: 'Score Moyen',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'Cœurs',
+    core_gpu: 'Cœurs GPU',
+    genai_assistant: 'Assistant GenAI',
+    ask_placeholder: 'Posez vos questions sur les Mac...',
+    perf_subtitle: 'Performance (Geekbench 6 & Metal)'
   },
   de: {
     appTitle: 'MacRank',
@@ -356,7 +392,16 @@ export const translations = {
     family_m1: 'M1 Familie',
     family_intel: 'Intel Serie',
     chart_value_desc: 'Preis vs. Leistung (Oben Links = Bester Wert)',
-    chart_ratio_desc: 'Leistungspunkte pro Dollar (Höher ist besser)'
+    chart_ratio_desc: 'Leistungspunkte pro Dollar (Höher ist besser)',
+    avgPrice: 'Ø Preis',
+    avgScore: 'Ø Punktzahl',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'Kerne',
+    core_gpu: 'GPU-Kerne',
+    genai_assistant: 'GenAI Assistent',
+    ask_placeholder: 'Fragen zu Macs...',
+    perf_subtitle: 'Leistung (Geekbench 6 & Metal)'
   },
   ja: {
     appTitle: 'MacRank',
@@ -420,7 +465,16 @@ export const translations = {
     family_m1: 'M1 ファミリー',
     family_intel: 'Intel シリーズ',
     chart_value_desc: '価格 vs パフォーマンス (左上 = 最高コスパ)',
-    chart_ratio_desc: '1ドルあたりのパフォーマンス (高いほど良い)'
+    chart_ratio_desc: '1ドルあたりのパフォーマンス (高いほど良い)',
+    avgPrice: '平均価格',
+    avgScore: '平均スコア',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'コア',
+    core_gpu: 'コアGPU',
+    genai_assistant: 'GenAI アシスタント',
+    ask_placeholder: 'Macについて質問...',
+    perf_subtitle: 'パフォーマンス (Geekbench 6 & Metal)'
   },
   pt: {
     appTitle: 'MacRank',
@@ -484,7 +538,16 @@ export const translations = {
     family_m1: 'Família M1',
     family_intel: 'Série Intel',
     chart_value_desc: 'Preço vs. Desempenho (Canto Sup. Esq. = Melhor Valor)',
-    chart_ratio_desc: 'Pontos de Desempenho por Dólar (Mais alto é melhor)'
+    chart_ratio_desc: 'Pontos de Desempenho por Dólar (Mais alto é melhor)',
+    avgPrice: 'Preço Médio',
+    avgScore: 'Pontuação Média',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'Núcleos',
+    core_gpu: 'Núcleos GPU',
+    genai_assistant: 'Assistente GenAI',
+    ask_placeholder: 'Pergunte sobre Macs...',
+    perf_subtitle: 'Desempenho (Geekbench 6 & Metal)'
   },
   ru: {
     appTitle: 'MacRank',
@@ -548,7 +611,16 @@ export const translations = {
     family_m1: 'Семейство M1',
     family_intel: 'Серия Intel',
     chart_value_desc: 'Цена vs Производительность (Левый верх = Лучший выбор)',
-    chart_ratio_desc: 'Очки производительности на доллар (Выше - лучше)'
+    chart_ratio_desc: 'Очки производительности на доллар (Выше - лучше)',
+    avgPrice: 'Ср. цена',
+    avgScore: 'Ср. балл',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'Ядер',
+    core_gpu: 'Ядер GPU',
+    genai_assistant: 'Ассистент GenAI',
+    ask_placeholder: 'Спросите о Mac...',
+    perf_subtitle: 'Производительность (Geekbench 6 & Metal)'
   },
   ko: {
     appTitle: 'MacRank',
@@ -612,7 +684,16 @@ export const translations = {
     family_m1: 'M1 패밀리',
     family_intel: 'Intel 시리즈',
     chart_value_desc: '가격 대 성능 (좌측 상단 = 최고 가성비)',
-    chart_ratio_desc: '달러당 성능 점수 (높을수록 좋음)'
+    chart_ratio_desc: '달러당 성능 점수 (높을수록 좋음)',
+    avgPrice: '평균 가격',
+    avgScore: '평균 점수',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: '코어',
+    core_gpu: '코어 GPU',
+    genai_assistant: 'GenAI 어시스턴트',
+    ask_placeholder: 'Mac에 대해 질문하세요...',
+    perf_subtitle: '성능 (Geekbench 6 & Metal)'
   },
   hi: {
     appTitle: 'MacRank',
@@ -676,6 +757,15 @@ export const translations = {
     family_m1: 'M1 परिवार',
     family_intel: 'Intel सीरीज़',
     chart_value_desc: 'मूल्य बनाम प्रदर्शन (ऊपर बाएं = सर्वोत्तम मूल्य)',
-    chart_ratio_desc: 'प्रदर्शन अंक प्रति डॉलर (उच्चतर बेहतर है)'
+    chart_ratio_desc: 'प्रदर्शन अंक प्रति डॉलर (उच्चतर बेहतर है)',
+    avgPrice: 'औसत कीमत',
+    avgScore: 'औसत स्कोर',
+    label_single: 'Single',
+    label_multi: 'Multi',
+    cores: 'कोर',
+    core_gpu: 'GPU कोर',
+    genai_assistant: 'GenAI सहायक',
+    ask_placeholder: 'Mac के बारे में पूछें...',
+    perf_subtitle: 'प्रदर्शन (Geekbench 6 & Metal)'
   }
 };

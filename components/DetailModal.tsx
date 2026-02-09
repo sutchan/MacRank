@@ -64,13 +64,13 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
                             <Cpu className="text-gray-400 w-6 h-6 shrink-0" strokeWidth={1.5} />
                             <div>
                                 <p className="font-medium text-gray-900 dark:text-white">{mac.chip}</p>
-                                <p className="text-sm text-gray-500">{mac.cores_cpu} Cores</p>
+                                <p className="text-sm text-gray-500">{mac.cores_cpu} {t('cores')}</p>
                             </div>
                         </div>
                         <div className="flex gap-4">
                             <Layers className="text-gray-400 w-6 h-6 shrink-0" strokeWidth={1.5} />
                             <div>
-                                <p className="font-medium text-gray-900 dark:text-white">{mac.cores_gpu} Core GPU</p>
+                                <p className="font-medium text-gray-900 dark:text-white">{mac.cores_gpu} {t('core_gpu')}</p>
                                 <p className="text-sm text-gray-500">{t('graphics')}</p>
                             </div>
                         </div>

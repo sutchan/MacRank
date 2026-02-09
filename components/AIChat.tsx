@@ -65,7 +65,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         <div className="px-6 py-4 border-b border-gray-200/50 dark:border-gray-700/50 flex justify-between items-center">
           <div className="flex flex-col">
             <h3 className="font-semibold text-gray-900 dark:text-white text-base">{t('chatTitle')}</h3>
-            <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">GenAI Assistant</span>
+            <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">{t('genai_assistant')}</span>
           </div>
           <button 
             onClick={() => setIsOpen(false)}
@@ -112,7 +112,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about Macs..."
+              placeholder={t('ask_placeholder')}
               className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
             />
             <button 

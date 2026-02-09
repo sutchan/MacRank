@@ -104,8 +104,8 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
 
             {/* Detailed Stats (Smaller) */}
             <div className="pt-2 mt-2 border-t border-gray-100 dark:border-gray-700 text-[10px] text-gray-400 grid grid-cols-2 gap-x-2 gap-y-1">
-                 <div>Single: {d.singleCoreScore}</div>
-                 <div>Multi: {d.multiCoreScore}</div>
+                 <div>{t('label_single')}: {d.singleCoreScore}</div>
+                 <div>{t('label_multi')}: {d.multiCoreScore}</div>
                  <div className="col-span-2">Metal: {d.metalScore.toLocaleString()}</div>
             </div>
           </div>
@@ -172,7 +172,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
       <div className="h-[500px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           {metric === 'value' ? (
-             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e) => e && e.activePayload && onSelect(e.activePayload[0].payload)}>
+             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e && e.activePayload && onSelect(e.activePayload[0].payload)}>
                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
                <XAxis 
                  type="number" 
@@ -195,10 +195,10 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
                
                {/* Reference Lines for Quadrants */}
                <ReferenceLine x={stats.avgPrice} stroke="#9ca3af" strokeDasharray="3 3" strokeOpacity={0.5}>
-                  <Label value="Avg Price" position="insideTopRight" fontSize={10} fill="#9ca3af" />
+                  <Label value={t('avgPrice')} position="insideTopRight" fontSize={10} fill="#9ca3af" />
                </ReferenceLine>
                <ReferenceLine y={stats.avgScore} stroke="#9ca3af" strokeDasharray="3 3" strokeOpacity={0.5}>
-                  <Label value="Avg Score" position="insideTopRight" fontSize={10} fill="#9ca3af" />
+                  <Label value={t('avgScore')} position="insideTopRight" fontSize={10} fill="#9ca3af" />
                </ReferenceLine>
 
                <Scatter name="Macs" data={chartData} className="cursor-pointer">
@@ -218,7 +218,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
               data={chartData}
               layout="vertical"
               margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
-              onClick={(e) => e && e.activePayload && onSelect(e.activePayload[0].payload)}
+              onClick={(e: any) => e && e.activePayload && onSelect(e.activePayload[0].payload)}
             >
               <defs>
                 <linearGradient id="colorSingle" x1="0" y1="0" x2="1" y2="0">

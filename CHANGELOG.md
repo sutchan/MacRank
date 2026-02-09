@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2025-02-22
+
+### Maintenance
+- **System Stability**: Verified app functionality and updated version to 0.1.10 to ensure all features including the footer version display are correctly applied.
+
+## [0.1.9] - 2025-02-22
+
+### Added
+- **Complete Internationalization**: Added translations for all hardcoded strings in charts, modals, and AI assistant across 10 languages.
+
 ## [0.1.8] - 2025-02-22
 
 ### Fixed

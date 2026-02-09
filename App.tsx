@@ -9,7 +9,7 @@ import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
 import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X, Github } from 'lucide-react';
 
-const APP_VERSION = '0.1.8';
+const APP_VERSION = '0.1.10';
 
 // Create Language Context
 interface LanguageContextType {
@@ -264,7 +264,7 @@ const App: React.FC = () => {
           <section id="charts" className="py-8 border-b border-gray-200 dark:border-gray-800 scroll-mt-32">
              <div className="mb-8">
                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('charts')}</h3>
-               <p className="text-gray-500 dark:text-gray-400 text-sm">{t('performance')} (Geekbench 6 & Metal)</p>
+               <p className="text-gray-500 dark:text-gray-400 text-sm">{t('perf_subtitle')}</p>
              </div>
             <PerformanceChart data={filteredData} onSelect={setSelectedModel} />
           </section>
