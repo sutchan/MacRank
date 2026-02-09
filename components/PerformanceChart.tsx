@@ -132,7 +132,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
   };
 
   return (
-    <div className="w-full bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 transition-colors">
+    <div className="w-full bg-white dark:bg-gray-900 p-4 md:p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 transition-colors">
       
       {/* Header & Controls */}
       <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-6">
@@ -169,7 +169,8 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
         </div>
       </div>
 
-      <div className="h-[500px] w-full">
+      {/* Chart Container - Responsive Height */}
+      <div className="h-[350px] md:h-[500px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           {metric === 'value' ? (
              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e && e.activePayload && onSelect(e.activePayload[0].payload)}>

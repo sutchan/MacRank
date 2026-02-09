@@ -52,7 +52,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
         
         {/* Model 1 Bar */}
         <div className="flex items-center gap-3 mb-2">
-           <div className="w-24 text-right text-xs font-medium truncate text-gray-600 dark:text-gray-300">{m1.chip}</div>
+           <div className="w-16 md:w-24 text-right text-xs font-medium truncate text-gray-600 dark:text-gray-300 shrink-0">{m1.chip}</div>
            <div className="relative flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
              <div className={`h-full rounded-full transition-all duration-500 ${getBarColor(val1, val2)}`} style={{ width: `${p1}%` }}></div>
              {/* Marker on Winner Bar showing Loser's position */}
@@ -60,12 +60,12 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
                 <div className="absolute top-0 bottom-0 w-[2px] bg-white/40 dark:bg-black/30 z-10 shadow-[0_0_2px_rgba(0,0,0,0.2)]" style={{ left: `${p2}%` }}></div>
              )}
            </div>
-           <div className="w-20 text-right text-sm font-bold text-gray-900 dark:text-white tabular-nums">{val1.toLocaleString()}{suffix}</div>
+           <div className="w-16 md:w-20 text-right text-xs md:text-sm font-bold text-gray-900 dark:text-white tabular-nums shrink-0">{val1.toLocaleString()}{suffix}</div>
         </div>
 
         {/* Model 2 Bar */}
         <div className="flex items-center gap-3">
-           <div className="w-24 text-right text-xs font-medium truncate text-gray-600 dark:text-gray-300">{m2.chip}</div>
+           <div className="w-16 md:w-24 text-right text-xs font-medium truncate text-gray-600 dark:text-gray-300 shrink-0">{m2.chip}</div>
            <div className="relative flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
              <div className={`h-full rounded-full transition-all duration-500 ${getBarColor(val2, val1)}`} style={{ width: `${p2}%` }}></div>
              {/* Marker on Winner Bar showing Loser's position */}
@@ -73,7 +73,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
                 <div className="absolute top-0 bottom-0 w-[2px] bg-white/40 dark:bg-black/30 z-10 shadow-[0_0_2px_rgba(0,0,0,0.2)]" style={{ left: `${p1}%` }}></div>
              )}
            </div>
-           <div className="w-20 text-right text-sm font-bold text-gray-900 dark:text-white tabular-nums">{val2.toLocaleString()}{suffix}</div>
+           <div className="w-16 md:w-20 text-right text-xs md:text-sm font-bold text-gray-900 dark:text-white tabular-nums shrink-0">{val2.toLocaleString()}{suffix}</div>
         </div>
       </div>
     );
@@ -89,8 +89,8 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
       <div className="relative w-full max-w-4xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
         
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-[#151516]">
-           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</h2>
+        <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-[#151516]">
+           <h2 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</h2>
            <button 
               onClick={onClose}
               aria-label={t('close')}
@@ -100,46 +100,46 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
            </button>
         </div>
 
-        <div className="overflow-y-auto p-6 custom-scrollbar">
+        <div className="overflow-y-auto p-4 md:p-6 custom-scrollbar">
           
           {/* Models Header */}
-          <div className="grid grid-cols-2 gap-8 mb-10">
+          <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10">
              {[m1, m2].map((m, idx) => (
                 <div key={idx} className="flex flex-col items-center text-center">
                     <TierBadge tier={getTierLabel(calculateTierScore(m))} />
-                    <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-white leading-tight px-4">{m.name}</h3>
-                    <p className="text-sm text-gray-500 mt-1">{m.chip} ({m.releaseYear})</p>
-                    <div className="mt-4 text-2xl font-semibold text-gray-900 dark:text-white">{formatCurrency(m.basePriceUSD, language)}</div>
+                    <h3 className="mt-3 md:mt-4 text-base md:text-xl font-bold text-gray-900 dark:text-white leading-tight px-1 md:px-4 line-clamp-2 md:line-clamp-none h-10 md:h-auto">{m.name}</h3>
+                    <p className="text-xs md:text-sm text-gray-500 mt-1">{m.chip} ({m.releaseYear})</p>
+                    <div className="mt-2 md:mt-4 text-lg md:text-2xl font-semibold text-gray-900 dark:text-white">{formatCurrency(m.basePriceUSD, language)}</div>
                 </div>
              ))}
              
              {/* VS Circle */}
-             <div className="absolute left-1/2 top-[130px] -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center font-bold text-gray-500 dark:text-gray-400 border-4 border-white dark:border-[#1c1c1e]">
+             <div className="absolute left-1/2 top-[120px] md:top-[130px] -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-xs md:text-base font-bold text-gray-500 dark:text-gray-400 border-4 border-white dark:border-[#1c1c1e]">
                {t('vs')}
              </div>
           </div>
 
           {/* Specs Grid */}
-          <div className="grid grid-cols-2 gap-8 mb-10 text-center border-t border-b border-gray-200 dark:border-gray-800 py-6">
+          <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10 text-center border-t border-b border-gray-200 dark:border-gray-800 py-6">
              <div>
-                <p className="text-sm text-gray-500 mb-1">{t('cpuCores')}</p>
-                <p className="font-medium text-gray-900 dark:text-white">{m1.cores_cpu}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('cpuCores')}</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m1.cores_cpu}</p>
                 <div className="h-4"></div>
-                <p className="text-sm text-gray-500 mb-1">{t('gpuCores')}</p>
-                <p className="font-medium text-gray-900 dark:text-white">{m1.cores_gpu}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('gpuCores')}</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m1.cores_gpu}</p>
                  <div className="h-4"></div>
-                <p className="text-sm text-gray-500 mb-1">{t('memory')}</p>
-                <p className="font-medium text-gray-900 dark:text-white">{m1.memory}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('memory')}</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m1.memory}</p>
              </div>
              <div>
-                <p className="text-sm text-gray-500 mb-1">{t('cpuCores')}</p>
-                <p className="font-medium text-gray-900 dark:text-white">{m2.cores_cpu}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('cpuCores')}</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m2.cores_cpu}</p>
                  <div className="h-4"></div>
-                <p className="text-sm text-gray-500 mb-1">{t('gpuCores')}</p>
-                <p className="font-medium text-gray-900 dark:text-white">{m2.cores_gpu}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('gpuCores')}</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m2.cores_gpu}</p>
                  <div className="h-4"></div>
-                <p className="text-sm text-gray-500 mb-1">{t('memory')}</p>
-                <p className="font-medium text-gray-900 dark:text-white">{m2.memory}</p>
+                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('memory')}</p>
+                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m2.memory}</p>
              </div>
           </div>
 

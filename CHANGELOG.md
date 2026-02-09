@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.13] - 2025-02-22
+
+### Optimized
+- **Mobile Responsiveness**:
+    - Reduced padding and font sizes in `DetailModal` and `CompareModal` for better viewing on small screens.
+    - Adjusted `PerformanceChart` height to `350px` on mobile (vs `500px` desktop) to prevent excessive vertical scrolling.
+    - Improved `AIChat` window layout on mobile devices to act as a full-width bottom sheet.
+- **Visual Polish**: Added `.no-scrollbar` utility to hide scrollbars in horizontal scrolling containers (filters, chart tabs) for a cleaner aesthetic.
+
 ## [0.1.12] - 2025-02-22
 
 ### Added

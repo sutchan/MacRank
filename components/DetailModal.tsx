@@ -37,14 +37,14 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
       
       <div className="relative w-full max-w-3xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="p-8 pb-0 flex justify-between items-start">
+        <div className="p-5 md:p-8 pb-0 flex justify-between items-start">
              <div>
                  <div className="flex items-center gap-3 mb-2">
                     <TierBadge tier={tier} />
                     <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{getTypeLabel(mac.type)}</span>
                  </div>
-                 <h2 className="text-4xl font-semibold text-gray-900 dark:text-white tracking-tight leading-tight">{mac.name}</h2>
-                 <p className="text-xl text-gray-500 dark:text-gray-400 mt-2 font-light">{mac.chip} <span className="mx-2">•</span> {mac.releaseYear}</p>
+                 <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 dark:text-white tracking-tight leading-tight">{mac.name}</h2>
+                 <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-2 font-light">{mac.chip} <span className="mx-2">•</span> {mac.releaseYear}</p>
              </div>
              <button 
                 onClick={onClose}
@@ -56,10 +56,10 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
         </div>
 
         {/* Scrollable Content */}
-        <div className="p-8 overflow-y-auto custom-scrollbar space-y-10">
+        <div className="p-5 md:p-8 overflow-y-auto custom-scrollbar space-y-8 md:space-y-10">
             
             {/* Description */}
-            <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 font-light">
+            <p className="text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300 font-light">
                 {mac.description}
             </p>
 
