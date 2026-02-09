@@ -7,7 +7,7 @@ import DetailModal from './components/DetailModal';
 import CompareModal from './components/CompareModal';
 import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
-import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X } from 'lucide-react';
+import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X, Github } from 'lucide-react';
 
 const APP_VERSION = '0.1.7';
 
@@ -263,7 +263,7 @@ const App: React.FC = () => {
           {/* Charts Section - Clean & Minimal */}
           <section id="charts" className="py-8 border-b border-gray-200 dark:border-gray-800 scroll-mt-32">
              <div className="mb-8">
-               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('topIndex')}</h3>
+               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('charts')}</h3>
                <p className="text-gray-500 dark:text-gray-400 text-sm">{t('performance')} (Geekbench 6 & Metal)</p>
              </div>
             <PerformanceChart data={filteredData} onSelect={setSelectedModel} />
@@ -289,7 +289,19 @@ const App: React.FC = () => {
           <footer className="text-xs text-gray-400 dark:text-gray-600 py-12 border-t border-gray-200 dark:border-gray-800 text-center">
              <p>{t('footer_disclaimer')}</p>
              <p className="mt-2">{t('footer_copyright')}</p>
-             <p className="mt-2 font-mono text-[10px] opacity-40">v{APP_VERSION}</p>
+             <div className="mt-6 flex flex-col items-center gap-3">
+               <a 
+                 href="https://github.com/sutchan/MacRank" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-gray-300 transition-colors duration-200 group"
+                 aria-label="View on GitHub"
+               >
+                 <Github size={16} className="text-gray-500 group-hover:text-black dark:group-hover:text-white transition-colors" />
+                 <span className="font-medium">GitHub</span>
+               </a>
+               <span className="font-mono text-[10px] opacity-40">v{APP_VERSION}</span>
+             </div>
           </footer>
 
         </main>

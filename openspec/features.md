@@ -92,3 +92,13 @@
 *   **核心规格**: CPU/GPU/内存的三列布局。
 *   **性能仪表盘**: 三个进度条分别展示 Single/Multi/Metal 分数在满分(预设最大值)中的占比。
 *   **底部**: 发售价展示及“规格已验证”标识。
+
+## 7. 系统特性 (System Features)
+
+### 7.1 PWA (Progressive Web App)
+*   **安装**: 支持添加到主屏幕 (Mobile) 或安装为桌面应用 (Desktop)。
+*   **离线访问**: 
+    *   核心应用 Shell (HTML/CSS/JS) 自动缓存。
+    *   CDN 依赖 (React, Recharts) 缓存策略为 CacheFirst。
+    *   断网状态下仍可浏览已加载的排行榜数据。
+*   **Web App Manifest**: 配置了名称、图标、主题色，支持 Standalone 显示模式。

@@ -10,32 +10,25 @@ export const calculateTierScore = (mac: MacModel) => {
   
   // Weights (Sums to 100)
   const total = (sc * 35) + (mc * 45) + (mt * 20); 
-  return Math.round(total * 100); // Scale to nicer numbers (e.g., 9000 -> 90) or keep logic consistent with previous version
+  // Scale by 100 to get a "Geekbench-like" 4-5 digit score (e.g., 90.5 -> 9050)
+  return Math.round(total * 100); 
 };
-
-// Fix logic: The previous calculateTierScore returned raw roughly 0-100 range but multiplied by 100 at the end in some versions or removed decimals.
-// Let's standardize to the logic used in v0.1.6 which seemed to output 0-100 range integers.
-// Original v0.1.6 logic: return Math.round(total); 
-// Wait, looking at previous data.ts content provided in context:
-// const total = (sc * 35) + (mc * 45) + (mt * 20); 
-// return Math.round(total); 
-// Let's stick strictly to the extracted logic.
 
 export const calculateTierScoreV2 = (mac: MacModel) => {
     const sc = mac.singleCoreScore / 4000;
     const mc = mac.multiCoreScore / 25000;
     const mt = mac.metalScore / 200000;
     const total = (sc * 35) + (mc * 45) + (mt * 20); 
-    return Math.round(total);
+    return Math.round(total * 100);
 };
 
 export const getTierLabel = (score: number) => {
-  if (score >= 90) return 'S+';
-  if (score >= 80) return 'S';
-  if (score >= 70) return 'A+';
-  if (score >= 60) return 'A';
-  if (score >= 45) return 'B';
-  if (score >= 30) return 'C';
+  if (score >= 9000) return 'S+';
+  if (score >= 8000) return 'S';
+  if (score >= 7000) return 'A+';
+  if (score >= 6000) return 'A';
+  if (score >= 4500) return 'B';
+  if (score >= 3000) return 'C';
   return 'D';
 };
 

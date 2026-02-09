@@ -3,10 +3,12 @@
 ## 1. 项目概述
 MacRank 是一个针对苹果 Mac 电脑（涵盖 M1-M4 系列及 2010-2020 Intel 经典机型）和 iPad Pro/Air 系列的性能排行榜与智能导购助手。它结合了详尽的硬件基准测试数据与 AI 辅助决策系统，帮助用户在复杂的机型中找到最适合自己工作流的设备。
 
+**当前版本**: v0.1.7
+
 ## 2. 技术架构概览
 - **核心框架**: React 19 (Hooks 模式)
 - **构建系统**: Vite + ESM (通过 esm.sh 加载依赖)
-- **样式系统**: Tailwind CSS (支持 Dark Mode, Glassmorphism)
+- **样式系统**: Tailwind CSS + 自定义 CSS (`app/style.css`)
 - **数据可视化**: Recharts (响应式 SVG 图表)
 - **AI 集成**: Google GenAI SDK (Gemini 3 Flash)
 - **PWA 支持**: Vite PWA Plugin (离线缓存, 安装到主屏幕)
@@ -16,7 +18,7 @@ MacRank 是一个针对苹果 Mac 电脑（涵盖 M1-M4 系列及 2010-2020 Inte
 为了保证可维护性和扩展性，数据层采用了**分离式架构**：
 - **数据源分离**: 
   - `lib/data-silicon.ts`: 存放 Apple Silicon (M系列) 机型。
-  - `lib/data-intel.ts`: 存放 Legacy Intel 机型。
+  - `lib/data-intel.ts`: 存放 Legacy Intel 机型 (2010-2020)。
   - `lib/data.ts`: 作为统一聚合出口。
 - **逻辑分离**: 评分算法与辅助函数独立于 `lib/scoring.ts`。
 - **类型定义**: 统一在 `lib/types.ts`。
@@ -51,10 +53,11 @@ MacRank 是一个针对苹果 Mac 电脑（涵盖 M1-M4 系列及 2010-2020 Inte
 - **视图**: `AIChat` 悬浮组件。
 - **能力**: 基于当前数据库 answering technical questions。
 - **上下文**: 动态注入 Top 40 最相关机型的规格数据到 System Prompt。
-- **特性**: 支持 Markdown 渲染，打字机效果。
+- **特性**: 支持 Markdown 渲染，打字机效果，多语言回复。
 
 ## 5. UI/UX 设计规范
 - **视觉风格**: Apple Human Interface Guidelines (仿 macOS 风格)。
+- **样式文件**: 核心 Tailwind 类与 `app/style.css` (滚动条、字体平滑) 结合。
 - **动效**: 使用 Tailwind `animate-in`, `fade-in`, `zoom-in` 实现平滑过渡。
 - **响应式**:
   - **Mobile**: 隐藏非核心列 (CPU/GPU/Price)，保留核心评分，支持横向滚动。
@@ -65,3 +68,12 @@ MacRank 是一个针对苹果 Mac 电脑（涵盖 M1-M4 系列及 2010-2020 Inte
 - **组件原子化**: 所有 UI 组件存放在 `components/` 目录。
 - **服务隔离**: AI 调用逻辑封装在 `services/geminiService.ts`。
 - **无构建依赖**: 依赖项通过 Import Map 指向 CDN，减少 node_modules 体积，便于快速部署和预览。
+
+## 7. 规范文档索引
+本项目包含以下详细规范文档：
+- [功能详细说明书 (Features)](./features.md)
+- [技术栈与架构 (Tech Stack)](./tech_stack.md)
+- [数据字典 (Data Dictionary)](./data_dictionary.md)
+- [UI 设计规范 (UI Design)](./ui_design.md)
+- [项目目录结构 (Directory Structure)](./directory_structure.md)
+- [项目路线图 (Roadmap)](./roadmap.md)

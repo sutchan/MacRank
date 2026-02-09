@@ -40,10 +40,10 @@
 算法位于 `lib/scoring.ts`。
 
 ### 综合评分 (Composite Score)
-为了将不同维度的性能压缩为一个可排名的数值，采用加权归一化算法：
+为了将不同维度的性能压缩为一个可排名的数值，采用加权归一化算法，并乘以 100 以获得 4-5 位数的直观分数：
 
 $$
-Score = ( \frac{SingleCore}{4000} \times 35 ) + ( \frac{MultiCore}{25000} \times 45 ) + ( \frac{Metal}{200000} \times 20 )
+Score = \left[ ( \frac{SingleCore}{4000} \times 35 ) + ( \frac{MultiCore}{25000} \times 45 ) + ( \frac{Metal}{200000} \times 20 ) \right] \times 100
 $$
 
 *注：分母 (4000, 25000, 200000) 为当前世代的大致最大值，用于归一化。*
@@ -52,10 +52,10 @@ $$
 
 | 段位 | 综合分阈值 | 颜色标识 (Tailwind) | 描述 |
 | :--- | :--- | :--- | :--- |
-| **S+** | ≥ 90 | Purple-600 (Gradient) | 幻神级 (God Tier) |
-| **S** | ≥ 80 | Purple-500 | 顶级 (Top Tier) |
-| **A+** | ≥ 70 | Blue-600 | 次顶级 (High-End) |
-| **A** | ≥ 60 | Blue-500 | 优秀 (Excellent) |
-| **B** | ≥ 45 | Green-500 | 良好 (Good) |
-| **C** | ≥ 30 | Yellow-500 | 入门 (Entry) |
-| **D** | < 30 | Gray-500 | 淘汰/过时 (Legacy) |
+| **S+** | ≥ 9000 | Purple-600 (Gradient) | 幻神级 (God Tier) |
+| **S** | ≥ 8000 | Purple-500 | 顶级 (Top Tier) |
+| **A+** | ≥ 7000 | Blue-600 | 次顶级 (High-End) |
+| **A** | ≥ 6000 | Blue-500 | 优秀 (Excellent) |
+| **B** | ≥ 4500 | Green-500 | 良好 (Good) |
+| **C** | ≥ 3000 | Yellow-500 | 入门 (Entry) |
+| **D** | < 3000 | Gray-500 | 淘汰/过时 (Legacy) |
