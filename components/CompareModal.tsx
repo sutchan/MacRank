@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { X, Trophy, Minus, Share2, Check } from 'lucide-react';
+import { X, Share2, Check } from 'lucide-react';
 import { MacModel } from '../lib/types';
 import { calculateTierScore, getTierLabel } from '../lib/data';
-import { LanguageContext } from '../App';
+import { LanguageContext, formatCurrency } from '../lib/translations';
 import TierBadge from './TierBadge';
-import { formatCurrency } from '../lib/translations';
 
 interface CompareModalProps {
   models: MacModel[];
@@ -28,7 +27,6 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
   };
 
   const handleShare = () => {
-    // URL includes current filter/compare state handled by App.tsx, so just copy href
     navigator.clipboard.writeText(window.location.href);
     setShowCopied(true);
     setTimeout(() => setShowCopied(false), 2000);
@@ -122,67 +120,44 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
           
           {/* Models Header */}
           <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10">
-             {[m1, m2].map((m, idx) => (
-                <div key={idx} className="flex flex-col items-center text-center">
-                    <TierBadge tier={getTierLabel(calculateTierScore(m))} />
-                    <h3 className="mt-3 md:mt-4 text-base md:text-xl font-bold text-gray-900 dark:text-white leading-tight px-1 md:px-4 line-clamp-2 md:line-clamp-none h-10 md:h-auto">{m.name}</h3>
-                    <p className="text-xs md:text-sm text-gray-500 mt-1">{m.chip} ({m.releaseYear})</p>
-                    <div className="mt-2 md:mt-4 text-lg md:text-2xl font-semibold text-gray-900 dark:text-white">{formatCurrency(m.basePriceUSD, language)}</div>
-                </div>
-             ))}
-             
-             {/* VS Circle */}
-             <div className="absolute left-1/2 top-[120px] md:top-[130px] -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-xs md:text-base font-bold text-gray-500 dark:text-gray-400 border-4 border-white dark:border-[#1c1c1e]">
-               {t('vs')}
-             </div>
+             {[m1, m2].map((model, i) => {
+               const score = i === 0 ? score1 : score2;
+               return (
+                  <div key={model.id} className="flex flex-col items-center text-center">
+                    <div className="mb-3">
+                       <TierBadge tier={getTierLabel(score)} />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight mb-1">{model.name}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{model.chip}</p>
+                    <p className="text-sm font-medium text-blue-600 dark:text-blue-400">{formatCurrency(model.basePriceUSD, language)}</p>
+                  </div>
+               );
+             })}
           </div>
 
-          {/* Specs Grid */}
-          <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-10 text-center border-t border-b border-gray-200 dark:border-gray-800 py-6">
-             <div>
-                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('cpuCores')}</p>
-                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m1.cores_cpu}</p>
-                <div className="h-4"></div>
-                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('gpuCores')}</p>
-                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m1.cores_gpu}</p>
-                 <div className="h-4"></div>
-                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('memory')}</p>
-                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m1.memory}</p>
-             </div>
-             <div>
-                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('cpuCores')}</p>
-                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m2.cores_cpu}</p>
-                 <div className="h-4"></div>
-                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('gpuCores')}</p>
-                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m2.cores_gpu}</p>
-                 <div className="h-4"></div>
-                <p className="text-xs md:text-sm text-gray-500 mb-1">{t('memory')}</p>
-                <p className="text-sm md:text-base font-medium text-gray-900 dark:text-white">{m2.memory}</p>
-             </div>
-          </div>
+          <ComparisonRow label={t('composite')} val1={score1} val2={score2} />
+          <ComparisonRow label={t('singleCore')} val1={m1.singleCoreScore} val2={m2.singleCoreScore} />
+          <ComparisonRow label={t('multiCore')} val1={m1.multiCoreScore} val2={m2.multiCoreScore} />
+          <ComparisonRow label={t('metal')} val1={m1.metalScore} val2={m2.metalScore} />
 
-          {/* Performance Charts */}
-          <div className="max-w-3xl mx-auto">
-              <ComparisonRow 
-                 label={t('composite')} 
-                 val1={score1} 
-                 val2={score2} 
-              />
-              <ComparisonRow 
-                 label={t('singleCore')} 
-                 val1={m1.singleCoreScore} 
-                 val2={m2.singleCoreScore} 
-              />
-              <ComparisonRow 
-                 label={t('multiCore')} 
-                 val1={m1.multiCoreScore} 
-                 val2={m2.multiCoreScore} 
-              />
-              <ComparisonRow 
-                 label={t('metal')} 
-                 val1={m1.metalScore} 
-                 val2={m2.metalScore} 
-              />
+          <div className="grid grid-cols-2 gap-4 md:gap-8 mt-8 border-t border-gray-100 dark:border-gray-800 pt-6">
+              <div className="text-center">
+                 <p className="text-xs text-gray-500 uppercase mb-1">{t('memory')}</p>
+                 <p className="text-sm font-medium text-gray-900 dark:text-white">{m1.memory}</p>
+              </div>
+              <div className="text-center">
+                 <p className="text-xs text-gray-500 uppercase mb-1">{t('memory')}</p>
+                 <p className="text-sm font-medium text-gray-900 dark:text-white">{m2.memory}</p>
+              </div>
+
+              <div className="text-center">
+                 <p className="text-xs text-gray-500 uppercase mb-1">{t('gpuCores')}</p>
+                 <p className="text-sm font-medium text-gray-900 dark:text-white">{m1.cores_gpu}</p>
+              </div>
+              <div className="text-center">
+                 <p className="text-xs text-gray-500 uppercase mb-1">{t('gpuCores')}</p>
+                 <p className="text-sm font-medium text-gray-900 dark:text-white">{m2.cores_gpu}</p>
+              </div>
           </div>
 
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { MessageSquare, ArrowUp, X, Bot, Sparkles } from 'lucide-react';
 import { ChatMessage, MacModel } from '../lib/types';
 import { getMacAdvice } from '../services/geminiService';
-import { LanguageContext } from '../App';
+import { LanguageContext } from '../lib/translations';
 
 interface AIChatProps {
   macData: MacModel[];

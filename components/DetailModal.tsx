@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2 } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel, DeviceType } from '../lib/types';
-import { LanguageContext } from '../App';
+import { LanguageContext } from '../lib/translations';
 import TierBadge from './TierBadge';
 import { formatCurrency } from '../lib/translations';
 

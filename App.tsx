@@ -1,28 +1,16 @@
-import React, { useState, useMemo, useEffect, createContext, useContext, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { macData, calculateTierScore } from './lib/data';
 import { ChipFamily, DeviceType, MacModel } from './lib/types';
 import MacTable from './components/MacTable';
 import PerformanceChart from './components/PerformanceChart';
 import DetailModal from './components/DetailModal';
 import CompareModal from './components/CompareModal';
+import SettingsModal from './components/SettingsModal';
 import AIChat from './components/AIChat';
-import { translations, languages, Language } from './lib/translations';
-import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X, Github, Share2, ArrowUp, Check } from 'lucide-react';
+import { translations, languages, Language, LanguageContext } from './lib/translations';
+import { Search, ChevronDown, Scale, X, Github, Share2, ArrowUp, Check, Settings, Globe, Moon, Sun } from 'lucide-react';
 
 const APP_VERSION = '0.1.13';
-
-// Create Language Context
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (key: keyof typeof translations['en']) => string;
-}
-
-export const LanguageContext = createContext<LanguageContextType>({
-  language: 'en',
-  setLanguage: () => {},
-  t: (key) => translations['en'][key] || key,
-});
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---
@@ -68,6 +56,7 @@ const App: React.FC = () => {
   });
   
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialState.search);
   const [filterType, setFilterType] = useState<DeviceType | 'All'>(initialState.type);
   const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>(initialState.family);
@@ -241,24 +230,12 @@ const App: React.FC = () => {
               <button onClick={() => scrollToSection('charts')} className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block font-medium">{t('charts')}</button>
               
               <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-700 pl-4">
-                 {/* Language & Theme Controls - Minimalist */}
-                 <div className="relative group">
-                    <button className="hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Select Language">
-                      <Globe size={14} />
-                    </button>
-                    <div className="absolute right-0 top-full pt-4 hidden group-hover:block w-32">
-                      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 p-1 overflow-hidden">
-                        {languages.map((lang) => (
-                           <button key={lang.code} onClick={() => setLanguage(lang.code)} className="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-900 dark:text-white text-xs">
-                             {lang.flag} {lang.label}
-                           </button>
-                        ))}
-                      </div>
-                    </div>
-                 </div>
-                 
-                 <button onClick={toggleTheme} className="hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
-                   {theme === 'light' ? <Moon size={14} /> : <Sun size={14} />}
+                 <button 
+                   onClick={() => setIsSettingsOpen(true)}
+                   className="hover:text-gray-900 dark:hover:text-white transition-colors" 
+                   aria-label="Settings"
+                 >
+                   <Settings size={16} />
                  </button>
               </div>
             </nav>
@@ -464,6 +441,13 @@ const App: React.FC = () => {
         <DetailModal mac={selectedModel} onClose={() => setSelectedModel(null)} />
         {isCompareModalOpen && (
            <CompareModal models={compareList} onClose={() => setIsCompareModalOpen(false)} />
+        )}
+        {isSettingsOpen && (
+          <SettingsModal 
+            onClose={() => setIsSettingsOpen(false)} 
+            theme={theme} 
+            toggleTheme={toggleTheme} 
+          />
         )}
         <AIChat macData={filteredData} />
       </div>

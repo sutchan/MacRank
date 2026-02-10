@@ -1,8 +1,9 @@
+// Version: 0.1.13
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter, Label } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel } from '../lib/types';
-import { LanguageContext } from '../App';
+import { LanguageContext } from '../lib/translations';
 import { BarChart3, Cpu, DollarSign, TrendingUp, MousePointerClick } from 'lucide-react';
 import { formatCurrency } from '../lib/translations';
 

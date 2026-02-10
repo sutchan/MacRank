@@ -1,3 +1,5 @@
+import { createContext } from 'react';
+
 export type Language = 'en' | 'zh' | 'es' | 'fr' | 'de' | 'ja' | 'pt' | 'ru' | 'ko' | 'hi';
 
 export const languages: { code: Language; label: string; flag: string }[] = [
@@ -118,6 +120,11 @@ export const translations = {
     share: 'Share',
     link_copied: 'Link copied to clipboard!',
     back_to_top: 'Back to Top',
+    settings: 'Settings',
+    appearance: 'Appearance',
+    language: 'Language',
+    theme_light: 'Light',
+    theme_dark: 'Dark',
   },
   zh: {
     appTitle: 'MacRank',
@@ -199,6 +206,11 @@ export const translations = {
     share: '分享',
     link_copied: '链接已复制到剪贴板！',
     back_to_top: '回到顶部',
+    settings: '设置',
+    appearance: '外观',
+    language: '语言',
+    theme_light: '浅色',
+    theme_dark: '深色',
   },
   es: {
     appTitle: 'MacRank',
@@ -280,6 +292,11 @@ export const translations = {
     share: 'Compartir',
     link_copied: '¡Enlace copiado!',
     back_to_top: 'Volver arriba',
+    settings: 'Ajustes',
+    appearance: 'Apariencia',
+    language: 'Idioma',
+    theme_light: 'Claro',
+    theme_dark: 'Oscuro',
   },
   fr: {
     appTitle: 'MacRank',
@@ -361,6 +378,11 @@ export const translations = {
     share: 'Partager',
     link_copied: 'Lien copié !',
     back_to_top: 'Haut de page',
+    settings: 'Paramètres',
+    appearance: 'Apparence',
+    language: 'Langue',
+    theme_light: 'Clair',
+    theme_dark: 'Sombre',
   },
   de: {
     appTitle: 'MacRank',
@@ -442,6 +464,11 @@ export const translations = {
     share: 'Teilen',
     link_copied: 'Link kopiert!',
     back_to_top: 'Nach oben',
+    settings: 'Einstellungen',
+    appearance: 'Erscheinungsbild',
+    language: 'Sprache',
+    theme_light: 'Hell',
+    theme_dark: 'Dunkel',
   },
   ja: {
     appTitle: 'MacRank',
@@ -523,6 +550,11 @@ export const translations = {
     share: '共有',
     link_copied: 'リンクをコピーしました！',
     back_to_top: 'トップへ戻る',
+    settings: '設定',
+    appearance: '外観',
+    language: '言語',
+    theme_light: 'ライト',
+    theme_dark: 'ダーク',
   },
   pt: {
     appTitle: 'MacRank',
@@ -563,7 +595,7 @@ export const translations = {
     chatWelcome: 'Olá! Sou seu especialista em Mac. Pergunte qualquer coisa sobre desempenho ou dicas de compra!',
     topIndex: 'Índice de Desempenho Top 15',
     heroTitle: 'Ranking de Desempenho Apple Silicon',
-    heroSubtitle: 'Pontuações e especificações completas para a era da série M. Encontre o Mac perfeito para você.',
+    heroSubtitle: 'Pontuações e especificações completas para la era da série M. Encontre o Mac perfeito para você.',
     compare: 'Comparar',
     selectToCompare: 'Selecionar',
     compareModels: 'Comparar Modelos',
@@ -604,6 +636,11 @@ export const translations = {
     share: 'Compartilhar',
     link_copied: 'Link copiado!',
     back_to_top: 'Voltar ao topo',
+    settings: 'Configurações',
+    appearance: 'Aparência',
+    language: 'Idioma',
+    theme_light: 'Claro',
+    theme_dark: 'Escuro',
   },
   ru: {
     appTitle: 'MacRank',
@@ -685,6 +722,11 @@ export const translations = {
     share: 'Поделиться',
     link_copied: 'Ссылка скопирована!',
     back_to_top: 'Наверх',
+    settings: 'Настройки',
+    appearance: 'Внешний вид',
+    language: 'Язык',
+    theme_light: 'Светлая',
+    theme_dark: 'Темная',
   },
   ko: {
     appTitle: 'MacRank',
@@ -766,6 +808,11 @@ export const translations = {
     share: '공유',
     link_copied: '링크가 복사되었습니다!',
     back_to_top: '맨 위로',
+    settings: '설정',
+    appearance: '화면 테마',
+    language: '언어',
+    theme_light: '라이트',
+    theme_dark: '다크',
   },
   hi: {
     appTitle: 'MacRank',
@@ -847,5 +894,22 @@ export const translations = {
     share: 'साझा करें',
     link_copied: 'लिंक कॉपी किया गया!',
     back_to_top: 'शीर्ष पर वापस',
+    settings: 'सेटिंग्स',
+    appearance: 'दिखावट',
+    language: 'भाषा',
+    theme_light: 'लाइट',
+    theme_dark: 'डार्क',
   }
 };
+
+export interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: keyof typeof translations['en']) => string;
+}
+
+export const LanguageContext = createContext<LanguageContextType>({
+  language: 'en',
+  setLanguage: () => {},
+  t: (key) => translations['en'][key] || String(key),
+});

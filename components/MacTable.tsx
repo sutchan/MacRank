@@ -1,9 +1,10 @@
+// Version: 0.1.13
 import React, { useContext } from 'react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel } from '../lib/types';
 import TierBadge from './TierBadge';
 import { ChevronRight, Check } from 'lucide-react';
-import { LanguageContext } from '../App';
+import { LanguageContext } from '../lib/translations';
 import { formatCurrency } from '../lib/translations';
 
 interface MacTableProps {
