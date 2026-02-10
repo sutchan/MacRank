@@ -1,25 +1,30 @@
-import { MacModel } from './types';
+import { MacModel, RankingScenario } from './types';
 
-// Helper to calculate a synthetic "Tier Score" for ranking
-export const calculateTierScore = (mac: MacModel) => {
-  // Weighted score: 35% Single Core, 45% Multi Core, 20% Metal
-  // We normalize slightly based on max observed values (approx) to keep them in readable ranges
-  const sc = mac.singleCoreScore / 4000;
-  const mc = mac.multiCoreScore / 25000;
-  const mt = mac.metalScore / 200000;
-  
-  // Weights (Sums to 100)
-  const total = (sc * 35) + (mc * 45) + (mt * 20); 
-  // Scale by 100 to get a "Geekbench-like" 4-5 digit score (e.g., 90.5 -> 9050)
-  return Math.round(total * 100); 
+// Normalization constants (approximate max values in current database)
+const MAX_SC = 4200;   // Single Core max
+const MAX_MC = 28000;  // Multi Core max
+const MAX_MT = 200000; // Metal max
+
+const SCENARIO_WEIGHTS: Record<RankingScenario, { sc: number; mc: number; mt: number }> = {
+  balanced: { sc: 35, mc: 45, mt: 20 }, // Default: Balanced mix
+  developer: { sc: 20, mc: 65, mt: 15 }, // Dev: Heavily favors Multi-Core (Compilation/Docker)
+  creative: { sc: 15, mc: 30, mt: 55 },  // Creative: Heavily favors GPU (Rendering/3D)
+  daily: { sc: 70, mc: 20, mt: 10 },     // Daily: Heavily favors Single-Core (Snappiness/Web)
 };
 
-export const calculateTierScoreV2 = (mac: MacModel) => {
-    const sc = mac.singleCoreScore / 4000;
-    const mc = mac.multiCoreScore / 25000;
-    const mt = mac.metalScore / 200000;
-    const total = (sc * 35) + (mc * 45) + (mt * 20); 
-    return Math.round(total * 100);
+// Helper to calculate a synthetic "Tier Score" for ranking based on scenario
+export const calculateTierScore = (mac: MacModel, scenario: RankingScenario = 'balanced') => {
+  const weights = SCENARIO_WEIGHTS[scenario];
+
+  const sc = mac.singleCoreScore / MAX_SC;
+  const mc = mac.multiCoreScore / MAX_MC;
+  const mt = mac.metalScore / MAX_MT;
+  
+  // Calculate weighted sum
+  const total = (sc * weights.sc) + (mc * weights.mc) + (mt * weights.mt);
+  
+  // Scale by 100 to get a "Geekbench-like" score format (e.g., 90.5 -> 9050)
+  return Math.round(total * 100); 
 };
 
 export const getTierLabel = (score: number) => {

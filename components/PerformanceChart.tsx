@@ -2,7 +2,7 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter, Label } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/data';
-import { MacModel } from '../lib/types';
+import { MacModel, RankingScenario } from '../lib/types';
 import { LanguageContext } from '../lib/translations';
 import { BarChart3, Cpu, DollarSign, TrendingUp, MousePointerClick } from 'lucide-react';
 import { formatCurrency } from '../lib/translations';
@@ -10,11 +10,12 @@ import { formatCurrency } from '../lib/translations';
 interface PerformanceChartProps {
   data: MacModel[];
   onSelect: (mac: MacModel) => void;
+  scenario: RankingScenario;
 }
 
 type Metric = 'composite' | 'single' | 'multi' | 'metal' | 'value' | 'value-ratio';
 
-const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) => {
+const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, scenario }) => {
   const { t, language } = useContext(LanguageContext);
   const [metric, setMetric] = useState<Metric>('composite');
 
@@ -22,7 +23,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
   const { chartData, stats } = useMemo(() => {
     // Basic enrichment
     const enriched = data.map(m => {
-        const score = calculateTierScore(m);
+        const score = calculateTierScore(m, scenario);
         // Create shortened display name combining model and chip
         const shortModelName = m.name.replace(/MacBook Pro/, 'MBP').replace(/MacBook Air/, 'MBA').replace(/Mac mini/, 'Mini').replace(/Mac Studio/, 'Studio').split('(')[0].trim();
         const displayName = `${shortModelName} - ${m.chip}`;
@@ -67,7 +68,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect }) =
     processedData = processedData.slice(0, 15);
 
     return { chartData: processedData, stats };
-  }, [data, metric]);
+  }, [data, metric, scenario]);
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {

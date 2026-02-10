@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.15] - 2025-02-22
+
+### Added
+- **Comparison Visuals**: Introduced a dynamic Radar Chart in the comparison view to visualize performance across 5 dimensions (Single-Core, Multi-Core, Metal, Value, Memory).
+- **Table UX**: Added sticky column support for the model name in the leaderboard table, ensuring context is maintained while scrolling horizontally on mobile devices.
+
 ## [0.1.13] - 2025-02-22
 
 ### Optimized

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2 } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
-import { MacModel, DeviceType } from '../lib/types';
+import { MacModel, DeviceType, RankingScenario } from '../lib/types';
 import { LanguageContext } from '../lib/translations';
 import TierBadge from './TierBadge';
 import { formatCurrency } from '../lib/translations';
@@ -9,14 +9,15 @@ import { formatCurrency } from '../lib/translations';
 interface DetailModalProps {
   mac: MacModel | null;
   onClose: () => void;
+  scenario: RankingScenario;
 }
 
-const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose }) => {
+const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => {
   const { t, language } = useContext(LanguageContext);
 
   if (!mac) return null;
 
-  const score = calculateTierScore(mac);
+  const score = calculateTierScore(mac, scenario);
   const tier = getTierLabel(score);
 
   const getTypeLabel = (type: DeviceType) => {

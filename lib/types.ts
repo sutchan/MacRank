@@ -12,6 +12,8 @@ export enum DeviceType {
   Tablet = 'Tablet'
 }
 
+export type RankingScenario = 'balanced' | 'developer' | 'creative' | 'daily';
+
 export interface MacModel {
   id: string;
   name: string;

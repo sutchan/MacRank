@@ -15,10 +15,21 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showSuggestion, setShowSuggestion] = useState(true);
 
   useEffect(() => {
     setMessages([{ role: 'model', text: t('chatWelcome') }]);
   }, [language]);
+
+  // Hide suggestion after a delay or when opened
+  useEffect(() => {
+    if (isOpen) {
+      setShowSuggestion(false);
+    } else {
+        const timer = setTimeout(() => setShowSuggestion(true), 3000);
+        return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,6 +56,16 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
   return (
     <>
+       {/* Suggestion Bubble */}
+       <div 
+         className={`fixed bottom-24 right-6 z-40 bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-all duration-500 transform origin-bottom-right ${
+            showSuggestion && !isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-4 pointer-events-none'
+         }`}
+       >
+         <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white dark:bg-gray-800 border-r border-b border-gray-100 dark:border-gray-700 transform rotate-45"></div>
+         {t('ai_suggestion')}
+       </div>
+
       {/* Floating Button - Apple Gradient */}
       <button
         onClick={() => setIsOpen(true)}
