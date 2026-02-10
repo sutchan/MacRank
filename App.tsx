@@ -14,7 +14,7 @@ import Footer from './components/Footer';
 import { translations, Language, LanguageContext } from './lib/translations';
 import { Scale, Check, ArrowUp } from 'lucide-react';
 
-const APP_VERSION = '0.1.18';
+const APP_VERSION = '0.2.0';
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---

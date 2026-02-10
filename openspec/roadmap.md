@@ -1,6 +1,6 @@
 # 项目路线图 (Roadmap)
 
-## 当前版本: v0.1.18
+## 当前版本: v0.2.0
 
 ### 已完成 (Completed)
 - [x] **基础框架**: React 19 + Vite + Tailwind CSS。
