@@ -1,3 +1,4 @@
+
 export const en = {
   appTitle: 'MacRank',
   leaderboard: 'Ladder',
@@ -99,4 +100,5 @@ export const en = {
   reset_desc: 'Clear local preferences and cache.',
   source_code: 'Source Code',
   version: 'Version',
+  pc_reference: 'PC/GPU Ref',
 };

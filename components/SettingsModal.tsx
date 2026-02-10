@@ -136,7 +136,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
              </div>
 
              <div className="text-center pt-2">
-                <p className="text-xs text-gray-400 font-mono">MacRank v0.2.0</p>
+                <p className="text-xs text-gray-400 font-mono">MacRank v0.3.0</p>
              </div>
           </div>
 

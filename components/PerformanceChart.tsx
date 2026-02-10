@@ -1,4 +1,4 @@
-// Version: 0.1.13
+
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter, Label } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/data';
@@ -25,7 +25,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
     const enriched = data.map(m => {
         const score = calculateTierScore(m, scenario);
         // Create shortened display name combining model and chip
-        const shortModelName = m.name.replace(/MacBook Pro/, 'MBP').replace(/MacBook Air/, 'MBA').replace(/Mac mini/, 'Mini').replace(/Mac Studio/, 'Studio').split('(')[0].trim();
+        const shortModelName = m.name.replace(/MacBook Pro/, 'MBP').replace(/MacBook Air/, 'MBA').replace(/Mac mini/, 'Mini').replace(/Mac Studio/, 'Studio').replace(/NVIDIA GeForce/, '').replace(/Intel Core/, 'i').replace(/AMD Ryzen/, 'Ryzen').split('(')[0].trim();
         const displayName = `${shortModelName} - ${m.chip}`;
 
         return {
@@ -64,8 +64,9 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
       });
     }
 
-    // Slice for bar charts to keep it readable
-    processedData = processedData.slice(0, 15);
+    // Slice for bar charts to keep it readable, but increase if references are included to not hide Macs
+    const sliceLimit = 15 + (data.filter(d => d.isReference).length > 0 ? 5 : 0);
+    processedData = processedData.slice(0, sliceLimit);
 
     return { chartData: processedData, stats };
   }, [data, metric, scenario]);
@@ -73,16 +74,20 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const d = payload[0].payload;
+      const isRef = d.isReference;
       return (
         <div className="bg-white dark:bg-gray-800 p-4 border border-gray-100 dark:border-gray-700 shadow-xl rounded-xl text-xs transition-colors z-50 min-w-[200px]">
           <div className="flex justify-between items-start mb-2">
-             <p className="font-bold text-gray-900 dark:text-white text-sm max-w-[150px] leading-tight">{d.name}</p>
+             <p className="font-bold text-gray-900 dark:text-white text-sm max-w-[150px] leading-tight">
+               {d.name} {isRef && <span className="text-gray-400 font-normal">(Ref)</span>}
+             </p>
              <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                 isRef ? 'bg-gray-200 text-gray-600' :
                  d.tier === 'S+' ? 'bg-purple-100 text-purple-700' :
                  d.tier === 'S' ? 'bg-purple-100 text-purple-700' :
                  d.tier.startsWith('A') ? 'bg-blue-100 text-blue-700' :
                  'bg-gray-100 text-gray-700'
-             }`}>{d.tier}</span>
+             }`}>{isRef ? 'REF' : d.tier}</span>
           </div>
           <p className="text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5 border-b border-gray-100 dark:border-gray-700 pb-2">
             <Cpu size={12} /> {d.chip}
@@ -108,7 +113,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
             <div className="pt-2 mt-2 border-t border-gray-100 dark:border-gray-700 text-[10px] text-gray-400 grid grid-cols-2 gap-x-2 gap-y-1">
                  <div>{t('label_single')}: {d.singleCoreScore}</div>
                  <div>{t('label_multi')}: {d.multiCoreScore}</div>
-                 <div className="col-span-2">Metal: {d.metalScore.toLocaleString()}</div>
+                 <div className="col-span-2">Metal/OpenCL: {d.metalScore.toLocaleString()}</div>
             </div>
           </div>
         </div>
@@ -148,7 +153,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                 ? t('chart_value_desc')
                 : metric === 'value-ratio'
                    ? t('chart_ratio_desc')
-                   : `${t('showing')} Top 15 • ${t('clickToDetail')}`}
+                   : `${t('showing')} Top ${15} • ${t('clickToDetail')}`}
              {metric === 'value' && <MousePointerClick size={10} />}
           </p>
         </div>
@@ -175,7 +180,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
       <div className="h-[350px] md:h-[500px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           {metric === 'value' ? (
-             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e && e.activePayload && onSelect(e.activePayload[0].payload)}>
+             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e && e.activePayload && !e.activePayload[0].payload.isReference && onSelect(e.activePayload[0].payload)}>
                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
                <XAxis 
                  type="number" 
@@ -207,12 +212,13 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                <Scatter name="Macs" data={chartData} className="cursor-pointer">
                   {chartData.map((entry, index) => {
                      let color = '#9ca3af';
-                     if (entry.tier === 'S+') color = '#db2777';
+                     if (entry.isReference) color = '#4b5563'; // Dark gray for refs
+                     else if (entry.tier === 'S+') color = '#db2777';
                      else if (entry.tier === 'S') color = '#9333ea';
                      else if (entry.tier.startsWith('A')) color = '#3b82f6';
                      else if (entry.tier.startsWith('B')) color = '#22c55e';
                      else if (entry.tier.startsWith('C')) color = '#eab308';
-                     return <Cell key={`cell-${index}`} fill={color} />;
+                     return <Cell key={`cell-${index}`} fill={color} stroke={entry.isReference ? '#000' : 'none'} strokeDasharray={entry.isReference ? '3 3' : ''} />;
                   })}
                </Scatter>
              </ScatterChart>
@@ -221,7 +227,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
               data={chartData}
               layout="vertical"
               margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
-              onClick={(e: any) => e && e.activePayload && onSelect(e.activePayload[0].payload)}
+              onClick={(e: any) => e && e.activePayload && !e.activePayload[0].payload.isReference && onSelect(e.activePayload[0].payload)}
             >
               <defs>
                 <linearGradient id="colorSingle" x1="0" y1="0" x2="1" y2="0">
@@ -240,6 +246,9 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                    <stop offset="0%" stopColor="#86efac" />
                    <stop offset="100%" stopColor="#16a34a" />
                 </linearGradient>
+                <pattern id="patternReference" patternUnits="userSpaceOnUse" width="4" height="4">
+                   <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style={{stroke: '#9ca3af', strokeWidth: 1}} />
+                </pattern>
               </defs>
 
               <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#374151" strokeOpacity={0.1} />
@@ -261,6 +270,9 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                 className="cursor-pointer"
               >
                 {metric === 'composite' && chartData.map((entry, index) => {
+                  if (entry.isReference) {
+                      return <Cell key={`cell-${index}`} fill="#d1d5db" stroke="#6b7280" />;
+                  }
                   let color = '#9ca3af';
                   if (entry.tier === 'S+') color = '#db2777';
                   else if (entry.tier === 'S') color = '#9333ea';

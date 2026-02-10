@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { macData, calculateTierScore } from './lib/data';
+import { macData, refData, calculateTierScore } from './lib/data';
 import { ChipFamily, DeviceType, MacModel, RankingScenario } from './lib/types';
 import MacTable from './components/MacTable';
 import PerformanceChart from './components/PerformanceChart';
@@ -14,7 +14,7 @@ import Footer from './components/Footer';
 import { translations, Language, LanguageContext } from './lib/translations';
 import { Scale, Check, ArrowUp } from 'lucide-react';
 
-const APP_VERSION = '0.2.0';
+const APP_VERSION = '0.3.0';
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---
@@ -26,9 +26,10 @@ const App: React.FC = () => {
     sort: 'score' | 'price' | 'year';
     scenario: RankingScenario;
     compareIds: string[];
+    showRef: boolean;
   } => {
     if (typeof window === 'undefined') return {
-      search: '', type: 'All', family: 'All', sort: 'score', scenario: 'balanced', compareIds: []
+      search: '', type: 'All', family: 'All', sort: 'score', scenario: 'balanced', compareIds: [], showRef: false
     };
     
     const params = new URLSearchParams(window.location.search);
@@ -50,7 +51,8 @@ const App: React.FC = () => {
       family: (validFamilies.includes(familyParam) ? familyParam : 'All') as ChipFamily | 'All',
       sort: (validSorts.includes(sortParam) ? sortParam : 'score') as 'score' | 'price' | 'year',
       scenario: (validScenarios.includes(scenarioParam) ? scenarioParam : 'balanced') as RankingScenario,
-      compareIds: params.get('compare') ? params.get('compare')?.split(',') || [] : []
+      compareIds: params.get('compare') ? params.get('compare')?.split(',') || [] : [],
+      showRef: params.get('ref') === 'true'
     };
   };
 
@@ -70,6 +72,7 @@ const App: React.FC = () => {
   const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>(initialState.family);
   const [sortBy, setSortBy] = useState<'score' | 'price' | 'year'>(initialState.sort);
   const [rankingScenario, setRankingScenario] = useState<RankingScenario>(initialState.scenario);
+  const [showReference, setShowReference] = useState(initialState.showRef);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showToast, setShowToast] = useState(false);
   
@@ -92,11 +95,12 @@ const App: React.FC = () => {
     if (filterFamily !== 'All') params.set('family', filterFamily);
     if (sortBy !== 'score') params.set('sort', sortBy);
     if (rankingScenario !== 'balanced') params.set('scenario', rankingScenario);
+    if (showReference) params.set('ref', 'true');
     if (compareList.length > 0) params.set('compare', compareList.map(m => m.id).join(','));
 
     const newUrl = `${window.location.pathname}?${params.toString()}`;
     window.history.replaceState(null, '', newUrl);
-  }, [searchTerm, filterType, filterFamily, sortBy, compareList, rankingScenario]);
+  }, [searchTerm, filterType, filterFamily, sortBy, compareList, rankingScenario, showReference]);
 
   // --- Scroll Listener for Back to Top ---
   useEffect(() => {
@@ -179,9 +183,20 @@ const App: React.FC = () => {
   };
 
   const filteredData = useMemo(() => {
-    let result = macData.filter(item => {
+    // Combine standard data with reference data if toggle is on
+    const sourceData = showReference ? [...macData, ...refData] : macData;
+
+    let result = sourceData.filter(item => {
+      // Reference items bypass normal search filters unless search is explicitly active
+      if (item.isReference && !searchTerm) return true;
+
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                             item.chip.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      // Reference items ignore Type/Family filters generally to serve as constant anchors,
+      // unless user is searching.
+      if (item.isReference) return matchesSearch;
+
       const matchesType = filterType === 'All' || item.type === filterType;
       const matchesFamily = filterFamily === 'All' || item.family === filterFamily;
       
@@ -197,7 +212,7 @@ const App: React.FC = () => {
         return b.releaseYear - a.releaseYear;
       }
     });
-  }, [searchTerm, filterType, filterFamily, sortBy, macData, rankingScenario]);
+  }, [searchTerm, filterType, filterFamily, sortBy, macData, refData, rankingScenario, showReference]);
 
   // Calculate Max Score for Progress Bar normalization (only considering current filtered list for better scaling, or global max?)
   // Using global max from filtered list to make bars relative to the current view
@@ -246,6 +261,8 @@ const App: React.FC = () => {
               setShowToast(true);
               setTimeout(() => setShowToast(false), 2000);
             }}
+            showReference={showReference}
+            setShowReference={setShowReference}
           />
 
           {/* Charts Section - Clean & Minimal */}

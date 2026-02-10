@@ -1,15 +1,19 @@
+
 export enum ChipFamily {
   M1 = 'M1',
   M2 = 'M2',
   M3 = 'M3',
   M4 = 'M4',
-  Intel = 'Intel'
+  Intel = 'Intel',
+  Reference = 'Reference' // For PC parts
 }
 
 export enum DeviceType {
   Laptop = 'Laptop',
   Desktop = 'Desktop',
-  Tablet = 'Tablet'
+  Tablet = 'Tablet',
+  GPU = 'GPU', // For standalone Graphics Cards
+  CPU = 'CPU'  // For standalone Processors
 }
 
 export type RankingScenario = 'balanced' | 'developer' | 'creative' | 'daily';
@@ -26,9 +30,10 @@ export interface MacModel {
   releaseYear: number;
   singleCoreScore: number; // Geekbench 6 estimate
   multiCoreScore: number; // Geekbench 6 estimate
-  metalScore: number; // Geekbench Metal estimate
+  metalScore: number; // Geekbench Metal estimate (or OpenCL for PC)
   basePriceUSD: number;
   description: string;
+  isReference?: boolean; // New flag to mark PC/Ref hardware
 }
 
 export interface ChatMessage {

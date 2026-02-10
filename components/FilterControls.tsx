@@ -1,5 +1,6 @@
+
 import React, { useContext } from 'react';
-import { Search, X, Share2, ChevronDown, Scale, Code, Palette, Coffee, Info } from 'lucide-react';
+import { Search, X, Share2, ChevronDown, Scale, Code, Palette, Coffee, Info, Cpu } from 'lucide-react';
 import { LanguageContext } from '../lib/translations';
 import { DeviceType, ChipFamily, RankingScenario } from '../lib/types';
 
@@ -15,6 +16,8 @@ interface FilterControlsProps {
   rankingScenario: RankingScenario;
   setRankingScenario: (scenario: RankingScenario) => void;
   onShare: () => void;
+  showReference: boolean;
+  setShowReference: (show: boolean) => void;
 }
 
 const FilterControls: React.FC<FilterControlsProps> = ({
@@ -23,7 +26,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   filterFamily, setFilterFamily,
   sortBy, setSortBy,
   rankingScenario, setRankingScenario,
-  onShare
+  onShare,
+  showReference, setShowReference
 }) => {
   const { t } = useContext(LanguageContext);
 
@@ -133,18 +137,34 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               </div>
           </div>
 
-          {/* Row 2: Scenario Selector & Info */}
+          {/* Row 2: Scenario Selector, PC Reference Toggle, Info */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-gray-100 dark:border-gray-800">
-              <div className="flex items-center gap-3 w-full sm:w-auto">
+              <div className="flex items-center gap-3 w-full sm:w-auto overflow-x-auto no-scrollbar">
                   <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide shrink-0">{t('scenario')}:</span>
-                  <div className="flex gap-2 w-full overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+                  <div className="flex gap-2 pb-1 sm:pb-0">
                      <ScenarioButton value="balanced" icon={Scale} labelKey="scenario_balanced" />
                      <ScenarioButton value="developer" icon={Code} labelKey="scenario_developer" />
                      <ScenarioButton value="creative" icon={Palette} labelKey="scenario_creative" />
                      <ScenarioButton value="daily" icon={Coffee} labelKey="scenario_daily" />
                   </div>
+                  
+                  <div className="h-4 w-px bg-gray-300 dark:bg-gray-700 mx-1 shrink-0"></div>
+                  
+                  {/* PC Reference Toggle */}
+                  <button
+                    onClick={() => setShowReference(!showReference)}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0 ${
+                      showReference
+                        ? 'bg-gray-800 text-white dark:bg-white dark:text-black shadow-md'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    <Cpu size={14} />
+                    <span className="whitespace-nowrap">{t('pc_reference')}</span>
+                  </button>
               </div>
-              {/* Scenario Info Text - Dynamic Transparency */}
+
+              {/* Scenario Info Text */}
               <div className="flex items-center gap-1.5 text-[10px] text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-white/5 px-2 py-1 rounded-md animate-in fade-in duration-300">
                   <Info size={12} />
                   <span>{getScenarioDescription(rankingScenario)}</span>

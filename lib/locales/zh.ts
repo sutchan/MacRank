@@ -1,3 +1,4 @@
+
 export const zh = {
   appTitle: 'MacRank',
   leaderboard: '性能天梯',
@@ -99,4 +100,5 @@ export const zh = {
   reset_desc: '清除本地偏好设置和缓存。',
   source_code: '源代码',
   version: '版本',
+  pc_reference: 'PC 参照系',
 };

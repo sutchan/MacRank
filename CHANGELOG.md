@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-02-22
+
+### Added
+- **PC Reference Mode**: Added a "PC/GPU Ref" toggle in the filter bar. Users can now view Apple Silicon performance alongside PC industry benchmarks (e.g., NVIDIA RTX 4090, Intel i9-14900K) for better context.
+- **Enhanced Footer**: Redesigned footer for better visual hierarchy and added GitHub star call-to-action.
+
 ## [0.2.0] - 2025-02-22
 
 ### Refactor

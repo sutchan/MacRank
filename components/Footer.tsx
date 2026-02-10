@@ -10,22 +10,42 @@ const Footer: React.FC<FooterProps> = ({ version }) => {
   const { t } = useContext(LanguageContext);
 
   return (
-    <footer className="text-xs text-gray-400 dark:text-gray-600 py-12 border-t border-gray-200 dark:border-gray-800 text-center">
-       <p>{t('footer_disclaimer')}</p>
-       <p className="mt-2">{t('footer_copyright')}</p>
-       <div className="mt-6 flex flex-col items-center gap-3">
-         <a 
-           href="https://github.com/sutchan/MacRank" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           className="flex items-center gap-2 hover:text-gray-900 dark:hover:text-gray-300 transition-colors duration-200 group"
-           aria-label="View on GitHub"
-         >
-           <Github size={16} className="text-gray-500 group-hover:text-black dark:group-hover:text-white transition-colors" />
-           <span className="font-medium">GitHub</span>
-         </a>
-         <span className="font-mono text-[10px] opacity-40">v{version}</span>
-       </div>
+    <footer className="py-12 border-t border-gray-200 dark:border-gray-800 transition-colors">
+      <div className="flex flex-col items-center justify-center space-y-8 text-center">
+         
+         {/* Disclaimer */}
+         <p className="text-[10px] md:text-xs leading-relaxed text-gray-400 dark:text-gray-500 max-w-lg mx-auto">
+           {t('footer_disclaimer')}
+         </p>
+
+         {/* Social / Actions */}
+         <div className="flex items-center justify-center">
+            <a 
+              href="https://github.com/sutchan/MacRank" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all duration-200 group text-xs font-medium"
+              aria-label="View on GitHub"
+            >
+              <Github size={14} className="group-hover:scale-110 transition-transform" />
+              <span>Star on GitHub</span>
+            </a>
+         </div>
+
+         {/* Copyright & Version */}
+         <div className="flex flex-col items-center gap-1.5">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+              {t('footer_copyright')}
+            </p>
+            <div className="flex items-center gap-2">
+               <span className="w-1 h-1 rounded-full bg-green-500"></span>
+               <p className="font-mono text-[10px] text-gray-400 dark:text-gray-600">
+                 v{version} • stable
+               </p>
+            </div>
+         </div>
+
+      </div>
     </footer>
   );
 };
