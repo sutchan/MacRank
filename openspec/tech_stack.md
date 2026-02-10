@@ -44,18 +44,24 @@
 *   **库**: Recharts
 *   **实现细节**:
     *   **响应式**: 使用 `ResponsiveContainer` 确保图表随窗口缩放。
+    *   **雷达图 (Radar)**: 在对比模式下展示 5 维数据，数据归一化到 0-100 区间。
     *   **动态填充**: Bar Chart 的颜色根据评分段位 (`Tier`) 动态计算 (S+ 为紫色渐变, A 为蓝色等)。
     *   **散点图**: 使用 `ScatterChart` 实现价格(X)与性能(Y)的二维分析，并绘制平均值参考线 (`ReferenceLine`) 划分象限。
 
 ## 7. 国际化 (i18n)
-*   **实现**: 不依赖第三方重型库 (如 i18next)，使用轻量级 TypeScript 对象字典 (`lib/translations.ts`)。
+*   **实现**: 模块化文件结构 (`lib/locales/*.ts`)，不依赖第三方重型库。
+*   **架构**:
+    *   `lib/locales/`: 每个语言（en, zh, es, etc.）拥有独立的 TS 文件。
+    *   `lib/translations.ts`: 负责聚合所有语言包并导出 `LanguageContext`。
 *   **功能**:
     *   支持 10 种语言。
     *   **货币格式化**: 根据语言环境 (`Intl.NumberFormat`) 自动转换货币符号及汇率估算（静态汇率）。
     *   **SEO**: 根据当前语言动态更新 `document.title`。
 
 ## 8. 性能优化
-*   **代码分割**: 数据文件按芯片架构拆分 (`data-silicon.ts`, `data-intel.ts`)，虽然目前全量加载，但为未来按需加载打下基础。
+*   **代码分割**: 
+    *   数据文件按芯片架构拆分 (`data-silicon.ts`, `data-intel.ts`)。
+    *   翻译文件按语言拆分，虽然目前主 bundle 包含所有，但结构上支持未来的动态导入。
 *   **渲染优化**: 
     *   `content-visibility: auto`: 优化长表格渲染。
     *   `will-change`: 优化悬浮组件动画。

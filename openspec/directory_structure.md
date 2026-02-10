@@ -11,10 +11,10 @@
 ## 核心源码目录
 
 ### `/components` (UI 组件)
-*   `MacTable.tsx`: 核心排行榜表格组件，处理数据展示与行交互。
+*   `MacTable.tsx`: 核心排行榜表格组件，处理数据展示与行交互，支持移动端列冻结。
 *   `PerformanceChart.tsx`: 基于 Recharts 的可视化图表组件，支持多模式切换。
 *   `DetailModal.tsx`: 机型详情弹窗，展示详细规格与评分条。
-*   `CompareModal.tsx`: 对比模式弹窗，展示双机型参数与性能差异条。
+*   `CompareModal.tsx`: 对比模式弹窗，包含雷达图和条形图对比。
 *   `AIChat.tsx`: AI 悬浮聊天组件，包含聊天界面与输入逻辑。
 *   `TierBadge.tsx`: 显示 S+/S/A/B 等段位的徽章组件。
 
@@ -23,7 +23,9 @@
 *   `data-silicon.ts`: 存储 Apple Silicon (M1-M4) 机型数据。
 *   `data-intel.ts`: 存储 Intel (2010-2020) 机型数据。
 *   `scoring.ts`: 包含综合评分计算算法 (`calculateTierScore`) 和段位映射逻辑。
-*   `translations.ts`: 国际化字典 (10 种语言) 及货币格式化工具。
+*   `translations.ts`: 国际化入口，聚合 `locales/` 下的所有语言包，提供 Context Provider。
+*   `locales/`: 存放各语言翻译文件的目录。
+    *   `en.ts`, `zh.ts`, `es.ts`, `fr.ts`, `de.ts`, `ja.ts`, `pt.ts`, `ru.ts`, `ko.ts`, `hi.ts`
 *   `types.ts`: TypeScript 接口定义 (`MacModel`, `DeviceType`, `ChipFamily` 等)。
 
 ### `/services` (外部服务)

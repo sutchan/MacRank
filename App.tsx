@@ -10,7 +10,7 @@ import AIChat from './components/AIChat';
 import { translations, languages, Language, LanguageContext } from './lib/translations';
 import { Search, ChevronDown, Scale, X, Github, Share2, ArrowUp, Check, Settings, Globe, Moon, Sun, Briefcase, Code, Palette, Coffee, Info } from 'lucide-react';
 
-const APP_VERSION = '0.1.15';
+const APP_VERSION = '0.1.16';
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---
