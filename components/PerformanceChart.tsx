@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter, Label } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/data';
@@ -265,21 +264,28 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                 dataKey={getDataKey()} 
                 radius={[0, 4, 4, 0]} 
                 barSize={20}
-                fill={getBarFill()}
+                // No default fill, controlled by Cells below
                 animationDuration={500}
                 className="cursor-pointer"
               >
-                {metric === 'composite' && chartData.map((entry, index) => {
+                {chartData.map((entry, index) => {
+                  // Always render cells to ensure references get distinct styling
                   if (entry.isReference) {
-                      return <Cell key={`cell-${index}`} fill="#d1d5db" stroke="#6b7280" />;
+                      return <Cell key={`cell-${index}`} fill="url(#patternReference)" stroke="#6b7280" />;
                   }
-                  let color = '#9ca3af';
-                  if (entry.tier === 'S+') color = '#db2777';
-                  else if (entry.tier === 'S') color = '#9333ea';
-                  else if (entry.tier.startsWith('A')) color = '#3b82f6';
-                  else if (entry.tier.startsWith('B')) color = '#22c55e';
-                  else if (entry.tier.startsWith('C')) color = '#eab308';
-                  return <Cell key={`cell-${index}`} fill={color} />;
+                  
+                  if (metric === 'composite') {
+                      let color = '#9ca3af';
+                      if (entry.tier === 'S+') color = '#db2777';
+                      else if (entry.tier === 'S') color = '#9333ea';
+                      else if (entry.tier.startsWith('A')) color = '#3b82f6';
+                      else if (entry.tier.startsWith('B')) color = '#22c55e';
+                      else if (entry.tier.startsWith('C')) color = '#eab308';
+                      return <Cell key={`cell-${index}`} fill={color} />;
+                  } else {
+                      // Fallback to the gradient defined in getBarFill()
+                      return <Cell key={`cell-${index}`} fill={getBarFill()} />;
+                  }
                 })}
               </Bar>
             </BarChart>

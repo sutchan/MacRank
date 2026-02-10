@@ -1,3 +1,4 @@
+
 export const hi = {
   appTitle: 'MacRank',
   leaderboard: 'लीडरबोर्ड',
@@ -93,4 +94,15 @@ export const hi = {
   scenario_desc_creative: 'रेंडरिंग फोकस: 55% GPU, 30% मल्टी, 15% सिंगल',
   scenario_desc_daily: 'प्रतिक्रिया फोकस: 70% सिंगल, 20% मल्टी, 10% GPU',
   ai_suggestion: 'मदद चाहिए?',
+  general: 'सामान्य',
+  about: 'के बारे में',
+  reset_data: 'डेटा रीसेट करें',
+  reset_desc: 'लोकल कैश साफ़ करें।',
+  source_code: 'सोर्स कोड',
+  version: 'संस्करण',
+  pc_reference: 'PC/GPU संदर्भ',
+  star_on_github: 'GitHub पर स्टार दें',
+  stable: 'स्थिर',
+  reset_confirm: 'क्या आप वाकई सभी प्राथमिकताएँ रीसेट करना चाहते हैं?',
+  view_on_github: 'GitHub पर देखें',
 };

@@ -1,3 +1,4 @@
+
 export const ru = {
   appTitle: 'MacRank',
   leaderboard: 'Рейтинг',
@@ -93,4 +94,15 @@ export const ru = {
   scenario_desc_creative: 'Рендеринг: 55% GPU, 30% Multi, 15% Single',
   scenario_desc_daily: 'Отклик: 70% Single, 20% Multi, 10% GPU',
   ai_suggestion: 'Нужна помощь?',
+  general: 'Общее',
+  about: 'О программе',
+  reset_data: 'Сброс данных',
+  reset_desc: 'Очистить кэш.',
+  source_code: 'Исходный код',
+  version: 'Версия',
+  pc_reference: 'PC/GPU Сравн.',
+  star_on_github: 'Звезда на GitHub',
+  stable: 'стабильная',
+  reset_confirm: 'Вы уверены, что хотите сбросить все настройки?',
+  view_on_github: 'Смотреть на GitHub',
 };

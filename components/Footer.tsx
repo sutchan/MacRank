@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react';
 import { Github } from 'lucide-react';
 import { LanguageContext } from '../lib/translations';
@@ -25,10 +26,10 @@ const Footer: React.FC<FooterProps> = ({ version }) => {
               target="_blank" 
               rel="noopener noreferrer" 
               className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all duration-200 group text-xs font-medium"
-              aria-label="View on GitHub"
+              aria-label={t('view_on_github')}
             >
               <Github size={14} className="group-hover:scale-110 transition-transform" />
-              <span>Star on GitHub</span>
+              <span>{t('star_on_github')}</span>
             </a>
          </div>
 
@@ -40,7 +41,7 @@ const Footer: React.FC<FooterProps> = ({ version }) => {
             <div className="flex items-center gap-2">
                <span className="w-1 h-1 rounded-full bg-green-500"></span>
                <p className="font-mono text-[10px] text-gray-400 dark:text-gray-600">
-                 v{version} • stable
+                 v{version} • {t('stable')}
                </p>
             </div>
          </div>

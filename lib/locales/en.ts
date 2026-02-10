@@ -101,4 +101,8 @@ export const en = {
   source_code: 'Source Code',
   version: 'Version',
   pc_reference: 'PC/GPU Ref',
+  star_on_github: 'Star on GitHub',
+  stable: 'stable',
+  reset_confirm: 'Are you sure you want to reset all preferences?',
+  view_on_github: 'View on GitHub',
 };

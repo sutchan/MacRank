@@ -101,4 +101,8 @@ export const zh = {
   source_code: '源代码',
   version: '版本',
   pc_reference: 'PC 参照系',
+  star_on_github: '在 GitHub 上点星',
+  stable: '稳定版',
+  reset_confirm: '确定要重置所有偏好设置吗？',
+  view_on_github: '在 GitHub 上查看',
 };

@@ -1,3 +1,4 @@
+
 export const ja = {
   appTitle: 'MacRank',
   leaderboard: 'ランキング',
@@ -93,4 +94,15 @@ export const ja = {
   scenario_desc_creative: 'レンダリング重視: 55% GPU, 30% マルチ, 15% シングル',
   scenario_desc_daily: '応答速度重視: 70% シングル, 20% マルチ, 10% GPU',
   ai_suggestion: '選び方で迷っていますか？',
+  general: '一般',
+  about: '情報',
+  reset_data: 'データをリセット',
+  reset_desc: 'ローカルキャッシュを消去します。',
+  source_code: 'ソースコード',
+  version: 'バージョン',
+  pc_reference: 'PC/GPU 参照',
+  star_on_github: 'GitHubでスターをつける',
+  stable: '安定版',
+  reset_confirm: 'すべての設定をリセットしてもよろしいですか？',
+  view_on_github: 'GitHubで見る',
 };

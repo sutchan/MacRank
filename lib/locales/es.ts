@@ -1,3 +1,4 @@
+
 export const es = {
   appTitle: 'MacRank',
   leaderboard: 'Clasificación',
@@ -93,4 +94,15 @@ export const es = {
   scenario_desc_creative: 'Enfoque Render: 55% GPU, 30% Multi, 15% Single',
   scenario_desc_daily: 'Enfoque Fluidez: 70% Single, 20% Multi, 10% GPU',
   ai_suggestion: '¿Necesitas ayuda?',
+  general: 'General',
+  about: 'Acerca de',
+  reset_data: 'Restablecer datos',
+  reset_desc: 'Borrar preferencias locales y caché.',
+  source_code: 'Código Fuente',
+  version: 'Versión',
+  pc_reference: 'Ref. PC/GPU',
+  star_on_github: 'Dar estrella en GitHub',
+  stable: 'estable',
+  reset_confirm: '¿Estás seguro de que quieres restablecer todas las preferencias?',
+  view_on_github: 'Ver en GitHub',
 };

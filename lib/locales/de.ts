@@ -1,3 +1,4 @@
+
 export const de = {
   appTitle: 'MacRank',
   leaderboard: 'Rangliste',
@@ -93,4 +94,15 @@ export const de = {
   scenario_desc_creative: 'Fokus Rendering: 55% GPU, 30% Multi, 15% Single',
   scenario_desc_daily: 'Fokus Reaktivität: 70% Single, 20% Multi, 10% GPU',
   ai_suggestion: 'Brauchen Sie Hilfe?',
+  general: 'Allgemein',
+  about: 'Über',
+  reset_data: 'Daten zurücksetzen',
+  reset_desc: 'Lokalen Cache löschen.',
+  source_code: 'Quellcode',
+  version: 'Version',
+  pc_reference: 'PC/GPU Ref',
+  star_on_github: 'Auf GitHub bewerten',
+  stable: 'stabil',
+  reset_confirm: 'Möchten Sie wirklich alle Einstellungen zurücksetzen?',
+  view_on_github: 'Auf GitHub ansehen',
 };

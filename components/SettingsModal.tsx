@@ -12,7 +12,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
   const { t, language, setLanguage } = useContext(LanguageContext);
 
   const handleReset = () => {
-    if (confirm('Are you sure you want to reset all preferences?')) {
+    if (confirm(t('reset_confirm'))) {
       localStorage.clear();
       window.location.reload();
     }
@@ -43,7 +43,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
           
           {/* Section: General */}
           <div className="space-y-4">
-             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('general' as any) || 'General'}</h3>
+             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('general')}</h3>
              
              {/* Language Dropdown */}
              <div className="space-y-2">
@@ -96,7 +96,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
 
           {/* Section: Data & About */}
           <div className="space-y-4">
-             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('about' as any) || 'About'}</h3>
+             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('about')}</h3>
              
              <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800">
                 
@@ -110,8 +110,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
                          <RotateCcw size={16} />
                       </div>
                       <div>
-                         <p className="text-sm font-medium text-gray-900 dark:text-white">{t('reset_data' as any) || 'Reset Data'}</p>
-                         <p className="text-xs text-gray-500">{t('reset_desc' as any) || 'Clear local cache'}</p>
+                         <p className="text-sm font-medium text-gray-900 dark:text-white">{t('reset_data')}</p>
+                         <p className="text-xs text-gray-500">{t('reset_desc')}</p>
                       </div>
                    </div>
                    <ChevronRight size={16} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
@@ -128,7 +128,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
                       <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
                          <Github size={16} />
                       </div>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">{t('source_code' as any) || 'Source Code'}</p>
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{t('source_code')}</p>
                    </div>
                    <ChevronRight size={16} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
                 </a>
@@ -136,7 +136,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
              </div>
 
              <div className="text-center pt-2">
-                <p className="text-xs text-gray-400 font-mono">MacRank v0.3.0</p>
+                <p className="text-xs text-gray-400 font-mono">MacRank v0.3.1</p>
              </div>
           </div>
 

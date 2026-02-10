@@ -1,3 +1,4 @@
+
 export const ko = {
   appTitle: 'MacRank',
   leaderboard: '순위표',
@@ -93,4 +94,15 @@ export const ko = {
   scenario_desc_creative: '렌더링 중심: GPU 55%, 멀티 30%, 싱글 15%',
   scenario_desc_daily: '반응성 중심: 싱글 70%, 멀티 20%, GPU 10%',
   ai_suggestion: '도움이 필요하신가요?',
+  general: '일반',
+  about: '정보',
+  reset_data: '데이터 초기화',
+  reset_desc: '로컬 캐시 삭제.',
+  source_code: '소스 코드',
+  version: '버전',
+  pc_reference: 'PC/GPU 참조',
+  star_on_github: 'GitHub에서 스타 주기',
+  stable: '안정판',
+  reset_confirm: '모든 설정을 초기화하시겠습니까?',
+  view_on_github: 'GitHub에서 보기',
 };
