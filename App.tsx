@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, createContext, useContext } from 'react';
+import React, { useState, useMemo, useEffect, createContext, useContext, useRef } from 'react';
 import { macData, calculateTierScore } from './lib/data';
 import { ChipFamily, DeviceType, MacModel } from './lib/types';
 import MacTable from './components/MacTable';
@@ -7,7 +7,7 @@ import DetailModal from './components/DetailModal';
 import CompareModal from './components/CompareModal';
 import AIChat from './components/AIChat';
 import { translations, languages, Language } from './lib/translations';
-import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X, Github } from 'lucide-react';
+import { Search, Monitor, Laptop, Filter, ArrowUpDown, Moon, Sun, Globe, ChevronDown, Scale, X, Github, Share2, ArrowUp, Check } from 'lucide-react';
 
 const APP_VERSION = '0.1.13';
 
@@ -25,14 +25,93 @@ export const LanguageContext = createContext<LanguageContextType>({
 });
 
 const App: React.FC = () => {
+  // --- State Initialization with URL Parsing ---
+  // We initialize state lazily to parse URL params once on mount
+  const getInitialState = (): {
+    search: string;
+    type: DeviceType | 'All';
+    family: ChipFamily | 'All';
+    sort: 'score' | 'price' | 'year';
+    compareIds: string[];
+  } => {
+    if (typeof window === 'undefined') return {
+      search: '', type: 'All', family: 'All', sort: 'score', compareIds: []
+    };
+    
+    const params = new URLSearchParams(window.location.search);
+    
+    // Explicitly check against string arrays to ensure type safety
+    const validTypes: string[] = ['All', DeviceType.Laptop, DeviceType.Desktop, DeviceType.Tablet];
+    const validFamilies: string[] = ['All', ChipFamily.M4, ChipFamily.M3, ChipFamily.M2, ChipFamily.M1, ChipFamily.Intel];
+    const validSorts: string[] = ['score', 'price', 'year'];
+
+    const typeParam = params.get('type') || '';
+    const familyParam = params.get('family') || '';
+    const sortParam = params.get('sort') || '';
+
+    return {
+      search: params.get('search') || '',
+      type: (validTypes.includes(typeParam) ? typeParam : 'All') as DeviceType | 'All',
+      family: (validFamilies.includes(familyParam) ? familyParam : 'All') as ChipFamily | 'All',
+      sort: (validSorts.includes(sortParam) ? sortParam : 'score') as 'score' | 'price' | 'year',
+      compareIds: params.get('compare') ? params.get('compare')?.split(',') || [] : []
+    };
+  };
+
+  const initialState = getInitialState();
+
   const [selectedModel, setSelectedModel] = useState<MacModel | null>(null);
-  const [compareList, setCompareList] = useState<MacModel[]>([]);
-  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState<DeviceType | 'All'>('All');
-  const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>('All');
-  const [sortBy, setSortBy] = useState<'score' | 'price' | 'year'>('score');
   
+  // Initialize compare list based on IDs found in URL
+  const [compareList, setCompareList] = useState<MacModel[]>(() => {
+    return macData.filter(m => initialState.compareIds.includes(m.id)).slice(0, 2);
+  });
+  
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(initialState.search);
+  const [filterType, setFilterType] = useState<DeviceType | 'All'>(initialState.type);
+  const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>(initialState.family);
+  const [sortBy, setSortBy] = useState<'score' | 'price' | 'year'>(initialState.sort);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  
+  // Auto-open compare modal if 2 items were loaded from URL
+  const initialLoadRef = useRef(true);
+  useEffect(() => {
+    if (initialLoadRef.current && compareList.length === 2) {
+      setIsCompareModalOpen(true);
+    }
+    initialLoadRef.current = false;
+  }, []);
+
+  // --- URL Synchronization ---
+  useEffect(() => {
+    if (initialLoadRef.current) return; // Skip on first render to avoid overwriting initial parse
+
+    const params = new URLSearchParams();
+    if (searchTerm) params.set('search', searchTerm);
+    if (filterType !== 'All') params.set('type', filterType);
+    if (filterFamily !== 'All') params.set('family', filterFamily);
+    if (sortBy !== 'score') params.set('sort', sortBy);
+    if (compareList.length > 0) params.set('compare', compareList.map(m => m.id).join(','));
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState(null, '', newUrl);
+  }, [searchTerm, filterType, filterFamily, sortBy, compareList]);
+
+  // --- Scroll Listener for Back to Top ---
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 500);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Language State
   const [language, setLanguage] = useState<Language>(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -100,6 +179,12 @@ const App: React.FC = () => {
     });
   };
 
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
+
   const filteredData = useMemo(() => {
     let result = macData.filter(item => {
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -139,7 +224,7 @@ const App: React.FC = () => {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      <div className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans">
+      <div className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative">
         
         {/* Apple Global Nav Style Header */}
         <header className="fixed w-full top-0 z-40 bg-[rgba(251,251,253,0.8)] dark:bg-[rgba(22,22,23,0.8)] backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-500">
@@ -197,16 +282,33 @@ const App: React.FC = () => {
              <div className="max-w-[980px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
                 
                 {/* Search - Pill Style */}
-                <div className="relative w-full md:w-80 group">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={16} />
-                  <input
-                    type="text"
-                    placeholder={t('searchPlaceholder')}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm text-gray-900 dark:text-white placeholder-gray-500 transition-all"
-                    aria-label="Search Models"
-                  />
+                <div className="flex w-full md:w-auto items-center gap-2">
+                  <div className="relative w-full md:w-80 group">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={16} />
+                    <input
+                      type="text"
+                      placeholder={t('searchPlaceholder')}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-10 pr-8 py-2 bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm text-gray-900 dark:text-white placeholder-gray-500 transition-all"
+                      aria-label="Search Models"
+                    />
+                    {searchTerm && (
+                      <button 
+                        onClick={() => setSearchTerm('')}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-300/20 dark:bg-gray-600/20 rounded-full p-0.5 transition-colors"
+                      >
+                        <X size={12} />
+                      </button>
+                    )}
+                  </div>
+                  <button 
+                    onClick={handleShare}
+                    className="p-2 text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                    aria-label={t('share')}
+                  >
+                    <Share2 size={18} />
+                  </button>
                 </div>
 
                 <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 no-scrollbar">
@@ -306,6 +408,17 @@ const App: React.FC = () => {
 
         </main>
 
+        {/* Back To Top Button */}
+        <button
+          onClick={scrollToTop}
+          aria-label={t('back_to_top')}
+          className={`fixed bottom-6 left-6 z-40 w-10 h-10 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 flex items-center justify-center transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-700 ${
+            showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'
+          }`}
+        >
+          <ArrowUp size={20} />
+        </button>
+
         {/* Floating Compare Bar */}
         {compareList.length > 0 && (
           <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-10 duration-300">
@@ -341,6 +454,12 @@ const App: React.FC = () => {
              </div>
           </div>
         )}
+
+        {/* Toast Notification */}
+        <div className={`fixed top-20 left-1/2 -translate-x-1/2 bg-black/80 dark:bg-white/90 text-white dark:text-black px-4 py-2 rounded-full shadow-lg text-sm font-medium transition-all duration-300 z-[60] flex items-center gap-2 ${showToast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+           <Check size={14} />
+           {t('link_copied')}
+        </div>
 
         <DetailModal mac={selectedModel} onClose={() => setSelectedModel(null)} />
         {isCompareModalOpen && (

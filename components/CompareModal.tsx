@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { X, Trophy, Minus } from 'lucide-react';
+import React, { useContext, useState } from 'react';
+import { X, Trophy, Minus, Share2, Check } from 'lucide-react';
 import { MacModel } from '../lib/types';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { LanguageContext } from '../App';
@@ -13,6 +13,7 @@ interface CompareModalProps {
 
 const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
   const { t, language } = useContext(LanguageContext);
+  const [showCopied, setShowCopied] = useState(false);
 
   if (models.length !== 2) return null;
 
@@ -24,6 +25,13 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
     if (val1 > val2) return 'bg-blue-600 dark:bg-blue-500';
     if (val1 < val2) return 'bg-gray-400 dark:bg-gray-600';
     return 'bg-blue-400 dark:bg-blue-400';
+  };
+
+  const handleShare = () => {
+    // URL includes current filter/compare state handled by App.tsx, so just copy href
+    navigator.clipboard.writeText(window.location.href);
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2000);
   };
 
   const ComparisonRow = ({ label, val1, val2, suffix = '' }: { label: string, val1: number, val2: number, suffix?: string }) => {
@@ -91,13 +99,23 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose }) => {
         {/* Header */}
         <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-[#151516]">
            <h2 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</h2>
-           <button 
-              onClick={onClose}
-              aria-label={t('close')}
-              className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-           >
-              <X size={20} />
-           </button>
+           <div className="flex items-center gap-2">
+             <button 
+                onClick={handleShare}
+                aria-label={t('share')}
+                className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-2"
+             >
+                {showCopied ? <Check size={18} className="text-green-500" /> : <Share2 size={18} />}
+                {showCopied && <span className="text-xs font-medium text-green-600 dark:text-green-400 hidden sm:inline">{t('link_copied')}</span>}
+             </button>
+             <button 
+                onClick={onClose}
+                aria-label={t('close')}
+                className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+             >
+                <X size={20} />
+             </button>
+           </div>
         </div>
 
         <div className="overflow-y-auto p-4 md:p-6 custom-scrollbar">

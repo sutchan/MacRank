@@ -115,6 +115,9 @@ export const translations = {
     type_tablet: 'Tablet',
     close: 'Close',
     pts_per_10: 'pts/$10',
+    share: 'Share',
+    link_copied: 'Link copied to clipboard!',
+    back_to_top: 'Back to Top',
   },
   zh: {
     appTitle: 'MacRank',
@@ -193,6 +196,9 @@ export const translations = {
     type_tablet: '平板',
     close: '关闭',
     pts_per_10: '分/$10',
+    share: '分享',
+    link_copied: '链接已复制到剪贴板！',
+    back_to_top: '回到顶部',
   },
   es: {
     appTitle: 'MacRank',
@@ -271,6 +277,9 @@ export const translations = {
     type_tablet: 'Tablet',
     close: 'Cerrar',
     pts_per_10: 'pts/$10',
+    share: 'Compartir',
+    link_copied: '¡Enlace copiado!',
+    back_to_top: 'Volver arriba',
   },
   fr: {
     appTitle: 'MacRank',
@@ -349,6 +358,9 @@ export const translations = {
     type_tablet: 'Tablette',
     close: 'Fermer',
     pts_per_10: 'pts/10$',
+    share: 'Partager',
+    link_copied: 'Lien copié !',
+    back_to_top: 'Haut de page',
   },
   de: {
     appTitle: 'MacRank',
@@ -427,6 +439,9 @@ export const translations = {
     type_tablet: 'Tablet',
     close: 'Schließen',
     pts_per_10: 'Pkt/10$',
+    share: 'Teilen',
+    link_copied: 'Link kopiert!',
+    back_to_top: 'Nach oben',
   },
   ja: {
     appTitle: 'MacRank',
@@ -505,6 +520,9 @@ export const translations = {
     type_tablet: 'タブレット',
     close: '閉じる',
     pts_per_10: '点/10ドル',
+    share: '共有',
+    link_copied: 'リンクをコピーしました！',
+    back_to_top: 'トップへ戻る',
   },
   pt: {
     appTitle: 'MacRank',
@@ -583,6 +601,9 @@ export const translations = {
     type_tablet: 'Tablet',
     close: 'Fechar',
     pts_per_10: 'pts/$10',
+    share: 'Compartilhar',
+    link_copied: 'Link copiado!',
+    back_to_top: 'Voltar ao topo',
   },
   ru: {
     appTitle: 'MacRank',
@@ -661,6 +682,9 @@ export const translations = {
     type_tablet: 'Планшет',
     close: 'Закрыть',
     pts_per_10: 'очк/$10',
+    share: 'Поделиться',
+    link_copied: 'Ссылка скопирована!',
+    back_to_top: 'Наверх',
   },
   ko: {
     appTitle: 'MacRank',
@@ -739,6 +763,9 @@ export const translations = {
     type_tablet: '태블릿',
     close: '닫기',
     pts_per_10: '점/$10',
+    share: '공유',
+    link_copied: '링크가 복사되었습니다!',
+    back_to_top: '맨 위로',
   },
   hi: {
     appTitle: 'MacRank',
@@ -817,5 +844,8 @@ export const translations = {
     type_tablet: 'टैबलेट',
     close: 'बंद करें',
     pts_per_10: 'अंक/$10',
+    share: 'साझा करें',
+    link_copied: 'लिंक कॉपी किया गया!',
+    back_to_top: 'शीर्ष पर वापस',
   }
 };
