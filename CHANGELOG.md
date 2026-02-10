@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.18] - 2025-02-22
+
+### Added
+- **Settings UI**: Improved the Settings modal with a standardized list layout including "General" and "About" sections.
+- **Language Selector**: Changed language selection to a user-friendly dropdown menu in Settings.
+- **System Options**: Added "Reset Data" option to clear local storage cache and "Source Code" link in the About section.
+
 ## [0.1.16] - 2025-02-22
 
 ### Refactor

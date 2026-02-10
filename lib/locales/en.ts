@@ -93,4 +93,10 @@ export const en = {
   scenario_desc_creative: 'Focus on Rendering: 55% GPU, 30% Multi, 15% Single',
   scenario_desc_daily: 'Focus on Responsiveness: 70% Single-Core, 20% Multi, 10% GPU',
   ai_suggestion: 'Need help choosing?',
+  general: 'General',
+  about: 'About',
+  reset_data: 'Reset Data',
+  reset_desc: 'Clear local preferences and cache.',
+  source_code: 'Source Code',
+  version: 'Version',
 };

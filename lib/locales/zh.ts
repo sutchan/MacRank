@@ -93,4 +93,10 @@ export const zh = {
   scenario_desc_creative: '侧重渲染：55% GPU，30% 多核，15% 单核',
   scenario_desc_daily: '侧重响应：70% 单核，20% 多核，10% GPU',
   ai_suggestion: '需要选购建议吗？',
+  general: '通用',
+  about: '关于',
+  reset_data: '重置数据',
+  reset_desc: '清除本地偏好设置和缓存。',
+  source_code: '源代码',
+  version: '版本',
 };
