@@ -3,45 +3,57 @@
 ## 根目录
 *   `index.html`: 应用入口 HTML，包含 Meta 标签、PWA 配置、Tailwind CDN 配置及 ImportMap。
 *   `index.tsx`: React 应用挂载点。
-*   `App.tsx`: 主应用组件，包含路由逻辑（虽然是单页滚动）、全局状态管理 (Context) 和主布局。
-*   `vite.config.ts`: Vite 构建配置，包含 PWA 插件配置和环境变量处理。
+*   `App.tsx`: 主应用组件，包含路由逻辑、全局状态管理和主布局。
+*   `vite.config.ts`: Vite 构建配置。
 *   `tsconfig.json`: TypeScript 编译配置。
 *   `package.json`: 项目依赖与脚本。
+*   `metadata.json`: 项目元数据定义。
+*   `CHANGELOG.md`: 版本变更记录。
+*   `README.md` / `README_zh-CN.md`: 项目说明文档。
 
 ## 核心源码目录
 
 ### `/components` (UI 组件)
-*   `MacTable.tsx`: 核心排行榜表格组件，处理数据展示与行交互，支持移动端列冻结。
-*   `PerformanceChart.tsx`: 基于 Recharts 的可视化图表组件，支持多模式切换。
-*   `DetailModal.tsx`: 机型详情弹窗，展示详细规格与评分条。
-*   `CompareModal.tsx`: 对比模式弹窗，包含雷达图和条形图对比。
-*   `AIChat.tsx`: AI 悬浮聊天组件，包含聊天界面与输入逻辑。
-*   `TierBadge.tsx`: 显示 S+/S/A/B 等段位的徽章组件。
+*   `Header.tsx`: 顶部导航栏。
+*   `Hero.tsx`: 首页标题区域。
+*   `FilterControls.tsx`: 筛选与排序控制栏。
+*   `MacTable.tsx`: 核心排行榜表格。
+*   `PerformanceChart.tsx`: 可视化图表组件。
+*   `DetailModal.tsx`: 机型详情弹窗。
+*   `CompareModal.tsx`: 对比模式弹窗。
+*   `AIChat.tsx`: AI 悬浮聊天组件。
+*   `SettingsModal.tsx`: 设置弹窗。
+*   `Footer.tsx`: 底部页脚。
+*   `TierBadge.tsx`: 段位徽章组件。
 
 ### `/lib` (数据与逻辑)
-*   `data.ts`: 数据入口文件，聚合 Silicon 和 Intel 数据。
-*   `data-silicon.ts`: 存储 Apple Silicon (M1-M4) 机型数据。
-*   `data-intel.ts`: 存储 Intel (2010-2020) 机型数据。
-*   `scoring.ts`: 包含综合评分计算算法 (`calculateTierScore`) 和段位映射逻辑。
-*   `translations.ts`: 国际化入口，聚合 `locales/` 下的所有语言包，提供 Context Provider。
-*   `locales/`: 存放各语言翻译文件的目录。
-    *   `en.ts`, `zh.ts`, `es.ts`, `fr.ts`, `de.ts`, `ja.ts`, `pt.ts`, `ru.ts`, `ko.ts`, `hi.ts`
-*   `types.ts`: TypeScript 接口定义 (`MacModel`, `DeviceType`, `ChipFamily` 等)。
+*   `data.ts`: 数据统一出口。
+*   `data-silicon.ts`: Apple Silicon 机型数据。
+*   `data-intel.ts`: Intel 机型数据。
+*   `data-reference.ts`: PC/GPU 参考数据。
+*   `scoring.ts`: 评分算法与段位逻辑。
+*   `translations.ts`: 国际化上下文与工具函数。
+*   `types.ts`: TypeScript 类型定义。
+*   `locales/`: 语言包目录 (`en.ts`, `zh.ts`, ...)。
 
 ### `/services` (外部服务)
-*   `geminiService.ts`: 封装 Google Gemini API 调用逻辑，包含 System Prompt 构建与上下文注入。
+*   `geminiService.ts`: Google Gemini API 集成逻辑。
 
 ### `/app` (全局样式)
-*   `style.css`: 自定义全局样式，补充 Tailwind 未覆盖的 Webkit 滚动条与动画细节。
+*   `style.css`: 自定义全局样式。
 
 ### `/openspec` (规范文档)
+*   `project_rules.md`: 项目核心规则与规范。
 *   `specification.md`: 产品规格说明书。
 *   `features.md`: 功能详细说明书。
 *   `tech_stack.md`: 技术栈与架构文档。
+*   `api_interface.md`: API 接口与服务定义。
 *   `data_dictionary.md`: 数据字典与算法定义。
 *   `ui_design.md`: UI 设计规范。
+*   `testing_strategy.md`: 测试策略。
+*   `deployment.md`: 部署指南。
 *   `roadmap.md`: 项目路线图。
 *   `directory_structure.md`: 本文件。
 
 ### `/public` (静态资源)
-*   `icon.svg`: 应用图标 (Logo)。
+*   `icon.svg`: 应用图标。
