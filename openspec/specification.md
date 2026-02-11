@@ -6,7 +6,7 @@ MacRank 是一个针对苹果 Mac 电脑（涵盖 M1-M4 系列及 2010-2020 Inte
 **当前版本**: v0.3.1
 
 ## 2. 技术架构概览
-- **核心框架**: React 19 (Hooks 模式)
+- **核心框架**: React 18.3.1 (Hooks 模式)
 - **构建系统**: Vite + ESM (通过 esm.sh 加载依赖)
 - **样式系统**: Tailwind CSS + 自定义 CSS (`app/style.css`)
 - **数据可视化**: Recharts (响应式 SVG 图表)

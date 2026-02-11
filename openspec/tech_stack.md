@@ -1,7 +1,7 @@
 # 技术栈与架构深度文档
 
 ## 1. 核心框架与运行时
-*   **React 19**: 利用最新的 Hooks API (`useMemo` 深度优化过滤逻辑, `useContext` 管理全局状态)。
+*   **React 18.3.1**: 目前最稳定的 React 版本，兼容所有主流生态库。使用 Hooks API (`useMemo`, `useContext`) 管理状态。
 *   **Vite 5**: 高性能前端构建工具，支持 HMR (热模块替换) 和优化的生产环境打包。
 *   **ES Modules (ESM)**: 
     *   **开发环境**: Vite 本地服务。
