@@ -1,5 +1,6 @@
+
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { MessageSquare, ArrowUp, X, Bot, Sparkles } from 'lucide-react';
+import { MessageSquare, ArrowUp, X, Bot, Sparkles, Wifi, WifiOff } from 'lucide-react';
 import { ChatMessage, MacModel } from '../lib/types';
 import { getMacAdvice } from '../services/geminiService';
 import { LanguageContext } from '../lib/translations';
@@ -16,10 +17,25 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showSuggestion, setShowSuggestion] = useState(true);
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
 
   useEffect(() => {
     setMessages([{ role: 'model', text: t('chatWelcome') }]);
   }, [language]);
+
+  // Network Status Listener
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   // Hide suggestion after a delay or when opened
   useEffect(() => {
@@ -87,7 +103,12 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         <div className="px-6 py-4 border-b border-gray-200/50 dark:border-gray-700/50 flex justify-between items-center bg-white/50 dark:bg-black/20">
           <div className="flex flex-col">
             <h3 className="font-semibold text-gray-900 dark:text-white text-base">{t('chatTitle')}</h3>
-            <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">{t('genai_assistant')}</span>
+            <div className="flex items-center gap-1.5">
+               <span className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-green-500' : 'bg-orange-500'}`}></span>
+               <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">
+                 {isOnline ? t('genai_assistant') || 'GenAI Assistant' : t('status_offline') || 'Offline Mode'}
+               </span>
+            </div>
           </div>
           <button 
             onClick={() => setIsOpen(false)}
@@ -141,9 +162,11 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
             <button 
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white disabled:opacity-50 disabled:bg-gray-400 transition-all hover:bg-blue-600"
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-white disabled:opacity-50 disabled:bg-gray-400 transition-all ${
+                isOnline ? 'bg-blue-500 hover:bg-blue-600' : 'bg-orange-500 hover:bg-orange-600'
+              }`}
             >
-              <ArrowUp size={16} strokeWidth={2.5} />
+              {isOnline ? <ArrowUp size={16} strokeWidth={2.5} /> : <WifiOff size={14} />}
             </button>
           </div>
         </form>

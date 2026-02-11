@@ -41,6 +41,9 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
             <th className="hidden md:table-cell py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-32">{t('cpuCores')}</th>
             <th className="hidden md:table-cell py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-32">{t('gpuCores')}</th>
             
+            {/* New Memory Column - Hidden on mobile/tablet, shown on lg+ */}
+            <th className="hidden lg:table-cell py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-32">{t('memory')}</th>
+            
             <th className="py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right w-32">{t('performance')}</th>
             
             {/* Hidden on mobile, shown on md+ */}
@@ -126,6 +129,11 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
                 </td>
                 <td className="hidden md:table-cell py-6 px-4 text-sm opacity-80 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
                   {mac.cores_gpu}
+                </td>
+
+                {/* Memory - Hidden on mobile/tablet */}
+                <td className="hidden lg:table-cell py-6 px-4 text-sm opacity-80 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
+                  {mac.memory}
                 </td>
 
                 <td className="py-4 md:py-6 px-4 text-right cursor-pointer" onClick={() => !isRef && onSelect(mac)}>

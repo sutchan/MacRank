@@ -1,3 +1,4 @@
+
 import React, { useContext, useState } from 'react';
 import { X, Share2, Check } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -65,7 +66,9 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
   };
 
   const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const compareTitle = t('share_compare_msg') || 'Performance Battle:';
+    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name}\n${t('compareModels')} - MacRank\n\n👉 ${window.location.href}`;
+    navigator.clipboard.writeText(shareText);
     setShowCopied(true);
     setTimeout(() => setShowCopied(false), 2000);
   };

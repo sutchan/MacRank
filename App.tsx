@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { macData, refData, calculateTierScore } from './lib/data';
 import { ChipFamily, DeviceType, MacModel, RankingScenario } from './lib/types';
@@ -98,8 +99,13 @@ const App: React.FC = () => {
     if (showReference) params.set('ref', 'true');
     if (compareList.length > 0) params.set('compare', compareList.map(m => m.id).join(','));
 
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState(null, '', newUrl);
+    try {
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState(null, '', newUrl);
+    } catch (e) {
+      // Ignore errors in environments where history API is restricted (e.g. some previews)
+      console.debug('URL sync skipped:', e);
+    }
   }, [searchTerm, filterType, filterFamily, sortBy, compareList, rankingScenario, showReference]);
 
   // --- Scroll Listener for Back to Top ---
@@ -237,6 +243,14 @@ const App: React.FC = () => {
     }
   };
 
+  const handleAppShare = () => {
+    // Generates a rich share message with promotional text
+    const shareText = `${t('share_message') || 'Check out MacRank!'} \n\n👉 ${window.location.href}`;
+    navigator.clipboard.writeText(shareText);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
+
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       <div className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative">
@@ -256,11 +270,7 @@ const App: React.FC = () => {
             filterFamily={filterFamily} setFilterFamily={setFilterFamily}
             sortBy={sortBy} setSortBy={setSortBy}
             rankingScenario={rankingScenario} setRankingScenario={setRankingScenario}
-            onShare={() => {
-              navigator.clipboard.writeText(window.location.href);
-              setShowToast(true);
-              setTimeout(() => setShowToast(false), 2000);
-            }}
+            onShare={handleAppShare}
             showReference={showReference}
             setShowReference={setShowReference}
           />
