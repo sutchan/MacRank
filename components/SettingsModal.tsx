@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react';
 import { X, Moon, Sun, ChevronRight, RotateCcw, Github, Globe, ChevronDown } from 'lucide-react';
 import { LanguageContext, languages, Language } from '../lib/translations';
@@ -19,13 +20,13 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="settings-modal-overlay" className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-[rgba(50,50,50,0.5)] dark:bg-[rgba(0,0,0,0.8)] backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
-      <div className="relative w-full max-w-sm bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 flex flex-col max-h-[90vh]">
+      <div id="settings-modal-content" className="relative w-full max-w-sm bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 flex flex-col max-h-[90vh]">
         
         {/* Header */}
         <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-[#151516]">

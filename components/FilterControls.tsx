@@ -55,8 +55,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   };
 
   return (
-    <section className="sticky top-12 z-30 bg-[rgba(251,251,253,0.8)] dark:bg-[rgba(0,0,0,0.8)] backdrop-blur-xl py-4 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800 transition-all duration-300 shadow-sm">
-       <div className="max-w-[980px] mx-auto flex flex-col gap-4">
+    <section id="filter-controls" className="sticky top-12 z-30 bg-[rgba(251,251,253,0.8)] dark:bg-[rgba(0,0,0,0.8)] backdrop-blur-xl py-4 -mx-4 px-4 border-b border-gray-200 dark:border-gray-800 transition-all duration-300 shadow-sm">
+       <div id="filter-controls-inner" className="max-w-[980px] mx-auto flex flex-col gap-4">
           
           {/* Row 1: Search & Type Filter */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">

@@ -14,6 +14,7 @@ import FilterControls from './components/FilterControls';
 import Footer from './components/Footer';
 import { translations, Language, LanguageContext } from './lib/translations';
 import { Scale, Check, ArrowUp } from 'lucide-react';
+import { shareContent } from './lib/share';
 
 const APP_VERSION = '0.3.1';
 
@@ -220,8 +221,6 @@ const App: React.FC = () => {
     });
   }, [searchTerm, filterType, filterFamily, sortBy, macData, refData, rankingScenario, showReference]);
 
-  // Calculate Max Score for Progress Bar normalization (only considering current filtered list for better scaling, or global max?)
-  // Using global max from filtered list to make bars relative to the current view
   const maxScoreInView = useMemo(() => {
       if (filteredData.length === 0) return 10000;
       return Math.max(...filteredData.map(m => calculateTierScore(m, rankingScenario)));
@@ -243,24 +242,51 @@ const App: React.FC = () => {
     }
   };
 
-  const handleAppShare = () => {
-    // Generates a rich share message with promotional text
-    const shareText = `${t('share_message') || 'Check out MacRank!'} \n\n👉 ${window.location.href}`;
-    navigator.clipboard.writeText(shareText);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+  const handleAppShare = async () => {
+    // Determine sharing context (e.g., "M3 Family" or "Laptops")
+    let contextTitle = '';
+    if (filterFamily !== 'All') {
+        contextTitle = t(('family_' + filterFamily.toLowerCase().replace(' ', '')) as any) || filterFamily;
+    } else if (filterType !== 'All') {
+         // Simple mapping for basic types to their translation keys
+         const typeKeyMap: Record<string, string> = {
+            'Laptop': 'laptops',
+            'Desktop': 'desktops',
+            'Tablet': 'tablets'
+         };
+         const typeKey = typeKeyMap[filterType] || filterType;
+         contextTitle = t(typeKey as any);
+    }
+
+    const shareTitle = contextTitle ? `${contextTitle} - MacRank` : t('appTitle');
+    const baseMessage = t('share_message') || 'Check out MacRank!';
+    // If we have a specific context, prepend it to the message
+    const shareText = contextTitle 
+        ? `${contextTitle} | ${baseMessage}`
+        : baseMessage;
+
+    const result = await shareContent({
+        title: shareTitle,
+        text: shareText,
+        url: window.location.href
+    });
+
+    if (result === 'copied') {
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2000);
+    }
   };
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      <div className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative">
+      <div id="app-root" className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative">
         
         <Header 
           onScrollToSection={scrollToSection} 
           onOpenSettings={() => setIsSettingsOpen(true)} 
         />
 
-        <main className="max-w-[980px] mx-auto px-4 pt-28 space-y-12">
+        <main id="main-content" className="max-w-[980px] mx-auto px-4 pt-28 space-y-12">
           
           <Hero />
 
@@ -276,7 +302,7 @@ const App: React.FC = () => {
           />
 
           {/* Charts Section - Clean & Minimal */}
-          <section id="charts" className="py-4 border-b border-gray-200 dark:border-gray-800 scroll-mt-36">
+          <section id="charts-section" className="py-4 border-b border-gray-200 dark:border-gray-800 scroll-mt-36">
              <div className="mb-8">
                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{t('charts')}</h3>
                <p className="text-gray-500 dark:text-gray-400 text-sm">{t('perf_subtitle')}</p>
@@ -285,7 +311,7 @@ const App: React.FC = () => {
           </section>
 
           {/* List Section */}
-          <section id="leaderboard" className="space-y-6 scroll-mt-36">
+          <section id="leaderboard-section" className="space-y-6 scroll-mt-36">
             <div className="flex items-end justify-between">
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('leaderboard')}</h2>
               <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -308,6 +334,7 @@ const App: React.FC = () => {
 
         {/* Back To Top Button */}
         <button
+          id="back-to-top-btn"
           onClick={scrollToTop}
           aria-label={t('back_to_top')}
           className={`fixed bottom-6 left-6 z-40 w-10 h-10 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 flex items-center justify-center transition-all duration-300 hover:bg-gray-50 dark:hover:bg-gray-700 ${
@@ -319,7 +346,7 @@ const App: React.FC = () => {
 
         {/* Floating Compare Bar */}
         {compareList.length > 0 && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-10 duration-300">
+          <div id="compare-floating-bar" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-10 duration-300">
              <div className="bg-white dark:bg-gray-800 rounded-full shadow-2xl border border-gray-200 dark:border-gray-700 p-2 pl-6 pr-2 flex items-center gap-6">
                  <div className="flex items-center gap-3">
                    <span className="text-sm font-medium text-gray-900 dark:text-white">
@@ -354,7 +381,7 @@ const App: React.FC = () => {
         )}
 
         {/* Toast Notification */}
-        <div className={`fixed top-20 left-1/2 -translate-x-1/2 bg-black/80 dark:bg-white/90 text-white dark:text-black px-4 py-2 rounded-full shadow-lg text-sm font-medium transition-all duration-300 z-[60] flex items-center gap-2 ${showToast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
+        <div id="toast-notification" className={`fixed top-20 left-1/2 -translate-x-1/2 bg-black/80 dark:bg-white/90 text-white dark:text-black px-4 py-2 rounded-full shadow-lg text-sm font-medium transition-all duration-300 z-[60] flex items-center gap-2 ${showToast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
            <Check size={14} />
            {t('link_copied')}
         </div>

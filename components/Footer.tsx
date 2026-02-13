@@ -11,8 +11,8 @@ const Footer: React.FC<FooterProps> = ({ version }) => {
   const { t } = useContext(LanguageContext);
 
   return (
-    <footer className="py-12 border-t border-gray-200 dark:border-gray-800 transition-colors">
-      <div className="flex flex-col items-center justify-center space-y-8 text-center">
+    <footer id="app-footer" className="py-12 border-t border-gray-200 dark:border-gray-800 transition-colors">
+      <div id="footer-content" className="flex flex-col items-center justify-center space-y-8 text-center">
          
          {/* Disclaimer */}
          <p className="text-[10px] md:text-xs leading-relaxed text-gray-400 dark:text-gray-500 max-w-lg mx-auto">

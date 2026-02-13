@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react';
 import { LanguageContext } from '../lib/translations';
 
@@ -5,7 +6,7 @@ const Hero: React.FC = () => {
   const { t } = useContext(LanguageContext);
 
   return (
-    <div className="text-center space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div id="hero-section" className="text-center space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
        <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-gray-900 dark:text-white">
          {t('heroTitle')}
        </h1>

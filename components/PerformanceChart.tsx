@@ -1,3 +1,4 @@
+
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter, Label } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/data';
@@ -138,10 +139,10 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
   };
 
   return (
-    <div className="w-full bg-white dark:bg-gray-900 p-4 md:p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 transition-colors">
+    <div id="performance-chart-wrapper" className="w-full bg-white dark:bg-gray-900 p-4 md:p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 transition-colors">
       
       {/* Header & Controls */}
-      <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-6">
+      <div id="chart-controls" className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
             {metric === 'value' || metric === 'value-ratio' ? <DollarSign size={20} className="text-gray-400" /> : <BarChart3 size={20} className="text-gray-400" />}
@@ -176,7 +177,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
       </div>
 
       {/* Chart Container - Responsive Height */}
-      <div className="h-[350px] md:h-[500px] w-full">
+      <div id="chart-visualization" className="h-[350px] md:h-[500px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           {metric === 'value' ? (
              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e && e.activePayload && !e.activePayload[0].payload.isReference && onSelect(e.activePayload[0].payload)}>

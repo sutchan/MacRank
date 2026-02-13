@@ -23,9 +23,9 @@ const MacTable: React.FC<MacTableProps> = ({ data, onSelect, compareList, onTogg
   const isMaxSelected = compareList.length >= 2;
 
   return (
-    <div className="overflow-x-auto relative">
+    <div id="mac-table-container" className="overflow-x-auto relative">
       {/* Remove forced min-width on mobile to allow natural fitting, apply min-width only on desktop (md) */}
-      <table className="w-full text-left border-collapse md:min-w-[700px]">
+      <table id="mac-table" className="w-full text-left border-collapse md:min-w-[700px]">
         <thead>
           <tr className="border-b border-gray-200 dark:border-gray-800">
             <th className="py-4 pl-4 w-10 text-center">

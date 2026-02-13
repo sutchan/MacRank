@@ -6,6 +6,7 @@ import { MacModel, RankingScenario } from '../lib/types';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { LanguageContext, formatCurrency } from '../lib/translations';
 import TierBadge from './TierBadge';
+import { shareContent } from '../lib/share';
 
 interface CompareModalProps {
   models: MacModel[];
@@ -65,12 +66,20 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
     return 'bg-blue-400 dark:bg-blue-400';
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     const compareTitle = t('share_compare_msg') || 'Performance Battle:';
-    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name}\n${t('compareModels')} - MacRank\n\n👉 ${window.location.href}`;
-    navigator.clipboard.writeText(shareText);
-    setShowCopied(true);
-    setTimeout(() => setShowCopied(false), 2000);
+    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name}`;
+    
+    const result = await shareContent({
+      title: 'MacRank Comparison',
+      text: shareText,
+      url: window.location.href
+    });
+
+    if (result === 'copied') {
+      setShowCopied(true);
+      setTimeout(() => setShowCopied(false), 2000);
+    }
   };
 
   const ComparisonRow = ({ label, val1, val2, suffix = '' }: { label: string, val1: number, val2: number, suffix?: string }) => {
@@ -124,13 +133,13 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="compare-modal-overlay" className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-[rgba(50,50,50,0.5)] dark:bg-[rgba(0,0,0,0.8)] backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
-      <div className="relative w-full max-w-4xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
+      <div id="compare-modal-content" className="relative w-full max-w-4xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
         
         {/* Header */}
         <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-[#151516]">

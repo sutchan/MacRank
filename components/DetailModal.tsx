@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2 } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
@@ -30,13 +31,13 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="detail-modal-overlay" className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-[rgba(50,50,50,0.4)] dark:bg-[rgba(0,0,0,0.7)] backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
-      <div className="relative w-full max-w-3xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
+      <div id="detail-modal-content" className="relative w-full max-w-3xl bg-white dark:bg-[#1c1c1e] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="p-5 md:p-8 pb-0 flex justify-between items-start">
              <div>
