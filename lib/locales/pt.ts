@@ -23,7 +23,7 @@ export const pt = {
   launchPrice: 'Preço Lançamento',
   composite: 'Composto',
   pts: 'pts',
-  specs: 'Especificaciones',
+  specs: 'Especificações',
   processor: 'Processador',
   graphics: 'Gráficos',
   memory: 'Memória',
@@ -105,4 +105,6 @@ export const pt = {
   stable: 'estável',
   reset_confirm: 'Tem certeza que deseja redefinir todas as preferências?',
   view_on_github: 'Ver no GitHub',
+  share_message: '🚀 Confira o Ranking de Desempenho Apple Silicon no MacRank! Compare pontuações M1/M2/M3/M4 e encontre o Mac ideal para você.',
+  share_compare_msg: '⚔️ Batalha de Desempenho: ',
 };

@@ -1,8 +1,9 @@
+
 # 项目定义 (Project Definition)
 
 ## 项目概况
 - **项目名称**: MacRank
-- **当前版本**: v0.3.1
+- **当前版本**: v0.3.3
 - **项目描述**: 针对 Apple Silicon (M1-M4) 及经典 Intel Mac 的交互式性能天梯榜与 AI 导购助手。
 - **GitHub**: https://github.com/sutchan/MacRank
 

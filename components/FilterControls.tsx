@@ -80,9 +80,10 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                     </button>
                   )}
                 </div>
+                {/* Retaining small share button here for context sharing */}
                 <button 
                   onClick={onShare}
-                  className="p-2 text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                  className="p-2 bg-gray-200/50 dark:bg-gray-800/50 rounded-lg text-gray-500 hover:text-blue-500 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                   aria-label={t('share')}
                 >
                   <Share2 size={18} />

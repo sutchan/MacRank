@@ -1,9 +1,26 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.3.3] - 2025-02-22
+
+### Fixed
+- **Code Quality**: Removed hardcoded version string in `SettingsModal`, now using the global constant.
+- **Localization**: Corrected a typo in Portuguese translation ("Especificaciones" -> "Especificações").
+
+## [0.3.2] - 2025-02-22
+
+### Added
+- **Share Functionality**: Implemented deep linking and share buttons in Hero, Filter Controls, and Detail Modal to boost viral marketing.
+- **Internationalization**: Completed translations for all 8 non-English/Chinese languages (Spanish, French, German, Japanese, Portuguese, Russian, Korean, Hindi).
+
+### Optimized
+- **Footer UI**: Redesigned the footer with better visual hierarchy, spacing, and a clear GitHub Call-to-Action.
+- **Version Sync**: Synchronized version numbers across all application files and documentation.
 
 ## [0.3.1] - 2025-02-22
 

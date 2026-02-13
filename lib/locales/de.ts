@@ -105,4 +105,6 @@ export const de = {
   stable: 'stabil',
   reset_confirm: 'Möchten Sie wirklich alle Einstellungen zurücksetzen?',
   view_on_github: 'Auf GitHub ansehen',
+  share_message: '🚀 Entdecke die MacRank Apple Silicon Leistungs-Rangliste! Vergleiche M1/M2/M3/M4 Scores und finde den besten Mac für dich.',
+  share_compare_msg: '⚔️ Leistungs-Duell: ',
 };

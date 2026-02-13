@@ -105,4 +105,6 @@ export const ko = {
   stable: '안정판',
   reset_confirm: '모든 설정을 초기화하시겠습니까?',
   view_on_github: 'GitHub에서 보기',
+  share_message: '🚀 MacRank Apple Silicon 성능 순위를 확인하세요! M1/M2/M3/M4 점수를 비교하고 나에게 맞는 최적의 Mac을 찾으세요.',
+  share_compare_msg: '⚔️ 성능 대결: ',
 };

@@ -105,4 +105,6 @@ export const fr = {
   stable: 'stable',
   reset_confirm: 'Êtes-vous sûr de vouloir réinitialiser toutes les préférences ?',
   view_on_github: 'Voir sur GitHub',
+  share_message: '🚀 Découvrez le classement de performance Apple Silicon sur MacRank ! Comparez les scores M1/M2/M3/M4 et trouvez le Mac idéal.',
+  share_compare_msg: '⚔️ Duel de Performance : ',
 };

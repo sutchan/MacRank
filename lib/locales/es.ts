@@ -105,4 +105,6 @@ export const es = {
   stable: 'estable',
   reset_confirm: '¿Estás seguro de que quieres restablecer todas las preferencias?',
   view_on_github: 'Ver en GitHub',
+  share_message: '🚀 ¡Echa un vistazo al Ranking de Rendimiento Apple Silicon de MacRank! Compara puntuaciones M1/M2/M3/M4 y encuentra tu Mac ideal.',
+  share_compare_msg: '⚔️ Batalla de Rendimiento: ',
 };

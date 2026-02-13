@@ -16,7 +16,7 @@ import { translations, Language, LanguageContext } from './lib/translations';
 import { Scale, Check, ArrowUp } from 'lucide-react';
 import { shareContent } from './lib/share';
 
-const APP_VERSION = '0.3.1';
+const APP_VERSION = '0.3.3';
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---
@@ -29,9 +29,10 @@ const App: React.FC = () => {
     scenario: RankingScenario;
     compareIds: string[];
     showRef: boolean;
+    modelId: string | null;
   } => {
     if (typeof window === 'undefined') return {
-      search: '', type: 'All', family: 'All', sort: 'score', scenario: 'balanced', compareIds: [], showRef: false
+      search: '', type: 'All', family: 'All', sort: 'score', scenario: 'balanced', compareIds: [], showRef: false, modelId: null
     };
     
     const params = new URLSearchParams(window.location.search);
@@ -54,7 +55,8 @@ const App: React.FC = () => {
       sort: (validSorts.includes(sortParam) ? sortParam : 'score') as 'score' | 'price' | 'year',
       scenario: (validScenarios.includes(scenarioParam) ? scenarioParam : 'balanced') as RankingScenario,
       compareIds: params.get('compare') ? params.get('compare')?.split(',') || [] : [],
-      showRef: params.get('ref') === 'true'
+      showRef: params.get('ref') === 'true',
+      modelId: params.get('model') || null
     };
   };
 
@@ -81,8 +83,19 @@ const App: React.FC = () => {
   // Auto-open compare modal if 2 items were loaded from URL
   const initialLoadRef = useRef(true);
   useEffect(() => {
-    if (initialLoadRef.current && compareList.length === 2) {
-      setIsCompareModalOpen(true);
+    if (initialLoadRef.current) {
+      // Handle compare modal deep link
+      if (compareList.length === 2 && initialState.compareIds.length === 2) {
+        setIsCompareModalOpen(true);
+      }
+      
+      // Handle single model deep link
+      if (initialState.modelId) {
+        const found = macData.find(m => m.id === initialState.modelId) || refData.find(m => m.id === initialState.modelId);
+        if (found) {
+          setSelectedModel(found);
+        }
+      }
     }
     initialLoadRef.current = false;
   }, []);
@@ -99,6 +112,9 @@ const App: React.FC = () => {
     if (rankingScenario !== 'balanced') params.set('scenario', rankingScenario);
     if (showReference) params.set('ref', 'true');
     if (compareList.length > 0) params.set('compare', compareList.map(m => m.id).join(','));
+    // Note: We deliberately DO NOT sync 'model' (selectedModel) to URL during navigation 
+    // to prevent the back button from behaving unexpectedly (closing modal = back).
+    // The 'model' param is only for incoming shared links.
 
     try {
       const newUrl = `${window.location.pathname}?${params.toString()}`;
@@ -265,10 +281,15 @@ const App: React.FC = () => {
         ? `${contextTitle} | ${baseMessage}`
         : baseMessage;
 
+    // Clean URL without deep linking parameters for general share
+    const url = new URL(window.location.href);
+    // Keep search/filter params but ensure no model/compare params unless intended? 
+    // Actually sharing the *current view* is better.
+    
     const result = await shareContent({
         title: shareTitle,
         text: shareText,
-        url: window.location.href
+        url: url.toString()
     });
 
     if (result === 'copied') {
@@ -288,7 +309,7 @@ const App: React.FC = () => {
 
         <main id="main-content" className="max-w-[980px] mx-auto px-4 pt-28 space-y-12">
           
-          <Hero />
+          <Hero onShare={handleAppShare} />
 
           <FilterControls 
             searchTerm={searchTerm} setSearchTerm={setSearchTerm}
@@ -395,6 +416,7 @@ const App: React.FC = () => {
             onClose={() => setIsSettingsOpen(false)} 
             theme={theme} 
             toggleTheme={toggleTheme} 
+            version={APP_VERSION}
           />
         )}
         <AIChat macData={filteredData} />

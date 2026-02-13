@@ -1,11 +1,12 @@
 
-import React, { useContext } from 'react';
-import { X, Cpu, Layers, HardDrive, CheckCircle2 } from 'lucide-react';
+import React, { useContext, useState } from 'react';
+import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel, DeviceType, RankingScenario } from '../lib/types';
 import { LanguageContext } from '../lib/translations';
 import TierBadge from './TierBadge';
 import { formatCurrency } from '../lib/translations';
+import { shareContent } from '../lib/share';
 
 interface DetailModalProps {
   mac: MacModel | null;
@@ -15,6 +16,7 @@ interface DetailModalProps {
 
 const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => {
   const { t, language } = useContext(LanguageContext);
+  const [showCopied, setShowCopied] = useState(false);
 
   if (!mac) return null;
 
@@ -27,6 +29,25 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
       case DeviceType.Desktop: return t('type_desktop');
       case DeviceType.Tablet: return t('type_tablet');
       default: return type;
+    }
+  };
+
+  const handleShare = async () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('model', mac.id);
+    
+    // Create a compelling message based on the model's strengths
+    const shareText = `Check out the ${mac.name} on MacRank!\n\n🚀 Score: ${score} (${tier} Tier)\n🧠 Chip: ${mac.chip}\n💰 Price: ${formatCurrency(mac.basePriceUSD, language)}`;
+
+    const result = await shareContent({
+      title: `${mac.name} - MacRank`,
+      text: shareText,
+      url: url.toString()
+    });
+
+    if (result === 'copied') {
+      setShowCopied(true);
+      setTimeout(() => setShowCopied(false), 2000);
     }
   };
 
@@ -48,13 +69,22 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                  <h2 className="text-2xl md:text-4xl font-semibold text-gray-900 dark:text-white tracking-tight leading-tight">{mac.name}</h2>
                  <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mt-2 font-light">{mac.chip} <span className="mx-2">•</span> {mac.releaseYear}</p>
              </div>
-             <button 
-                onClick={onClose}
-                aria-label={t('close')}
-                className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-             >
-                <X size={20} />
-             </button>
+             <div className="flex gap-2">
+                <button 
+                    onClick={handleShare}
+                    aria-label={t('share')}
+                    className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
+                    {showCopied ? <Check size={20} className="text-green-500"/> : <Share2 size={20} />}
+                </button>
+                <button 
+                    onClick={onClose}
+                    aria-label={t('close')}
+                    className="bg-gray-100 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                    <X size={20} />
+                </button>
+             </div>
         </div>
 
         {/* Scrollable Content */}

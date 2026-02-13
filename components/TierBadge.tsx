@@ -1,4 +1,5 @@
-// Version: 0.1.13
+
+// Version: 0.3.3
 import React from 'react';
 
 interface TierBadgeProps {

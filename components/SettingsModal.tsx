@@ -7,9 +7,10 @@ interface SettingsModalProps {
   onClose: () => void;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
+  version: string;
 }
 
-const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleTheme }) => {
+const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleTheme, version }) => {
   const { t, language, setLanguage } = useContext(LanguageContext);
 
   const handleReset = () => {
@@ -137,7 +138,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
              </div>
 
              <div className="text-center pt-2">
-                <p className="text-xs text-gray-400 font-mono">MacRank v0.3.1</p>
+                <p className="text-xs text-gray-400 font-mono">MacRank v{version}</p>
              </div>
           </div>
 
