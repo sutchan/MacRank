@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useContext } from 'react';
 import { Search, X, Share2, ChevronDown, Scale, Code, Palette, Coffee, Info, Cpu } from 'lucide-react';
 import { LanguageContext } from '../lib/translations';
@@ -117,6 +117,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                         aria-label="Filter by Chip Family"
                       >
                         <option value="All">{t('allChips')}</option>
+                        <option value={ChipFamily.M5}>{t('family_m5')}</option>
                         <option value={ChipFamily.M4}>{t('family_m4')}</option>
                         <option value={ChipFamily.M3}>{t('family_m3')}</option>
                         <option value={ChipFamily.M2}>{t('family_m2')}</option>

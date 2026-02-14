@@ -1,3 +1,4 @@
+// Version: 0.3.4
 import { MacModel, ChipFamily, DeviceType } from './types';
 
 export const intelData: MacModel[] = [

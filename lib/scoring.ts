@@ -1,9 +1,10 @@
+// Version: 0.3.4
 import { MacModel, RankingScenario } from './types';
 
 // Normalization constants (approximate max values in current database)
-const MAX_SC = 4200;   // Single Core max
-const MAX_MC = 28000;  // Multi Core max
-const MAX_MT = 200000; // Metal max
+const MAX_SC = 5000;   // Single Core max (Updated for M5)
+const MAX_MC = 35000;  // Multi Core max (Updated for M5)
+const MAX_MT = 250000; // Metal max (Updated for M5)
 
 const SCENARIO_WEIGHTS: Record<RankingScenario, { sc: number; mc: number; mt: number }> = {
   balanced: { sc: 35, mc: 45, mt: 20 }, // Default: Balanced mix

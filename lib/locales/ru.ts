@@ -55,6 +55,7 @@ export const ru = {
   clickToDetail: 'Клик для деталей',
   footer_disclaimer: 'MacRank использует синтетические оценки на основе данных Geekbench 6. Цены отражают MSRP запуска в USD.',
   footer_copyright: 'Copyright © 2025 MacRank. Не связано с Apple Inc.',
+  family_m5: 'Семейство M5',
   family_m4: 'Семейство M4',
   family_m3: 'Семейство M3',
   family_m2: 'Семейство M2',

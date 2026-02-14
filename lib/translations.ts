@@ -1,3 +1,4 @@
+// Version: 0.3.4
 import { createContext } from 'react';
 import { en } from './locales/en';
 import { zh } from './locales/zh';

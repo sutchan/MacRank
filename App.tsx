@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { macData, refData, calculateTierScore } from './lib/data';
 import { ChipFamily, DeviceType, MacModel, RankingScenario } from './lib/types';
@@ -16,7 +16,7 @@ import { translations, Language, LanguageContext } from './lib/translations';
 import { Scale, Check, ArrowUp } from 'lucide-react';
 import { shareContent } from './lib/share';
 
-const APP_VERSION = '0.3.3';
+const APP_VERSION = '0.3.4';
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---
@@ -39,7 +39,7 @@ const App: React.FC = () => {
     
     // Explicitly check against string arrays to ensure type safety
     const validTypes: string[] = ['All', DeviceType.Laptop, DeviceType.Desktop, DeviceType.Tablet];
-    const validFamilies: string[] = ['All', ChipFamily.M4, ChipFamily.M3, ChipFamily.M2, ChipFamily.M1, ChipFamily.Intel];
+    const validFamilies: string[] = ['All', ChipFamily.M5, ChipFamily.M4, ChipFamily.M3, ChipFamily.M2, ChipFamily.M1, ChipFamily.Intel];
     const validSorts: string[] = ['score', 'price', 'year'];
     const validScenarios: string[] = ['balanced', 'developer', 'creative', 'daily'];
 

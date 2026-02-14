@@ -1,6 +1,75 @@
+// Version: 0.3.4
 import { MacModel, ChipFamily, DeviceType } from './types';
 
 export const siliconData: MacModel[] = [
+  // ==========================================
+  // M5 Series (2025) - Speculative
+  // ==========================================
+  {
+    id: 'm5-max-16-16-48',
+    name: 'MacBook Pro 16" (Late 2025)',
+    type: DeviceType.Laptop,
+    chip: 'M5 Max',
+    family: ChipFamily.M5,
+    cores_cpu: '16 (12P+4E)',
+    cores_gpu: 48,
+    memory: '64GB - 192GB',
+    releaseYear: 2025,
+    singleCoreScore: 4850,
+    multiCoreScore: 32000,
+    metalScore: 240000,
+    basePriceUSD: 4199,
+    description: 'The next leap in mobile workstation power. On-device AI and real-time ray tracing become effortless.'
+  },
+  {
+    id: 'm5-pro-14-12-24',
+    name: 'MacBook Pro 14" (Late 2025)',
+    type: DeviceType.Laptop,
+    chip: 'M5 Pro',
+    family: ChipFamily.M5,
+    cores_cpu: '12 (8P+4E)',
+    cores_gpu: 24,
+    memory: '36GB - 72GB',
+    releaseYear: 2025,
+    singleCoreScore: 4800,
+    multiCoreScore: 26000,
+    metalScore: 135000,
+    basePriceUSD: 2199,
+    description: 'A huge multi-core jump for the Pro line, making it a compelling alternative to the previous-gen Max.'
+  },
+  {
+    id: 'm5-mbp-14-base',
+    name: 'MacBook Pro 14" (Late 2025)',
+    type: DeviceType.Laptop,
+    chip: 'M5',
+    family: ChipFamily.M5,
+    cores_cpu: '12 (4P+8E)',
+    cores_gpu: 12,
+    memory: '16GB - 32GB',
+    releaseYear: 2025,
+    singleCoreScore: 4750,
+    multiCoreScore: 19000,
+    metalScore: 70000,
+    basePriceUSD: 1699,
+    description: 'The base M5 brings a significant increase in efficiency cores, boosting everyday multi-tasking performance.'
+  },
+  {
+    id: 'm5-air-13',
+    name: 'MacBook Air 13" (2025)',
+    type: DeviceType.Laptop,
+    chip: 'M5',
+    family: ChipFamily.M5,
+    cores_cpu: '10 (4P+6E)',
+    cores_gpu: 10,
+    memory: '16GB - 32GB',
+    releaseYear: 2025,
+    singleCoreScore: 4700,
+    multiCoreScore: 18500,
+    metalScore: 68000,
+    basePriceUSD: 1199,
+    description: 'The new standard for thin-and-light computing, with Pro-level performance from just two years prior.'
+  },
+
   // ==========================================
   // M4 Series (2024)
   // ==========================================

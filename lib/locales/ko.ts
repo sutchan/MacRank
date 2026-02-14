@@ -55,6 +55,7 @@ export const ko = {
   clickToDetail: '상세보기 클릭',
   footer_disclaimer: 'MacRank는 Geekbench 6 데이터를 기반으로 한 종합 점수를 사용합니다. 가격은 출시 당시 USD 권장소비자가격을 반영합니다.',
   footer_copyright: 'Copyright © 2025 MacRank. Apple Inc.와 관련 없음.',
+  family_m5: 'M5 패밀리',
   family_m4: 'M4 패밀리',
   family_m3: 'M3 패밀리',
   family_m2: 'M2 패밀리',

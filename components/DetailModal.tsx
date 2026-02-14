@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useContext, useState } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
@@ -138,7 +138,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                                 <span className="font-mono text-gray-900 dark:text-white">{mac.singleCoreScore}</span>
                              </div>
                              <div className="h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(mac.singleCoreScore / 4500) * 100}%`}}></div>
+                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(mac.singleCoreScore / 5000) * 100}%`}}></div>
                              </div>
                         </div>
 
@@ -149,7 +149,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                                 <span className="font-mono text-gray-900 dark:text-white">{mac.multiCoreScore}</span>
                              </div>
                              <div className="h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-purple-500 rounded-full" style={{ width: `${(mac.multiCoreScore / 30000) * 100}%`}}></div>
+                                <div className="h-full bg-purple-500 rounded-full" style={{ width: `${(mac.multiCoreScore / 35000) * 100}%`}}></div>
                              </div>
                         </div>
 

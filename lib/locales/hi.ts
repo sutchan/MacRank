@@ -55,6 +55,7 @@ export const hi = {
   clickToDetail: 'विवरण के लिए क्लिक करें',
   footer_disclaimer: 'MacRank Geekbench 6 डेटा पर आधारित सिंथेटिक स्कोर का उपयोग करता है। कीमतें USD में लॉन्च MSRP को दर्शाती हैं।',
   footer_copyright: 'कॉपीराइट © 2025 MacRank। Apple Inc. से संबद्ध नहीं।',
+  family_m5: 'M5 परिवार',
   family_m4: 'M4 परिवार',
   family_m3: 'M3 परिवार',
   family_m2: 'M2 परिवार',

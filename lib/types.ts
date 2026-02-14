@@ -1,9 +1,10 @@
-
+// Version: 0.3.4
 export enum ChipFamily {
-  M1 = 'M1',
-  M2 = 'M2',
-  M3 = 'M3',
+  M5 = 'M5',
   M4 = 'M4',
+  M3 = 'M3',
+  M2 = 'M2',
+  M1 = 'M1',
   Intel = 'Intel',
   Reference = 'Reference' // For PC parts
 }

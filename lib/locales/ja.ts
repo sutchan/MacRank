@@ -55,6 +55,7 @@ export const ja = {
   clickToDetail: 'クリックで詳細表示',
   footer_disclaimer: 'MacRankはGeekbench 6データに基づく合成スコアを使用しています。価格は発売時の米ドルMSRPを反映しています。',
   footer_copyright: 'Copyright © 2025 MacRank. Apple Inc.とは関係ありません。',
+  family_m5: 'M5 ファミリー',
   family_m4: 'M4 ファミリー',
   family_m3: 'M3 ファミリー',
   family_m2: 'M2 ファミリー',

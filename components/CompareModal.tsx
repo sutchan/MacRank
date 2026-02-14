@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useContext, useState } from 'react';
 import { X, Share2, Check } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -28,20 +28,20 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
   const radarData = [
     {
       subject: t('singleCore'),
-      A: (m1.singleCoreScore / 4200) * 100, // Normalized to max approx
-      B: (m2.singleCoreScore / 4200) * 100,
+      A: (m1.singleCoreScore / 5000) * 100, // Normalized to max approx
+      B: (m2.singleCoreScore / 5000) * 100,
       fullMark: 100,
     },
     {
       subject: t('multiCore'),
-      A: (m1.multiCoreScore / 28000) * 100,
-      B: (m2.multiCoreScore / 28000) * 100,
+      A: (m1.multiCoreScore / 35000) * 100,
+      B: (m2.multiCoreScore / 35000) * 100,
       fullMark: 100,
     },
     {
       subject: t('metal'),
-      A: (m1.metalScore / 200000) * 100,
-      B: (m2.metalScore / 200000) * 100,
+      A: (m1.metalScore / 250000) * 100,
+      B: (m2.metalScore / 250000) * 100,
       fullMark: 100,
     },
     {

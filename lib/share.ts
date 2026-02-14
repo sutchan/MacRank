@@ -1,3 +1,4 @@
+// Version: 0.3.4
 /**
  * Shares content using the native Web Share API if available,
  * otherwise falls back to copying text to the clipboard.

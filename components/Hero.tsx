@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useContext } from 'react';
 import { Share2 } from 'lucide-react';
 import { LanguageContext } from '../lib/translations';

@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { MessageSquare, ArrowUp, X, Bot, Sparkles, Wifi, WifiOff } from 'lucide-react';
 import { ChatMessage, MacModel } from '../lib/types';

@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import { MacModel, ChipFamily, DeviceType } from './types';
 
 // Reference scores based on Geekbench 6 (CPU) and Geekbench 6 OpenCL (GPU)

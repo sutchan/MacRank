@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useContext } from 'react';
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel, RankingScenario } from '../lib/types';

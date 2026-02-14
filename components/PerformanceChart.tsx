@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter, Label } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/data';

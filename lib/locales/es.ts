@@ -55,6 +55,7 @@ export const es = {
   clickToDetail: 'Clic para detalles',
   footer_disclaimer: 'MacRank utiliza puntuaciones sintéticas basadas en datos de Geekbench 6. Los precios reflejan el PVP de lanzamiento en USD.',
   footer_copyright: 'Copyright © 2025 MacRank. No afiliado a Apple Inc.',
+  family_m5: 'Familia M5',
   family_m4: 'Familia M4',
   family_m3: 'Familia M3',
   family_m2: 'Familia M2',

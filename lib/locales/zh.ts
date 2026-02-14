@@ -55,6 +55,7 @@ export const zh = {
   clickToDetail: '点击查看详情',
   footer_disclaimer: 'MacRank 使用基于 Geekbench 6 数据的合成评分。价格反映发售时的美元建议零售价。',
   footer_copyright: '版权所有 © 2025 MacRank。与 Apple Inc. 无关。',
+  family_m5: 'M5 系列',
   family_m4: 'M4 系列',
   family_m3: 'M3 系列',
   family_m2: 'M2 系列',

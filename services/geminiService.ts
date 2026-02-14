@@ -1,4 +1,4 @@
-
+// Version: 0.3.4
 import { GoogleGenAI } from "@google/genai";
 import { MacModel } from '../lib/types';
 import { translations, Language, formatCurrency } from '../lib/translations';
