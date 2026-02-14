@@ -112,4 +112,6 @@ export const zh = {
   offline_no_match: '我在本地数据库中未找到符合您描述的具体机型。请尝试提及具体的芯片（如 "M3"）或机型名称。',
   share_message: '🚀 来看看 MacRank 苹果电脑性能天梯榜！全系 M1/M2/M3/M4 跑分对比，帮你选到最适合的 Mac。',
   share_compare_msg: '⚔️ 性能巅峰对决：',
+  view_options: '视图选项',
+  sort_by: '排序方式'
 };

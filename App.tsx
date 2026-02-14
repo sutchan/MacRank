@@ -1,4 +1,5 @@
-// Version: 0.3.4
+
+// Version: 0.3.5
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { macData, refData, calculateTierScore } from './lib/data';
 import { ChipFamily, DeviceType, MacModel, RankingScenario } from './lib/types';
@@ -16,7 +17,7 @@ import { translations, Language, LanguageContext } from './lib/translations';
 import { Scale, Check, ArrowUp } from 'lucide-react';
 import { shareContent } from './lib/share';
 
-const APP_VERSION = '0.3.4';
+const APP_VERSION = '0.3.5';
 
 const App: React.FC = () => {
   // --- State Initialization with URL Parsing ---

@@ -112,4 +112,6 @@ export const en = {
   offline_no_match: 'I couldn\'t find specific models matching your query in the local database. Try mentioning a specific chip (e.g., "M3") or model name.',
   share_message: '🚀 Check out the MacRank Apple Silicon Performance Leaderboard! Compare M1/M2/M3/M4 scores and find the best Mac for you.',
   share_compare_msg: '⚔️ Performance Battle: ',
+  view_options: 'View Options',
+  sort_by: 'Sort by'
 };
