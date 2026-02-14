@@ -88,7 +88,7 @@ export const ko = {
   scenario: '사용 용도',
   scenario_balanced: '밸런스',
   scenario_developer: '개발자',
-  scenario_creative: '크리에이티브',
+  scenario_creative: '크리에이ティブ',
   scenario_daily: '일상/사무',
   scenario_desc_balanced: '표준 혼합: 싱글 35%, 멀티 45%, GPU 20%',
   scenario_desc_developer: '컴파일 중심: 멀티 65%, 싱글 20%, GPU 15%',
@@ -108,4 +108,6 @@ export const ko = {
   view_on_github: 'GitHub에서 보기',
   share_message: '🚀 MacRank Apple Silicon 성능 순위를 확인하세요! M1/M2/M3/M4 점수를 비교하고 나에게 맞는 최적의 Mac을 찾으세요.',
   share_compare_msg: '⚔️ 성능 대결: ',
+  view_options: '보기 옵션',
+  sort_by: '정렬 기준'
 };

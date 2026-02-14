@@ -76,7 +76,7 @@ export const ja = {
   type_desktop: 'デスクトップ',
   type_tablet: 'タブレット',
   close: '閉じる',
-  pts_per_10: '点/10ドル',
+  pts_per_10: '点/$10',
   share: '共有',
   link_copied: 'リンクをコピーしました！',
   back_to_top: 'トップへ戻る',
@@ -108,4 +108,6 @@ export const ja = {
   view_on_github: 'GitHubで見る',
   share_message: '🚀 MacRankのApple Silicon性能ランキングをチェック！M1/M2/M3/M4スコアを比較して、あなたに最適なMacを見つけよう。',
   share_compare_msg: '⚔️ 性能対決: ',
+  view_options: '表示オプション',
+  sort_by: '並び替え'
 };

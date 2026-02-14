@@ -1,3 +1,4 @@
+
 // Version: 0.3.4
 import React, { useContext } from 'react';
 import { Settings } from 'lucide-react';
@@ -12,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ onScrollToSection, onOpenSettings }) =>
   const { t } = useContext(LanguageContext);
 
   return (
-    <header id="app-header" className="fixed w-full top-0 z-40 bg-[rgba(251,251,253,0.8)] dark:bg-[rgba(22,22,23,0.8)] backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-500">
+    <header id="app-header" className="fixed w-full top-0 z-40 bg-frost-light dark:bg-frost-dark backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-500">
       <div id="header-container" className="max-w-[980px] mx-auto px-4 h-12 flex items-center justify-between text-xs">
         <div className="flex items-center gap-4">
            <a href="/" className="text-gray-900 dark:text-gray-100 opacity-80 hover:opacity-100 transition-opacity" aria-label="Home">

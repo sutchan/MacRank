@@ -1,3 +1,4 @@
+
 // Placed in /public to be served as a static asset
 // This config object must be available before the Tailwind CDN script is loaded.
 
@@ -33,6 +34,13 @@ tailwind.config = {
         blue: {
           500: '#0071E3', // Apple Blue
           600: '#0077ED',
+        },
+        // Centralized colors for glassmorphism ("Frost") effects
+        frost: {
+          light: 'rgba(251, 251, 253, 0.8)',      // Header Light
+          dark: 'rgba(22, 22, 23, 0.8)',         // Header Dark
+          'light-chat': 'rgba(255, 255, 255, 0.95)', // AIChat Light
+          'dark-chat': 'rgba(30, 30, 30, 0.95)',       // AIChat Dark
         }
       },
       backdropBlur: {

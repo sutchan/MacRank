@@ -108,4 +108,6 @@ export const pt = {
   view_on_github: 'Ver no GitHub',
   share_message: '🚀 Confira o Ranking de Desempenho Apple Silicon no MacRank! Compare pontuações M1/M2/M3/M4 e encontre o Mac ideal para você.',
   share_compare_msg: '⚔️ Batalha de Desempenho: ',
+  view_options: 'Opções de Visualização',
+  sort_by: 'Ordenar por'
 };

@@ -44,7 +44,7 @@
 
 ### `/openspec` (规范文档)
 *   `project_rules.md`: 项目核心规则与规范。
-*   `specification.md`: 产品规格说明书。
+*   `specification.md`: 项目规格索引文件 (Master Index)。
 *   `features.md`: 功能详细说明书。
 *   `tech_stack.md`: 技术栈与架构文档。
 *   `api_interface.md`: API 接口与服务定义。

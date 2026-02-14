@@ -1,3 +1,4 @@
+
 // Version: 0.3.4
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { MessageSquare, ArrowUp, X, Bot, Sparkles, Wifi, WifiOff } from 'lucide-react';
@@ -98,7 +99,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
       {/* Chat Window - Glassmorphism */}
       <div 
         id="ai-chat-window"
-        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-[rgba(255,255,255,0.95)] dark:bg-[rgba(30,30,30,0.95)] backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-all duration-500 transform origin-bottom-right overflow-hidden ${
+        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-all duration-500 transform origin-bottom-right overflow-hidden ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 pointer-events-none translate-y-10'
         }`}
       >
