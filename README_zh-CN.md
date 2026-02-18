@@ -2,7 +2,7 @@
 
 **中文文档** | [English](./README.md)
 
-**MacRank** 是一个针对 Apple Silicon (M1-M4 系列) 电脑的综合性能排行榜和天梯图应用。它结合了详尽的基准测试数据与 AI 智能导购助手，帮助用户找到最适合自己工作流的 Mac 电脑。
+**MacRank** 是一个针对 Apple Silicon (M1-M5 系列) 电脑的综合性能排行榜和天梯图应用。它结合了详尽的基准测试数据与 AI 智能导购助手，帮助用户找到最适合自己工作流的 Mac 电脑。
 
 ![MacRank 预览](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
@@ -37,8 +37,8 @@
 
 1. **克隆仓库**
    ```bash
-   git clone https://github.com/yourusername/macrank.git
-   cd macrank
+   git clone https://github.com/sutchan/MacRank.git
+   cd MacRank
    ```
 
 2. **安装依赖**
@@ -63,15 +63,20 @@
 
 ```
 macrank/
-├── components/       # UI 组件 (表格, 图表, 聊天窗口, 详情弹窗)
-├── lib/             
-│   ├── data.ts       # 静态 Mac 机型数据库 (统一入口)
-│   ├── translations.ts # 国际化翻译字典
-│   └── types.ts      # TypeScript 类型定义
-├── services/         # API 服务集成 (Gemini AI)
-├── App.tsx           # 主应用逻辑
-├── index.tsx         # 入口文件
-└── index.html        # HTML 模板
+├── app/
+│   ├── components/       # UI 组件 (如 MacTable.tsx)
+│   ├── data/             # 硬件参数等静态数据 (如 data-silicon.ts)
+│   ├── lib/              # 核心逻辑 (如 scoring.ts)
+│   ├── locales/          # 国际化语言包 (如 zh.ts)
+│   ├── services/         # API 服务集成 (如 geminiService.ts)
+│   └── style.css         # 全局样式
+├── public/               # 静态资源 (如 icon.svg)
+├── openspec/             # 项目规范文档
+├── App.tsx               # 主应用组件
+├── index.tsx             # 应用入口文件
+├── tailwind.config.js    # Tailwind 配置
+├── package.json
+└── README_zh-CN.md
 ```
 
 ## 🤝 参与贡献

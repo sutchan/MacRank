@@ -2,7 +2,7 @@
 
 [中文文档](./README_zh-CN.md) | **English**
 
-**MacRank** is a comprehensive performance leaderboard and tier list for Apple Mac computers (M1-M4 series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect Mac for their workflow.
+**MacRank** is a comprehensive performance leaderboard and tier list for Apple Mac computers (M1-M5 series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect Mac for their workflow.
 
 ![MacRank Preview](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
@@ -37,8 +37,8 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/macrank.git
-   cd macrank
+   git clone https://github.com/sutchan/MacRank.git
+   cd MacRank
    ```
 
 2. **Install dependencies**
@@ -63,15 +63,20 @@
 
 ```
 macrank/
-├── components/       # UI Components (Table, Chart, Chat, Modal)
-├── lib/             
-│   ├── data.ts       # Static Mac model database (Entry)
-│   ├── translations.ts # i18n dictionaries
-│   └── types.ts      # TypeScript interfaces
-├── services/         # API integrations (Gemini AI)
-├── App.tsx           # Main application logic
-├── index.tsx         # Entry point
-└── index.html        # HTML template
+├── app/
+│   ├── components/       # UI Components (e.g., MacTable.tsx)
+│   ├── data/             # Static data files (e.g., data-silicon.ts)
+│   ├── lib/              # Core logic (e.g., scoring.ts)
+│   ├── locales/          # Language translation files (e.g., en.ts)
+│   ├── services/         # API integrations (e.g., geminiService.ts)
+│   └── style.css         # Global CSS styles
+├── public/               # Static assets (e.g., icon.svg)
+├── openspec/             # Specification documents
+├── App.tsx               # Main application component
+├── index.tsx             # Application entry point
+├── tailwind.config.js    # Tailwind CSS configuration
+├── package.json
+└── README.md
 ```
 
 ## 🤝 Contributing

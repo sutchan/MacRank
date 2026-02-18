@@ -1,5 +1,4 @@
-
-// Version: 0.3.5
+// index.tsx v0.5.3
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

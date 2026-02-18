@@ -1,5 +1,5 @@
 {
-  "name": "MacRank - Coding",
-  "description": "The ultimate 2025 performance guide for Apple Mac computers. Compare Geekbench 6 & Metal scores for M4 Max, M3, M2, M1 & Intel models. AI-powered buying advice for MacBook Pro, Air, Mac Studio & iMac.",
+  "name": "MacRank - 苹果电脑性能天梯查询表 v0.6.2",
+  "description": "专业级苹果电脑性能天梯查询工具。新增操作系统版本筛选器，并将筛选控件重构为下拉菜单以优化空间。版本: v0.6.2",
   "requestFramePermissions": []
 }

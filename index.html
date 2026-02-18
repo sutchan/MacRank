@@ -1,6 +1,6 @@
-<!-- Version: 0.3.5 -->
+<!-- Version: 0.6.2 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8"></script>
@@ -15,20 +15,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     
-    <!-- PWA & Mobile Meta Tags -->
-    <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="MacRank">
-    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-    <link rel="apple-touch-icon" href="/icon.svg">
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./icon.svg">
     
     <!-- Primary Meta Tags -->
-    <title>MacRank 2025: Apple Silicon M1/M2/M3/M4 Benchmark Leaderboard & Tier List</title>
-    <meta name="title" content="MacRank 2025: Apple Silicon M1/M2/M3/M4 Benchmark Leaderboard & Tier List" />
-    <meta name="description" content="The ultimate 2025 performance guide for Apple Mac computers. Compare Geekbench 6 & Metal scores for M4 Max, M3, M2, M1 & Intel models. AI-powered buying advice for MacBook Pro, Air, Mac Studio & iMac." />
-    <meta name="keywords" content="Apple Silicon, M4 Max Benchmark, M3 Pro vs M4, Mac Tier List 2025, MacBook Performance Chart, Geekbench 6 Scores, Mac Buying Guide, MacRank, M1 vs M2 vs M3 vs M4, Mac Studio Ultra Benchmark" />
+    <title>MacRank 2025: 苹果电脑性能天梯榜 v0.6.2</title>
+    <meta name="title" content="MacRank 2025: 苹果电脑性能天梯榜 v0.6.2" />
+    <meta name="description" content="最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。版本: 0.6.2" />
+    <meta name="keywords" content="苹果性能天梯, Mac天梯图, MacBook跑分, M4 Max跑分, Apple Silicon排行榜, MacRank" />
     <meta name="author" content="MacRank" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://macrank.app/" />
@@ -36,114 +30,21 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://macrank.app/" />
-    <meta property="og:title" content="MacRank 2025: Apple Silicon Performance Leaderboard" />
-    <meta property="og:description" content="Compare M1/M2/M3/M4 benchmark scores. Find the best MacBook or Desktop for your workflow with our interactive tier list and AI advisor." />
+    <meta property="og:title" content="MacRank 2025: Mac 性能天梯榜 v0.6.2" />
+    <meta property="og:description" content="交互式苹果电脑性能排名与 AI 选购顾问。" />
     <meta property="og:image" content="https://macrank.app/og-image.jpg" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://macrank.app/" />
-    <meta property="twitter:title" content="MacRank 2025: Apple Silicon Performance Leaderboard" />
-    <meta property="twitter:description" content="Detailed benchmarks for every Apple Silicon Mac and iPad. Interactive charts and comparison tools." />
-    <meta property="twitter:image" content="https://macrank.app/og-image.jpg" />
-
-    <!-- GEO / Generative Engine Optimization: Structured Data -->
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "MacRank",
-        "url": "https://macrank.app/",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://macrank.app/?search={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "MacRank",
-        "applicationCategory": "ReferenceApplication",
-        "operatingSystem": "Web, iOS, Android",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "description": "An interactive performance leaderboard and AI-powered purchasing advisor for Apple Mac computers and iPads, featuring Geekbench 6 and Metal benchmark data.",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "ratingCount": "150"
-        },
-        "featureList": "Apple Silicon Benchmarks, Mac Tier List, AI Buying Advisor, Performance Charts, Specs Comparison"
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "Dataset",
-        "name": "Apple Silicon M-Series Benchmark Database 2025",
-        "description": "A comprehensive collection of performance metrics for Apple M1, M2, M3, and M4 series chips, including Geekbench 6 Single-Core, Multi-Core, and Metal GPU scores.",
-        "creator": {
-          "@type": "Organization",
-          "name": "MacRank"
-        },
-        "license": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "variableMeasured": ["Single-Core Score", "Multi-Core Score", "Metal Score", "Launch Price", "Release Year"]
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is the fastest Mac chip in 2025?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "As of late 2024 and 2025, the Apple M4 Max chip features the highest mobile performance, achieving Multi-Core scores exceeding 26,000 in Geekbench 6."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How does M4 compare to M1?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The M4 series represents a significant leap over the M1, with the M4 Max offering nearly double the CPU performance and substantially higher GPU capabilities compared to the original M1 Max, alongside improved power efficiency."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is the Mac Studio M2 Ultra better than the Mac Pro?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Performance-wise, the Mac Studio M2 Ultra and Mac Pro M2 Ultra share the same chip and performance profile. The Mac Pro offers PCIe expansion slots, while the Mac Studio is a compact, non-expandable desktop at a lower price point."
-            }
-          }
-        ]
-      }
-    ]
-    </script>
-
-    <!-- Configure Tailwind for Dark Mode -->
-    <script src="/tailwind.config.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "@google/genai": "https://esm.sh/@google/genai",
-    "lucide-react": "https://esm.sh/lucide-react@0.428.0?deps=react@18.3.1",
-    "recharts": "https://esm.sh/recharts@2.12.0?deps=react@18.3.1,react-dom@18.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^4.3.1",
-    "react-dom/": "https://esm.sh/react-dom@^18.3.1/",
-    "vite": "https://esm.sh/vite@^5.4.1",
-    "react/": "https://esm.sh/react@^18.3.1/",
-    "vite-plugin-pwa": "https://esm.sh/vite-plugin-pwa@^0.20.0"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4",
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0",
+    "tailwindcss-animate": "https://esm.sh/tailwindcss-animate@^1.0.7"
   }
 }
 </script>
