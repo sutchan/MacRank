@@ -19,7 +19,7 @@ export enum DeviceType {
 
 export type RankingScenario = 'balanced' | 'developer' | 'creative' | 'daily';
 
-export type SortKey = 'score' | 'price' | 'year' | 'name' | 'cpu' | 'gpu' | 'memory';
+export type SortKey = 'score' | 'price' | 'year' | 'name' | 'cpu' | 'gpu' | 'memory' | 'value';
 
 export interface MacModel {
   id: string;
@@ -38,6 +38,21 @@ export interface MacModel {
   multiCoreScore: number;
   metalScore: number;
   basePriceUSD: number;
+  currentPriceUSD?: number; // Real-time or tracked price
+  valueScore?: number; // Performance per dollar
+  
+  // Memory & Storage Details
+  ramDetails?: {
+    type: string; // e.g., LPDDR5, LPDDR5X
+    bandwidth: number; // GB/s
+    capacity: string; // e.g., "8/16/24 GB"
+  };
+  storageDetails?: {
+    type: string; // e.g., SSD
+    readSpeed: number; // MB/s
+    writeSpeed: number; // MB/s
+  };
+
   description: string;
   isReference?: boolean;
 }

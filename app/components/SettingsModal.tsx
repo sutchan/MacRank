@@ -1,7 +1,8 @@
 // app/components/SettingsModal.tsx v0.6.1
 import React, { useContext } from 'react';
-import { X, Moon, Sun, ChevronRight, RotateCcw, Github, Globe, ChevronDown } from 'lucide-react';
-import { LanguageContext, Language, LanguageContextType, languages, translations } from '../locales/translations';
+import { X, Moon, Sun, ChevronRight, RotateCcw, Github, ChevronDown } from 'lucide-react';
+import { LanguageContext, Language, LanguageContextType, languages } from '../locales/translations';
+import TradeInCalculator from './TradeInCalculator';
 
 interface SettingsModalProps {
   onClose: () => void;
@@ -90,6 +91,11 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
                     </button>
                 </div>
              </div>
+          </div>
+
+          <div className="space-y-4">
+             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('tradeIn')}</h3>
+             <TradeInCalculator />
           </div>
 
           <div className="space-y-4">

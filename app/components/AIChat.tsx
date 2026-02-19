@@ -1,6 +1,7 @@
 // app/components/AIChat.tsx v0.6.1
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { MessageSquare, ArrowUp, X, Bot, Sparkles, Wifi, WifiOff, Trash2 } from 'lucide-react';
+import { ArrowUp, X, Sparkles, WifiOff, Trash2 } from 'lucide-react';
+import Markdown from 'react-markdown';
 import { ChatMessage, MacModel } from '../types';
 import { getMacAdvice } from '../services/geminiService';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
@@ -147,7 +148,9 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
                     : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-bl-none border border-gray-100 dark:border-gray-700'
                 }`}
               >
-                <div dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br/>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                <div className="markdown-body">
+                  <Markdown>{msg.text}</Markdown>
+                </div>
               </div>
             </div>
           ))}

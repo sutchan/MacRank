@@ -42,7 +42,7 @@ const currencyMap: Record<Language, { rate: number; symbol: string; code: string
 };
 
 export const formatCurrency = (priceUSD: number, language: Language) => {
-  const { rate, symbol, code } = currencyMap[language] || currencyMap['en'];
+  const { rate, symbol } = currencyMap[language] || currencyMap['en'];
   const converted = Math.round(priceUSD * rate);
   
   // Format with commas

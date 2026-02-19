@@ -1,24 +1,45 @@
-/* app/style.css v0.5.2 */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* app/style.css v0.7.0 */
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-apple-blue: #0071E3;
+  
+  --color-frost-light: rgba(255, 255, 255, 0.8);
+  --color-frost-dark: rgba(0, 0, 0, 0.8);
+  --color-frost-light-chat: rgba(255, 255, 255, 0.95);
+  --color-frost-dark-chat: rgba(28, 28, 30, 0.95);
+  --color-scrim: rgba(50, 50, 50, 0.5);
+  
+  --color-apple-gray-50: #F5F5F7;
+  --color-apple-gray-100: #E5E5EA;
+  --color-apple-gray-200: #D1D1D6;
+  --color-apple-gray-300: #C7C7CC;
+  --color-apple-gray-400: #AEAEB2;
+  --color-apple-gray-500: #8E8E93;
+  --color-apple-gray-600: #636366;
+  --color-apple-gray-700: #48484A;
+  --color-apple-gray-800: #3A3A3C;
+  --color-apple-gray-850: #2C2C2E;
+  --color-apple-gray-900: #1C1C1E;
+  --color-apple-gray-950: #000000;
+}
 
 @layer base {
   :root {
     scroll-behavior: smooth;
-    --apple-blue: #0071E3;
   }
 
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior-y: none;
-    /* Adaptive padding for notches */
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
 
-  /* Firefox Scrollbar */
   * {
     scrollbar-width: thin;
     scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
@@ -29,54 +50,76 @@
   }
 }
 
-@layer utilities {
-  /* Webkit Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+@utility glass-panel {
+  backdrop-filter: blur(24px);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(229, 231, 235, 0.5);
+  
+  @variant dark {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-color: rgba(31, 41, 55, 0.5);
   }
+}
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
   }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(156, 163, 175, 0.5); /* gray-400/50 */
-    border-radius: 20px;
-    border: 2px solid transparent;
-    background-clip: content-box;
+  &::-webkit-scrollbar-thumb {
+    background-color: #d1d5db; /* gray-300 */
+    border-radius: 9999px;
   }
-
-  .dark ::-webkit-scrollbar-thumb {
-    background-color: rgba(75, 85, 99, 0.5); /* gray-600/50 */
+  @variant dark {
+    &::-webkit-scrollbar-thumb {
+      background-color: #374151; /* gray-700 */
+    }
   }
+}
 
-  .no-scrollbar::-webkit-scrollbar {
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
     display: none;
   }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  /* S+ Pulse Animation */
-  @keyframes s-plus-glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(168, 85, 247, 0.4); }
-    50% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.7); }
-  }
-
-  .tier-s-plus {
-    animation: s-plus-glow 3s ease-in-out infinite;
-  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.glass-panel {
-  @apply backdrop-blur-xl bg-white/70 dark:bg-black/70 border-gray-200/50 dark:border-gray-800/50;
+@utility tier-s-plus {
+  animation: s-plus-glow 3s ease-in-out infinite;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+@keyframes s-plus-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(168, 85, 247, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.7); }
 }
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+.markdown-body {
+  @apply text-sm leading-relaxed;
+}
+.markdown-body p {
+  @apply mb-2 last:mb-0;
+}
+.markdown-body ul, .markdown-body ol {
+  @apply mb-2 ml-4 list-disc;
+}
+.markdown-body li {
+  @apply mb-1;
+}
+.markdown-body table {
+  @apply w-full border-collapse mb-2 text-xs;
+}
+.markdown-body th, .markdown-body td {
+  @apply border border-gray-200 dark:border-gray-700 p-1;
+}
+.markdown-body strong {
+  @apply font-semibold text-blue-600 dark:text-blue-400;
 }

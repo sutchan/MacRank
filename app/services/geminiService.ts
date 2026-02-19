@@ -1,6 +1,6 @@
 
 // app/services/geminiService.ts v0.5.2
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { MacModel } from '../types';
 import { translations, Language, formatCurrency, languages } from '../locales/translations';
 
@@ -41,11 +41,13 @@ const getOfflineAdvice = (query: string, contextData: MacModel[], language: Lang
     const responseParts: string[] = [t['offline_response_prefix']];
 
     topMatches.forEach(m => {
+        const price = m.currentPriceUSD || m.basePriceUSD;
         const details = [
           `### ${m.name}`,
           `- **Chip**: ${m.chip} (${m.cores_cpu} CPU, ${m.cores_gpu} GPU)`,
           `- **Scores**: Single ${m.singleCoreScore}, Multi ${m.multiCoreScore}, Metal ${m.metalScore}`,
-          `- **Price**: ${formatCurrency(m.basePriceUSD, language)}`
+          `- **Price**: ${formatCurrency(price, language)}${m.currentPriceUSD && m.currentPriceUSD < m.basePriceUSD ? ' (Discounted)' : ''}`,
+          `- **Value Score**: ${m.valueScore || 'N/A'} pts/$100`
         ];
         
         if (q.includes('cod') || q.includes('dev')) {
@@ -72,29 +74,31 @@ export const getMacAdvice = async (
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
     const optimizedContext = [...contextData]
       .sort((a, b) => b.releaseYear - a.releaseYear || b.multiCoreScore - a.multiCoreScore)
       .slice(0, 45);
 
-    const specsContext = optimizedContext.map(m => 
-      `- ${m.name} (${m.chip}, ${m.releaseYear}): Single-Core ${m.singleCoreScore}, Multi-Core ${m.multiCoreScore}, GPU ${m.metalScore}, Price ~$${m.basePriceUSD}`
-    ).join('\n');
+    const specsContext = optimizedContext.map(m => {
+      const price = m.currentPriceUSD || m.basePriceUSD;
+      return `- ${m.name} (${m.chip}, ${m.releaseYear}): Single-Core ${m.singleCoreScore}, Multi-Core ${m.multiCoreScore}, GPU ${m.metalScore}, Current Price ~$${price}, Value Score: ${m.valueScore || 'N/A'}`;
+    }).join('\n');
     
     const langInfo = languages.find(l => l.code === language);
     const langName = langInfo ? langInfo.label : 'English';
 
     const systemInstruction = `You are "MacRank Advisor", a world-class Apple hardware expert.
-      Your goal: Help users select the best Mac based on technical benchmarks.
+      Your goal: Help users select the best Mac based on technical benchmarks and real-time value analysis.
       
       RULES:
       1. Respond in **${langName}**.
       2. Use Markdown: **Bold** for models, \`code\` for scores, and tables for comparisons.
       3. For "M5" models, clearly state they are "industry-based predictions".
-      4. If a user has a budget, calculate "Performance Points per Dollar" (Score/Price) to justify recommendations.
-      5. Always reference specific Geekbench 6 scores from the provided data.
-      6. Be concise. Avoid fluff. Focus on ROI (Return on Investment) for the user's specific use case (Coding, Design, Office).`;
+      4. Use the provided "Value Score" (Performance per $100) to justify recommendations. Higher is better.
+      5. Mention if a model has a "Current Price" lower than its "Base Price" (indicating a discount).
+      6. Always reference specific Geekbench 6 scores from the provided data.
+      7. Be concise. Avoid fluff. Focus on ROI (Return on Investment) for the user's specific use case (Coding, Design, Office).`;
 
     const contents = `
       User Query: "${query}"
@@ -109,7 +113,7 @@ export const getMacAdvice = async (
       config: {
         systemInstruction: systemInstruction,
         temperature: 0.7,
-        thinkingConfig: { thinkingBudget: 0 }
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW }
       }
     });
 

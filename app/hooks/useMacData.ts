@@ -1,7 +1,8 @@
 // app/hooks/useMacData.ts v0.6.2
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { macData, refData } from '../data/data';
 import { calculateTierScore } from '../lib/scoring';
+import { calculateValueScore, fetchRealTimePrices } from '../services/priceService';
 import { ChipFamily, DeviceType, MacModel, RankingScenario, SortKey } from '../types';
 
 const getInitialStateFromURL = () => {
@@ -39,10 +40,15 @@ export const useMacData = () => {
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>(initialState.sortConfig);
   const [rankingScenario, setRankingScenario] = useState<RankingScenario>(initialState.scenario);
   const [showReference, setShowReference] = useState(initialState.showRef);
+  const [liveData, setLiveData] = useState<MacModel[]>(macData);
+
+  useEffect(() => {
+    fetchRealTimePrices(macData).then(setLiveData);
+  }, []);
   
   const availableFamilies = useMemo(() => {
     const familySet = new Set(macData.filter(m => !m.isReference).map(m => m.family));
-    return ['All', ...Object.values(ChipFamily).filter(f => familySet.has(f) && f !== ChipFamily.Reference)];
+    return ['All', ...Object.values(ChipFamily).filter(f => familySet.has(f) && f !== ChipFamily.Reference)] as (ChipFamily | 'All')[];
   }, []);
 
   const availableOS = useMemo(() => {
@@ -51,10 +57,13 @@ export const useMacData = () => {
   }, []);
 
   const filteredData = useMemo(() => {
-    const sourceData = showReference ? [...macData, ...refData] : macData;
+    const sourceData = showReference ? [...liveData, ...refData] : liveData;
     const searchTerms = searchTerm.toLowerCase().trim().split(/\s+/).filter(Boolean);
     
-    let result = sourceData.filter(item => {
+    let result = sourceData.map(item => ({
+      ...item,
+      valueScore: calculateValueScore(item, rankingScenario)
+    })).filter(item => {
       const dataStr = `${item.name} ${item.chip} ${item.releaseYear} ${item.memory} ${item.cores_cpu} ${item.cores_gpu} ${item.os || ''}`.toLowerCase();
       const matchesSearch = searchTerms.every(term => dataStr.includes(term));
       if (item.isReference) return matchesSearch;
@@ -69,13 +78,19 @@ export const useMacData = () => {
       if (sortConfig.key === 'score') {
         valA = calculateTierScore(a, rankingScenario);
         valB = calculateTierScore(b, rankingScenario);
+      } else if (sortConfig.key === 'value') {
+        valA = a.valueScore || 0;
+        valB = b.valueScore || 0;
+      } else if (sortConfig.key === 'price') {
+        valA = a.currentPriceUSD || a.basePriceUSD;
+        valB = b.currentPriceUSD || b.basePriceUSD;
       } else {
         valA = a[sortConfig.key as keyof MacModel] ?? 0;
         valB = b[sortConfig.key as keyof MacModel] ?? 0;
       }
       return sortConfig.direction === 'asc' ? (valA < valB ? -1 : 1) : (valA > valB ? -1 : 1);
     });
-  }, [searchTerm, filterType, filterFamily, filterOS, sortConfig, rankingScenario, showReference]);
+  }, [searchTerm, filterType, filterFamily, filterOS, sortConfig, rankingScenario, showReference, liveData]);
 
   const handleSort = (key: SortKey) => {
     setSortConfig(prev => ({

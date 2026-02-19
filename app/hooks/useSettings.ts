@@ -20,8 +20,8 @@ export const useSettings = () => {
   });
 
   const t = useCallback((key: keyof typeof translations['en']) => {
-    const dict = translations[language] || translations['en'];
-    return dict[key] || translations['en'][key] || key;
+    const dict = (translations[language] || translations['en']) as any;
+    return dict[key] || (translations['en'] as any)[key] || key;
   }, [language]);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
 // app/components/DetailModal.tsx v0.6.1
 import React, { useContext, useState } from 'react';
-import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap } from 'lucide-react';
+import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';
+import { estimateRefurbishedPrice } from '../services/priceService';
 import { MacModel, RankingScenario } from '../types';
 import { LanguageContext, LanguageContextType, formatCurrency } from '../locales/translations';
 import TierBadge from './TierBadge';
+import TradeInCalculator from './TradeInCalculator';
 import { shareContent } from '../lib/share';
 
 interface DetailModalProps {
@@ -87,6 +89,9 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                   {mac.ramType && <TechParam icon={Zap} label={t('ram_type')} value={mac.ramType} fullWidth />}
                   {mac.displayInfo && <TechParam icon={Monitor} label={t('display')} value={mac.displayInfo} fullWidth />}
                   <TechParam icon={Zap} label="MSRP" value={formatCurrency(mac.basePriceUSD, language)} />
+                  {!mac.isReference && mac.releaseYear < new Date().getFullYear() && (
+                    <TechParam icon={RotateCcw} label={t('refurbished' as any)} value={`~${formatCurrency(estimateRefurbishedPrice(mac.basePriceUSD, mac.releaseYear), language)}`} />
+                  )}
               </div>
             </div>
 
@@ -110,6 +115,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                   ))}
                </div>
             </div>
+
+            <TradeInCalculator targetMac={mac} />
 
             <div className="flex items-center justify-center gap-2 py-4 border-t border-gray-100 dark:border-white/5 text-green-600 dark:text-green-400 text-xs font-bold">
                <CheckCircle2 size={16} />

@@ -21,7 +21,8 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Paths */
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["vite/client", "vite-plugin-pwa/client", "vite-plugin-pwa/react"]
   },
   "include": ["**/*.ts", "**/*.tsx"]
 }

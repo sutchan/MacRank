@@ -24,11 +24,23 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
         const score = calculateTierScore(m, scenario);
         const shortModelName = m.name.replace(/MacBook Pro/, 'MBP').replace(/MacBook Air/, 'MBA').split('(')[0].trim();
         const displayName = `${shortModelName} - ${m.chip}`;
-        return { ...m, displayName, compositeScore: score, tier: getTierLabel(score), valueRatio: m.basePriceUSD > 0 ? score / m.basePriceUSD : 0 };
+        const price = m.currentPriceUSD || m.basePriceUSD;
+        // valueScore is already calculated in useMacData, but we can recalculate or use it if available.
+        // For chart consistency, let's calculate a simple ratio here or use the pre-calculated one.
+        const valueRatio = price > 0 ? score / price : 0;
+        
+        return { 
+          ...m, 
+          displayName, 
+          compositeScore: score, 
+          tier: getTierLabel(score), 
+          price,
+          valueRatio 
+        };
     });
     const stats = {
         avgScore: enriched.length ? enriched.reduce((s, i) => s + i.compositeScore, 0) / enriched.length : 0,
-        avgPrice: enriched.length ? enriched.reduce((s, i) => s + i.basePriceUSD, 0) / enriched.length : 0
+        avgPrice: enriched.length ? enriched.reduce((s, i) => s + i.price, 0) / enriched.length : 0
     };
     let processedData = [...enriched];
     if (metric === 'value-ratio') processedData.sort((a, b) => b.valueRatio - a.valueRatio);
@@ -52,7 +64,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
           <p className="text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1"><Cpu size={12} /> {d.chip}</p>
           <div className="space-y-1">
             <div className="flex justify-between gap-4"><span>{t('composite')}:</span><span>{Math.round(d.compositeScore)}</span></div>
-            <div className="flex justify-between gap-4"><span>{t('price')}:</span><span>{formatCurrency(d.basePriceUSD, language)}</span></div>
+            <div className="flex justify-between gap-4"><span>{t('price')}:</span><span>{formatCurrency(d.price, language)}</span></div>
           </div>
         </div>
       );
@@ -82,7 +94,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
             {metric === 'value' ? (
                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e?.activePayload && onSelect(e.activePayload[0].payload)}>
                  <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
-                 <XAxis type="number" dataKey="basePriceUSD" name="Price" unit="$" tick={{ fontSize: 10 }} label={{ value: t('price'), position: 'bottom', offset: 0, fontSize: 10 }} />
+                 <XAxis type="number" dataKey="price" name="Price" unit="$" tick={{ fontSize: 10 }} label={{ value: t('price'), position: 'bottom', offset: 0, fontSize: 10 }} />
                  <YAxis type="number" dataKey="compositeScore" name="Score" tick={{ fontSize: 10 }} label={{ value: t('score'), angle: -90, position: 'left', fontSize: 10 }} />
                  <Tooltip content={<CustomTooltip />} />
                  <ReferenceLine x={stats.avgPrice} stroke="#9ca3af" strokeDasharray="3 3" />

@@ -1,5 +1,5 @@
 {
-  "name": "MacRank - 苹果电脑性能天梯查询表 v0.6.2",
-  "description": "专业级苹果电脑性能天梯查询工具。新增操作系统版本筛选器，并将筛选控件重构为下拉菜单以优化空间。版本: v0.6.2",
+  "name": "MacRank - 苹果电脑性能天梯查询表 v0.7.0",
+  "description": "专业级苹果电脑性能天梯查询工具。支持 PWA 离线安装，升级至 Tailwind CSS v4，重构 AI 聊天组件支持 Markdown 渲染，并优化 Gemini API 集成。版本: v0.7.0",
   "requestFramePermissions": []
 }

@@ -78,6 +78,10 @@ const MacTable: React.FC<MacTableProps> = ({
                <SortHeader label={t('performance')} sortKey="score" align="right" />
             </th>
             
+            <th className="hidden sm:table-cell py-5 px-4 text-right w-32">
+               <SortHeader label={t('valueScore')} sortKey="value" align="right" />
+            </th>
+            
             <th className="hidden sm:table-cell py-5 pl-5 pr-5 text-right w-28">
                <SortHeader label={t('price')} sortKey="price" align="right" />
             </th>
@@ -178,8 +182,30 @@ const MacTable: React.FC<MacTableProps> = ({
                     </div>
                 </td>
 
+                <td className="hidden sm:table-cell py-6 px-4 text-right cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
+                  <div className="flex flex-col items-end">
+                    <span className={`text-xs font-black ${
+                      (mac.valueScore || 0) > 150 ? 'text-emerald-500' : 
+                      (mac.valueScore || 0) > 100 ? 'text-blue-500' : 
+                      'text-gray-400'
+                    }`}>
+                      {mac.valueScore}
+                    </span>
+                    <span className="text-[9px] text-gray-400 uppercase tracking-tighter">{t('pts_per_10')}</span>
+                  </div>
+                </td>
+
                 <td className="hidden sm:table-cell py-6 pl-5 pr-5 text-right cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
-                  <span className="text-xs font-bold text-gray-400 dark:text-gray-500 tabular-nums">{formatCurrency(mac.basePriceUSD, language)}</span>
+                  <div className="flex flex-col items-end">
+                    <span className={`text-xs font-bold tabular-nums ${mac.currentPriceUSD && mac.currentPriceUSD < mac.basePriceUSD ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-400 dark:text-gray-500'}`}>
+                      {formatCurrency(mac.currentPriceUSD || mac.basePriceUSD, language)}
+                    </span>
+                    {mac.currentPriceUSD && mac.currentPriceUSD < mac.basePriceUSD && (
+                      <span className="text-[9px] font-medium text-emerald-500 line-through opacity-50">
+                        {formatCurrency(mac.basePriceUSD, language)}
+                      </span>
+                    )}
+                  </div>
                 </td>
               </tr>
             );
