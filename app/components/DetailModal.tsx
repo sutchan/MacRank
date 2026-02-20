@@ -1,8 +1,9 @@
 // app/components/DetailModal.tsx v0.6.1
 import React, { useContext, useState } from 'react';
-import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw } from 'lucide-react';
+import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw, Wifi, Cable, BoxSelect } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';
 import { estimateRefurbishedPrice } from '../services/priceService';
+import { getMacSpecs } from '../lib/specs';
 import { MacModel, RankingScenario } from '../types';
 import { LanguageContext, LanguageContextType, formatCurrency } from '../locales/translations';
 import TierBadge from './TierBadge';
@@ -23,6 +24,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
 
   const score = calculateTierScore(mac, scenario);
   const tier = getTierLabel(score);
+  const specs = getMacSpecs(mac);
 
   const descKey = `desc_${mac.id}`;
   const translatedText = t(descKey as any);
@@ -92,6 +94,17 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                   {!mac.isReference && mac.releaseYear < new Date().getFullYear() && (
                     <TechParam icon={RotateCcw} label={t('refurbished' as any)} value={`~${formatCurrency(estimateRefurbishedPrice(mac.basePriceUSD, mac.releaseYear), language)}`} />
                   )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{t('connectivity' as any)}</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <TechParam icon={Wifi} label={t('connectivity' as any)} value={specs.connectivity} fullWidth />
+                  <TechParam icon={Cable} label={t('ports' as any)} value={specs.portsDescription} fullWidth />
+                  <TechParam icon={Monitor} label={t('max_displays' as any)} value={`${specs.maxExternalDisplays}x`} />
+                  <TechParam icon={BoxSelect} label={t('ram_upgrade' as any)} value={specs.ramUpgradable ? t('upgradable' as any) : t('not_upgradable' as any)} />
+                  <TechParam icon={HardDrive} label={t('ssd_upgrade' as any)} value={specs.ssdUpgradable ? t('upgradable' as any) : t('not_upgradable' as any)} />
               </div>
             </div>
 

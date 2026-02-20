@@ -137,6 +137,13 @@ export const en = {
   fairValue: 'Fair Value',
   overpriced: 'Overpriced',
   refurbished: 'Refurbished',
+  upgradable: 'Upgradable',
+  not_upgradable: 'Not Upgradable',
+  max_displays: 'Max Displays',
+  connectivity: 'Connectivity',
+  ports: 'Ports',
+  ram_upgrade: 'RAM Upgrade',
+  ssd_upgrade: 'SSD Upgrade',
 
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'The next leap in mobile workstation power. On-device AI and real-time ray tracing become effortless.',

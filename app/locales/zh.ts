@@ -137,6 +137,13 @@ export const zh = {
   fairValue: '性价比一般',
   overpriced: '溢价较高',
   refurbished: '翻新预估价',
+  upgradable: '可升级',
+  not_upgradable: '不可升级',
+  max_displays: '最大外接显示器',
+  connectivity: '无线连接',
+  ports: '接口',
+  ram_upgrade: '内存升级',
+  ssd_upgrade: '硬盘升级',
 
   // --- 硬件详细描述 ---
   'desc_m5-max-16-16-48': '下一代移动工作站。预测将采用更先进的制程，进一步提升端侧 AI 性能。',

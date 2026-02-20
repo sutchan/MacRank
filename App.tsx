@@ -11,7 +11,6 @@ import Header from './app/components/Header';
 import Hero from './app/components/Hero';
 import FilterControls from './app/components/FilterControls';
 import Footer from './app/components/Footer';
-import ReloadPrompt from './app/components/ReloadPrompt';
 import { LanguageContext } from './app/locales/translations';
 import { ArrowUp, Check } from 'lucide-react';
 import { shareContent } from './app/lib/share';
@@ -138,7 +137,6 @@ const App: React.FC = () => {
         )}
 
         <AIChat macData={data.filteredData} />
-        <ReloadPrompt />
         
         {interaction.showToast && (
           <div id="toast-notification" className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
