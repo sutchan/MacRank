@@ -1,14 +1,15 @@
 // app/components/Header.tsx v0.3.25
 import React, { useContext } from 'react';
-import { Settings } from 'lucide-react';
+import { Settings, RotateCcw } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
 
 interface HeaderProps {
   onScrollToSection: (id: string) => void;
   onOpenSettings: () => void;
+  onOpenTradeIn: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onScrollToSection, onOpenSettings }) => {
+const Header: React.FC<HeaderProps> = ({ onScrollToSection, onOpenSettings, onOpenTradeIn }) => {
   const { t } = useContext(LanguageContext) as LanguageContextType;
 
   return (
@@ -26,6 +27,15 @@ const Header: React.FC<HeaderProps> = ({ onScrollToSection, onOpenSettings }) =>
           <button onClick={() => onScrollToSection('charts-section')} className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block font-medium">{t('charts')}</button>
           
           <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-700 pl-4">
+             <button
+               onClick={onOpenTradeIn}
+               className="hover:text-green-600 dark:hover:text-green-400 transition-colors flex items-center gap-1.5"
+               title={t('tradeIn')}
+             >
+               <RotateCcw size={16} />
+               <span className="hidden md:inline text-xs font-medium">{t('tradeIn')}</span>
+             </button>
+
              <button 
                onClick={onOpenSettings}
                className="hover:text-gray-900 dark:hover:text-white transition-colors" 

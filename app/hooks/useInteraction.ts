@@ -22,6 +22,7 @@ export const useInteraction = () => {
     const [showToast, setShowToast] = useState(false);
 
     const initialLoadRef = useRef(true);
+    const [isTradeInOpen, setIsTradeInOpen] = useState(false);
 
     useEffect(() => {
         if (initialLoadRef.current) {
@@ -64,6 +65,8 @@ export const useInteraction = () => {
         setIsCompareModalOpen,
         isSettingsOpen,
         setIsSettingsOpen,
+        isTradeInOpen,
+        setIsTradeInOpen,
         showBackToTop,
         showToast,
         handleShowToast,

@@ -6,6 +6,7 @@ import DetailModal from './app/components/DetailModal';
 import CompareModal from './app/components/CompareModal';
 import CompareBar from './app/components/CompareBar';
 import SettingsModal from './app/components/SettingsModal';
+import TradeInView from './app/components/TradeInView';
 import AIChat from './app/components/AIChat';
 import Header from './app/components/Header';
 import Hero from './app/components/Hero';
@@ -67,7 +68,8 @@ const App: React.FC = () => {
                 const el = document.getElementById(id);
                 if (el) window.scrollTo({ top: el.offsetTop - 140, behavior: 'smooth' });
             }} 
-            onOpenSettings={() => interaction.setIsSettingsOpen(true)} 
+            onOpenSettings={() => interaction.setIsSettingsOpen(true)}
+            onOpenTradeIn={() => interaction.setIsTradeInOpen(true)}
         />
 
         <main id="app-main-content" className="max-w-[980px] mx-auto px-4 pt-28 space-y-12">
@@ -134,6 +136,10 @@ const App: React.FC = () => {
             toggleTheme={settings.toggleTheme} 
             version={APP_VERSION}
           />
+        )}
+
+        {interaction.isTradeInOpen && (
+          <TradeInView onClose={() => interaction.setIsTradeInOpen(false)} />
         )}
 
         <AIChat macData={data.filteredData} />
