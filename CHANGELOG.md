@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.3]
+### Fixed
+- **Sharing**: Corrected an issue where shared text was improperly formatted, especially when using the clipboard fallback.
+
 ## [0.7.2]
 ### Added
 - **Data**: Added missing M4 Max/Pro variants and legendary Intel Mac models (2013-2015).

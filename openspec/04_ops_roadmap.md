@@ -1,4 +1,4 @@
-# 04. 运维与展望 (Operations & Roadmap) v0.7.2
+# 04. 运维与展望 (Operations & Roadmap) v0.7.3
 
 ## 1. 部署与环境配置 (Deployment)
 ### 1.1 静态托管

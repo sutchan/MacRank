@@ -39,7 +39,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
     
     const result = await shareContent({
       title: `${mac.name} - MacRank`,
-      text: `Check out the ${mac.name} on MacRank!\nScore: ${score} (${tier})\nChip: ${mac.chip}`,
+      text: `Check out the ${mac.name} on MacRank! Score: ${score.toLocaleString()} (${tier}) Chip: ${mac.chip}`,
       url: newUrl
     });
     if (result === 'copied') { setShowCopied(true); setTimeout(() => setShowCopied(false), 2000); }

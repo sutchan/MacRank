@@ -27,7 +27,7 @@ export const shareContent = async (data: { title: string; text: string; url: str
   // 2. Fallback: Clipboard
   try {
     // Combine text and URL for clipboard since it handles plain text only
-    const textToCopy = `${data.text}\n\n👉 ${data.url}`;
+    const textToCopy = `${data.title}\n${data.text}\n\n👉 ${data.url}`;
     await navigator.clipboard.writeText(textToCopy);
     return 'copied';
   } catch (err) {
