@@ -1,27 +1,28 @@
-// App.tsx v0.7.0
+'use client';
+
 import React, { useEffect } from 'react';
-import MacTable from './app/components/MacTable';
-import PerformanceChart from './app/components/PerformanceChart';
-import DetailModal from './app/components/DetailModal';
-import CompareModal from './app/components/CompareModal';
-import CompareBar from './app/components/CompareBar';
-import SettingsModal from './app/components/SettingsModal';
-import TradeInView from './app/components/TradeInView';
-import AIChat from './app/components/AIChat';
-import Header from './app/components/Header';
-import Hero from './app/components/Hero';
-import FilterControls from './app/components/FilterControls';
-import Footer from './app/components/Footer';
-import { LanguageContext } from './app/locales/translations';
+import MacTable from './components/MacTable';
+import PerformanceChart from './components/PerformanceChart';
+import DetailModal from './components/DetailModal';
+import CompareModal from './components/CompareModal';
+import CompareBar from './components/CompareBar';
+import SettingsModal from './components/SettingsModal';
+import TradeInView from './components/TradeInView';
+import AIChat from './components/AIChat';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import FilterControls from './components/FilterControls';
+import Footer from './components/Footer';
+import { LanguageContext } from './locales/translations';
 import { ArrowUp, Check } from 'lucide-react';
-import { shareContent } from './app/lib/share';
-import { useSettings } from './app/hooks/useSettings';
-import { useMacData } from './app/hooks/useMacData';
-import { useInteraction } from './app/hooks/useInteraction';
+import { shareContent } from './lib/share';
+import { useSettings } from './hooks/useSettings';
+import { useMacData } from './hooks/useMacData';
+import { useInteraction } from './hooks/useInteraction';
 
 const APP_VERSION = '0.7.0';
 
-const App: React.FC = () => {
+const Page: React.FC = () => {
   const settings = useSettings();
   const data = useMacData();
   const interaction = useInteraction();
@@ -155,4 +156,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Page;
