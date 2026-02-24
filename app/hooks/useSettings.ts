@@ -3,21 +3,31 @@ import { useState, useEffect, useCallback } from 'react';
 import { translations, Language } from '../locales/translations';
 
 export const useSettings = () => {
-  const [language, setLanguage] = useState<Language>(() => {
-    if (typeof window === 'undefined') return 'en';
-    const stored = localStorage.getItem('language');
-    if (stored && translations[stored as Language]) return stored as Language;
-    const systemLang = navigator.language.split('-')[0] as Language;
-    if (translations[systemLang]) return systemLang;
-    return 'zh';
-  });
+  const [mounted, setMounted] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    if (typeof window === 'undefined') return 'light';
-    const stored = localStorage.getItem('theme');
-    if (stored) return stored as 'light' | 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  useEffect(() => {
+    setMounted(true);
+    const storedLang = localStorage.getItem('language');
+    if (storedLang && translations[storedLang as Language]) {
+      setLanguage(storedLang as Language);
+    } else {
+      const systemLang = navigator.language.split('-')[0] as Language;
+      if (translations[systemLang]) {
+        setLanguage(systemLang);
+      } else {
+        setLanguage('zh');
+      }
+    }
+
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setTheme(storedTheme as 'light' | 'dark');
+    } else {
+      setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+  }, []);
 
   const t = useCallback((key: keyof typeof translations['en']) => {
     const dict = (translations[language] || translations['en']) as any;
@@ -25,16 +35,18 @@ export const useSettings = () => {
   }, [language]);
 
   useEffect(() => {
-    localStorage.setItem('language', language);
-    document.title = `${t('appTitle')}`;
-  }, [language, t]);
+    if (mounted) {
+      localStorage.setItem('language', language);
+      document.title = `${t('appTitle')}`;
+    }
+  }, [language, t, mounted]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-        localStorage.setItem('theme', theme);
+    if (mounted) {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      localStorage.setItem('theme', theme);
     }
-  }, [theme]);
+  }, [theme, mounted]);
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
@@ -44,5 +56,6 @@ export const useSettings = () => {
     t,
     theme,
     toggleTheme,
+    mounted,
   };
 };

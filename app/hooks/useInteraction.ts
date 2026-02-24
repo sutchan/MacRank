@@ -3,19 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import { macData, refData } from '../data/data';
 import { MacModel } from '../types';
 
-const getInitialStateFromURL = () => {
-  if (typeof window === 'undefined') return { compareIds: [] as string[], modelId: null as string | null };
-  const params = new URLSearchParams(window.location.hash.substring(1));
-  return {
-    compareIds: params.get('compare')?.split(',').filter(Boolean) || [],
-    modelId: params.get('model') || null,
-  };
-};
-
 export const useInteraction = () => {
-    const [initialState] = useState(() => getInitialStateFromURL());
     const [selectedModel, setSelectedModel] = useState<MacModel | null>(null);
-    const [compareList, setCompareList] = useState<MacModel[]>(() => macData.filter(m => initialState.compareIds.includes(m.id)).slice(0, 2));
+    const [compareList, setCompareList] = useState<MacModel[]>([]);
     const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [showBackToTop, setShowBackToTop] = useState(false);
@@ -25,15 +15,24 @@ export const useInteraction = () => {
     const [isTradeInOpen, setIsTradeInOpen] = useState(false);
 
     useEffect(() => {
-        if (initialLoadRef.current) {
-            if (compareList.length === 2) setIsCompareModalOpen(true);
-            if (initialState.modelId) {
-                const found = [...macData, ...refData].find(m => m.id === initialState.modelId);
+        if (typeof window !== 'undefined' && window.location.hash) {
+            const params = new URLSearchParams(window.location.hash.substring(1));
+            const compareIds = params.get('compare')?.split(',').filter(Boolean) || [];
+            const modelId = params.get('model') || null;
+
+            if (compareIds.length > 0) {
+                const list = macData.filter(m => compareIds.includes(m.id)).slice(0, 2);
+                setCompareList(list);
+                if (list.length === 2) setIsCompareModalOpen(true);
+            }
+
+            if (modelId) {
+                const found = [...macData, ...refData].find(m => m.id === modelId);
                 if (found) setSelectedModel(found);
             }
-            initialLoadRef.current = false;
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        initialLoadRef.current = false;
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => setShowBackToTop(window.scrollY > 500);

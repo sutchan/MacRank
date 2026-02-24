@@ -61,6 +61,10 @@ const Page: React.FC = () => {
     if (result === 'copied') { interaction.handleShowToast(); }
   };
 
+  if (!settings.mounted) {
+    return null;
+  }
+
   return (
     <LanguageContext.Provider value={settings}>
       <div id="main-layout-container" className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative selection:bg-blue-100 dark:selection:bg-blue-900/30">

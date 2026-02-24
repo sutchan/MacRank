@@ -5,42 +5,43 @@ import { calculateTierScore } from '../lib/scoring';
 import { calculateValueScore, fetchRealTimePrices } from '../services/priceService';
 import { ChipFamily, DeviceType, MacModel, RankingScenario, SortKey } from '../types';
 
-const getInitialStateFromURL = () => {
-  if (typeof window === 'undefined') return {
-    search: '', 
-    type: 'All' as DeviceType | 'All', 
-    family: 'All' as ChipFamily | 'All', 
-    os: 'All' as string,
-    sortConfig: { key: 'score' as SortKey, direction: 'desc' as 'asc' | 'desc' }, 
-    scenario: 'balanced' as RankingScenario, 
-    showRef: false, 
-  };
-  
-  const params = new URLSearchParams(window.location.hash.substring(1));
-  return {
-    search: params.get('search') || '',
-    type: (params.get('type') || 'All') as DeviceType | 'All',
-    family: (params.get('family') || 'All') as ChipFamily | 'All',
-    os: (params.get('os') || 'All') as string,
-    sortConfig: {
-      key: (params.get('sort') || 'score') as SortKey,
-      direction: (params.get('dir') === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc'
-    },
-    scenario: (params.get('scenario') || 'balanced') as RankingScenario,
-    showRef: params.get('ref') === 'true',
-  };
-};
+const getDefaultState = () => ({
+  search: '', 
+  type: 'All' as DeviceType | 'All', 
+  family: 'All' as ChipFamily | 'All', 
+  os: 'All' as string,
+  sortConfig: { key: 'score' as SortKey, direction: 'desc' as 'asc' | 'desc' }, 
+  scenario: 'balanced' as RankingScenario, 
+  showRef: false, 
+});
 
 export const useMacData = () => {
-  const [initialState] = useState(() => getInitialStateFromURL());
-  const [searchTerm, setSearchTerm] = useState(initialState.search);
-  const [filterType, setFilterType] = useState<DeviceType | 'All'>(initialState.type);
-  const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>(initialState.family);
-  const [filterOS, setFilterOS] = useState<string>(initialState.os);
-  const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>(initialState.sortConfig);
-  const [rankingScenario, setRankingScenario] = useState<RankingScenario>(initialState.scenario);
-  const [showReference, setShowReference] = useState(initialState.showRef);
+  const [searchTerm, setSearchTerm] = useState(getDefaultState().search);
+  const [filterType, setFilterType] = useState<DeviceType | 'All'>(getDefaultState().type);
+  const [filterFamily, setFilterFamily] = useState<ChipFamily | 'All'>(getDefaultState().family);
+  const [filterOS, setFilterOS] = useState<string>(getDefaultState().os);
+  const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>(getDefaultState().sortConfig);
+  const [rankingScenario, setRankingScenario] = useState<RankingScenario>(getDefaultState().scenario);
+  const [showReference, setShowReference] = useState(getDefaultState().showRef);
   const [liveData, setLiveData] = useState<MacModel[]>(macData);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const params = new URLSearchParams(window.location.hash.substring(1));
+      if (params.has('search')) setSearchTerm(params.get('search') || '');
+      if (params.has('type')) setFilterType((params.get('type') || 'All') as DeviceType | 'All');
+      if (params.has('family')) setFilterFamily((params.get('family') || 'All') as ChipFamily | 'All');
+      if (params.has('os')) setFilterOS((params.get('os') || 'All') as string);
+      if (params.has('sort') || params.has('dir')) {
+        setSortConfig({
+          key: (params.get('sort') || 'score') as SortKey,
+          direction: (params.get('dir') === 'asc' ? 'asc' : 'desc') as 'asc' | 'desc'
+        });
+      }
+      if (params.has('scenario')) setRankingScenario((params.get('scenario') || 'balanced') as RankingScenario);
+      if (params.has('ref')) setShowReference(params.get('ref') === 'true');
+    }
+  }, []);
 
   useEffect(() => {
     fetchRealTimePrices(macData).then(setLiveData);
