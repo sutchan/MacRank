@@ -54,7 +54,7 @@ const MacTable: React.FC<MacTableProps> = ({
         <thead id="mac-table-header-element">
           <tr className="border-b border-gray-100 dark:border-gray-900 bg-gray-50/30 dark:bg-white/5">
             <th className="py-4 pl-3 w-8 text-center"></th>
-            <th className="py-4 pr-2 text-[10px] font-black text-gray-400 uppercase tracking-widest w-10 text-center">#</th>
+            <th className="py-4 pr-2 text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest w-10 text-center">#</th>
             <th className="py-4 pr-2 w-14 text-center">
                <SortHeader label={t('rank')} sortKey="score" align="center" />
             </th>
@@ -154,19 +154,19 @@ const MacTable: React.FC<MacTableProps> = ({
                     </span>
                     <div className="flex items-center gap-1.5 mt-1">
                         <span className="text-[10px] font-bold text-gray-400 dark:text-gray-600 bg-gray-100 dark:bg-white/5 px-1.5 py-0.5 rounded leading-none uppercase">{mac.chip}</span>
-                        {!isRef && <span className="text-[10px] font-medium text-gray-400">{mac.releaseYear}</span>}
+                        {!isRef && <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400">{mac.releaseYear}</span>}
                     </div>
                   </div>
                 </td>
 
-                <td className="hidden md:table-cell py-4 px-2 text-xs font-medium text-gray-500 dark:text-gray-400 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
+                <td className="hidden md:table-cell py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
                   {mac.cores_cpu}
                 </td>
-                <td className="hidden lg:table-cell py-4 px-2 text-xs font-medium text-gray-500 dark:text-gray-400 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
+                <td className="hidden lg:table-cell py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
                   {mac.cores_gpu} <span className="text-[10px] opacity-50">GPU</span>
                 </td>
 
-                <td className="hidden xl:table-cell py-4 px-2 text-xs font-medium text-gray-500 dark:text-gray-400 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
+                <td className="hidden xl:table-cell py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300 cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
                   <span className="truncate block max-w-[140px]">{mac.memory}</span>
                 </td>
 
@@ -187,11 +187,11 @@ const MacTable: React.FC<MacTableProps> = ({
                     <span className={`text-xs font-black ${
                       (mac.valueScore || 0) > 150 ? 'text-emerald-500' : 
                       (mac.valueScore || 0) > 100 ? 'text-blue-500' : 
-                      'text-gray-400'
+                      'text-gray-500 dark:text-gray-400'
                     }`}>
                       {mac.valueScore}
                     </span>
-                    <span className="text-[9px] text-gray-400 uppercase tracking-tighter">{t('pts_per_10')}</span>
+                    <span className="text-[9px] text-gray-500 dark:text-gray-400 uppercase tracking-tighter">{t('pts_per_10')}</span>
                   </div>
                 </td>
 

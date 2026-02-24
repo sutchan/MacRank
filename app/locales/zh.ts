@@ -1,6 +1,6 @@
 // app/locales/zh.ts v0.6.1
 export const zh = {
-  appTitle: 'MacRank 性能天梯 v0.6.1',
+  appTitle: 'MacRank 性能天梯 v0.7.1',
   leaderboard: '天梯榜单',
   charts: '性能可视化',
   searchPlaceholder: '搜索型号 (如: MacBook Pro 16, M4 Max, 16GB)...',

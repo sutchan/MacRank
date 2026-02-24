@@ -38,7 +38,7 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
               >
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-gray-900 dark:text-white leading-tight truncate max-w-[80px] md:max-w-[120px]">{m.name}</span>
-                  <span className="text-[9px] text-gray-500 uppercase tracking-tighter">{m.chip}</span>
+                  <span className="text-[9px] text-gray-600 dark:text-gray-400 uppercase tracking-tighter">{m.chip}</span>
                 </div>
                 <button 
                   onClick={() => onRemove(m.id)}
@@ -50,7 +50,7 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
             ))}
             
             {models.length < 2 && (
-              <div className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-dashed border-gray-200 dark:border-gray-800 text-gray-300 dark:text-gray-700 text-[10px] font-bold uppercase tracking-widest">
+              <div className="flex items-center justify-center px-4 py-2 rounded-lg border-2 border-dashed border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 text-[10px] font-bold uppercase tracking-widest">
                 {t('selectToCompare')}
               </div>
             )}

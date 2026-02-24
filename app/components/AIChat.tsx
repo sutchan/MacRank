@@ -25,7 +25,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
     if (messages.length === 0) {
       setMessages([{ role: 'model', text: t('chatWelcome') }]);
     }
-  }, [language, messages]);
+  }, [language, messages, t]);
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -110,7 +110,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
             <h3 className="font-semibold text-gray-900 dark:text-white text-base">{t('chatTitle')}</h3>
             <div className="flex items-center gap-1.5">
                <span className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-green-500' : 'bg-orange-500'}`}></span>
-               <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium tracking-wide uppercase">
+               <span className="text-[10px] text-gray-600 dark:text-gray-300 font-medium tracking-wide uppercase">
                  {isOnline ? t('genai_assistant') : t('status_offline')}
                </span>
             </div>

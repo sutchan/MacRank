@@ -29,6 +29,44 @@ export const siliconData: MacModel[] = [
   // M4 Series (2024)
   // ==========================================
   {
+    id: 'm4-max-14-14-32',
+    name: 'MacBook Pro 14" (Late 2024)',
+    type: DeviceType.Laptop,
+    chip: 'M4 Max',
+    family: ChipFamily.M4,
+    os: 'macOS Sequoia',
+    cores_cpu: '14 (10P+4E)',
+    cores_gpu: 32,
+    memory: '36GB - 128GB',
+    ramType: 'LPDDR5x (410GB/s BW)',
+    displayInfo: 'Liquid Retina XDR',
+    releaseYear: 2024,
+    singleCoreScore: 4000,
+    multiCoreScore: 24500,
+    metalScore: 165000,
+    basePriceUSD: 3199,
+    description: 'The more portable Max. Incredible performance in a 14-inch chassis.'
+  },
+  {
+    id: 'm4-pro-14-14-20',
+    name: 'MacBook Pro 14" (Late 2024)',
+    type: DeviceType.Laptop,
+    chip: 'M4 Pro',
+    family: ChipFamily.M4,
+    os: 'macOS Sequoia',
+    cores_cpu: '14 (10P+4E)',
+    cores_gpu: 20,
+    memory: '24GB - 64GB',
+    ramType: 'LPDDR5x (273GB/s BW)',
+    displayInfo: 'Liquid Retina XDR',
+    releaseYear: 2024,
+    singleCoreScore: 3950,
+    multiCoreScore: 23500,
+    metalScore: 125000,
+    basePriceUSD: 2399,
+    description: 'The high-end M4 Pro configuration. Beats M3 Max in many CPU tasks.'
+  },
+  {
     id: 'm4-max-16-16-40',
     name: 'MacBook Pro 16" (Late 2024)',
     type: DeviceType.Laptop,
@@ -300,6 +338,24 @@ export const siliconData: MacModel[] = [
   // ==========================================
   // M2 Series (2022-2023)
   // ==========================================
+  {
+    id: 'm2-ultra-studio-60',
+    name: 'Mac Studio (2023)',
+    type: DeviceType.Desktop,
+    chip: 'M2 Ultra',
+    family: ChipFamily.M2,
+    os: 'macOS Ventura',
+    cores_cpu: '24 (16P+8E)',
+    cores_gpu: 60,
+    memory: '64GB - 192GB',
+    ramType: 'LPDDR5 (800GB/s)',
+    releaseYear: 2023,
+    singleCoreScore: 2800,
+    multiCoreScore: 21500,
+    metalScore: 185000,
+    basePriceUSD: 3199,
+    description: 'The "base" Ultra model. Still overkill for 99% of users.'
+  },
   {
     id: 'm2-ultra-studio',
     name: 'Mac Studio (2023)',

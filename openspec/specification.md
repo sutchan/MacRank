@@ -1,6 +1,6 @@
 # MacRank 规范总纲 (Master Index)
 
-当前版本：**v0.6.1**
+当前版本：**v0.7.2**
 状态：**Standard Volumes Finalized (Production Ready)**
 
 本项目规范已达到 **Production Ready** 状态。Standard Volumes (01-04) 包含了重构应用所需的每一行核心逻辑。
@@ -8,7 +8,7 @@
 ## 📚 核心规范卷 (The Standard Volumes)
 
 ### [01. 核心规格 (Core Specification)](./01_core_spec.md)
-*   **涵盖**: 产品定义、组件交互、雷达图维度、UI/UX 设计语言、分享逻辑、CompareBar 行为。
+*   **涵盖**: 产品定义、组件交互、雷达图维度、UI/UX 设计语言、分享逻辑、CompareBar 行为、**国际化 (i18n)**。
 
 ### [02. 技术规格 (Technical Specification)](./02_tech_spec.md)
 *   **涵盖**: **URL Hash 状态持久化协议**、精确评分权重、归一化锚点、**离线匹配算法**、Gemini RAG 策略。

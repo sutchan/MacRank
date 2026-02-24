@@ -65,7 +65,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           aria-label={label}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+          className="w-full appearance-none bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg px-3 py-2 text-xs font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
         >
           {options.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
         </select>
@@ -79,7 +79,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           <div id="search-input-wrapper" className="relative w-full md:flex-1 group">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={16} />
             <input type="text" placeholder={t('searchPlaceholder')} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-8 py-2.5 bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm text-gray-900 dark:text-white placeholder-gray-500 transition-all"
+              className="w-full pl-9 pr-8 py-2.5 bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 transition-all"
               aria-label="Search Models"
             />
             {searchTerm && <button onClick={() => setSearchTerm('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><X size={14} /></button>}
@@ -94,8 +94,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                 <div className="absolute top-full right-0 mt-2 w-64 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-10 p-2 animate-in fade-in zoom-in-95 origin-top-right">
                   {scenarios.map(({ key, icon: Icon, label, desc }) => (
                     <button key={key} onClick={() => { setRankingScenario(key); setIsScenarioMenuOpen(false); }} className="w-full text-left p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 flex items-start gap-3">
-                      <Icon size={16} className="mt-1 text-gray-500" />
-                      <div> <p className="text-sm font-semibold text-gray-900 dark:text-white">{label}</p> <p className="text-[10px] text-gray-500 dark:text-gray-400">{desc}</p> </div>
+                      <Icon size={16} className="mt-1 text-gray-500 dark:text-gray-400" />
+                      <div> <p className="text-sm font-semibold text-gray-900 dark:text-white">{label}</p> <p className="text-[10px] text-gray-600 dark:text-gray-300">{desc}</p> </div>
                     </button>
                   ))}
                 </div>
@@ -109,7 +109,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               {isViewMenuOpen && (
                 <div className="absolute top-full right-0 mt-2 w-56 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-10 p-2 animate-in fade-in zoom-in-95 origin-top-right">
                     <div className="p-2">
-                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t('sort_by')}</label>
+                        <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('sort_by')}</label>
                         <div className="flex flex-col items-start gap-1 mt-2">
                             {(['score', 'price', 'year', 'name'] as const).map(option => (
                                 <button key={option} onClick={() => onSort(option)} className="w-full text-left text-sm flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">

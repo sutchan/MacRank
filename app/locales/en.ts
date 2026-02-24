@@ -1,6 +1,6 @@
 // app/locales/en.ts v0.6.1
 export const en = {
-  appTitle: 'MacRank v0.6.1',
+  appTitle: 'MacRank v0.7.1',
   leaderboard: 'Ladder',
   charts: 'Charts',
   searchPlaceholder: 'Search MacBook, iMac, iPad...',
