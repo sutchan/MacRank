@@ -40,9 +40,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <link rel="apple-touch-icon" href="/icon.svg" />
         
         {/* Primary Meta Tags */}
-        <title>MacRank 2025: 苹果电脑性能天梯榜 v0.7.1</title>
-        <meta name="title" content="MacRank 2025: 苹果电脑性能天梯榜 v0.7.1" />
-        <meta name="description" content="最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。版本: 0.7.1" />
+        <title>MacRank 2025: 苹果电脑性能天梯榜 v0.7.3</title>
+        <meta name="title" content="MacRank 2025: 苹果电脑性能天梯榜 v0.7.3" />
+        <meta name="description" content="最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。版本: 0.7.3" />
         <meta name="keywords" content="苹果性能天梯, Mac天梯图, MacBook跑分, M4 Max跑分, Apple Silicon排行榜, MacRank" />
         <meta name="author" content="MacRank" />
         <meta name="robots" content="index, follow" />

@@ -18,12 +18,12 @@
 
 ## 🛠 技术栈
 
-- **核心框架**: [React 19](https://react.dev/)
-- **构建工具**: [Vite](https://vitejs.dev/)
+- **核心框架**: [Next.js 15](https://nextjs.org/)
 - **样式库**: [Tailwind CSS](https://tailwindcss.com/)
 - **AI SDK**: [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)
 - **图表库**: [Recharts](https://recharts.org/)
 - **图标库**: [Lucide React](https://lucide.dev/)
+- **Markdown 渲染**: [React Markdown](https://remarkjs.github.io/react-markdown/)
 
 ## 🚀 快速开始
 
@@ -57,7 +57,7 @@
    npm run dev
    ```
 
-5. 打开浏览器访问 `http://localhost:5173`。
+5. 打开浏览器访问 `http://localhost:3000`。
 
 ## 📂 项目结构
 
