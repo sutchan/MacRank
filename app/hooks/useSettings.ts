@@ -1,4 +1,4 @@
-// app/hooks/useSettings.ts v0.6.0
+// app/hooks/useSettings.ts v0.7.3
 import { useState, useEffect, useCallback } from 'react';
 import { translations, Language } from '../locales/translations';
 

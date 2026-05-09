@@ -18,12 +18,12 @@
 
 ## 🛠 Tech Stack
 
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Framework**: [Next.js 15](https://nextjs.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **AI SDK**: [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)
 - **Charts**: [Recharts](https://recharts.org/)
 - **Icons**: [Lucide React](https://lucide.dev/)
+- **Markdown**: [React Markdown](https://remarkjs.github.io/react-markdown/)
 
 ## 🚀 Getting Started
 
@@ -57,7 +57,7 @@
    npm run dev
    ```
 
-5. Open your browser and navigate to `http://localhost:5173`.
+5. Open your browser and navigate to `http://localhost:3000`.
 
 ## 📂 Project Structure
 

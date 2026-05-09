@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.4]
+### Security
+- **Next.js**: Upgraded to v15.5.18 to patch CVE-2025-66478 (Critical RCE vulnerability)
+- **PostCSS**: Upgraded to v8.5.10 to fix XSS vulnerability
+- **ESLint**: Updated eslint-config-next to v15.5.18
+### Fixed
+- **Version Sync**: Updated version numbers across all source files to v0.7.3
+- **Documentation**: Corrected tech stack description in README (Vite → Next.js 15)
+- **Cleanup**: Removed deprecated spec files per specification.md deprecation notice
+
 ## [0.7.3]
 ### Fixed
 - **Sharing**: Corrected an issue where shared text was improperly formatted, especially when using the clipboard fallback.

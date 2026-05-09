@@ -1,4 +1,4 @@
-// app/types.ts v0.6.2
+// app/types.ts v0.7.3
 export enum ChipFamily {
   M5 = 'M5',
   M4 = 'M4',
