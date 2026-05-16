@@ -49,6 +49,7 @@ export const useSettings = () => {
   }, [theme, mounted]);
 
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  const setThemeMode = (newTheme: 'light' | 'dark') => setTheme(newTheme);
 
   return {
     language,
@@ -56,6 +57,7 @@ export const useSettings = () => {
     t,
     theme,
     toggleTheme,
+    setThemeMode,
     mounted,
   };
 };

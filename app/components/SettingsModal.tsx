@@ -6,11 +6,11 @@ import { LanguageContext, Language, LanguageContextType, languages } from '../lo
 interface SettingsModalProps {
   onClose: () => void;
   theme: 'light' | 'dark';
-  toggleTheme: () => void;
+  setThemeMode: (theme: 'light' | 'dark') => void;
   version: string;
 }
 
-const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleTheme, version }) => {
+const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, setThemeMode, version }) => {
   const { t, language, setLanguage } = useContext(LanguageContext) as LanguageContextType;
 
   const handleReset = () => {
@@ -67,7 +67,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300 px-1">{t('appearance')}</label>
                 <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-xl flex">
                     <button
-                      onClick={() => theme === 'dark' && toggleTheme()}
+                      onClick={() => setThemeMode('light')}
                       className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
                         theme === 'light' 
                           ? 'bg-white text-gray-900 shadow-sm' 
@@ -78,7 +78,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, toggleThe
                       {t('theme_light')}
                     </button>
                     <button
-                      onClick={() => theme === 'light' && toggleTheme()}
+                      onClick={() => setThemeMode('dark')}
                       className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
                         theme === 'dark' 
                           ? 'bg-gray-700 text-white shadow-sm' 

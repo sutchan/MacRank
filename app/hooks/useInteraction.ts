@@ -1,6 +1,7 @@
-// app/hooks/useInteraction.ts v0.7.5
-import { useState, useEffect, useRef } from 'react';
+// app/hooks/useInteraction.ts v0.7.6
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { macData, refData } from '../data/data';
+import { parseUrlParams, updateUrlHash } from '../lib/urlParams';
 import { MacModel } from '../types';
 
 export const useInteraction = () => {
@@ -15,22 +16,19 @@ export const useInteraction = () => {
     const [isTradeInOpen, setIsTradeInOpen] = useState(false);
 
     useEffect(() => {
-        if (typeof window !== 'undefined' && window.location.hash) {
-            const params = new URLSearchParams(window.location.hash.substring(1));
-            const compareIds = params.get('compare')?.split(',').filter(Boolean) || [];
-            const modelId = params.get('model') || null;
-
-            if (compareIds.length > 0) {
-                const list = macData.filter(m => compareIds.includes(m.id)).slice(0, 2);
-                setCompareList(list);
-                if (list.length === 2) setIsCompareModalOpen(true);
-            }
-
-            if (modelId) {
-                const found = [...macData, ...refData].find(m => m.id === modelId);
-                if (found) setSelectedModel(found);
-            }
+        const params = parseUrlParams();
+        
+        if (params.compare?.length) {
+            const list = macData.filter(m => params.compare!.includes(m.id)).slice(0, 2);
+            setCompareList(list);
+            if (list.length === 2) setIsCompareModalOpen(true);
         }
+
+        if (params.model) {
+            const found = [...macData, ...refData].find(m => m.id === params.model);
+            if (found) setSelectedModel(found);
+        }
+        
         initialLoadRef.current = false;
     }, []);
 
@@ -40,25 +38,46 @@ export const useInteraction = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleToggleCompare = (mac: MacModel) => {
+    const handleToggleCompare = useCallback((mac: MacModel) => {
         setCompareList(prev => {
             const exists = prev.some(p => p.id === mac.id);
-            if (exists) return prev.filter(p => p.id !== mac.id);
-            if (prev.length < 2) return [...prev, mac];
+            if (exists) {
+                const updated = prev.filter(p => p.id !== mac.id);
+                updateUrlHash({ compare: updated.map(m => m.id) });
+                return updated;
+            }
+            if (prev.length < 2) {
+                const updated = [...prev, mac];
+                updateUrlHash({ compare: updated.map(m => m.id) });
+                return updated;
+            }
             return prev;
         });
-    };
+    }, []);
 
-    const handleShowToast = () => {
+    const setCompareListCallback = useCallback((value: MacModel[] | ((prev: MacModel[]) => MacModel[])) => {
+        setCompareList(prev => {
+            const updated = typeof value === 'function' ? value(prev) : value;
+            updateUrlHash({ compare: updated.map(m => m.id) });
+            return updated;
+        });
+    }, []);
+
+    const setSelectedModelCallback = useCallback((model: MacModel | null) => {
+        setSelectedModel(model);
+        updateUrlHash({ model: model?.id || undefined });
+    }, []);
+
+    const handleShowToast = useCallback(() => {
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
-    }
+    }, []);
 
     return {
         selectedModel,
-        setSelectedModel,
+        setSelectedModel: setSelectedModelCallback,
         compareList,
-        setCompareList,
+        setCompareList: setCompareListCallback,
         handleToggleCompare,
         isCompareModalOpen,
         setIsCompareModalOpen,

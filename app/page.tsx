@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import MacTable from './components/MacTable';
 import PerformanceChart from './components/PerformanceChart';
 import DetailModal from './components/DetailModal';
@@ -20,41 +20,13 @@ import { useSettings } from './hooks/useSettings';
 import { useMacData } from './hooks/useMacData';
 import { useInteraction } from './hooks/useInteraction';
 
-const APP_VERSION = '0.7.5';
+const APP_VERSION = '0.7.6';
 
 const Page: React.FC = () => {
   const settings = useSettings();
   const data = useMacData();
   const interaction = useInteraction();
   const { t } = settings;
-
-  // URL Hash State Management
-  useEffect(() => {
-    if (interaction.isInitialLoad) return;
-    
-    const params = new URLSearchParams();
-    if (data.searchTerm) params.set('search', data.searchTerm);
-    if (data.filterType !== 'All') params.set('type', data.filterType);
-    if (data.filterFamily !== 'All') params.set('family', data.filterFamily);
-    if (data.filterOS !== 'All') params.set('os', data.filterOS);
-    if (data.sortConfig.key !== 'score' || data.sortConfig.direction !== 'desc') {
-        params.set('sort', data.sortConfig.key);
-        params.set('dir', data.sortConfig.direction);
-    }
-    if (data.rankingScenario !== 'balanced') params.set('scenario', data.rankingScenario);
-    if (data.showReference) params.set('ref', 'true');
-    if (interaction.compareList.length > 0) params.set('compare', interaction.compareList.map(m => m.id).join(','));
-    if (interaction.selectedModel) params.set('model', interaction.selectedModel.id);
-
-    const newHash = params.toString();
-    if (window.location.hash.substring(1) !== newHash) {
-      window.location.hash = newHash;
-    }
-  }, [
-    data.searchTerm, data.filterType, data.filterFamily, data.filterOS, data.sortConfig, 
-    data.rankingScenario, data.showReference, interaction.compareList, 
-    interaction.selectedModel, interaction.isInitialLoad
-  ]);
 
   const handleAppShare = async () => {
     const result = await shareContent({ title: t('appTitle'), text: t('share_message'), url: window.location.href });
@@ -138,7 +110,7 @@ const Page: React.FC = () => {
           <SettingsModal 
             onClose={() => interaction.setIsSettingsOpen(false)} 
             theme={settings.theme} 
-            toggleTheme={settings.toggleTheme} 
+            setThemeMode={settings.setThemeMode} 
             version={APP_VERSION}
           />
         )}
