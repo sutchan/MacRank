@@ -20,7 +20,7 @@ import { useSettings } from './hooks/useSettings';
 import { useMacData } from './hooks/useMacData';
 import { useInteraction } from './hooks/useInteraction';
 
-const APP_VERSION = '0.7.4';
+const APP_VERSION = '0.7.5';
 
 const Page: React.FC = () => {
   const settings = useSettings();

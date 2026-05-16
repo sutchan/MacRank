@@ -19,8 +19,22 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
-    <html lang="zh-CN" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            try {
+              const theme = localStorage.getItem('theme');
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+              }
+            } catch (e) {}
+          `
+        }} />
+
         {/* Google tag (gtag.js) */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8" />
         <Script id="google-analytics">
@@ -40,9 +54,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <link rel="apple-touch-icon" href="/icon.svg" />
         
         {/* Primary Meta Tags */}
-        <title>MacRank 2025: 苹果电脑性能天梯榜 v0.7.4</title>
-        <meta name="title" content="MacRank 2025: 苹果电脑性能天梯榜 v0.7.4" />
-        <meta name="description" content="最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。版本: 0.7.4" />
+        <title>MacRank 2025: 苹果电脑性能天梯榜 v0.7.5</title>
+        <meta name="title" content="MacRank 2025: 苹果电脑性能天梯榜 v0.7.5" />
+        <meta name="description" content="最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。版本: 0.7.5" />
         <meta name="keywords" content="苹果性能天梯, Mac天梯图, MacBook跑分, M4 Max跑分, Apple Silicon排行榜, MacRank" />
         <meta name="author" content="MacRank" />
         <meta name="robots" content="index, follow" />
@@ -51,7 +65,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://macrank.app/" />
-        <meta property="og:title" content="MacRank 2025: Mac 性能天梯榜 v0.7.4" />
+        <meta property="og:title" content="MacRank 2025: Mac 性能天梯榜 v0.7.5" />
         <meta property="og:description" content="交互式苹果电脑性能排名与 AI 选购顾问。" />
         <meta property="og:image" content="https://macrank.app/og-image.jpg" />
       </head>

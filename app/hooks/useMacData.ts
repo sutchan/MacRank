@@ -1,4 +1,4 @@
-// app/hooks/useMacData.ts v0.7.4
+// app/hooks/useMacData.ts v0.7.5
 import { useState, useMemo, useEffect } from 'react';
 import { macData, refData } from '../data/data';
 import { calculateTierScore } from '../lib/scoring';

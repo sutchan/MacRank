@@ -1,7 +1,196 @@
-// app/data/data-silicon.ts v0.6.2
+// app/data/data-silicon.ts v0.7.5
 import { MacModel, ChipFamily, DeviceType } from '../types';
 
 export const siliconData: MacModel[] = [
+  // ==========================================
+  // M4 Series (2025) - MacBook Air Refresh
+  // ==========================================
+  {
+    id: 'm4-air-15-2025',
+    name: 'MacBook Air 15" (2025)',
+    type: DeviceType.Laptop,
+    chip: 'M4',
+    family: ChipFamily.M4,
+    os: 'macOS Sequoia',
+    cores_cpu: '10 (4P+6E)',
+    cores_gpu: 10,
+    memory: '16GB - 32GB',
+    ramType: 'LPDDR5x (120GB/s BW)',
+    displayInfo: 'Liquid Retina',
+    releaseYear: 2025,
+    singleCoreScore: 3750,
+    multiCoreScore: 14500,
+    metalScore: 65000,
+    basePriceUSD: 1299,
+    description: 'The thinnest 15-inch laptop with M4 power. Silent fanless design with incredible battery life and new Sky Blue color.'
+  },
+  {
+    id: 'm4-air-13-2025',
+    name: 'MacBook Air 13" (2025)',
+    type: DeviceType.Laptop,
+    chip: 'M4',
+    family: ChipFamily.M4,
+    os: 'macOS Sequoia',
+    cores_cpu: '10 (4P+6E)',
+    cores_gpu: 10,
+    memory: '16GB - 32GB',
+    ramType: 'LPDDR5x (120GB/s BW)',
+    displayInfo: 'Liquid Retina',
+    releaseYear: 2025,
+    singleCoreScore: 3750,
+    multiCoreScore: 14500,
+    metalScore: 65000,
+    basePriceUSD: 1099,
+    description: 'The most popular laptop, now with M4. Perfect balance of performance, portability, and battery life.'
+  },
+
+  // ==========================================
+  // Mac Studio M4 Series (2025)
+  // ==========================================
+  {
+    id: 'm4-studio-max-2025',
+    name: 'Mac Studio (2025)',
+    type: DeviceType.Desktop,
+    chip: 'M4 Max',
+    family: ChipFamily.M4,
+    os: 'macOS Sequoia',
+    cores_cpu: '16 (12P+4E)',
+    cores_gpu: 40,
+    memory: '36GB - 128GB',
+    ramType: 'LPDDR5x (546GB/s BW)',
+    releaseYear: 2025,
+    singleCoreScore: 4100,
+    multiCoreScore: 28000,
+    metalScore: 200000,
+    basePriceUSD: 1999,
+    description: 'The ultimate compact workstation. M4 Max delivers incredible CPU and GPU performance for professional workflows.'
+  },
+  {
+    id: 'm3-ultra-studio-2025',
+    name: 'Mac Studio (2025)',
+    type: DeviceType.Desktop,
+    chip: 'M3 Ultra',
+    family: ChipFamily.M3,
+    os: 'macOS Sequoia',
+    cores_cpu: '28 (20P+8E)',
+    cores_gpu: 60,
+    memory: '96GB - 256GB',
+    ramType: 'LPDDR5 (819GB/s)',
+    releaseYear: 2025,
+    singleCoreScore: 2900,
+    multiCoreScore: 35000,
+    metalScore: 420000,
+    basePriceUSD: 3999,
+    description: 'The most powerful Mac ever created. M3 Ultra delivers unmatched performance for AI, video production, and 3D rendering.'
+  },
+
+  // ==========================================
+  // iPad Pro M4 Series (2024)
+  // ==========================================
+  {
+    id: 'm4-ipad-pro-13',
+    name: 'iPad Pro 13" (2024)',
+    type: DeviceType.Tablet,
+    chip: 'M4',
+    family: ChipFamily.M4,
+    os: 'iPadOS',
+    cores_cpu: '10 (4P+6E)',
+    cores_gpu: 10,
+    memory: '8GB - 16GB',
+    ramType: 'LPDDR5x',
+    displayInfo: 'Ultra Retina XDR OLED',
+    releaseYear: 2024,
+    singleCoreScore: 3680,
+    multiCoreScore: 13375,
+    metalScore: 53315,
+    basePriceUSD: 1299,
+    description: 'The thinnest Apple product ever. OLED display with tandem technology for stunning brightness and contrast.'
+  },
+  {
+    id: 'm4-ipad-pro-11',
+    name: 'iPad Pro 11" (2024)',
+    type: DeviceType.Tablet,
+    chip: 'M4',
+    family: ChipFamily.M4,
+    os: 'iPadOS',
+    cores_cpu: '9 (3P+6E)',
+    cores_gpu: 10,
+    memory: '8GB - 16GB',
+    ramType: 'LPDDR5x',
+    displayInfo: 'Ultra Retina XDR OLED',
+    releaseYear: 2024,
+    singleCoreScore: 3680,
+    multiCoreScore: 13000,
+    metalScore: 53315,
+    basePriceUSD: 999,
+    description: 'Incredibly powerful yet thin and light. M4 chip makes it faster than most laptops.'
+  },
+
+  // ==========================================
+  // iPad Air M2 Series (2024)
+  // ==========================================
+  {
+    id: 'm2-ipad-air-13',
+    name: 'iPad Air 13" (2024)',
+    type: DeviceType.Tablet,
+    chip: 'M2',
+    family: ChipFamily.M2,
+    os: 'iPadOS',
+    cores_cpu: '8 (4P+4E)',
+    cores_gpu: 10,
+    memory: '8GB',
+    ramType: 'LPDDR5',
+    displayInfo: 'Liquid Retina IPS',
+    releaseYear: 2024,
+    singleCoreScore: 2590,
+    multiCoreScore: 9867,
+    metalScore: 41340,
+    basePriceUSD: 799,
+    description: 'Now available in 13-inch. M2 provides excellent performance for creative work and gaming.'
+  },
+  {
+    id: 'm2-ipad-air-11',
+    name: 'iPad Air 11" (2024)',
+    type: DeviceType.Tablet,
+    chip: 'M2',
+    family: ChipFamily.M2,
+    os: 'iPadOS',
+    cores_cpu: '8 (4P+4E)',
+    cores_gpu: 10,
+    memory: '8GB',
+    ramType: 'LPDDR5',
+    displayInfo: 'Liquid Retina IPS',
+    releaseYear: 2024,
+    singleCoreScore: 2590,
+    multiCoreScore: 9867,
+    metalScore: 41340,
+    basePriceUSD: 599,
+    description: 'The sweet spot iPad. Supports Apple Pencil Pro with hover and squeeze gestures.'
+  },
+
+  // ==========================================
+  // iPad mini A17 Pro Series (2024)
+  // ==========================================
+  {
+    id: 'a17pro-ipad-mini-7',
+    name: 'iPad mini (A17 Pro, 2024)',
+    type: DeviceType.Tablet,
+    chip: 'A17 Pro',
+    family: ChipFamily.A17,
+    os: 'iPadOS',
+    cores_cpu: '6 (2P+4E)',
+    cores_gpu: 5,
+    memory: '8GB',
+    ramType: 'LPDDR5',
+    displayInfo: '8.3" Liquid Retina',
+    releaseYear: 2024,
+    singleCoreScore: 2840,
+    multiCoreScore: 6869,
+    metalScore: 25895,
+    basePriceUSD: 499,
+    description: 'The most powerful mini tablet. A17 Pro brings Apple Intelligence to the compact form factor.'
+  },
+
   // ==========================================
   // M5 Series (2025) - Speculative Predictions
   // ==========================================

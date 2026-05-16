@@ -1,4 +1,4 @@
-# 02. 技术规格 (Technical Specification) v0.7.4
+# 02. 技术规格 (Technical Specification) v0.7.5
 
 ## 1. 评分算法 (Normalization Algorithm)
 ### 1.1 性能锚点 (Anchors)

@@ -64,15 +64,15 @@
 ```
 macrank/
 ├── app/
-│   ├── components/       # UI Components (e.g., MacTable.tsx)
-│   ├── data/             # Static data files (e.g., data-silicon.ts)
-│   ├── lib/              # Core logic (e.g., scoring.ts)
-│   ├── locales/          # Language translation files (e.g., en.ts)
-│   ├── services/         # API integrations (e.g., geminiService.ts)
-│   └── style.css         # Global CSS styles
-├── public/               # Static assets (e.g., icon.svg)
-├── openspec/             # Specification documents
-├── tailwind.config.js    # Tailwind CSS configuration
+│   ├── components/       # UI 组件 (如 MacTable.tsx)
+│   ├── data/             # 硬件参数等静态数据 (如 data-silicon.ts)
+│   ├── lib/              # 核心逻辑 (如 scoring.ts)
+│   ├── locales/          # 国际化语言包 (如 zh.ts)
+│   ├── services/         # API 服务集成 (如 geminiService.ts)
+│   └── style.css         # 全局样式
+├── public/               # 静态资源 (如 icon.svg)
+├── openspec/             # 项目规范文档
+├── tailwind.config.js    # Tailwind 配置
 ├── package.json
 └── README.md
 ```

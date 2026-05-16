@@ -1,10 +1,11 @@
-// app/types.ts v0.7.4
+// app/types.ts v0.7.5
 export enum ChipFamily {
   M5 = 'M5',
   M4 = 'M4',
   M3 = 'M3',
   M2 = 'M2',
   M1 = 'M1',
+  A17 = 'A17',
   Intel = 'Intel',
   Reference = 'Reference'
 }

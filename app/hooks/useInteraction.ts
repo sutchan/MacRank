@@ -1,4 +1,4 @@
-// app/hooks/useInteraction.ts v0.7.4
+// app/hooks/useInteraction.ts v0.7.5
 import { useState, useEffect, useRef } from 'react';
 import { macData, refData } from '../data/data';
 import { MacModel } from '../types';

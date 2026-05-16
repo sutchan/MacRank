@@ -1,6 +1,6 @@
-// app/locales/zh.ts v0.6.1
+// app/locales/zh.ts v0.7.5
 export const zh = {
-  appTitle: 'MacRank 性能天梯 v0.7.1',
+  appTitle: 'MacRank 性能天梯',
   leaderboard: '天梯榜单',
   charts: '性能可视化',
   searchPlaceholder: '搜索型号 (如: MacBook Pro 16, M4 Max, 16GB)...',
@@ -63,6 +63,7 @@ export const zh = {
   family_m2: 'M2 系列',
   family_m1: 'M1 系列',
   family_intel: 'Intel 系列',
+  family_a17: 'A17 系列',
   chart_value_desc: '横轴价格/纵轴性能 (左上角为高性价比王者)',
   chart_ratio_desc: '每 1 美元能买到的性能分 (数值越高越划算)',
   avgPrice: '平均售价',
