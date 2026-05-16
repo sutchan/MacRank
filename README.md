@@ -1,12 +1,12 @@
-# MacRank - Apple Silicon Performance Leaderboard
+# MacRank - 苹果电脑性能天梯榜
 
-[中文文档](./README_zh-CN.md) | **English**
+**中文文档** | [English](./README_zh-CN.md)
 
 **MacRank** is a comprehensive performance leaderboard and tier list for Apple computers (Mac M1-M5 series & iPad A-series/M-series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect device for their workflow.
 
-![MacRank Preview](https://via.placeholder.com/800x400?text=MacRank+Preview)
+![MacRank 预览](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
-## ✨ Features
+## ✨ 功能特性
 
 - **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, and iPad Pro based on synthetic tier scores.
 - **Interactive Charts**: Visual comparison of top models using Recharts.
@@ -16,50 +16,50 @@
 - **Dark Mode**: Fully responsive UI with automatic and manual light/dark theme switching.
 - **Internationalization**: Support for 10 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese, Russian, Korean, Hindi).
 
-## 🛠 Tech Stack
+## 🛠 技术栈
 
-- **Framework**: [Next.js 15](https://nextjs.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **核心框架**: [Next.js 15](https://nextjs.org/)
+- **样式库**: [Tailwind CSS](https://tailwindcss.com/)
 - **AI SDK**: [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)
-- **Charts**: [Recharts](https://recharts.org/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Markdown**: [React Markdown](https://remarkjs.github.io/react-markdown/)
+- **图表库**: [Recharts](https://recharts.org/)
+- **图标库**: [Lucide React](https://lucide.dev/)
+- **Markdown 渲染**: [React Markdown](https://remarkjs.github.io/react-markdown/)
 
-## 🚀 Getting Started
+## 🚀 快速开始
 
-### Prerequisites
+### 前置要求
 
-- Node.js (v18 or higher)
-- npm or yarn
-- A Google Gemini API Key (Get one at [Google AI Studio](https://aistudio.google.com/))
+- Node.js (v18 或更高版本)
+- npm 或 yarn
+- Google Gemini API Key (可在 [Google AI Studio](https://aistudio.google.com/) 免费获取)
 
-### Installation
+### 安装步骤
 
-1. **Clone the repository**
+1. **克隆仓库**
    ```bash
    git clone https://github.com/sutchan/MacRank.git
    cd MacRank
    ```
 
-2. **Install dependencies**
+2. **安装依赖**
    ```bash
    npm install
    ```
 
-3. **Configure Environment Variables**
-   Create a `.env` file in the root directory and add your Google Gemini API Key:
+3. **配置环境变量**
+   在项目根目录下创建一个 `.env` 文件，并添加你的 API Key：
    ```env
-   API_KEY=your_actual_api_key_here
+   API_KEY=你的_API_KEY_粘贴在这里
    ```
 
-4. **Run the development server**
+4. **启动开发服务器**
    ```bash
    npm run dev
    ```
 
-5. Open your browser and navigate to `http://localhost:3000`.
+5. 打开浏览器访问 `http://localhost:3000`。
 
-## 📂 Project Structure
+## 📂 项目结构
 
 ```
 macrank/
@@ -77,16 +77,16 @@ macrank/
 └── README.md
 ```
 
-## 🤝 Contributing
+## 🤝 参与贡献
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+欢迎提交 Pull Request！
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork 本项目
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的修改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启一个 Pull Request
 
-## 📄 License
+## 📄 许可证
 
 Distributed under the MIT License. See `LICENSE` for more information.
