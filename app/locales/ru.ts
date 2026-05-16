@@ -1,6 +1,6 @@
-// app/locales/ru.ts v0.6.1
+// app/locales/ru.ts v0.7.5
 export const ru = {
-  appTitle: 'MacRank v0.7.1',
+  appTitle: 'MacRank',
   leaderboard: 'Рейтинг',
   charts: 'Графики',
   searchPlaceholder: 'Поиск MacBook, iMac...',
@@ -63,6 +63,7 @@ export const ru = {
   family_m2: 'Семейство M2',
   family_m1: 'Семейство M1',
   family_intel: 'Серия Intel',
+  family_a17: 'Серия A17',
   chart_value_desc: 'Цена vs Производительность (Левый верх = Лучший выбор)',
   chart_ratio_desc: 'Очки производительности на доллар (Выше - лучше)',
   avgPrice: 'Ср. цена',

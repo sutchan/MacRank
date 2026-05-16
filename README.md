@@ -2,13 +2,13 @@
 
 [中文文档](./README_zh-CN.md) | **English**
 
-**MacRank** is a comprehensive performance leaderboard and tier list for Apple Mac computers (M1-M5 series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect Mac for their workflow.
+**MacRank** is a comprehensive performance leaderboard and tier list for Apple computers (Mac M1-M5 series & iPad A-series/M-series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect device for their workflow.
 
 ![MacRank Preview](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
 ## ✨ Features
 
-- **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, and Mac Studio based on synthetic tier scores.
+- **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, and iPad Pro based on synthetic tier scores.
 - **Interactive Charts**: Visual comparison of top models using Recharts.
 - **Detailed Specs**: Deep dive into CPU/GPU cores, memory configurations, and benchmark scores (Geekbench 6 & Metal).
 - **AI Advisor**: Integrated chat interface powered by **Google Gemini 3 Flash** to answer buying questions and provide technical advice.

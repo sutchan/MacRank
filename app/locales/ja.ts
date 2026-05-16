@@ -1,6 +1,6 @@
-// app/locales/ja.ts v0.6.1
+// app/locales/ja.ts v0.7.5
 export const ja = {
-  appTitle: 'MacRank v0.7.1',
+  appTitle: 'MacRank',
   leaderboard: 'ランキング',
   charts: 'チャート',
   searchPlaceholder: 'MacBook, iMacなどを検索...',
@@ -63,6 +63,7 @@ export const ja = {
   family_m2: 'M2 ファミリー',
   family_m1: 'M1 ファミリー',
   family_intel: 'Intel シリーズ',
+  family_a17: 'A17 シリーズ',
   chart_value_desc: '価格 vs パフォーマンス (左上 = 最高コスパ)',
   chart_ratio_desc: '1ドルあたりのパフォーマンス (高いほど良い)',
   avgPrice: '平均価格',

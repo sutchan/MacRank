@@ -1,6 +1,6 @@
-// app/locales/es.ts v0.6.1
+// app/locales/es.ts v0.7.5
 export const es = {
-  appTitle: 'MacRank v0.7.1',
+  appTitle: 'MacRank',
   leaderboard: 'Clasificación',
   charts: 'Gráficos',
   searchPlaceholder: 'Buscar MacBook, iMac...',
@@ -63,6 +63,7 @@ export const es = {
   family_m2: 'Familia M2',
   family_m1: 'Familia M1',
   family_intel: 'Serie Intel',
+  family_a17: 'Serie A17',
   chart_value_desc: 'Precio vs. Rendimiento (Arriba Izq. = Mejor Valor)',
   chart_ratio_desc: 'Puntos de Rendimiento por Dólar (Más alto es mejor)',
   avgPrice: 'Precio Medio',

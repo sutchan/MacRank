@@ -1,6 +1,6 @@
-// app/locales/hi.ts v0.6.1
+// app/locales/hi.ts v0.7.5
 export const hi = {
-  appTitle: 'MacRank v0.7.1',
+  appTitle: 'MacRank',
   leaderboard: 'लीडरबोर्ड',
   charts: 'चार्ट',
   searchPlaceholder: 'MacBook, iMac खोजें...',
@@ -63,6 +63,7 @@ export const hi = {
   family_m2: 'M2 परिवार',
   family_m1: 'M1 परिवार',
   family_intel: 'Intel सीरीज़',
+  family_a17: 'A17 सीरीज़',
   chart_value_desc: 'मूल्य बनाम प्रदर्शन (ऊपर बाएं = सर्वोत्तम मूल्य)',
   chart_ratio_desc: 'प्रदर्शन अंक प्रति डॉलर (उच्चतर बेहतर है)',
   avgPrice: 'औसत कीमत',

@@ -1,6 +1,6 @@
-// app/locales/ko.ts v0.6.1
+// app/locales/ko.ts v0.7.5
 export const ko = {
-  appTitle: 'MacRank v0.7.1',
+  appTitle: 'MacRank',
   leaderboard: '순위표',
   charts: '차트',
   searchPlaceholder: 'MacBook, iMac 검색...',
@@ -63,6 +63,7 @@ export const ko = {
   family_m2: 'M2 패밀리',
   family_m1: 'M1 패밀리',
   family_intel: 'Intel 시리즈',
+  family_a17: 'A17 시리즈',
   chart_value_desc: '가격 대 성능 (좌측 상단 = 최고 가성비)',
   chart_ratio_desc: '달러당 성능 점수 (높을수록 좋음)',
   avgPrice: '평균 가격',
