@@ -1,4 +1,4 @@
-// app/lib/share.ts v0.7.3
+// app/lib/share.ts v0.7.4
 /**
  * Shares content using the native Web Share API if available,
  * otherwise falls back to copying text to the clipboard.

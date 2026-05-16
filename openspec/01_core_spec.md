@@ -1,4 +1,4 @@
-# 01. 核心规格 (Core Specification) v0.7.3
+# 01. 核心规格 (Core Specification) v0.7.4
 
 ## 1. 项目定义与核心价值
 ### 1.1 核心使命
