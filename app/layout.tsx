@@ -4,8 +4,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'MacRank 2025: Apple Silicon M1/M2/M3/M4 Benchmark Leaderboard &amp; Tier List',
-  description: 'The ultimate 2025 performance guide for Apple Mac computers. Compare Geekbench 6 &amp; Metal scores for M4 Max, M3, M2, M1 &amp; Intel models. AI-powered buying advice for MacBook Pro, Air, Mac Studio &amp; iMac.',
+  title: 'MacRank 2025: Apple Silicon M1/M2/M3/M4 Benchmark Leaderboard & Tier List',
+  description: 'The ultimate 2025 performance guide for Apple Mac computers. Compare Geekbench 6 & Metal scores for M4 Max, M3, M2, M1 & Intel models. AI-powered buying advice for MacBook Pro, Air, Mac Studio & iMac.',
   keywords: ['Apple Silicon', 'M4 Max Benchmark', 'M3 Pro vs M4', 'Mac Tier List 2025', 'MacBook Performance Chart', 'Geekbench 6 Scores', 'Mac Buying Guide', 'MacRank', 'M1 vs M2 vs M3 vs M4', 'Mac Studio Ultra Benchmark'],
   authors: [{ name: 'MacRank' }],
   robots: { index: true, follow: true },
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    url: 'https://macrank.app/',
     title: 'MacRank 2025: Apple Silicon Performance Leaderboard',
     description: 'Detailed benchmarks for every Apple Silicon Mac and iPad. Interactive charts and comparison tools.',
     images: ['https://macrank.app/og-image.jpg'],
@@ -45,18 +44,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    &lt;html lang="en"&gt;
-      &lt;head&gt;
-        &lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8"&gt;&lt;/script&gt;
-        &lt;script dangerouslySetInnerHTML={{
+    <html lang="en">
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8"></script>
+        <script dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-YKBHMQRHC8');
           `
-        }} /&gt;
-        &lt;script type="application/ld+json" dangerouslySetInnerHTML={{
+        }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: JSON.stringify([
             {
               "@context": "https://schema.org",
@@ -131,11 +130,11 @@ export default function RootLayout({
               ]
             }
           ])
-        }} /&gt;
-      &lt;/head&gt;
-      &lt;body className="bg-gray-50 dark:bg-black text-gray-700 dark:text-gray-100 transition-colors duration-300 overflow-x-hidden"&gt;
+        }} />
+      </head>
+      <body className="bg-gray-50 dark:bg-black text-gray-700 dark:text-gray-100 transition-colors duration-300 overflow-x-hidden">
         {children}
-      &lt;/body&gt;
-    &lt;/html&gt;
+      </body>
+    </html>
   );
 }

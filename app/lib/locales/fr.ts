@@ -52,6 +52,7 @@ export const fr = {
   chart_metal: 'Metal GPU',
   chart_value: 'Valeur (Nuage)',
   chart_ratio: 'Points par $',
+  'chart_value-ratio': 'Ratio valeur',
   clickToDetail: 'Cliquez pour détails',
   footer_disclaimer: 'MacRank utilise des scores synthétiques basés sur les données Geekbench 6. Les prix reflètent le PDSF de lancement en USD.',
   footer_copyright: 'Copyright © 2025 MacRank. Non affilié à Apple Inc.',

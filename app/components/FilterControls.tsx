@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react';
 import { Search, X, Share2, ChevronDown, Scale, Code, Palette, Coffee, Info, Cpu } from 'lucide-react';
-import { LanguageContext } from '../lib/translations';
+import { LanguageContext, translations } from '../lib/translations';
 import { DeviceType, ChipFamily, RankingScenario } from '../lib/types';
 
 interface FilterControlsProps {
@@ -31,7 +31,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
 }) => {
   const { t } = useContext(LanguageContext);
 
-  const ScenarioButton = ({ value, icon: Icon, labelKey }: { value: RankingScenario, icon: any, labelKey: string }) => (
+  const ScenarioButton = ({ value, icon: Icon, labelKey }: { value: RankingScenario, icon: React.ElementType, labelKey: string }) => (
      <button
         onClick={() => setRankingScenario(value)}
         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
@@ -41,7 +41,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
         }`}
      >
         <Icon size={14} />
-        <span className="whitespace-nowrap">{t(labelKey as any)}</span>
+        <span className="whitespace-nowrap">{t(labelKey as keyof typeof translations['en'])}</span>
      </button>
   );
 
@@ -111,7 +111,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                   <div className="relative group">
                      <select 
                         value={filterFamily}
-                        onChange={(e) => setFilterFamily(e.target.value as any)}
+                        onChange={(e) => setFilterFamily(e.target.value as ChipFamily | 'All')}
                         className="appearance-none bg-transparent pl-2 pr-8 py-1 text-sm font-medium text-gray-900 dark:text-white focus:outline-none cursor-pointer hover:text-blue-500 transition-colors"
                         aria-label="Filter by Chip Family"
                       >

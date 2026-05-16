@@ -52,6 +52,7 @@ export const ko = {
   chart_metal: 'GPU (Metal)',
   chart_value: '가성비 분포',
   chart_ratio: '가성비 (점수/$)',
+  'chart_value-ratio': '가성비 비율',
   clickToDetail: '상세보기 클릭',
   footer_disclaimer: 'MacRank는 Geekbench 6 데이터를 기반으로 한 종합 점수를 사용합니다. 가격은 출시 당시 USD 권장소비자가격을 반영합니다.',
   footer_copyright: 'Copyright © 2025 MacRank. Apple Inc.와 관련 없음.',

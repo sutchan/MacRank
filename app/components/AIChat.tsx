@@ -1,8 +1,8 @@
 
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { MessageSquare, ArrowUp, X, Bot, Sparkles, Wifi, WifiOff } from 'lucide-react';
+import { ArrowUp, X, Sparkles, WifiOff } from 'lucide-react';
 import { ChatMessage, MacModel } from '../lib/types';
-import { getMacAdvice } from '../services/geminiService';
+import { getMacAdvice } from '@/app/services/geminiService';
 import { LanguageContext } from '../lib/translations';
 
 interface AIChatProps {
@@ -21,6 +21,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
   useEffect(() => {
     setMessages([{ role: 'model', text: t('chatWelcome') }]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language]);
 
   // Network Status Listener

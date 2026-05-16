@@ -1,6 +1,6 @@
 
 import React, { useContext } from 'react';
-import { X, Moon, Sun, ChevronRight, RotateCcw, Github, Globe, ChevronDown } from 'lucide-react';
+import { X, Moon, Sun, ChevronRight, RotateCcw, Github, ChevronDown } from 'lucide-react';
 import { LanguageContext, languages, Language } from '../lib/translations';
 
 interface SettingsModalProps {

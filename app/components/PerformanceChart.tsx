@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { calculateTierScore, getTierLabel } from '../lib/data';
 import { MacModel, RankingScenario } from '../lib/types';
 import { LanguageContext } from '../lib/translations';
-import { BarChart3, Cpu, DollarSign, TrendingUp, MousePointerClick } from 'lucide-react';
+import { BarChart3, Cpu, DollarSign, MousePointerClick } from 'lucide-react';
 import { formatCurrency } from '../lib/translations';
 
 interface PerformanceChartProps {
@@ -71,7 +71,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
     return { chartData: processedData, stats };
   }, [data, metric, scenario]);
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: MacModel & { compositeScore: number; valueRatio: number; tier: string; displayName: string } }> }) => {
     if (active && payload && payload.length) {
       const d = payload[0].payload;
       const isRef = d.isReference;
@@ -170,7 +170,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                }`}
              >
-               {t(`chart_${m}` as any)}
+               {t(`chart_${m}` as const)}
              </button>
            ))}
         </div>
@@ -180,7 +180,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
       <div id="chart-visualization" className="h-[350px] md:h-[500px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           {metric === 'value' ? (
-             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e && e.activePayload && !e.activePayload[0].payload.isReference && onSelect(e.activePayload[0].payload)}>
+             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e) => { const payload = (e as { activePayload?: unknown[] })?.activePayload; if (payload && payload[0] && !(payload[0] as { payload?: { isReference?: boolean } }).payload?.isReference) { onSelect((payload[0] as { payload: MacModel }).payload); } }}>
                <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
                <XAxis 
                  type="number" 
@@ -227,7 +227,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
               data={chartData}
               layout="vertical"
               margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
-              onClick={(e: any) => e && e.activePayload && !e.activePayload[0].payload.isReference && onSelect(e.activePayload[0].payload)}
+              onClick={(e) => { const payload = (e as { activePayload?: unknown[] })?.activePayload; if (payload && payload[0] && !(payload[0] as { payload?: { isReference?: boolean } }).payload?.isReference) { onSelect((payload[0] as { payload: MacModel }).payload); } }}
             >
               <defs>
                 <linearGradient id="colorSingle" x1="0" y1="0" x2="1" y2="0">

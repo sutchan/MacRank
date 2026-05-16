@@ -52,6 +52,7 @@ export const ja = {
   chart_metal: 'GPU (Metal)',
   chart_value: 'コストパフォーマンス分布',
   chart_ratio: 'コスパ (点数/$)',
+  'chart_value-ratio': 'コスパ比率',
   clickToDetail: 'クリックで詳細表示',
   footer_disclaimer: 'MacRankはGeekbench 6データに基づく合成スコアを使用しています。価格は発売時の米ドルMSRPを反映しています。',
   footer_copyright: 'Copyright © 2025 MacRank. Apple Inc.とは関係ありません。',
