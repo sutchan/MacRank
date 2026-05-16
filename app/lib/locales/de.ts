@@ -52,6 +52,7 @@ export const de = {
   chart_metal: 'Metal GPU',
   chart_value: 'Preis-Leistung (Scatter)',
   chart_ratio: 'Punkte pro $',
+  'chart_value-ratio': 'Wertverhältnis',
   clickToDetail: 'Klicken für Details',
   footer_disclaimer: 'MacRank verwendet synthetische Scores basierend auf Geekbench 6 Daten. Preise spiegeln die UVP zum Start in USD wider.',
   footer_copyright: 'Copyright © 2025 MacRank. Nicht verbunden mit Apple Inc.',

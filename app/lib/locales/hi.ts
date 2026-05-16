@@ -52,6 +52,7 @@ export const hi = {
   chart_metal: 'GPU (Metal)',
   chart_value: 'मूल्य (Price/Perf)',
   chart_ratio: 'अंक प्रति $',
+  'chart_value-ratio': 'मूल्य अनुपात',
   clickToDetail: 'विवरण के लिए क्लिक करें',
   footer_disclaimer: 'MacRank Geekbench 6 डेटा पर आधारित सिंथेटिक स्कोर का उपयोग करता है। कीमतें USD में लॉन्च MSRP को दर्शाती हैं।',
   footer_copyright: 'कॉपीराइट © 2025 MacRank। Apple Inc. से संबद्ध नहीं।',

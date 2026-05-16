@@ -52,6 +52,7 @@ export const pt = {
   chart_metal: 'GPU Metal',
   chart_value: 'Dispersão de Valor',
   chart_ratio: 'Pontos por $',
+  'chart_value-ratio': 'Razão valor',
   clickToDetail: 'Clique para detalhes',
   footer_disclaimer: 'MacRank usa pontuações sintéticas baseadas em dados do Geekbench 6. Preços refletem o MSRP de lançamento em USD.',
   footer_copyright: 'Copyright © 2025 MacRank. Não afiliado à Apple Inc.',

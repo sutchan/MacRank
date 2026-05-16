@@ -52,6 +52,7 @@ export const zh = {
   chart_metal: '图形性能',
   chart_value: '性价比分布',
   chart_ratio: '每元得分',
+  'chart_value-ratio': '性价比',
   clickToDetail: '点击查看详情',
   footer_disclaimer: 'MacRank 使用基于 Geekbench 6 数据的合成评分。价格反映发售时的美元建议零售价。',
   footer_copyright: '版权所有 © 2025 MacRank。与 Apple Inc. 无关。',

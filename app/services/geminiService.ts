@@ -3,27 +3,11 @@ import { GoogleGenAI } from "@google/genai";
 import { MacModel } from '../lib/types';
 import { translations, Language, formatCurrency } from '../lib/translations';
 
-// Helper for offline logic: Calculate a simple relevance score for a query
-const calculateRelevance = (query: string, model: MacModel): number => {
-    const q = query.toLowerCase();
-    const m = model.name.toLowerCase() + " " + model.chip.toLowerCase();
-    let score = 0;
-    
-    // Exact chip match is high value
-    if (m.includes(q)) score += 10;
-    
-    // Partial word matches
-    const words = q.split(' ');
-    words.forEach(w => {
-        if (w.length > 2 && m.includes(w)) score += 1;
-    });
-
-    return score;
-};
+type TranslationDict = Record<string, string>;
 
 // Fallback logic when API is unreachable
 const getOfflineAdvice = (query: string, contextData: MacModel[], language: Language = 'en'): string => {
-    const t = translations[language] || translations['en'];
+    const t = (translations[language] || translations['en']) as TranslationDict;
     const q = query.toLowerCase();
     
     // 1. Filter models based on query keywords
@@ -124,8 +108,7 @@ export const getMacAdvice = async (
       model: model,
       contents: prompt,
       config: {
-        systemInstruction: "You are a helpful assistant specialized in Apple hardware comparisons.",
-        thinkingConfig: { thinkingBudget: 0 } // Low latency preferred for chat
+        systemInstruction: "You are a helpful assistant specialized in Apple hardware comparisons."
       }
     });
 

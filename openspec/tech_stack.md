@@ -1,11 +1,10 @@
 # 技术栈与架构深度文档
 
 ## 1. 核心框架与运行时
-*   **React 18.3.1**: 目前最稳定的 React 版本，兼容所有主流生态库。使用 Hooks API (`useMemo`, `useContext`, `useRef`) 管理状态。
-*   **Vite 5.4.1**: 高性能前端构建工具，支持 HMR (热模块替换) 和优化的生产环境打包。
-*   **ES Modules (ESM)**: 
-    *   **开发环境**: Vite 本地服务。
-    *   **生产环境**: 通过 package.json 管理依赖。
+*   **Next.js 14**: 基于 React 的全栈框架，采用 App Router 架构，支持 SSR/SSG 混合渲染模式。
+*   **React 18.3.1**: UI 框架，使用 Hooks API (`useMemo`, `useContext`, `useRef`) 管理状态。
+*   **TypeScript 5.5.3**: 严格类型检查，提升代码质量与可维护性。
+*   **ES Modules (ESM)**: 模块化开发，通过 package.json 管理依赖。
 
 ## 2. 核心依赖版本
 
@@ -13,18 +12,19 @@
 | :--- | :--- | :--- |
 | `react` | ^18.3.1 | UI 框架 |
 | `react-dom` | ^18.3.1 | React DOM 渲染 |
+| `next` | ^14.2.0 | 全栈框架 |
 | `@google/genai` | ^0.2.0 | Gemini AI SDK |
 | `lucide-react` | ^0.428.0 | SVG 图标库 |
 | `recharts` | ^2.12.0 | 数据可视化 |
-| `@vitejs/plugin-react` | ^4.3.1 | Vite React 插件 |
-| `vite` | ^5.4.1 | 构建工具 |
-| `vite-plugin-pwa` | ^0.20.0 | PWA 支持 |
 | `typescript` | ^5.5.3 | 类型检查 |
 | `@types/react` | ^18.3.3 | React 类型定义 |
 | `@types/react-dom` | ^18.3.0 | React DOM 类型定义 |
+| `tailwindcss` | ^3.4.0 | CSS 框架 |
+| `eslint` | ^8.0.0 | 代码检查 |
+| `eslint-config-next` | ^14.2.0 | Next.js ESLint 配置 |
 
 ## 3. 样式与主题架构
-*   **Tailwind CSS 3.x**: 负责 95% 的原子化样式、布局、响应式设计和深色模式 (`dark:` 修饰符)。
+*   **Tailwind CSS 3.4**: 负责 95% 的原子化样式、布局、响应式设计和深色模式 (`dark:` 修饰符)。
 *   **Custom CSS**: `app/style.css`
     *   处理 Webkit 滚动条美化。
     *   字体平滑渲染 (`antialiased`)。
@@ -56,9 +56,9 @@
     *   条形图 (Top 15 Index)。
 
 ## 7. PWA 生态
-*   **vite-plugin-pwa**:
-    *   `Auto Update`: Service Worker 自动更新。
-    *   `CacheFirst`: 静态资源激进缓存策略。
+*   **next.config.ts 配置**:
+    *   `output: 'export'` 启用静态导出。
+    *   Service Worker 注册用于离线缓存。
     *   `Manifest`: 定义 Standalone 模式与应用图标。
 
 ## 8. 国际化 (i18n)
@@ -67,12 +67,14 @@
 *   **上下文**: `LanguageContext.Provider` 提供 `language`, `setLanguage`, `t` 函数。
 
 ## 9. 开发工具链 (DevOps)
-*   **Linting**: TypeScript 类型检查。
-*   **Formatter**: 建议 Prettier 配置。
+*   **Linting**: ESLint + TypeScript 类型检查 (`npm run lint`)。
+*   **Formatter**: 代码格式化 (建议 Prettier)。
 *   **Iconography**: Lucide React (SVG Icons)。
-*   **Deployment**: 兼容 Vercel, Netlify, Github Pages 等静态托管。
+*   **Deployment**: 兼容 Vercel, Netlify, GitHub Pages 等静态托管。
 
 ## 10. 关键架构决策
-- **组件原子化**: 所有 UI 组件存放在 `components/` 目录，避免 App.tsx 过大。
+- **App Router 架构**: 使用 Next.js 14 App Router，所有页面组件放在 `app/` 目录。
+- **组件原子化**: 所有 UI 组件存放在 `app/components/` 目录，避免页面组件过大。
 - **服务隔离**: AI 调用逻辑封装在 `services/geminiService.ts`，便于测试和替换。
-- **数据分离**: 机型数据按来源拆分到多个文件，便于维护扩展。
+- **数据分离**: 机型数据按来源拆分到多个文件 (`data-silicon.ts`, `data-intel.ts`, `data-reference.ts`)，便于维护扩展。
+- **静态导出**: Next.js 配置 `output: 'export'` 以支持完全静态化部署。

@@ -52,6 +52,7 @@ export const ru = {
   chart_metal: 'Metal GPU',
   chart_value: 'Цена/Качество',
   chart_ratio: 'Очки за $',
+  'chart_value-ratio': 'Соотношение',
   clickToDetail: 'Клик для деталей',
   footer_disclaimer: 'MacRank использует синтетические оценки на основе данных Geekbench 6. Цены отражают MSRP запуска в USD.',
   footer_copyright: 'Copyright © 2025 MacRank. Не связано с Apple Inc.',
