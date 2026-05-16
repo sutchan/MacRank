@@ -138,7 +138,7 @@ const Page: React.FC = () => {
           <SettingsModal 
             onClose={() => interaction.setIsSettingsOpen(false)} 
             theme={settings.theme} 
-            toggleTheme={settings.toggleTheme} 
+            setThemeMode={settings.setThemeMode} 
             version={APP_VERSION}
           />
         )}
