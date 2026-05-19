@@ -38,8 +38,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
     const newUrl = `${baseUrl}#${params.toString()}`;
     
     const result = await shareContent({
-      title: `${mac.name} - MacRank`,
-      text: `Check out the ${mac.name} on MacRank! Score: ${score.toLocaleString()} (${tier}) Chip: ${mac.chip}`,
+      title: `${mac.name} - MacRank 性能天梯`,
+      text: `🔥 ${mac.name} | MacRank 评分: ${score.toLocaleString()} (${tier}) | ${mac.chip} | 专业级苹果电脑性能数据库`,
       url: newUrl
     });
     if (result === 'copied') { setShowCopied(true); setTimeout(() => setShowCopied(false), 2000); }

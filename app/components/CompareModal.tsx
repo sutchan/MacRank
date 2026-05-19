@@ -58,11 +58,11 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
   ];
 
   const handleShare = async () => {
-    const compareTitle = t('share_compare_msg') || 'Performance Battle:';
-    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name}`;
+    const compareTitle = t('share_compare_msg') || '⚔️ MacRank 对决:';
+    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name} | MacRank 性能天梯 - 专业级苹果电脑对比工具`;
     
     const result = await shareContent({
-      title: 'MacRank Comparison',
+      title: `${m1.name} ${t('vs')} ${m2.name} - MacRank`,
       text: shareText,
       url: window.location.href
     });
