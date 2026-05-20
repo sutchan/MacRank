@@ -1,4 +1,6 @@
-// app/components/CompareBar.tsx v0.6.1
+'use client';
+
+// app/components/CompareBar.tsx v0.7.6
 import React, { useContext } from 'react';
 import { X, ArrowRightLeft, Trash2 } from 'lucide-react';
 import { MacModel } from '../types';

@@ -1,4 +1,6 @@
-// app/components/DetailModal.tsx v0.6.1
+'use client';
+
+// app/components/DetailModal.tsx v0.7.6
 import React, { useContext, useState } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw, Wifi, Cable, BoxSelect } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';

@@ -1,4 +1,6 @@
-// app/components/AIChat.tsx v0.7.5
+'use client';
+
+// app/components/AIChat.tsx v0.7.6
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { ArrowUp, X, Sparkles, WifiOff, Trash2 } from 'lucide-react';
 import Markdown from 'react-markdown';

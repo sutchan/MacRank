@@ -1,4 +1,6 @@
-// app/components/SettingsModal.tsx v0.6.1
+'use client';
+
+// app/components/SettingsModal.tsx v0.7.6
 import React, { useContext } from 'react';
 import { X, Moon, Sun, ChevronRight, RotateCcw, Github, ChevronDown } from 'lucide-react';
 import { LanguageContext, Language, LanguageContextType, languages } from '../locales/translations';

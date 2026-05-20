@@ -1,4 +1,6 @@
-// app/components/MacTable.tsx v0.6.1
+'use client';
+
+// app/components/MacTable.tsx v0.7.6
 import React, { useContext } from 'react';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';
 import { MacModel, RankingScenario, SortKey } from '../types';

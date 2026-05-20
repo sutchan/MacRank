@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useContext } from 'react';
 import { X, RotateCcw } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';

@@ -1,4 +1,6 @@
-// app/components/CompareModal.tsx v0.6.1
+'use client';
+
+// app/components/CompareModal.tsx v0.7.6
 import React, { useContext, useState } from 'react';
 import { X, Share2, Check } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';

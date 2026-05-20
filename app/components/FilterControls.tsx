@@ -1,4 +1,6 @@
-// app/components/FilterControls.tsx v0.6.2
+'use client';
+
+// app/components/FilterControls.tsx v0.7.6
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Search, X, ChevronDown, Scale, Code, Palette, Coffee, Cpu, Settings2, Check } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
