@@ -1,5 +1,7 @@
 
-// app/components/Hero.tsx v0.5.0
+'use client';
+
+// app/components/Hero.tsx v0.7.6
 import React, { useContext } from 'react';
 import { Share2, Zap } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';

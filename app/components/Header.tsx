@@ -1,4 +1,6 @@
-// app/components/Header.tsx v0.7.5
+'use client';
+
+// app/components/Header.tsx v0.7.6
 import React, { useContext } from 'react';
 import { Settings, RotateCcw } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';

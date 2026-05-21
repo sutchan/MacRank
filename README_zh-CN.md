@@ -2,13 +2,13 @@
 
 [中文文档](./README.md) | **English**
 
-**MacRank** is a comprehensive performance leaderboard and tier list for Apple Mac computers (M1-M5 series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect Mac for their workflow.
+**MacRank** is a comprehensive performance leaderboard and tier list for Apple Mac computers (M1-M5 series & iPad A-series/M-series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect device for their workflow.
 
 ![MacRank Preview](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
 ## ✨ Features
 
-- **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, and Mac Studio based on synthetic tier scores.
+- **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, and iPad Pro based on synthetic tier scores.
 - **Interactive Charts**: Visual comparison of top models using Recharts.
 - **Detailed Specs**: Deep dive into CPU/GPU cores, memory configurations, and benchmark scores (Geekbench 6 & Metal).
 - **AI Advisor**: Integrated chat interface powered by **Google Gemini 3 Flash** to answer buying questions and provide technical advice.
@@ -64,15 +64,15 @@
 ```
 macrank/
 ├── app/
-│   ├── components/       # UI 组件 (如 MacTable.tsx)
-│   ├── data/             # 硬件参数等静态数据 (如 data-silicon.ts)
-│   ├── lib/              # 核心逻辑 (如 scoring.ts)
-│   ├── locales/          # 国际化语言包 (如 zh.ts)
-│   ├── services/         # API 服务集成 (如 geminiService.ts)
-│   └── style.css         # 全局样式
-├── public/               # 静态资源 (如 icon.svg)
-├── openspec/             # 项目规范文档
-├── tailwind.config.js    # Tailwind 配置
+│   ├── components/       # UI Components (e.g., MacTable.tsx)
+│   ├── data/             # Static data files (e.g., data-silicon.ts)
+│   ├── lib/              # Core logic (e.g., scoring.ts)
+│   ├── locales/          # Language translation files (e.g., en.ts)
+│   ├── services/         # API integrations (e.g., geminiService.ts)
+│   └── style.css         # Global CSS styles
+├── public/               # Static assets (e.g., icon.svg)
+├── openspec/             # Specification documents
+├── tailwind.config.js    # Tailwind CSS configuration
 ├── package.json
 └── README.md
 ```

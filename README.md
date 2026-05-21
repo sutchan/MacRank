@@ -2,19 +2,19 @@
 
 **中文文档** | [English](./README_zh-CN.md)
 
-**MacRank** is a comprehensive performance leaderboard and tier list for Apple computers (Mac M1-M5 series & iPad A-series/M-series). It combines benchmark data with an AI-powered purchasing advisor to help users find the perfect device for their workflow.
+**MacRank** 是一个全面的苹果电脑（Mac M1-M5 系列 & iPad A系列/M系列）性能排行榜和分级列表。它结合了基准测试数据和 AI 驱动的购买顾问，帮助用户找到最适合自己工作流程的设备。
 
 ![MacRank 预览](https://via.placeholder.com/800x400?text=MacRank+Preview)
 
 ## ✨ 功能特性
 
-- **Performance Leaderboard**: comprehensive ranking of MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, and iPad Pro based on synthetic tier scores.
-- **Interactive Charts**: Visual comparison of top models using Recharts.
-- **Detailed Specs**: Deep dive into CPU/GPU cores, memory configurations, and benchmark scores (Geekbench 6 & Metal).
-- **AI Advisor**: Integrated chat interface powered by **Google Gemini 3 Flash** to answer buying questions and provide technical advice.
-- **Tier System**: Visual ranking from S+ (Top Tier) to D, based on a weighted composite score of Single-Core, Multi-Core, and GPU performance.
-- **Dark Mode**: Fully responsive UI with automatic and manual light/dark theme switching.
-- **Internationalization**: Support for 10 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese, Russian, Korean, Hindi).
+- **性能排行榜**: 基于综合分级分数对 MacBook Air、MacBook Pro、iMac、Mac mini、Mac Studio 和 iPad Pro 进行全面排名。
+- **交互式图表**: 使用 Recharts 进行顶级机型的可视化比较。
+- **详细规格**: 深入了解 CPU/GPU 核心数、内存配置和基准测试分数（Geekbench 6 & Metal）。
+- **AI 顾问**: 集成由 **Google Gemini 3 Flash** 驱动的聊天界面，回答购买问题并提供技术建议。
+- **分级系统**: 基于单核、多核和 GPU 性能的加权综合分数，从 S+（顶级）到 D 级进行可视化排名。
+- **深色模式**: 完全响应式 UI，支持自动和手动切换明暗主题。
+- **国际化**: 支持 10 种语言（英语、中文、西班牙语、法语、德语、日语、葡萄牙语、俄语、韩语、印地语）。
 
 ## 🛠 技术栈
 
@@ -31,7 +31,7 @@
 
 - Node.js (v18 或更高版本)
 - npm 或 yarn
-- Google Gemini API Key (可在 [Google AI Studio](https://aistudio.google.com/) 免费获取)
+- Google Gemini API Key（可在 [Google AI Studio](https://aistudio.google.com/) 免费获取）
 
 ### 安装步骤
 
@@ -64,15 +64,15 @@
 ```
 macrank/
 ├── app/
-│   ├── components/       # UI Components (e.g., MacTable.tsx)
-│   ├── data/             # Static data files (e.g., data-silicon.ts)
-│   ├── lib/              # Core logic (e.g., scoring.ts)
-│   ├── locales/          # Language translation files (e.g., en.ts)
-│   ├── services/         # API integrations (e.g., geminiService.ts)
-│   └── style.css         # Global CSS styles
-├── public/               # Static assets (e.g., icon.svg)
-├── openspec/             # Specification documents
-├── tailwind.config.js    # Tailwind CSS configuration
+│   ├── components/       # UI 组件（如 MacTable.tsx）
+│   ├── data/             # 静态数据文件（如 data-silicon.ts）
+│   ├── lib/              # 核心逻辑（如 scoring.ts）
+│   ├── locales/          # 语言翻译文件（如 zh.ts）
+│   ├── services/         # API 服务集成（如 geminiService.ts）
+│   └── style.css         # 全局 CSS 样式
+├── public/               # 静态资源（如 icon.svg）
+├── openspec/             # 规范文档
+├── tailwind.config.js    # Tailwind CSS 配置
 ├── package.json
 └── README.md
 ```
@@ -89,4 +89,4 @@ macrank/
 
 ## 📄 许可证
 
-Distributed under the MIT License. See `LICENSE` for more information.
+MIT 许可证。详见 `LICENSE` 文件了解更多信息。

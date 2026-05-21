@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.7.4]
+## [0.7.6]
+### Fixed
+- **Light Mode**: Fixed issue where light mode wasn't fully applied properly by replacing `classList.toggle` with explicit `classList.add` and `classList.remove`
+- **Scrollbar Styling**: Optimized scrollbar styling to coordinate better with light/dark modes, reduced opacity for less visual contrast
+- **Sharing**: Enhanced share messages with promotional text for better application propagation
+- **CSS Cleanup**: Removed duplicate Tailwind import in `globals.css`, now properly imports `style.css`
+### Updated
+- **Documentation**: Restructured README files, making default documentation fully in Chinese
+- **Version Sync**: Unified all version numbers to v0.7.6
+
+## [0.7.5]
 ### Security
 - **Next.js**: Upgraded to v15.5.18 to patch CVE-2025-66478 (Critical RCE vulnerability)
 - **PostCSS**: Upgraded to v8.5.10 to fix XSS vulnerability

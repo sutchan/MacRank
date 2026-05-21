@@ -1,4 +1,6 @@
-// app/components/TradeInCalculator.tsx v0.7.0
+'use client';
+
+// app/components/TradeInCalculator.tsx v0.7.6
 import React, { useState, useContext, useMemo } from 'react';
 import { LanguageContext, LanguageContextType, formatCurrency } from '../locales/translations';
 import { macData } from '../data/data';

@@ -1,4 +1,6 @@
-// app/components/CompareModal.tsx v0.6.1
+'use client';
+
+// app/components/CompareModal.tsx v0.7.6
 import React, { useContext, useState } from 'react';
 import { X, Share2, Check } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -58,11 +60,11 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
   ];
 
   const handleShare = async () => {
-    const compareTitle = t('share_compare_msg') || 'Performance Battle:';
-    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name}`;
+    const compareTitle = t('share_compare_msg') || '⚔️ MacRank 对决:';
+    const shareText = `${compareTitle} ${m1.name} ${t('vs')} ${m2.name} | MacRank 性能天梯 - 专业级苹果电脑对比工具`;
     
     const result = await shareContent({
-      title: 'MacRank Comparison',
+      title: `${m1.name} ${t('vs')} ${m2.name} - MacRank`,
       text: shareText,
       url: window.location.href
     });
