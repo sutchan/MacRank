@@ -1,4 +1,4 @@
-# 03. 开发标准 (Development Standards) v0.7.5
+# 03. 开发标准 (Development Standards) v0.7.6
 
 ## 1. 目录结构与扁平化规范
 ### 1.1 核心目录
