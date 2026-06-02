@@ -1,4 +1,4 @@
-# 04. 运维与展望 (Operations & Roadmap) v0.7.5
+# 04. 运维与展望 (Operations & Roadmap) v0.7.6
 
 ## 1. 部署与环境配置 (Deployment)
 ### 1.1 静态托管
@@ -18,6 +18,7 @@
 - [x] v0.7.2: 完善机型数据，优化深色/浅色模式文字可读性。
 - [x] v0.7.4: 安全补丁，升级 Next.js 修复 CVE-2025-66478 严重漏洞，PostCSS 修复 XSS 漏洞。
 - [x] v0.7.5: 新增 M4 MacBook Air (2025)、Mac Studio M4/M3 Ultra、iPad Pro M4、iPad Air M2、iPad mini A17 Pro 等最新设备数据。
+- [x] v0.7.6: 修复亮色模式显示问题，优化滚动条样式，增强分享文案，添加 'use client' 指令修复 Next.js 15 兼容性问题，统一所有版本号至 v0.7.6。
 
 ### 2.2 未来规划 (v0.8+)
 - [ ] **性能长图一键生成**: 支持将对比结果导出为 macOS 风格的社交分享海报。
