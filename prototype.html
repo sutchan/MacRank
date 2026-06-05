@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacRank v0.7.6 - 原型图设计规范</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .tier-s { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); }
+        .tier-a { background: #8b5cf6; }
+        .tier-b { background: #3b82f6; }
+        .tier-c { background: #22c55e; }
+        .tier-d { background: #eab308; }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.3);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.5);
+        }
+        .animate-pulse-slow {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .wireframe-box {
+            border: 2px dashed #9ca3af;
+            background: rgba(156, 163, 175, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 transition-colors duration-300">
+    <div class="min-h-screen">
+        <!-- 顶部导航 -->
+        <header class="fixed w-full top-0 z-50 glass-panel border-b border-gray-200">
+            <div class="max-w-[980px] mx-auto px-4 h-12 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-4">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.8 9.6c-.7 0-1.7-.5-1.7-1.7s1-2.2 2-2.3c.1 0 .2 0 .2 0-1-1.3-2.6-1.5-3.2-1.5-1.4 0-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 1-3.9 2.4-1.6 2.4-.4 5.9 1.1 8 1 1.4 2 2.9 3.4 2.9.7 0 1-.2 1.9-.2.9 0 1.1.2 1.9.2 1.3 0 2.2-1.3 3.1-2.6.9-1.3 1.3-2.7 1.3-2.7s-2.1-1-2.2-2.9zM15 4.6c.6-.7 1-1.8 1-2.8 0-.1 0-.3 0-.4-.9.1-2 .7-2.6 1.4-.6.6-1 1.6-1 2.6 0 .1 0 .3 0 .4 1-.1 2.1-.6 2.6-1.2z"/>
+                    </svg>
+                    <span class="font-semibold tracking-wide">MacRank 2025</span>
+                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-black">v0.7.6</span>
+                </div>
+                <nav class="flex items-center gap-6 text-gray-600">
+                    <span class="font-medium cursor-pointer hover:text-blue-500">排行榜</span>
+                    <span class="font-medium cursor-pointer hover:text-blue-500">图表</span>
+                    <span class="cursor-pointer hover:text-gray-900">⚙️</span>
+                </nav>
+            </div>
+        </header>
+
+        <!-- 主要内容区 -->
+        <main class="max-w-[980px] mx-auto px-4 pt-24 pb-32 space-y-8">
+            
+            <!-- 标题说明区 -->
+            <div class="text-center space-y-2 mb-12">
+                <h1 class="text-4xl font-black tracking-tight">MacRank 原型图设计规范</h1>
+                <p class="text-gray-500">基于 v0.7.6 实现的完整 UI 组件架构</p>
+            </div>
+
+            <!-- 1. Hero 组件 -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 text-white flex items-center justify-center font-bold text-sm">1</div>
+                    <div>
+                        <h2 class="text-xl font-bold">Hero 组件</h2>
+                        <p class="text-gray-500 text-sm">页面顶部英雄区域</p>
+                    </div>
+                </div>
+                
+                <div class="relative text-center space-y-6 bg-white dark:bg-gray-900 rounded-3xl p-10 border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[150%] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+                    
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-black uppercase tracking-widest mb-2 shadow-sm">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <span>2025 Mac Performance Data Loaded</span>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h1 class="text-5xl font-black tracking-tightest">苹果电脑性能天梯榜</h1>
+                        <p class="text-lg text-gray-500 font-medium max-w-3xl mx-auto leading-relaxed">
+                            最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。
+                        </p>
+                    </div>
+                    
+                    <div class="flex justify-center pt-2">
+                        <button class="group flex items-center gap-2 px-8 py-3 rounded-full bg-black text-white font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300">
+                            <svg class="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                            </svg>
+                            <span>分享</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Filter Controls 组件 -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-green-700 text-white flex items-center justify-center font-bold text-sm">2</div>
+                    <div>
+                        <h2 class="text-xl font-bold">Filter Controls 组件</h2>
+                        <p class="text-gray-500 text-sm">筛选与搜索控制</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 shadow-sm">
+                    <div class="space-y-4">
+                        <!-- 搜索栏 -->
+                        <div class="flex flex-wrap gap-3 items-center">
+                            <div class="flex-1 min-w-[200px] relative">
+                                <input type="text" placeholder="搜索型号、芯片、关键词..." class="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                            </div>
+                            
+                            <!-- 筛选下拉框 -->
+                            <select class="px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <option>全部类型</option>
+                                <option>笔记本</option>
+                                <option>台式机</option>
+                                <option>平板</option>
+                            </select>
+                            
+                            <select class="px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <option>全部芯片</option>
+                                <option>M5</option>
+                                <option>M4</option>
+                                <option>M3</option>
+                                <option>M2</option>
+                                <option>M1</option>
+                                <option>Intel</option>
+                            </select>
+                            
+                            <select class="px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500">
+                                <option>全部系统</option>
+                                <option>macOS Sequoia</option>
+                                <option>macOS Sonoma</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 场景选择 -->
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-black text-gray-400 uppercase tracking-widest self-center mr-2">场景:</span>
+                            <button class="px-4 py-1.5 rounded-full bg-blue-500 text-white text-sm font-bold shadow-lg">均衡</button>
+                            <button class="px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm font-bold hover:bg-gray-200 transition-colors">开发</button>
+                            <button class="px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm font-bold hover:bg-gray-200 transition-colors">创意</button>
+                            <button class="px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm font-bold hover:bg-gray-200 transition-colors">日常</button>
+                            
+                            <div class="flex-1"></div>
+                            
+                            <label class="flex items-center gap-2 text-xs font-medium text-gray-500 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded text-blue-500">
+                                显示参考数据
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Performance Chart 组件 -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-700 text-white flex items-center justify-center font-bold text-sm">3</div>
+                    <div>
+                        <h2 class="text-xl font-bold">Performance Chart 组件</h2>
+                        <p class="text-gray-500 text-sm">性能可视化图表</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg">性能对比图</h3>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1 rounded-full bg-blue-500 text-white text-xs font-bold">综合</button>
+                            <button class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold hover:bg-gray-200 transition-colors">单核</button>
+                            <button class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold hover:bg-gray-200 transition-colors">多核</button>
+                            <button class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold hover:bg-gray-200 transition-colors">Metal</button>
+                        </div>
+                    </div>
+                    
+                    <div class="h-64 bg-gray-50 rounded-2xl flex items-center justify-center">
+                        <div class="text-center text-gray-400">
+                            <div class="text-4xl mb-2">📊</div>
+                            <p class="text-sm">性能图表区域 (Recharts)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. MacTable 组件 -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-700 text-white flex items-center justify-center font-bold text-sm">4</div>
+                    <div>
+                        <h2 class="text-xl font-bold">MacTable 组件</h2>
+                        <p class="text-gray-500 text-sm">性能天梯主表格</p>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto relative custom-scrollbar bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 shadow-sm">
+                    <table class="w-full text-left border-collapse min-w-[750px]">
+                        <thead>
+                            <tr class="border-b border-gray-100 bg-gray-50/30">
+                                <th class="py-4 pl-3 w-8 text-center"></th>
+                                <th class="py-4 pr-2 text-[10px] font-black text-gray-500 uppercase tracking-widest w-10 text-center">#</th>
+                                <th class="py-4 pr-2 w-14 text-center text-[10px] font-black text-gray-500 uppercase tracking-widest">排名</th>
+                                <th class="py-4 px-3 sticky left-0 z-20 bg-gray-50 shadow-[4px_0_10px_-5px_rgba(0,0,0,0.1)] min-w-[280px] text-[10px] font-black text-gray-500 uppercase tracking-widest">型号/芯片</th>
+                                <th class="hidden md:table-cell py-4 px-2 w-24 text-[10px] font-black text-gray-500 uppercase tracking-widest">CPU</th>
+                                <th class="hidden lg:table-cell py-4 px-2 w-24 text-[10px] font-black text-gray-500 uppercase tracking-widest">GPU</th>
+                                <th class="hidden xl:table-cell py-4 px-2 w-28 text-[10px] font-black text-gray-500 uppercase tracking-widest">内存</th>
+                                <th class="py-4 px-3 text-right w-40 text-[10px] font-black text-gray-500 uppercase tracking-widest">性能</th>
+                                <th class="hidden sm:table-cell py-4 px-2 text-right w-24 text-[10px] font-black text-gray-500 uppercase tracking-widest">性价比</th>
+                                <th class="hidden sm:table-cell py-4 pl-2 pr-3 text-right w-24 text-[10px] font-black text-gray-500 uppercase tracking-widest">价格</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 第一行 (S+ 级) -->
+                            <tr class="border-b border-gray-50 hover:bg-gray-50 transition-all bg-blue-50/70 relative after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-blue-500">
+                                <td class="py-4 pl-3 text-center">
+                                    <div class="w-5 h-5 rounded-md border-2 flex items-center justify-center bg-blue-500 border-blue-500 text-white scale-110 shadow-lg shadow-blue-500/20">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="py-4 pr-2 text-center text-[11px] font-black text-gray-300">01</td>
+                                <td class="py-4 pr-2 text-center">
+                                    <span class="tier-s text-white text-[10px] font-black px-1.5 py-0.5 rounded-md animate-pulse-slow">S+</span>
+                                </td>
+                                <td class="py-4 px-3 sticky left-0 z-20 bg-blue-50/50">
+                                    <div class="flex flex-col">
+                                        <span class="text-[15px] font-semibold text-gray-900">MacBook Pro 16" M4 Max</span>
+                                        <div class="flex items-center gap-1.5 mt-1">
+                                            <span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded leading-none uppercase">M4 Max</span>
+                                            <span class="text-[10px] font-medium text-gray-500">2025</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="hidden md:table-cell py-4 px-2 text-xs font-medium text-gray-600">16+40</td>
+                                <td class="hidden lg:table-cell py-4 px-2 text-xs font-medium text-gray-600">64 <span class="text-[10px] opacity-50">GPU</span></td>
+                                <td class="hidden xl:table-cell py-4 px-2 text-xs font-medium text-gray-600">192GB</td>
+                                <td class="py-4 px-3 text-right">
+                                    <div class="flex flex-col items-end gap-1.5">
+                                        <span class="text-lg font-black tabular-nums tracking-tighter text-gray-900">9,850</span>
+                                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600" style="width: 98%"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="hidden sm:table-cell py-4 px-2 text-right">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-black text-blue-500">125</span>
+                                        <span class="text-[9px] text-gray-500 uppercase tracking-tighter">分/10$</span>
+                                    </div>
+                                </td>
+                                <td class="hidden sm:table-cell py-4 pl-2 pr-3 text-right">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-bold tabular-nums text-gray-400">$3,499</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <!-- 第二行 (S 级) -->
+                            <tr class="border-b border-gray-50 hover:bg-gray-50 transition-all">
+                                <td class="py-4 pl-3 text-center">
+                                    <div class="w-5 h-5 rounded-md border-2 flex items-center justify-center border-gray-200 bg-white hover:border-blue-300"></div>
+                                </td>
+                                <td class="py-4 pr-2 text-center text-[11px] font-black text-gray-300">02</td>
+                                <td class="py-4 pr-2 text-center">
+                                    <span class="tier-s text-white text-[10px] font-black px-1.5 py-0.5 rounded-md">S</span>
+                                </td>
+                                <td class="py-4 px-3 sticky left-0 z-20 bg-white hover:bg-gray-50 transition-colors">
+                                    <div class="flex flex-col">
+                                        <span class="text-[15px] font-semibold text-gray-900">Mac Studio M4 Ultra</span>
+                                        <div class="flex items-center gap-1.5 mt-1">
+                                            <span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded leading-none uppercase">M4 Ultra</span>
+                                            <span class="text-[10px] font-medium text-gray-500">2025</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="hidden md:table-cell py-4 px-2 text-xs font-medium text-gray-600">32+64</td>
+                                <td class="hidden lg:table-cell py-4 px-2 text-xs font-medium text-gray-600">128 <span class="text-[10px] opacity-50">GPU</span></td>
+                                <td class="hidden xl:table-cell py-4 px-2 text-xs font-medium text-gray-600">256GB</td>
+                                <td class="py-4 px-3 text-right">
+                                    <div class="flex flex-col items-end gap-1.5">
+                                        <span class="text-lg font-black tabular-nums tracking-tighter text-gray-900">9,620</span>
+                                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600" style="width: 96%"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="hidden sm:table-cell py-4 px-2 text-right">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-black text-blue-500">110</span>
+                                        <span class="text-[9px] text-gray-500 uppercase tracking-tighter">分/10$</span>
+                                    </div>
+                                </td>
+                                <td class="hidden sm:table-cell py-4 pl-2 pr-3 text-right">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-bold tabular-nums text-gray-400">$4,999</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <!-- 第三行 (A 级) -->
+                            <tr class="border-b border-gray-50 hover:bg-gray-50 transition-all">
+                                <td class="py-4 pl-3 text-center">
+                                    <div class="w-5 h-5 rounded-md border-2 flex items-center justify-center border-gray-200 bg-white hover:border-blue-300"></div>
+                                </td>
+                                <td class="py-4 pr-2 text-center text-[11px] font-black text-gray-300">03</td>
+                                <td class="py-4 pr-2 text-center">
+                                    <span class="tier-a text-white text-[10px] font-black px-1.5 py-0.5 rounded-md">A</span>
+                                </td>
+                                <td class="py-4 px-3 sticky left-0 z-20 bg-white hover:bg-gray-50 transition-colors">
+                                    <div class="flex flex-col">
+                                        <span class="text-[15px] font-semibold text-gray-900">MacBook Pro 14" M4 Pro</span>
+                                        <div class="flex items-center gap-1.5 mt-1">
+                                            <span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded leading-none uppercase">M4 Pro</span>
+                                            <span class="text-[10px] font-medium text-gray-500">2025</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="hidden md:table-cell py-4 px-2 text-xs font-medium text-gray-600">12+28</td>
+                                <td class="hidden lg:table-cell py-4 px-2 text-xs font-medium text-gray-600">40 <span class="text-[10px] opacity-50">GPU</span></td>
+                                <td class="hidden xl:table-cell py-4 px-2 text-xs font-medium text-gray-600">64GB</td>
+                                <td class="py-4 px-3 text-right">
+                                    <div class="flex flex-col items-end gap-1.5">
+                                        <span class="text-lg font-black tabular-nums tracking-tighter text-gray-900">8,450</span>
+                                        <div class="w-full h-[3px] bg-gray-100 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600" style="width: 84%"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="hidden sm:table-cell py-4 px-2 text-right">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-black text-emerald-500">145</span>
+                                        <span class="text-[9px] text-gray-500 uppercase tracking-tighter">分/10$</span>
+                                    </div>
+                                </td>
+                                <td class="hidden sm:table-cell py-4 pl-2 pr-3 text-right">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-xs font-bold tabular-nums text-gray-400">$1,999</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. Compare Modal & Detail Modal -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-500 to-pink-700 text-white flex items-center justify-center font-bold text-sm">5</div>
+                    <div>
+                        <h2 class="text-xl font-bold">模态框组件</h2>
+                        <p class="text-gray-500 text-sm">详情弹窗 & 对比弹窗</p>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Detail Modal -->
+                    <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">详情弹窗</h3>
+                            <span class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-medium">DetailModal</span>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="tier-s text-white text-[10px] font-black px-1.5 py-0.5 rounded-md">S+</span>
+                                        <h4 class="font-bold text-lg">MacBook Pro 16" M4 Max</h4>
+                                    </div>
+                                    <p class="text-gray-500 text-sm">M4 Max · 2025</p>
+                                </div>
+                                <button class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">✕</button>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-3 py-4 border-y border-gray-100">
+                                <div class="text-center">
+                                    <div class="text-2xl font-black text-gray-900">3,250</div>
+                                    <div class="text-[10px] text-gray-400 uppercase tracking-wider">单核</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-black text-gray-900">28,450</div>
+                                    <div class="text-[10px] text-gray-400 uppercase tracking-wider">多核</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-black text-gray-900">215,000</div>
+                                    <div class="text-[10px] text-gray-400 uppercase tracking-wider">Metal</div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between"><span class="text-gray-500">CPU 核心</span><span class="font-medium">16+40</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">GPU 核心</span><span class="font-medium">64</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">内存</span><span class="font-medium">192GB</span></div>
+                                <div class="flex justify-between"><span class="text-gray-500">起售价</span><span class="font-bold">$3,499</span></div>
+                            </div>
+                            
+                            <button class="w-full py-3 rounded-xl bg-black text-white font-bold">分享</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Compare Modal -->
+                    <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">对比弹窗</h3>
+                            <span class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-medium">CompareModal</span>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="text-center flex-1">
+                                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Model 1</div>
+                                    <div class="font-bold text-sm">MBP 16" M4 Max</div>
+                                </div>
+                                <div class="text-gray-300 text-lg font-bold mx-4">VS</div>
+                                <div class="text-center flex-1">
+                                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1">Model 2</div>
+                                    <div class="font-bold text-sm">Mac Studio M4 Ultra</div>
+                                </div>
+                            </div>
+                            
+                            <div class="h-48 bg-gray-50 rounded-2xl flex items-center justify-center">
+                                <div class="text-center text-gray-400">
+                                    <div class="text-3xl mb-1">📈</div>
+                                    <p class="text-xs">雷达图对比区域</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <button class="w-full py-3 rounded-xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-colors">清除</button>
+                                <button class="w-full py-3 rounded-xl bg-black text-white font-bold">分享对比</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Compare Bar -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-cyan-700 text-white flex items-center justify-center font-bold text-sm">6</div>
+                    <div>
+                        <h2 class="text-xl font-bold">Compare Bar 组件</h2>
+                        <p class="text-gray-500 text-sm">浮动对比栏</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="flex -space-x-2">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold shadow-md border-2 border-white">16"</div>
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold shadow-md border-2 border-white">Stu</div>
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold">2 款机型已选择</div>
+                                <div class="text-xs text-gray-500">点击按钮开始对比</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="px-4 py-2 rounded-xl bg-gray-100 text-gray-600 text-sm font-bold hover:bg-gray-200 transition-colors">清除</button>
+                            <button class="px-4 py-2 rounded-xl bg-black text-white text-sm font-bold shadow-lg hover:scale-105 transition-all">对比</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. AI Chat -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-500 to-yellow-700 text-white flex items-center justify-center font-bold text-sm">7</div>
+                    <div>
+                        <h2 class="text-xl font-bold">AI Chat 组件</h2>
+                        <p class="text-gray-500 text-sm">Gemini AI 选购助手</p>
+                    </div>
+                </div>
+                
+                <div class="max-w-md mx-auto">
+                    <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 shadow-xl overflow-hidden">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-4 text-white">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                                    <span class="text-xl">🤖</span>
+                                </div>
+                                <div>
+                                    <div class="font-bold">AI 选购助手</div>
+                                    <div class="text-xs opacity-80">Powered by Gemini</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 h-64 overflow-y-auto space-y-4">
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">🤖</div>
+                                <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 text-sm max-w-xs">
+                                    您好！我是您的 Mac 选购助手。告诉我您的使用场景，我可以为您推荐最合适的机型！
+                                </div>
+                            </div>
+                            <div class="flex gap-3 flex-row-reverse">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">👤</div>
+                                <div class="bg-blue-500 text-white rounded-2xl rounded-tr-none p-3 text-sm max-w-xs">
+                                    我主要做视频剪辑，预算 $2000 左右，有什么推荐？
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">🤖</div>
+                                <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 text-sm max-w-xs">
+                                    推荐 <strong>MacBook Pro 14" M4 Pro</strong>！它有出色的 GPU 性能，非常适合视频剪辑，性价比很高。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border-t border-gray-100">
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="问我任何问题..." class="flex-1 px-4 py-2 rounded-full bg-gray-100 text-sm focus:outline-none">
+                                <button class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Settings Modal -->
+            <section class="space-y-4">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center font-bold text-sm">8</div>
+                    <div>
+                        <h2 class="text-xl font-bold">Settings Modal 组件</h2>
+                        <p class="text-gray-500 text-sm">设置弹窗</p>
+                    </div>
+                </div>
+                
+                <div class="max-w-md mx-auto bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-xl">设置</h3>
+                        <span class="text-xs text-gray-400">v0.7.6</span>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-3">主题</label>
+                            <div class="flex gap-2">
+                                <button class="flex-1 py-2.5 rounded-xl bg-blue-500 text-white text-sm font-bold">🌙 深色</button>
+                                <button class="flex-1 py-2.5 rounded-xl bg-gray-100 text-gray-700 text-sm font-bold hover:bg-gray-200 transition-colors">☀️ 浅色</button>
+                                <button class="flex-1 py-2.5 rounded-xl bg-gray-100 text-gray-700 text-sm font-bold hover:bg-gray-200 transition-colors">⚡ 自动</button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-3">语言</label>
+                            <select class="w-full px-4 py-2.5 rounded-xl bg-gray-100 text-sm focus:outline-none">
+                                <option>简体中文</option>
+                                <option>English</option>
+                                <option>Español</option>
+                                <option>Français</option>
+                                <option>Deutsch</option>
+                                <option>日本語</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 页面底部说明 -->
+            <footer class="mt-16 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+                <p>MacRank v0.7.6 原型图设计规范 · 基于 Next.js 15 + Tailwind CSS 4 构建</p>
+                <p class="mt-2 text-xs text-gray-400">所有组件均按照代码实现 1:1 还原</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        // 简单的深色模式切换演示
+        let isDark = false;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' || e.key === 'D') {
+                isDark = !isDark;
+                document.body.classList.toggle('dark');
+                document.body.classList.toggle('bg-gray-900');
+                document.body.classList.toggle('bg-gray-50');
+                document.body.classList.toggle('text-white');
+                document.body.classList.toggle('text-gray-900');
+            }
+        });
+    </script>
+</body>
+</html>
