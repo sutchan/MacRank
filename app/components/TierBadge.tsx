@@ -1,4 +1,6 @@
-// app/components/TierBadge.tsx v0.3.25
+'use client';
+
+// app/components/TierBadge.tsx v0.7.6
 import React from 'react';
 
 interface TierBadgeProps {
