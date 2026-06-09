@@ -1,4 +1,10 @@
-# 02. 技术规格 (Technical Specification) v0.7.6
+# 02. 技术规格 (Technical Specification) v0.7.7
+
+## 版本信息
+- 版本：v0.7.7
+- 日期：2026-06-09
+- 状态：已完善
+- 对齐状态：与代码实现一致
 
 ## 1. 评分算法 (Normalization Algorithm)
 ### 1.1 性能锚点 (Anchors)
