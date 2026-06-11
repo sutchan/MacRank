@@ -1,12 +1,13 @@
 'use client';
 
-// app/components/AIChat.tsx v0.7.6
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { ArrowUp, X, Sparkles, WifiOff, Trash2 } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { ChatMessage, MacModel } from '../types';
 import { getMacAdvice } from '../services/geminiService';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface AIChatProps {
   macData: MacModel[];
@@ -23,7 +24,6 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
   const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
 
   useEffect(() => {
-    // Persistent initial message if no messages exist
     if (messages.length === 0) {
       setMessages([{ role: 'model', text: t('chatWelcome') }]);
     }
@@ -90,7 +90,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
          {t('ai_suggestion')}
        </div>
 
-      <button
+      <Button
         id="ai-chat-trigger-button"
         onClick={() => setIsOpen(true)}
         aria-label="Open AI Assistant"
@@ -99,7 +99,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         }`}
       >
         <Sparkles size={24} strokeWidth={1.5} />
-      </button>
+      </Button>
 
       <div 
         id="ai-chat-window-container"
@@ -118,21 +118,25 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button 
+            <Button 
               onClick={handleClearChat}
-              className="w-8 h-8 rounded-full hover:bg-red-500/10 text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center"
+              variant="ghost"
+              size="icon-xs"
+              className="hover:bg-red-500/10 text-gray-400 hover:text-red-500"
               title={t('clear_chat')}
             >
               <Trash2 size={16} />
-            </button>
-            <button 
+            </Button>
+            <Button 
               id="ai-chat-close-btn"
               onClick={() => setIsOpen(false)}
+              variant="outline"
+              size="icon-xs"
+              className="bg-gray-200/50 dark:bg-gray-700/50 text-gray-500 hover:text-gray-900 dark:hover:text-white"
               aria-label={t('close')}
-              className="w-8 h-8 rounded-full bg-gray-200/50 dark:bg-gray-700/50 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               <X size={16} />
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -170,24 +174,25 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
         <form id="ai-chat-input-form-element" onSubmit={handleSubmit} className="p-4 bg-white/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-gray-700/50">
           <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 px-1 py-1 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all shadow-sm">
-            <input
+            <Input
               id="ai-chat-input-field"
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t('ask_placeholder')}
-              className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+              className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm rounded-full border-none"
             />
-            <button 
+            <Button 
               id="ai-chat-send-btn"
               type="submit"
               disabled={isLoading || !input.trim()}
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-white disabled:opacity-50 disabled:bg-gray-400 transition-all ${
+              size="icon-xs"
+              className={`w-8 h-8 rounded-full text-white disabled:opacity-50 disabled:bg-gray-400 transition-all ${
                 isOnline ? 'bg-blue-500 hover:bg-blue-600' : 'bg-orange-500 hover:bg-orange-600'
               }`}
             >
               {isOnline ? <ArrowUp size={16} strokeWidth={2.5} /> : <WifiOff size={14} />}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

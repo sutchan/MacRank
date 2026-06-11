@@ -1,6 +1,5 @@
 'use client';
 
-// app/components/DetailModal.tsx v0.7.6
 import React, { useContext, useState } from 'react';
 import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw, Wifi, Cable, BoxSelect } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';
@@ -11,6 +10,8 @@ import { LanguageContext, LanguageContextType, formatCurrency } from '../locales
 import TierBadge from './TierBadge';
 import TradeInCalculator from './TradeInCalculator';
 import { shareContent } from '../lib/share';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface DetailModalProps {
   mac: MacModel | null;
@@ -58,24 +59,26 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
   );
 
   return (
-    <div id="detail-modal-overlay-container" className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/80 backdrop-blur-sm transition-opacity" onClick={onClose} />
-      <div id="detail-modal-content-wrapper" className="relative w-full max-w-2xl bg-white dark:bg-apple-gray-900 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/10 max-h-[90vh] flex flex-col">
-        
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/10 rounded-3xl">
         <div className="p-6 md:p-8 pb-4 flex justify-between items-start shrink-0 bg-white dark:bg-apple-gray-900">
              <div>
                  <div className="flex items-center gap-3 mb-3">
                     <TierBadge tier={tier} />
                     <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider">{mac.releaseYear}</span>
                  </div>
-                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{mac.name}</h2>
-                 <p className="text-gray-600 dark:text-gray-300 mt-1 font-medium">{mac.chip}</p>
+                 <DialogHeader>
+                   <DialogTitle className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">{mac.name}</DialogTitle>
+                   <p className="text-gray-600 dark:text-gray-300 mt-1 font-medium">{mac.chip}</p>
+                 </DialogHeader>
              </div>
              <div className="flex gap-2">
-                <button onClick={handleShare} className="bg-gray-100 dark:bg-gray-800 p-2.5 rounded-full text-gray-500 hover:text-blue-600 transition-colors" title={t('share')}>
+                <Button onClick={handleShare} variant="outline" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-blue-600">
                   {showCopied ? <Check size={20} className="text-green-500"/> : <Share2 size={20} />}
-                </button>
-                <button onClick={onClose} className="bg-gray-100 dark:bg-gray-800 p-2.5 rounded-full text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label={t('close')}><X size={20} /></button>
+                </Button>
+                <Button onClick={onClose} variant="outline" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700">
+                  <X size={20} />
+                </Button>
              </div>
         </div>
 
@@ -138,8 +141,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                <span>{t('verifiedSpecs')}</span>
             </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
