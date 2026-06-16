@@ -1,10 +1,9 @@
 'use client';
 
-// app/components/Header.tsx v0.7.6
 import React, { useContext } from 'react';
 import { Settings, RotateCcw } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
-
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 interface HeaderProps {
@@ -27,26 +26,34 @@ const Header: React.FC<HeaderProps> = ({ onScrollToSection, onOpenSettings, onOp
         </div>
         
         <nav className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
-          <button onClick={() => onScrollToSection('leaderboard-section')} className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block font-medium">{t('leaderboard')}</button>
-          <button onClick={() => onScrollToSection('charts-section')} className="cursor-pointer hover:text-blue-500 transition-colors hidden sm:block font-medium">{t('charts')}</button>
+          <Button variant="ghost" size="sm" onClick={() => onScrollToSection('leaderboard-section')} className="hidden sm:block h-auto px-0 hover:text-blue-500">
+            {t('leaderboard')}
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => onScrollToSection('charts-section')} className="hidden sm:block h-auto px-0 hover:text-blue-500">
+            {t('charts')}
+          </Button>
           
           <div className="flex items-center gap-3 border-l border-gray-300 dark:border-gray-700 pl-4">
-             <button
+             <Button
                onClick={onOpenTradeIn}
-               className="hover:text-green-600 dark:hover:text-green-400 transition-colors flex items-center gap-1.5"
+               variant="ghost"
+               size="icon-sm"
+               className="hover:text-green-600 dark:hover:text-green-400"
                title={t('tradeIn')}
              >
                <RotateCcw size={16} />
-               <span className="hidden md:inline text-xs font-medium">{t('tradeIn')}</span>
-             </button>
+               <span className="hidden md:inline text-xs ml-1">{t('tradeIn')}</span>
+             </Button>
 
-             <button 
+             <Button 
                onClick={onOpenSettings}
-               className="hover:text-gray-900 dark:hover:text-white transition-colors" 
+               variant="ghost"
+               size="icon-sm"
+               className="hover:text-gray-900 dark:hover:text-white"
                aria-label="Settings"
              >
                <Settings size={16} />
-             </button>
+             </Button>
           </div>
         </nav>
       </div>

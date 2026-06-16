@@ -1,10 +1,10 @@
 'use client';
 
-// app/components/CompareBar.tsx v0.7.6
 import React, { useContext } from 'react';
 import { X, ArrowRightLeft, Trash2 } from 'lucide-react';
 import { MacModel } from '../types';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
+import { Button } from '@/components/ui/button';
 
 interface CompareBarProps {
   models: MacModel[];
@@ -42,12 +42,14 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
                   <span className="text-[10px] font-bold text-gray-900 dark:text-white leading-tight truncate max-w-[80px] md:max-w-[120px]">{m.name}</span>
                   <span className="text-[9px] text-gray-600 dark:text-gray-400 uppercase tracking-tighter">{m.chip}</span>
                 </div>
-                <button 
+                <Button
                   onClick={() => onRemove(m.id)}
-                  className="text-gray-400 hover:text-red-500 transition-colors"
+                  variant="ghost"
+                  size="icon-xs"
+                  className="text-gray-400 hover:text-red-500"
                 >
                   <X size={14} />
-                </button>
+                </Button>
               </div>
             ))}
             
@@ -60,17 +62,20 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <button 
+          <Button 
             onClick={onClear}
-            className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            variant="ghost"
+            size="icon-sm"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
             title={t('clear_all')}
           >
             <Trash2 size={18} />
-          </button>
+          </Button>
           
-          <button 
+          <Button 
             onClick={onCompare}
             disabled={models.length < 2}
+            size="sm"
             className={`px-4 md:px-6 py-2 rounded-xl text-xs md:text-sm font-bold transition-all shadow-lg active:scale-95 ${
               models.length === 2 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20' 
@@ -78,7 +83,7 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
             }`}
           >
             {t('compare_now')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 'use client';
 
-// app/components/TradeInCalculator.tsx v0.7.6
 import React, { useState, useContext, useMemo } from 'react';
 import { LanguageContext, LanguageContextType, formatCurrency } from '../locales/translations';
 import { macData } from '../data/data';
 import { estimateTradeInValue } from '../services/priceService';
 import { MacModel } from '../types';
 import { Calculator, ArrowRight, TrendingDown, Wallet } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface TradeInCalculatorProps {
   targetMac?: MacModel | null;
@@ -38,26 +38,24 @@ const TradeInCalculator: React.FC<TradeInCalculatorProps> = ({ targetMac }) => {
       </div>
 
       <div className="space-y-4">
-        {/* Select Old Mac */}
         <div>
           <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">
             {t('selectOldMac')}
           </label>
-          <select
-            value={selectedOldId}
-            onChange={(e) => setSelectedOldId(e.target.value)}
-            className="w-full bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-          >
-            <option value="">-- {t('selectToCompare')} --</option>
-            {[...macData].sort((a, b) => b.releaseYear - a.releaseYear).map(m => (
-              <option key={m.id} value={m.id}>
-                {m.name} ({m.releaseYear})
-              </option>
-            ))}
-          </select>
+          <Select value={selectedOldId} onValueChange={(value) => setSelectedOldId(value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={`-- ${t('selectToCompare')} --`} />
+            </SelectTrigger>
+            <SelectContent>
+              {[...macData].sort((a, b) => b.releaseYear - a.releaseYear).map(m => (
+                <SelectItem key={m.id} value={m.id}>
+                  {m.name} ({m.releaseYear})
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        {/* Results Grid */}
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white dark:bg-black p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
             <div className="flex items-center gap-2 mb-1 text-gray-400">
@@ -80,7 +78,6 @@ const TradeInCalculator: React.FC<TradeInCalculatorProps> = ({ targetMac }) => {
           </div>
         </div>
 
-        {/* Target Summary */}
         {targetMac && (
           <div className="flex items-center justify-between p-4 bg-blue-500/5 rounded-2xl border border-blue-500/10">
             <div className="flex flex-col">

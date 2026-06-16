@@ -1,6 +1,5 @@
 'use client';
 
-// app/components/CompareModal.tsx v0.7.6
 import React, { useContext, useState } from 'react';
 import { X, Share2, Check } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -9,6 +8,8 @@ import { calculateTierScore, getTierLabel } from '../lib/scoring';
 import { LanguageContext, LanguageContextType, formatCurrency } from '../locales/translations';
 import TierBadge from './TierBadge';
 import { shareContent } from '../lib/share';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface CompareModalProps {
   models: MacModel[];
@@ -115,18 +116,19 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
   };
 
   return (
-    <div id="compare-modal-overlay-container" className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40 dark:bg-black/80 backdrop-blur-sm transition-opacity" onClick={onClose} />
-      
-      <div id="compare-modal-content-wrapper" className="relative w-full max-w-4xl bg-white dark:bg-apple-gray-900 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 max-h-[90vh] flex flex-col">
-        
+    <Dialog open={true} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/20 dark:border-white/10 rounded-2xl">
         <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-black/20">
-           <h2 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</h2>
+           <DialogHeader>
+             <DialogTitle className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</DialogTitle>
+           </DialogHeader>
            <div className="flex items-center gap-2">
-             <button onClick={handleShare} className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-blue-500 transition-colors flex items-center gap-2">
+             <Button onClick={handleShare} variant="outline" size="icon-sm" className="bg-gray-200 dark:bg-gray-800 text-gray-500 hover:text-blue-500">
                 {showCopied ? <Check size={18} className="text-green-500" /> : <Share2 size={18} />}
-             </button>
-             <button onClick={onClose} className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-red-500 transition-colors"><X size={20} /></button>
+             </Button>
+             <Button onClick={onClose} variant="outline" size="icon-sm" className="bg-gray-200 dark:bg-gray-800 text-gray-500 hover:text-red-500">
+               <X size={20} />
+             </Button>
            </div>
         </div>
 
@@ -166,8 +168,8 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
             <ComparisonRow label={t('metal')} val1={m1.metalScore} val2={m2.metalScore} />
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
