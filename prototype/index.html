@@ -993,7 +993,7 @@
             </section>
 
             <!-- ========== 9. 空状态组件 ========== -->
-            <section class="space-y-4">
+            <section class="space-y-4" id="empty-states">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-400 to-gray-600 text-white flex items-center justify-center font-bold shadow-lg">+</div>
                     <div>
@@ -1003,7 +1003,7 @@
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-5">
-                    <!-- 空状态 -->
+                    <!-- 空状态 - 搜索无结果 -->
                     <div class="bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-200 dark:border-gray-800 shadow-sm text-center">
                         <div class="w-20 h-20 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-5">
                             <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1020,7 +1020,7 @@
                     <!-- Toast 通知 -->
                     <div class="space-y-3">
                         <!-- Success Toast -->
-                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-emerald-500 text-white shadow-xl">
+                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-emerald-500 text-white shadow-xl animate-fade-in-up">
                             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
@@ -1028,7 +1028,7 @@
                         </div>
 
                         <!-- Error Toast -->
-                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-red-500 text-white shadow-xl">
+                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-red-500 text-white shadow-xl animate-fade-in-up stagger-1">
                             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
@@ -1036,13 +1036,65 @@
                         </div>
 
                         <!-- Info Toast -->
-                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-blue-500 text-white shadow-xl">
+                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-blue-500 text-white shadow-xl animate-fade-in-up stagger-2">
                             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                             <span class="text-sm font-medium">AI 助手已离线，切换到本地模式</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- 骨架屏加载状态 -->
+                <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">骨架屏加载状态</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <!-- 卡片骨架 -->
+                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
+                            <div class="flex flex-col gap-3">
+                                <div class="h-32 bg-gray-200 dark:bg-gray-700 rounded-xl skeleton"></div>
+                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-3/4"></div>
+                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-1/2"></div>
+                            </div>
+                        </div>
+                        <!-- 列表骨架 -->
+                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full skeleton"></div>
+                                <div class="flex-1 space-y-2">
+                                    <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
+                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded skeleton w-2/3"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
+                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded skeleton w-4/5"></div>
+                            </div>
+                        </div>
+                        <!-- 文本骨架 -->
+                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
+                            <div class="space-y-3">
+                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
+                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
+                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-3/4"></div>
+                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-1/2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 错误状态 -->
+                <div class="bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-200 dark:border-gray-800 shadow-sm text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-5">
+                        <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">加载失败</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5 max-w-md mx-auto">无法加载数据，请检查您的网络连接后重试</p>
+                    <button class="px-6 py-2.5 rounded-full bg-red-500 text-white text-sm font-bold shadow-lg hover:bg-red-600 transition-all btn-press">
+                        重试
+                    </button>
                 </div>
             </section>
 

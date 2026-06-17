@@ -1,10 +1,23 @@
 # MacRank 原型设计文档
 
 ## 文档版本
-- **版本**: v1.1
-- **更新日期**: 2026-06-09
-- **状态**: 高保真原型已完成
+- **版本**: v2.0
+- **更新日期**: 2026-06-16
+- **状态**: 完整设计系统已完成
 - **对齐状态**: 与代码实现完全一致
+
+---
+
+## 设计系统概览
+
+MacRank v0.7.6 使用基于 **shadcn/ui (radix-nova)** + **Tailwind CSS 4** + **Next.js 15** 的完整设计系统。
+
+### 核心设计原则
+
+1. **语义化优先** - 使用 design tokens 而非 raw values
+2. **组件化思维** - 组合而非继承
+3. **可访问性** - ARIA 标签、键盘导航、颜色对比度
+4. **一致性** - 统一的间距、动画、交互模式
 
 ---
 
@@ -27,17 +40,60 @@
 
 ### 2. UI 设计规范
 - **文件**: [UI_DESIGN_SPEC.md](./UI_DESIGN_SPEC.md)
-- **描述**: 完整的 UI/UX 设计规范文档
+- **描述**: 完整的设计系统文档
 - **内容**:
-  - 排版系统优化
-  - 颜色系统增强（包括 Tier 颜色系统）
-  - 动画系统规范
-  - 间距系统
-  - 阴影系统
-  - 组件级优化规范
-  - 响应式设计规范
-  - 可访问性 (A11y) 规范
-  - 状态设计规范
+  - **第一部分：设计系统规范**
+    - 色彩规范（Color System）
+    - 字体规范（Typography）
+    - 间距与布局规范（Spacing & Layout）
+    - 图标规范（Icon）
+    - 动效规范（Motion）
+  - **第二部分：组件库规范**
+    - 基础组件（Button, Input, Select, Switch, Badge, Avatar）
+    - 复合组件（Card, Dialog, Tabs, Form, ToggleGroup）
+    - 业务组件（TierBadge, PerformanceChart, MacTable, CompareBar, AIChat, TradeInCalculator）
+    - 组件使用规则
+  - **第三部分：交互标准**
+    - 交互模式库（Modal, Dropdown, Tabs, Tooltip）
+    - 交互反馈规范（Button, Toast, Loading）
+    - 错误处理规范（表单、API、边界情况）
+    - 空状态设计规范
+
+---
+
+## 设计系统规范摘要
+
+### 色彩系统
+
+| 类别 | 说明 |
+|-----|------|
+| 语义化颜色 | 使用 oklch 色彩空间，确保跨设备一致性 |
+| Tier 颜色 | S+(幻彩) → S(紫) → A(蓝) → B(绿) → C(黄) → D(灰) |
+| 状态颜色 | Success (#34C759), Warning (#FF9500), Error (#FF3B30), Info (#007AFF) |
+| 毛玻璃效果 | backdrop-blur(24px) + 半透明背景 |
+
+### 字体系统
+
+| 类别 | 规范 |
+|-----|------|
+| 主字体 | SF Pro (Apple San Francisco) |
+| 等宽字体 | JetBrains Mono |
+| 响应式字号 | 使用 clamp() 实现 fluid typography |
+
+### 间距系统
+
+- 基于 4px 网格
+- 使用 `gap-*` 而非 `space-y-*` 或 `space-x-*`
+- 容器最大宽度: 980px
+
+### 动效系统
+
+| 类别 | 时长 |
+|-----|------|
+| 微交互 | 150ms |
+| 标准过渡 | 300ms |
+| 复杂动画 | 500ms |
+| 页面过渡 | 700-1000ms |
 
 ---
 
@@ -151,6 +207,26 @@ D 级：gray 渐变 + 阴影
 
 ---
 
+## shadcn/ui 组件清单
+
+| 组件 | 分类 | 状态 |
+|-----|------|------|
+| Button | 基础 | ✅ |
+| Input | 基础 | ✅ |
+| Select | 基础 | ✅ |
+| Switch | 基础 | ✅ |
+| Badge | 基础 | ✅ |
+| Avatar | 基础 | ✅ |
+| Card | 复合 | ✅ |
+| Dialog | 复合 | ✅ |
+| Tabs | 复合 | ✅ |
+| DropdownMenu | 复合 | ✅ |
+| Tooltip | 复合 | ✅ |
+| Toast | 反馈 | ✅ |
+| Skeleton | 反馈 | ✅ |
+
+---
+
 ## 响应式断点
 
 ```css
@@ -172,18 +248,12 @@ xl: 1280px+ (Large Desktop)
 ### 入场动画
 ```css
 .animate-fade-in-up {
-  animation: fade-in-up 0.5s var(--ease-default) forwards;
+  animation: fade-in-up 0.5s var(--ease-out) forwards;
 }
 
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 ```
 
@@ -196,46 +266,12 @@ xl: 1280px+ (Large Desktop)
 .stagger-5 { animation-delay: 250ms; }
 ```
 
-### 骨架屏动画
-```css
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-```
-
----
-
-## 颜色系统
-
-### Tier 颜色
-```css
-S+: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)
-S:  linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)
-A:  linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)
-B:  linear-gradient(135deg, #22c55e 0%, #4ade80 100%)
-C:  linear-gradient(135deg, #eab308 0%, #facc15 100%)
-D:  linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)
-```
-
-### 主题色
-- Primary: #007AFF (Apple Blue)
-- Success: #34C759
-- Warning: #FF9500
-- Error: #FF3B30
-
 ---
 
 ## 可访问性 (A11y)
 
 ### ARIA 标签
 所有图标按钮必须包含 `aria-label`
-```html
-<button aria-label="分享到社交媒体">
-  <ShareIcon />
-</button>
-```
 
 ### 键盘导航
 - Tab 键顺序合理
@@ -244,31 +280,6 @@ D:  linear-gradient(135deg, #6b7280 0%, #9ca3af 100%)
 
 ### 颜色对比度
 符合 WCAG 2.1 AA 标准（至少 4.5:1）
-
----
-
-## 原型验证清单
-
-### ✅ 已完成
-- [x] Hero 组件 - 多层背景光晕、响应式排版
-- [x] Filter Controls - 搜索栏、筛选器、场景选择
-- [x] Performance Chart - 图表切换、渐变填充
-- [x] MacTable - 桌面端表格、移动端卡片
-- [x] TierBadge - 渐变背景、阴影效果
-- [x] DetailModal - 三分数网格、规格列表
-- [x] CompareModal - VS 布局、雷达图
-- [x] AI Chat - 消息气泡、Typing Indicator
-- [x] CompareBar - 毛玻璃、头像预览
-- [x] SettingsModal - 主题切换、语言选择
-- [x] TradeInView - 残值计算、净成本
-- [x] 响应式设计 - 移动端优先
-- [x] 动画系统 - 交错入场、骨架屏
-- [x] 可访问性 - ARIA 标签、键盘导航
-
-### 🔄 优化中
-- [ ] 打印样式优化
-- [ ] PWA 离线支持
-- [ ] 深色模式细腻调整
 
 ---
 
