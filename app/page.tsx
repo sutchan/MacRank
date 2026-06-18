@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import MacTable from './components/MacTable';
 import PerformanceChart from './components/PerformanceChart';
 import DetailModal from './components/DetailModal';
@@ -8,7 +8,6 @@ import CompareModal from './components/CompareModal';
 import CompareBar from './components/CompareBar';
 import SettingsModal from './components/SettingsModal';
 import TradeInView from './components/TradeInView';
-import AIChat from './components/AIChat';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FilterControls from './components/FilterControls';
@@ -19,6 +18,8 @@ import { shareContent } from './lib/share';
 import { useSettings } from './hooks/useSettings';
 import { useMacData } from './hooks/useMacData';
 import { useInteraction } from './hooks/useInteraction';
+
+const AIChat = lazy(() => import('./components/AIChat'));
 
 const APP_VERSION = '0.7.6';
 
@@ -119,7 +120,9 @@ const Page: React.FC = () => {
           <TradeInView onClose={() => interaction.setIsTradeInOpen(false)} />
         )}
 
-        <AIChat macData={data.filteredData} />
+        <Suspense fallback={null}>
+          <AIChat macData={data.filteredData} />
+        </Suspense>
         
         {interaction.showToast && (
           <div id="toast-notification" className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
