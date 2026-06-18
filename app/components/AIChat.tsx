@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
 import { ArrowUp, X, Sparkles, WifiOff, Trash2 } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { ChatMessage, MacModel } from '../types';
@@ -8,6 +8,17 @@ import { getMacAdvice } from '../services/geminiService';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+
+const MAX_INPUT_LENGTH = 500;
+const MAX_MESSAGE_LENGTH = 4000;
+
+function sanitizeText(text: string, maxLen: number = MAX_MESSAGE_LENGTH): string {
+  return text
+    .slice(0, maxLen)
+    .replace(/\x00/g, '')
+    .replace(/\r/g, '')
+    .replace(/\t/g, '  ');
+}
 
 interface AIChatProps {
   macData: MacModel[];
@@ -57,20 +68,25 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
     scrollToBottom();
   }, [messages, isOpen]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    const trimmed = input.trim();
+    if (!trimmed || isLoading) return;
+    if (trimmed.length > MAX_INPUT_LENGTH) return;
 
-    const userMsg = input.trim();
+    const userMsg = sanitizeText(trimmed, MAX_INPUT_LENGTH);
     setInput('');
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsLoading(true);
 
     const responseText = await getMacAdvice(userMsg, macData, language);
 
-    setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+    setMessages(prev => [
+      ...prev,
+      { role: 'model', text: sanitizeText(responseText, MAX_MESSAGE_LENGTH) },
+    ]);
     setIsLoading(false);
-  };
+  }, [input, isLoading, macData, language]);
 
   const handleClearChat = () => {
     if (confirm(t('clear_chat_confirm'))) {
@@ -178,8 +194,9 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
               id="ai-chat-input-field"
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
               placeholder={t('ask_placeholder')}
+              maxLength={MAX_INPUT_LENGTH}
               className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm rounded-full border-none"
             />
             <Button 
