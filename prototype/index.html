@@ -3,1132 +3,1115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacRank v0.7.6 - 原型图设计规范</title>
+    <title>MacRank v0.7.6 · 原型设计系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            font-feature-settings: "tnum";
-        }
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; }
 
-        /* ========== CSS Variables ========== */
         :root {
-            --color-primary: #007AFF;
-            --color-primary-hover: #0056CC;
-            --color-primary-light: #E5F1FF;
-            --color-success: #34C759;
-            --color-warning: #FF9500;
-            --color-error: #FF3B30;
-            --duration-fast: 150ms;
-            --duration-normal: 300ms;
-            --duration-slow: 500ms;
-            --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
-            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* ========== Glass Panel ========== */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .dark .glass-panel {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: #ffffff;
+            color: #1d1d1f;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* ========== Tier System ========== */
+        /* ========== Hero 渐变标题 ========== */
+        .hero-gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 35%, #ec4899 70%, #f97316 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 8s var(--ease-in-out) infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ========== 顶部导航（透明毛玻璃） ========== */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        /* ========== 按钮交互 ========== */
+        .btn-primary {
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.3s var(--ease-out);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.5), 0 6px 16px -4px rgba(236, 72, 153, 0.25);
+        }
+        .btn-primary:active { transform: translateY(0) scale(0.98); }
+
+        .btn-secondary {
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.15);
+            background: #fafafa;
+        }
+        .btn-secondary:active { transform: translateY(0) scale(0.98); }
+
+        /* ========== 卡片 hover 上浮 ========== */
+        .card-lift {
+            transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s var(--ease-out);
+        }
+        .card-lift:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ========== fade-in-up 动画 ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stagger-1 { transition-delay: 80ms; }
+        .stagger-2 { transition-delay: 160ms; }
+        .stagger-3 { transition-delay: 240ms; }
+        .stagger-4 { transition-delay: 320ms; }
+        .stagger-5 { transition-delay: 400ms; }
+
+        /* ========== S+ 级渐变 & 呼吸光晕 ========== */
         .tier-s-plus {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-            animation: tier-glow 2s ease-in-out infinite alternate;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 40%, #ec4899 100%);
+            box-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
+            animation: glow-pulse 2.4s ease-in-out infinite alternate;
         }
-        .tier-s {
-            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-        }
-        .tier-a {
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        .tier-b {
-            background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-        }
-        .tier-c {
-            background: linear-gradient(135deg, #eab308 0%, #facc15 100%);
-            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
-        }
-        .tier-d {
-            background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
-            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 18px rgba(168, 85, 247, 0.35), 0 0 0 0 rgba(236, 72, 153, 0.2); }
+            100% { box-shadow: 0 0 36px rgba(168, 85, 247, 0.55), 0 0 16px rgba(236, 72, 153, 0.3); }
         }
 
-        @keyframes tier-glow {
-            0% { box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.5); }
+        /* ========== 技术栈标签 ========== */
+        .tech-chip {
+            transition: all 0.3s var(--ease-out);
         }
-
-        /* ========== Custom Scrollbar ========== */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 6px;
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(156, 163, 175, 0.4);
-            border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(156, 163, 175, 0.6);
-        }
-
-        /* ========== Animations ========== */
-        @keyframes fade-in-up {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes scale-in {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes bounce-in {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .animate-fade-in-up {
-            animation: fade-in-up 0.5s var(--ease-default) forwards;
-        }
-        .animate-scale-in {
-            animation: scale-in 0.3s var(--ease-bounce) forwards;
-        }
-        .animate-bounce-in {
-            animation: bounce-in 0.4s var(--ease-bounce) forwards;
-        }
-
-        /* Staggered animations */
-        .stagger-1 { animation-delay: 50ms; }
-        .stagger-2 { animation-delay: 100ms; }
-        .stagger-3 { animation-delay: 150ms; }
-        .stagger-4 { animation-delay: 200ms; }
-        .stagger-5 { animation-delay: 250ms; }
-
-        /* ========== Skeleton Loading ========== */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        .dark .skeleton {
-            background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%);
-            background-size: 200% 100%;
-        }
-
-        /* ========== Focus States ========== */
-        .focus-ring:focus {
-            outline: none;
-            ring: 2px;
-            ring-color: var(--color-primary);
-            ring-offset: 2px;
-        }
-
-        /* ========== Button Press Effect ========== */
-        .btn-press:active {
-            transform: scale(0.97);
-        }
-
-        /* ========== Card Hover Lift ========== */
-        .card-hover {
-            transition: transform 0.2s var(--ease-default), box-shadow 0.2s var(--ease-default);
-        }
-        .card-hover:hover {
+        .tech-chip:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.25);
         }
 
-        /* ========== Progress Bar Animation ========== */
-        .progress-animate {
-            animation: progress-grow 1s var(--ease-bounce) forwards;
-            transform-origin: left;
+        /* ========== Hero 背景柔和光晕 ========== */
+        .hero-bg-blobs::before,
+        .hero-bg-blobs::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
         }
-        @keyframes progress-grow {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
+        .hero-bg-blobs::before {
+            top: -120px; left: -80px;
+            width: 520px; height: 520px;
+            background: radial-gradient(circle, #a5b4fc 0%, transparent 70%);
         }
-
-        /* ========== Chat Bubbles ========== */
-        .chat-bubble-user {
-            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
-            border-radius: 18px 18px 4px 18px;
-        }
-        .chat-bubble-assistant {
-            background: #f0f0f0;
-            border-radius: 18px 18px 18px 4px;
-        }
-        .dark .chat-bubble-assistant {
-            background: #2a2a2a;
-        }
-
-        /* ========== Typing Indicator ========== */
-        .typing-dot {
-            animation: typing-bounce 1.4s infinite ease-in-out;
-        }
-        .typing-dot:nth-child(1) { animation-delay: 0ms; }
-        .typing-dot:nth-child(2) { animation-delay: 200ms; }
-        .typing-dot:nth-child(3) { animation-delay: 400ms; }
-        @keyframes typing-bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-4px); }
+        .hero-bg-blobs::after {
+            top: 40px; right: -120px;
+            width: 580px; height: 580px;
+            background: radial-gradient(circle, #f9a8d4 0%, transparent 70%);
         }
 
-        /* ========== Bottom Sheet (Mobile Modal) ========== */
-        @media (max-width: 640px) {
-            .modal-bottom-sheet {
-                border-radius: 24px 24px 0 0;
-                max-height: 85vh;
-            }
+        /* ========== 预览 mockup 的小网格纹理 ========== */
+        .grid-pattern {
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
+
+        /* ========== 预览页面缩略图（mockup 小图） ========== */
+        .preview-thumb {
+            transition: all 0.3s var(--ease-out);
+        }
+        .preview-thumb:hover {
+            transform: translateY(-3px) scale(1.03);
+            border-color: #a855f7;
+        }
+        .preview-thumb.active {
+            border-color: #6366f1;
+            box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.4);
+        }
+
+        /* ========== 色板 hover ========== */
+        .color-swatch {
+            transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+        }
+        .color-swatch:hover {
+            transform: scale(1.12);
+            box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ========== 滚动时轻微缩放 hero mockup ========== */
+        .hero-mockup {
+            transition: transform 0.6s var(--ease-out);
+        }
+
+        /* ========== 简洁滚动条 ========== */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        ::-webkit-scrollbar-track { background: transparent; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-gray-950 dark:text-white">
-    <div class="min-h-screen">
+<body>
 
-        <!-- ========== 顶部导航 ========== -->
-        <header class="fixed w-full top-0 z-50 glass-panel border-b border-gray-200/80 dark:border-gray-800/80">
-            <div class="max-w-[980px] mx-auto px-4 h-14 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 flex items-center justify-center">
-                        <svg class="w-4 h-4 text-white dark:text-gray-900" viewBox="0 0 24 24" fill="currentColor">
+<!-- ============ 顶部固定导航 ============ -->
+<header class="fixed top-0 inset-x-0 z-50 border-b border-gray-200/70 nav-glass">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.8 9.6c-.7 0-1.7-.5-1.7-1.7s1-2.2 2-2.3c.1 0 .2 0 .2 0-1-1.3-2.6-1.5-3.2-1.5-1.4 0-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 1-3.9 2.4-1.6 2.4-.4 5.9 1.1 8 1 1.4 2 2.9 3.4 2.9.7 0 1-.2 1.9-.2.9 0 1.1.2 1.9.2 1.3 0 2.2-1.3 3.1-2.6.9-1.3 1.3-2.7 1.3-2.7s-2.1-1-2.2-2.9zM15 4.6c.6-.7 1-1.8 1-2.8 0-.1 0-.3 0-.4-.9.1-2 .7-2.6 1.4-.6.6-1 1.6-1 2.6 0 .1 0 .3 0 .4 1-.1 2.1-.6 2.6-1.2z"/>
+                </svg>
+            </div>
+            <span class="font-bold tracking-tight text-[15px] text-gray-900">MacRank</span>
+            <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-50 to-pink-50 border border-indigo-100 text-indigo-600 text-[10px] font-black tracking-wider">v0.7.6</span>
+        </div>
+        <nav class="flex items-center gap-1 sm:gap-2">
+            <a href="prototypes.html" class="px-3 sm:px-4 py-2 rounded-full text-[13px] font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-all">高保真原型</a>
+            <a href="wireframes.html" class="px-3 sm:px-4 py-2 rounded-full text-[13px] font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-all">组件库规范</a>
+            <a href="#" class="ml-1 px-3 sm:px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:shadow-lg hover:shadow-purple-500/30 transition-all">返回主站</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ============ Hero 区域 ============ -->
+<section class="relative overflow-hidden pt-32 pb-20 hero-bg-blobs">
+    <div class="relative z-10 max-w-6xl mx-auto px-6">
+
+        <!-- 徽章 -->
+        <div class="flex justify-center reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 shadow-sm">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                <span class="text-[11px] font-semibold text-gray-700 tracking-wide">基于真实 Geekbench 6 数据 · 48 款 Mac 机型</span>
+            </div>
+        </div>
+
+        <!-- 主标题 -->
+        <h1 class="mt-8 text-center text-[44px] sm:text-6xl md:text-7xl font-black tracking-tighter text-gray-900 leading-[1.05] reveal stagger-1">
+            <span class="hero-gradient-text">MacRank</span>
+            <br class="sm:hidden">
+            <span class="text-gray-900"> 原型设计系统</span>
+        </h1>
+
+        <!-- 副标题 -->
+        <p class="mt-6 text-center text-base sm:text-lg md:text-xl text-gray-500 font-medium max-w-3xl mx-auto leading-relaxed reveal stagger-2">
+            高保真原型 &nbsp;+&nbsp; 完整组件库规范<br class="sm:hidden">
+            <span class="text-gray-700">为真实 Mac 性能排行榜打造的精致设计系统</span>
+        </p>
+
+        <!-- 主按钮组 -->
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 reveal stagger-3">
+            <a href="prototypes.html" class="btn-primary inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gray-900 text-white font-semibold text-[15px] shadow-xl shadow-gray-900/10">
+                <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="true" d="M4 6h16M4 12h16M4 18h10"/>
+                </svg>
+                浏览高保真原型
+                <svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="true" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="wireframes.html" class="btn-secondary inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-white border border-gray-200 text-gray-900 font-semibold text-[15px] shadow-sm">
+                <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                </svg>
+                查看组件库规范
+            </a>
+        </div>
+
+        <!-- 预览 mockup 卡片 -->
+        <div class="mt-20 grid md:grid-cols-2 gap-6 reveal stagger-4">
+
+            <!-- 原型 mockup -->
+            <a href="prototypes.html" class="group relative block rounded-3xl overflow-hidden bg-gradient-to-br from-white to-indigo-50/40 border border-gray-200/80 shadow-[0_20px_60px_-20px_rgba(99,102,241,0.25)] card-lift">
+                <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent pointer-events-none"></div>
+
+                <!-- 浏览器顶栏 -->
+                <div class="relative flex items-center gap-1.5 px-5 py-3.5 border-b border-gray-200/70 bg-white/70 backdrop-blur-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-400/80"></span>
+                    <span class="ml-4 text-[11px] font-medium text-gray-500 truncate">macrank.app / prototypes</span>
+                </div>
+
+                <!-- 页面小预览（SVG 绘制模拟） -->
+                <div class="relative p-5 grid-pattern">
+                    <div class="rounded-2xl bg-white border border-gray-200 shadow-lg overflow-hidden">
+                        <!-- 简化表格 -->
+                        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center">
+                                    <span class="text-white text-[10px] font-black">S+</span>
+                                </div>
+                                <div>
+                                    <div class="text-[11px] font-semibold text-gray-900">MacBook Pro 16" M4 Max</div>
+                                    <div class="text-[9px] text-gray-400">M4 Max · 2025</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[13px] font-black text-gray-900 tabular-nums">9,850</div>
+                                <div class="w-14 h-1 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 mt-1"></div>
+                            </div>
+                        </div>
+                        <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
+                                    <span class="text-white text-[10px] font-black">S</span>
+                                </div>
+                                <div>
+                                    <div class="text-[11px] font-semibold text-gray-900">Mac Studio M4 Ultra</div>
+                                    <div class="text-[9px] text-gray-400">M4 Ultra · 2025</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[13px] font-black text-gray-900 tabular-nums">9,620</div>
+                                <div class="w-12 h-1 rounded-full bg-purple-400 mt-1"></div>
+                            </div>
+                        </div>
+                        <div class="px-5 py-4 flex items-center justify-between opacity-80">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
+                                    <span class="text-blue-600 text-[10px] font-black">A</span>
+                                </div>
+                                <div>
+                                    <div class="text-[11px] font-semibold text-gray-700">MacBook Pro 14" M4 Pro</div>
+                                    <div class="text-[9px] text-gray-400">M4 Pro · 2025</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[13px] font-black text-gray-700 tabular-nums">8,450</div>
+                                <div class="w-10 h-1 rounded-full bg-blue-400 mt-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative px-6 pb-6 pt-2">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-[15px] font-bold text-gray-900">高保真原型页面</div>
+                            <div class="text-[12px] text-gray-500 mt-0.5">6 个完整页面 · 首页 / 排行榜 / 详情 / 对比 / AI助手 / 以旧换新</div>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-indigo-600 text-[13px] font-semibold group-hover:gap-2.5 transition-all">
+                            立即浏览
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="true" d="M9 5l7 7-7 7"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 组件库 mockup -->
+            <a href="wireframes.html" class="group relative block rounded-3xl overflow-hidden bg-gradient-to-br from-white to-pink-50/40 border border-gray-200/80 shadow-[0_20px_60px_-20px_rgba(236,72,153,0.25)] card-lift">
+                <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-pink-500/10 via-orange-500/5 to-transparent pointer-events-none"></div>
+
+                <div class="relative flex items-center gap-1.5 px-5 py-3.5 border-b border-gray-200/70 bg-white/70 backdrop-blur-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-400/80"></span>
+                    <span class="ml-4 text-[11px] font-medium text-gray-500 truncate">macrank.app / design-system</span>
+                </div>
+
+                <div class="relative p-5 grid-pattern">
+                    <div class="rounded-2xl bg-white border border-gray-200 shadow-lg p-5 space-y-4">
+                        <!-- 按钮组 -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest w-14">按钮</span>
+                            <button class="px-3 py-1.5 rounded-lg bg-gray-900 text-white text-[10px] font-bold">Primary</button>
+                            <button class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-[10px] font-bold">Ghost</button>
+                            <button class="px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[10px] font-bold">Gradient</button>
+                        </div>
+                        <!-- 色板 -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest w-14">色板</span>
+                            <div class="flex gap-1.5">
+                                <div class="w-5 h-5 rounded-full bg-gray-900"></div>
+                                <div class="w-5 h-5 rounded-full bg-indigo-500"></div>
+                                <div class="w-5 h-5 rounded-full bg-purple-500"></div>
+                                <div class="w-5 h-5 rounded-full bg-pink-500"></div>
+                                <div class="w-5 h-5 rounded-full bg-blue-500"></div>
+                                <div class="w-5 h-5 rounded-full bg-emerald-500"></div>
+                                <div class="w-5 h-5 rounded-full bg-amber-500"></div>
+                            </div>
+                        </div>
+                        <!-- 输入框 -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest w-14">输入</span>
+                            <div class="flex-1 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200">
+                                <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+                                <span class="text-[10px] text-gray-400">搜索型号...</span>
+                            </div>
+                        </div>
+                        <!-- 标签 -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest w-14">徽章</span>
+                            <span class="px-2 py-0.5 rounded tier-s-plus text-white text-[9px] font-black">S+</span>
+                            <span class="px-2 py-0.5 rounded bg-gradient-to-br from-purple-500 to-indigo-500 text-white text-[9px] font-black">S</span>
+                            <span class="px-2 py-0.5 rounded bg-blue-500 text-white text-[9px] font-black">A</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500 text-white text-[9px] font-black">B</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-500 text-white text-[9px] font-black">C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative px-6 pb-6 pt-2">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-[15px] font-bold text-gray-900">组件库规范</div>
+                            <div class="text-[12px] text-gray-500 mt-0.5">40+ 组件 · 按钮 / 输入 / 卡片 / 表格 / 消息气泡 / 模态框</div>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-pink-600 text-[13px] font-semibold group-hover:gap-2.5 transition-all">
+                            查看规范
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="true" d="M9 5l7 7-7 7"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 功能亮点 ============ -->
+<section class="py-24 bg-gradient-to-b from-gray-50/50 to-white">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center max-w-2xl mx-auto reveal">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-600 mb-4">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                系统设计亮点
+            </div>
+            <h2 class="text-4xl sm:text-5xl font-black tracking-tight text-gray-900">为设计与开发而生</h2>
+            <p class="mt-4 text-[15px] text-gray-500 leading-relaxed">从首屏到细节，每一处都经过打磨 · 响应式布局与优雅动效</p>
+        </div>
+
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+            <!-- 亮点 1 -->
+            <div class="reveal stagger-1 card-lift group relative rounded-3xl bg-white border border-gray-200/80 p-6 shadow-sm overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br from-indigo-200/40 to-transparent pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l2.39 4.84L20 8l-4 3.9.94 5.5L12 14.77 7.06 17.4 8 11.9 4 8l5.61-1.16L12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-5 text-[17px] font-bold text-gray-900">完整高保真页面</h3>
+                    <p class="mt-2 text-[13px] text-gray-500 leading-relaxed">首页、排行榜、详情、对比、AI 助手、以旧换新 —— 6 个完整页面，可直接作为原型评审使用。</p>
+                    <div class="mt-5 flex flex-wrap gap-1.5">
+                        <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[10px] font-bold">首页</span>
+                        <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[10px] font-bold">排行</span>
+                        <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[10px] font-bold">详情</span>
+                        <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[10px] font-bold">对比</span>
+                        <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[10px] font-bold">AI</span>
+                        <span class="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-600 text-[10px] font-bold">以旧换新</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 亮点 2 -->
+            <div class="reveal stagger-2 card-lift group relative rounded-3xl bg-white border border-gray-200/80 p-6 shadow-sm overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br from-purple-200/40 to-transparent pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/25">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-5 text-[17px] font-bold text-gray-900">40+ 组件库规范</h3>
+                    <p class="mt-2 text-[13px] text-gray-500 leading-relaxed">按钮、输入、卡片、表格、消息气泡、模态框、工具提示、数据可视化 —— 统一命名与交互规范。</p>
+                    <div class="mt-5 flex flex-wrap gap-1.5">
+                        <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-bold">Button</span>
+                        <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-bold">Input</span>
+                        <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-bold">Card</span>
+                        <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-bold">Table</span>
+                        <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-bold">Bubble</span>
+                        <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 text-[10px] font-bold">Modal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 亮点 3 -->
+            <div class="reveal stagger-3 card-lift group relative rounded-3xl bg-white border border-gray-200/80 p-6 shadow-sm overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br from-pink-200/40 to-transparent pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-500/25">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 14l4-4 3 3 5-6"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-5 text-[17px] font-bold text-gray-900">真实性能数据</h3>
+                    <p class="mt-2 text-[13px] text-gray-500 leading-relaxed">基于 Geekbench 6 跑分分析 48 款 Mac 机型，结合价格、发布年份、芯片代际打造真实榜单。</p>
+                    <div class="mt-5 flex items-end gap-1.5 h-14">
+                        <div class="w-5 bg-gradient-to-t from-indigo-200 to-indigo-400 rounded-t" style="height: 40%"></div>
+                        <div class="w-5 bg-gradient-to-t from-indigo-300 to-indigo-500 rounded-t" style="height: 60%"></div>
+                        <div class="w-5 bg-gradient-to-t from-purple-300 to-purple-500 rounded-t" style="height: 75%"></div>
+                        <div class="w-5 bg-gradient-to-t from-purple-400 to-pink-500 rounded-t" style="height: 90%"></div>
+                        <div class="w-5 bg-gradient-to-t from-pink-400 to-pink-600 rounded-t" style="height: 100%"></div>
+                        <div class="w-5 bg-gradient-to-t from-rose-400 to-rose-600 rounded-t" style="height: 70%"></div>
+                        <div class="w-5 bg-gradient-to-t from-indigo-200 to-indigo-400 rounded-t" style="height: 50%"></div>
+                        <div class="w-5 bg-gradient-to-t from-indigo-300 to-indigo-500 rounded-t" style="height: 35%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 亮点 4 -->
+            <div class="reveal stagger-4 card-lift group relative rounded-3xl bg-white border border-gray-200/80 p-6 shadow-sm overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br from-orange-200/40 to-transparent pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/25">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-5 text-[17px] font-bold text-gray-900">精致交互动效</h3>
+                    <p class="mt-2 text-[13px] text-gray-500 leading-relaxed">悬停反馈、按压回弹、渐变动画、加载骨架、淡入上滑 —— 让每一次交互都被感知。</p>
+                    <div class="mt-5 flex items-center gap-2">
+                        <span class="inline-block w-2 h-2 rounded-full tier-s-plus"></span>
+                        <span class="text-[11px] font-bold text-gray-700">S+ 级渐变动画</span>
+                        <span class="ml-auto text-[10px] text-gray-400 font-mono">glow · pulse</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 页面预览大图区 ============ -->
+<section class="py-24">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center max-w-2xl mx-auto reveal">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-indigo-50 to-pink-50 border border-indigo-100/60 text-[11px] font-semibold text-indigo-600 mb-4">
+                页面预览
+            </div>
+            <h2 class="text-4xl sm:text-5xl font-black tracking-tight text-gray-900">所见即所得</h2>
+            <p class="mt-4 text-[15px] text-gray-500 leading-relaxed">从 01 到 06，每一个页面都经过设计评审</p>
+        </div>
+
+        <!-- 左：prototypes 大预览 + 小缩略 -->
+        <div class="mt-16 grid lg:grid-cols-5 gap-8 items-start">
+
+            <!-- 左侧：缩略列表 -->
+            <div class="lg:col-span-1 order-2 lg:order-1 reveal stagger-1">
+                <div class="lg:sticky lg:top-24">
+                    <div class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-4">页面索引</div>
+                    <div class="space-y-3">
+
+                        <!-- 缩略图列表项 01 -->
+                        <div class="preview-thumb active flex items-center gap-3 p-3 rounded-2xl border-2 border-indigo-200 bg-indigo-50/30 cursor-pointer">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-xl tier-s-plus flex items-center justify-center text-white text-[11px] font-black">01</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] font-bold text-gray-900 truncate">首页 Hero</div>
+                                <div class="text-[11px] text-gray-500">首屏介绍</div>
+                            </div>
+                        </div>
+
+                        <a href="prototypes.html" class="preview-thumb block flex items-center gap-3 p-3 rounded-2xl border-2 border-transparent bg-white border-gray-200/70 cursor-pointer">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-white text-[11px] font-black">02</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] font-bold text-gray-900 truncate">排行榜</div>
+                                <div class="text-[11px] text-gray-500">天梯主表</div>
+                            </div>
+                        </a>
+
+                        <a href="prototypes.html" class="preview-thumb block flex items-center gap-3 p-3 rounded-2xl border-2 border-transparent bg-white border-gray-200/70 cursor-pointer">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-white text-[11px] font-black">03</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] font-bold text-gray-900 truncate">详情页</div>
+                                <div class="text-[11px] text-gray-500">规格参数</div>
+                            </div>
+                        </a>
+
+                        <a href="prototypes.html" class="preview-thumb block flex items-center gap-3 p-3 rounded-2xl border-2 border-transparent bg-white border-gray-200/70 cursor-pointer">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-[11px] font-black">04</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] font-bold text-gray-900 truncate">对比页</div>
+                                <div class="text-[11px] text-gray-500">多机型对比</div>
+                            </div>
+                        </a>
+
+                        <a href="prototypes.html" class="preview-thumb block flex items-center gap-3 p-3 rounded-2xl border-2 border-transparent bg-white border-gray-200/70 cursor-pointer">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white text-[11px] font-black">05</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] font-bold text-gray-900 truncate">AI 助手</div>
+                                <div class="text-[11px] text-gray-500">选购建议</div>
+                            </div>
+                        </a>
+
+                        <a href="prototypes.html" class="preview-thumb block flex items-center gap-3 p-3 rounded-2xl border-2 border-transparent bg-white border-gray-200/70 cursor-pointer">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white text-[11px] font-black">06</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-[13px] font-bold text-gray-900 truncate">以旧换新</div>
+                                <div class="text-[11px] text-gray-500">估值流程</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <a href="prototypes.html" class="mt-6 btn-primary inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gray-900 text-white text-[13px] font-semibold shadow-lg shadow-gray-900/15">
+                        查看全部页面
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="true" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 右侧：大 mockup -->
+            <div class="lg:col-span-4 order-1 lg:order-2 reveal stagger-2">
+                <div class="hero-mockup relative rounded-[28px] overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-pink-50 border border-gray-200 shadow-[0_40px_80px_-30px_rgba(99,102,241,0.35)]">
+
+                    <!-- 浏览器标题栏 -->
+                    <div class="relative flex items-center gap-2 px-5 py-3.5 border-b border-gray-200/70 bg-white/80 backdrop-blur-sm">
+                        <div class="flex gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                        </div>
+                        <div class="flex-1 mx-6 max-w-md mx-auto">
+                            <div class="flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg bg-gray-100/80 text-[11px] text-gray-500 font-medium">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                macrank.app / prototypes
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-400">01 / 06</span>
+                    </div>
+
+                    <!-- 大预览内容 -->
+                    <div class="p-8 sm:p-12">
+                        <!-- 标题 -->
+                        <div class="text-center">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-600">
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                                </span>
+                                <span>2025 Mac 性能数据已加载</span>
+                            </div>
+                            <h3 class="mt-5 text-3xl sm:text-4xl font-black tracking-tight text-gray-900">
+                                <span class="hero-gradient-text">MacRank</span>
+                                <span class="text-gray-900"> · 苹果电脑性能天梯榜</span>
+                            </h3>
+                            <p class="mt-3 text-[14px] text-gray-500">最全的苹果电脑性能查询 · 包含 AI 选购助手、Geekbench 6 跑分与性价比分析</p>
+                        </div>
+
+                        <!-- 排名卡片网格 -->
+                        <div class="mt-10 grid md:grid-cols-3 gap-4">
+
+                            <!-- 排名卡 1 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5 relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500"></div>
+                                <div class="pl-2">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <span class="tier-s-plus text-white text-[9px] font-black px-2 py-0.5 rounded-md">S+</span>
+                                        <span class="text-[10px] text-gray-400">2025</span>
+                                    </div>
+                                    <div class="text-[14px] font-bold text-gray-900 leading-tight">MacBook Pro 16"</div>
+                                    <div class="text-[11px] text-gray-500 mt-1">M4 Max</div>
+                                    <div class="mt-4 flex items-end justify-between">
+                                        <div>
+                                            <div class="text-[22px] font-black text-gray-900 tabular-nums leading-none">9,850</div>
+                                            <div class="text-[9px] text-gray-400 mt-1">综合跑分</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-[11px] font-black text-indigo-600">$3,499</div>
+                                            <div class="w-12 h-1 mt-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 排名卡 2 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5 relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 to-indigo-500"></div>
+                                <div class="pl-2">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <span class="px-2 py-0.5 rounded-md bg-gradient-to-br from-purple-500 to-indigo-500 text-white text-[9px] font-black">S</span>
+                                        <span class="text-[10px] text-gray-400">2025</span>
+                                    </div>
+                                    <div class="text-[14px] font-bold text-gray-900 leading-tight">Mac Studio</div>
+                                    <div class="text-[11px] text-gray-500 mt-1">M4 Ultra</div>
+                                    <div class="mt-4 flex items-end justify-between">
+                                        <div>
+                                            <div class="text-[22px] font-black text-gray-900 tabular-nums leading-none">9,620</div>
+                                            <div class="text-[9px] text-gray-400 mt-1">综合跑分</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-[11px] font-black text-purple-600">$4,999</div>
+                                            <div class="w-10 h-1 mt-1.5 rounded-full bg-purple-400"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 排名卡 3 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5 relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-500 to-cyan-500"></div>
+                                <div class="pl-2">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <span class="px-2 py-0.5 rounded-md bg-blue-500 text-white text-[9px] font-black">A</span>
+                                        <span class="text-[10px] text-gray-400">2025</span>
+                                    </div>
+                                    <div class="text-[14px] font-bold text-gray-900 leading-tight">MacBook Pro 14"</div>
+                                    <div class="text-[11px] text-gray-500 mt-1">M4 Pro</div>
+                                    <div class="mt-4 flex items-end justify-between">
+                                        <div>
+                                            <div class="text-[22px] font-black text-gray-900 tabular-nums leading-none">8,450</div>
+                                            <div class="text-[9px] text-gray-400 mt-1">综合跑分</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-[11px] font-black text-blue-600">$1,999</div>
+                                            <div class="w-8 h-1 mt-1.5 rounded-full bg-blue-400"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 场景筛选按钮行 -->
+                        <div class="mt-8 flex flex-wrap items-center justify-center gap-2">
+                            <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest mr-1">场景：</span>
+                            <button class="px-4 py-1.5 rounded-full bg-gray-900 text-white text-[11px] font-bold shadow-md">均衡</button>
+                            <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-[11px] font-bold hover:bg-gray-50 transition-colors">开发</button>
+                            <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-[11px] font-bold hover:bg-gray-50 transition-colors">创意</button>
+                            <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-[11px] font-bold hover:bg-gray-50 transition-colors">日常</button>
+                            <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-700 text-[11px] font-bold hover:bg-gray-50 transition-colors">游戏</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二行：wireframes 设计系统大预览 -->
+        <div class="mt-24 grid lg:grid-cols-5 gap-8 items-start">
+
+            <!-- 左：设计系统大 mockup -->
+            <div class="lg:col-span-4 reveal stagger-1">
+                <div class="hero-mockup relative rounded-[28px] overflow-hidden bg-gradient-to-br from-pink-50 via-white to-orange-50 border border-gray-200 shadow-[0_40px_80px_-30px_rgba(236,72,153,0.35)]">
+
+                    <div class="relative flex items-center gap-2 px-5 py-3.5 border-b border-gray-200/70 bg-white/80 backdrop-blur-sm">
+                        <div class="flex gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                        </div>
+                        <div class="flex-1 mx-6 max-w-md mx-auto">
+                            <div class="flex items-center justify-center gap-2 px-4 py-1.5 rounded-lg bg-gray-100/80 text-[11px] text-gray-500 font-medium">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                macrank.app / design-system
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-400">40+ components</span>
+                    </div>
+
+                    <div class="p-8 sm:p-12">
+                        <div class="text-center">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-pink-600">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/></svg>
+                                设计令牌 & 组件库
+                            </div>
+                            <h3 class="mt-5 text-3xl sm:text-4xl font-black tracking-tight text-gray-900">
+                                <span class="hero-gradient-text">Design System</span>
+                            </h3>
+                            <p class="mt-3 text-[14px] text-gray-500">统一的视觉语言 · 色板、字体层级、间距、圆角与组件</p>
+                        </div>
+
+                        <!-- 色板 + 字体层级两栏 -->
+                        <div class="mt-10 grid md:grid-cols-2 gap-6">
+
+                            <!-- 色板列 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-6">
+                                <div class="flex items-center justify-between mb-5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-lg tier-s-plus"></div>
+                                        <h4 class="text-[15px] font-bold text-gray-900">色板 Tokens</h4>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">9 colors</span>
+                                </div>
+
+                                <div class="space-y-2.5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-gray-900 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Primary Ink</div>
+                                            <div class="text-[10px] font-mono text-gray-400">#111827</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded">text</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Brand Gradient</div>
+                                            <div class="text-[10px] font-mono text-gray-400">6366f1 → a855f7</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">brand</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-indigo-500 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Indigo 500</div>
+                                            <div class="text-[10px] font-mono text-gray-400">#6366f1</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">primary</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-pink-500 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Pink 500</div>
+                                            <div class="text-[10px] font-mono text-gray-400">#ec4899</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-pink-600 bg-pink-50 px-2 py-0.5 rounded">accent</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-emerald-500 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Emerald 500</div>
+                                            <div class="text-[10px] font-mono text-gray-400">#10b981</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">success</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-amber-500 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Amber 500</div>
+                                            <div class="text-[10px] font-mono text-gray-400">#f59e0b</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded">warning</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="color-swatch w-9 h-9 rounded-xl bg-red-500 shadow-sm"></div>
+                                        <div class="flex-1">
+                                            <div class="text-[12px] font-bold text-gray-900">Red 500</div>
+                                            <div class="text-[10px] font-mono text-gray-400">#ef4444</div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded">error</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 字体层级列 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-6">
+                                <div class="flex items-center justify-between mb-5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-pink-500 to-orange-500"></div>
+                                        <h4 class="text-[15px] font-bold text-gray-900">字体层级 Type</h4>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Inter</span>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                                        <div class="text-[28px] font-black tracking-tight text-gray-900">Display</div>
+                                        <div class="text-[10px] font-mono text-gray-400">28 / 900</div>
+                                    </div>
+                                    <div class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                                        <div class="text-[20px] font-bold tracking-tight text-gray-900">Heading H1</div>
+                                        <div class="text-[10px] font-mono text-gray-400">20 / 700</div>
+                                    </div>
+                                    <div class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                                        <div class="text-[16px] font-semibold text-gray-900">Heading H2</div>
+                                        <div class="text-[10px] font-mono text-gray-400">16 / 600</div>
+                                    </div>
+                                    <div class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                                        <div class="text-[14px] font-medium text-gray-800">Body</div>
+                                        <div class="text-[10px] font-mono text-gray-400">14 / 500</div>
+                                    </div>
+                                    <div class="flex items-baseline justify-between border-b border-gray-100 pb-2">
+                                        <div class="text-[12px] text-gray-600">Caption</div>
+                                        <div class="text-[10px] font-mono text-gray-400">12 / 400</div>
+                                    </div>
+                                    <div class="flex items-baseline justify-between">
+                                        <div class="text-[11px] font-mono text-indigo-600 tracking-wider">MONO 101</div>
+                                        <div class="text-[10px] font-mono text-gray-400">11 / mono</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 组件示例行 -->
+                        <div class="mt-6 grid md:grid-cols-3 gap-4">
+                            <!-- 按钮组件预览 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5">
+                                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Buttons</div>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="px-3 py-1.5 rounded-lg bg-gray-900 text-white text-[11px] font-bold">Primary</button>
+                                    <button class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-[11px] font-bold">Gradient</button>
+                                    <button class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-[11px] font-bold">Ghost</button>
+                                    <button class="px-3 py-1.5 rounded-full bg-emerald-500 text-white text-[11px] font-bold">Pill</button>
+                                </div>
+                            </div>
+                            <!-- 徽章组件预览 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5">
+                                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Badges · Tier</div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded tier-s-plus text-white text-[10px] font-black">S+</span>
+                                    <span class="px-2 py-0.5 rounded bg-gradient-to-br from-purple-500 to-indigo-500 text-white text-[10px] font-black">S</span>
+                                    <span class="px-2 py-0.5 rounded bg-blue-500 text-white text-[10px] font-black">A</span>
+                                    <span class="px-2 py-0.5 rounded bg-emerald-500 text-white text-[10px] font-black">B</span>
+                                    <span class="px-2 py-0.5 rounded bg-amber-500 text-white text-[10px] font-black">C</span>
+                                    <span class="px-2 py-0.5 rounded bg-gray-500 text-white text-[10px] font-black">D</span>
+                                </div>
+                            </div>
+                            <!-- 输入组件预览 -->
+                            <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5">
+                                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Inputs</div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border border-gray-200">
+                                        <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+                                        <span class="text-[11px] text-gray-400">搜索型号...</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border-2 border-indigo-200">
+                                        <span class="text-[11px] text-indigo-700 font-bold">M4 Max</span>
+                                        <span class="ml-auto text-[10px] text-gray-400">✓</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右：设计系统小卡 -->
+            <div class="lg:col-span-1 order-2 reveal stagger-2">
+                <div class="lg:sticky lg:top-24 space-y-4">
+                    <div class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-2">核心令牌</div>
+
+                    <!-- 圆角 -->
+                    <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-[13px] font-bold text-gray-900">圆角 Radius</div>
+                            <span class="text-[10px] font-mono text-gray-400">4 sizes</span>
+                        </div>
+                        <div class="flex items-end justify-between gap-2">
+                            <div class="text-center flex-1">
+                                <div class="w-full h-10 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded mb-1.5"></div>
+                                <div class="text-[9px] font-mono text-gray-400">sm</div>
+                            </div>
+                            <div class="text-center flex-1">
+                                <div class="w-full h-10 bg-gradient-to-br from-purple-100 to-purple-200 rounded-lg mb-1.5"></div>
+                                <div class="text-[9px] font-mono text-gray-400">md</div>
+                            </div>
+                            <div class="text-center flex-1">
+                                <div class="w-full h-10 bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl mb-1.5"></div>
+                                <div class="text-[9px] font-mono text-gray-400">xl</div>
+                            </div>
+                            <div class="text-center flex-1">
+                                <div class="w-full h-10 bg-gradient-to-br from-orange-100 to-amber-200 rounded-2xl mb-1.5"></div>
+                                <div class="text-[9px] font-mono text-gray-400">2xl</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 间距 -->
+                    <div class="card-lift rounded-2xl bg-white border border-gray-200 shadow-sm p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-[13px] font-bold text-gray-900">间距 Spacing</div>
+                            <span class="text-[10px] font-mono text-gray-400">4 / 8</span>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-1 h-6 rounded bg-indigo-400"></div>
+                                <div class="text-[11px] text-gray-600 font-mono">space-xs · 4px</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-6 rounded bg-purple-400"></div>
+                                <div class="text-[11px] text-gray-600 font-mono">space-sm · 8px</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-4 h-6 rounded bg-pink-400"></div>
+                                <div class="text-[11px] text-gray-600 font-mono">space-md · 16px</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded bg-amber-400"></div>
+                                <div class="text-[11px] text-gray-600 font-mono">space-lg · 24px</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="wireframes.html" class="btn-primary block text-center px-5 py-3 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white text-[13px] font-semibold shadow-lg shadow-purple-500/25">
+                        查看完整组件库
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 技术栈标签 ============ -->
+<section class="py-20 bg-gray-50/70">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto reveal">
+            <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-gray-900">构建于现代技术栈</h2>
+            <p class="mt-4 text-[14px] text-gray-500">零依赖 · 开箱即用 · 可扩展</p>
+        </div>
+
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-3">
+            <div class="tech-chip group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6l-3.5 6h7L12 6zm0 8l-3.5 4h7L12 14z"/></svg>
+                </div>
+                <div>
+                    <div class="text-[13px] font-bold text-gray-900">Tailwind CSS</div>
+                    <div class="text-[10px] text-gray-400">v3.x Utility-First</div>
+                </div>
+            </div>
+
+            <div class="tech-chip group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zm0 0v10m9 5l-9 5-9-5m9 5v-5"/></svg>
+                </div>
+                <div>
+                    <div class="text-[13px] font-bold text-gray-900">shadcn/ui</div>
+                    <div class="text-[10px] text-gray-400">可组合组件</div>
+                </div>
+            </div>
+
+            <div class="tech-chip group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+                    <span class="text-white text-[10px] font-black">HTML</span>
+                </div>
+                <div>
+                    <div class="text-[13px] font-bold text-gray-900">HTML5</div>
+                    <div class="text-[10px] text-gray-400">语义化标签</div>
+                </div>
+            </div>
+
+            <div class="tech-chip group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                    <span class="text-white text-[10px] font-black">#</span>
+                </div>
+                <div>
+                    <div class="text-[13px] font-bold text-gray-900">CSS3</div>
+                    <div class="text-[10px] text-gray-400">Grid · Flexbox</div>
+                </div>
+            </div>
+
+            <div class="tech-chip group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a4 4 0 000-8H7a4 4 0 000 8zM7 13V7a5 5 0 0110 0v6"/></svg>
+                </div>
+                <div>
+                    <div class="text-[13px] font-bold text-gray-900">SVG Icons</div>
+                    <div class="text-[10px] text-gray-400">矢量 · 轻量</div>
+                </div>
+            </div>
+
+            <div class="tech-chip group flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-rose-400 via-amber-400 to-emerald-400 flex items-center justify-center">
+                    <span class="text-white text-[9px] font-black">Aa</span>
+                </div>
+                <div>
+                    <div class="text-[13px] font-bold text-gray-900">Google Fonts</div>
+                    <div class="text-[10px] text-gray-400">Inter Family</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 页脚 ============ -->
+<footer class="bg-white border-t border-gray-200">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+        <div class="grid md:grid-cols-4 gap-8">
+
+            <div class="md:col-span-2">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-md shadow-purple-500/20">
+                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M17.8 9.6c-.7 0-1.7-.5-1.7-1.7s1-2.2 2-2.3c.1 0 .2 0 .2 0-1-1.3-2.6-1.5-3.2-1.5-1.4 0-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-3 1-3.9 2.4-1.6 2.4-.4 5.9 1.1 8 1 1.4 2 2.9 3.4 2.9.7 0 1-.2 1.9-.2.9 0 1.1.2 1.9.2 1.3 0 2.2-1.3 3.1-2.6.9-1.3 1.3-2.7 1.3-2.7s-2.1-1-2.2-2.9zM15 4.6c.6-.7 1-1.8 1-2.8 0-.1 0-.3 0-.4-.9.1-2 .7-2.6 1.4-.6.6-1 1.6-1 2.6 0 .1 0 .3 0 .4 1-.1 2.1-.6 2.6-1.2z"/>
                         </svg>
                     </div>
-                    <span class="font-bold tracking-tight text-sm">MacRank</span>
-                    <span class="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 text-[10px] font-black">v0.7.6</span>
+                    <div>
+                        <div class="text-[15px] font-bold text-gray-900">MacRank</div>
+                        <div class="text-[10px] text-gray-400 font-mono">v0.7.6 · Prototype Design System</div>
+                    </div>
                 </div>
-                <nav class="flex items-center gap-5 text-sm">
-                    <a href="#" class="font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">排行榜</a>
-                    <a href="#" class="font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">图表</a>
-                    <button class="w-9 h-9 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition-colors" aria-label="设置">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </button>
-                </nav>
-            </div>
-        </header>
-
-        <!-- ========== 主要内容区 ========== -->
-        <main class="max-w-[980px] mx-auto px-4 pt-24 pb-32 space-y-10">
-
-            <!-- 标题说明区 -->
-            <div class="text-center space-y-2 mb-8 animate-fade-in-up">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">MacRank 原型图设计规范</h1>
-                <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">基于 v0.7.6 实现的完整 UI 组件架构 · 顶级设计师优化版</p>
+                <p class="mt-5 text-[13px] text-gray-500 leading-relaxed max-w-sm">
+                    基于真实 Mac 性能数据打造的高保真原型设计系统。
+                    组件可复用，动效精致，响应式布局适配桌面与移动端。
+                </p>
             </div>
 
-            <!-- ========== 1. Hero 组件 ========== -->
-            <section class="space-y-4 animate-fade-in-up stagger-1">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white flex items-center justify-center font-bold shadow-lg shadow-blue-500/25">1</div>
-                    <div>
-                        <h2 class="text-xl font-bold">Hero 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">页面顶部英雄区域 · 已优化</p>
-                    </div>
-                </div>
+            <div>
+                <div class="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-4">原型</div>
+                <ul class="space-y-2.5 text-[13px]">
+                    <li><a href="prototypes.html" class="text-gray-500 hover:text-gray-900 transition-colors">高保真原型</a></li>
+                    <li><a href="prototypes.html" class="text-gray-500 hover:text-gray-900 transition-colors">排行榜</a></li>
+                    <li><a href="prototypes.html" class="text-gray-500 hover:text-gray-900 transition-colors">详情页</a></li>
+                    <li><a href="prototypes.html" class="text-gray-500 hover:text-gray-900 transition-colors">AI 助手</a></li>
+                </ul>
+            </div>
 
-                <div class="relative text-center space-y-6 bg-white dark:bg-gray-900 rounded-3xl p-8 sm:p-10 md:p-12 border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
-                    <!-- 多层渐变背景 -->
-                    <div class="absolute top-0 left-0 right-0 bottom-0 pointer-events-none -z-10">
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[160%] bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-pink-500/10 blur-[100px] rounded-full"></div>
-                        <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-500/5 to-transparent rounded-full"></div>
-                    </div>
+            <div>
+                <div class="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-4">规范</div>
+                <ul class="space-y-2.5 text-[13px]">
+                    <li><a href="wireframes.html" class="text-gray-500 hover:text-gray-900 transition-colors">组件库规范</a></li>
+                    <li><a href="wireframes.html" class="text-gray-500 hover:text-gray-900 transition-colors">色板与字体</a></li>
+                    <li><a href="wireframes.html" class="text-gray-500 hover:text-gray-900 transition-colors">间距与圆角</a></li>
+                    <li><a href="wireframes.html" class="text-gray-500 hover:text-gray-900 transition-colors">动效指南</a></li>
+                </ul>
+            </div>
+        </div>
 
-                    <!-- 徽章 - 优雅呼吸效果 -->
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50/80 dark:bg-blue-900/30 border border-blue-100/80 dark:border-blue-800/30 text-blue-600 dark:text-blue-400 text-[10px] font-black uppercase tracking-widest shadow-sm">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                        </span>
-                        <span>2025 Mac Performance Data Loaded</span>
-                    </div>
-
-                    <!-- 标题 - 响应式字号 -->
-                    <div class="space-y-4">
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tightest text-gray-900 dark:text-white drop-shadow-sm">
-                            苹果电脑性能天梯榜
-                        </h1>
-                        <p class="text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 font-medium max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-                            最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。
-                        </p>
-                    </div>
-
-                    <!-- 分享按钮 - 改进的悬停和点击效果 -->
-                    <div class="flex justify-center pt-4">
-                        <button class="group flex items-center gap-2.5 px-7 sm:px-8 py-3.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 btn-press">
-                            <svg class="w-5 h-5 group-hover:rotate-12 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                            </svg>
-                            <span>分享</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 2. Filter Controls 组件 ========== -->
-            <section class="space-y-4 animate-fade-in-up stagger-2">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-500/25">2</div>
-                    <div>
-                        <h2 class="text-xl font-bold">Filter Controls 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">筛选与搜索控制 · 已优化</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 border border-gray-200 dark:border-gray-800 shadow-sm">
-                    <div class="space-y-4">
-                        <!-- 搜索栏 -->
-                        <div class="flex flex-wrap gap-3 items-center">
-                            <div class="flex-1 min-w-[200px] relative">
-                                <div class="relative">
-                                    <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                    </svg>
-                                    <input type="text" placeholder="搜索型号、芯片、关键词..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all">
-                                </div>
-                            </div>
-
-                            <!-- 筛选下拉框 - 统一样式 -->
-                            <select class="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer appearance-none"
-                                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 40px;">
-                                <option>全部类型</option>
-                                <option>笔记本</option>
-                                <option>台式机</option>
-                                <option>平板</option>
-                            </select>
-
-                            <select class="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer appearance-none"
-                                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 40px;">
-                                <option>全部芯片</option>
-                                <option>M5</option>
-                                <option>M4</option>
-                                <option>M3</option>
-                                <option>M2</option>
-                                <option>M1</option>
-                                <option>Intel</option>
-                            </select>
-
-                            <select class="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer appearance-none"
-                                    style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%239ca3af%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 40px;">
-                                <option>全部系统</option>
-                                <option>macOS Sequoia</option>
-                                <option>macOS Sonoma</option>
-                            </select>
-                        </div>
-
-                        <!-- 场景选择 - 改进的按钮样式 -->
-                        <div class="flex flex-wrap gap-2 items-center">
-                            <span class="text-xs font-black text-gray-400 uppercase tracking-widest self-center mr-2">场景:</span>
-                            <button class="px-4 py-1.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold shadow-lg transition-all hover:scale-105 active:scale-95">均衡</button>
-                            <button class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">开发</button>
-                            <button class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">创意</button>
-                            <button class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">日常</button>
-
-                            <div class="flex-1"></div>
-
-                            <label class="flex items-center gap-2.5 text-xs font-medium text-gray-500 dark:text-gray-400 cursor-pointer group">
-                                <div class="relative">
-                                    <input type="checkbox" class="sr-only peer">
-                                    <div class="w-9 h-5 bg-gray-200 peer-checked:bg-blue-500 rounded-full transition-colors"></div>
-                                    <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform peer-checked:translate-x-4"></div>
-                                </div>
-                                <span class="group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">显示参考数据</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 3. Performance Chart 组件 ========== -->
-            <section class="space-y-4 animate-fade-in-up stagger-3">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-violet-700 text-white flex items-center justify-center font-bold shadow-lg shadow-violet-500/25">3</div>
-                    <div>
-                        <h2 class="text-xl font-bold">Performance Chart 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">性能可视化图表 · 已优化</p>
-                    </div>
-                </div>
-
-                <div class="bg-white dark:bg-gray-900 rounded-3xl p-5 sm:p-6 border border-gray-200 dark:border-gray-800 shadow-sm">
-                    <div class="flex items-center justify-between mb-5">
-                        <h3 class="font-bold text-lg">性能对比图</h3>
-                        <div class="flex gap-1.5 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
-                            <button class="px-4 py-1.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold shadow-md transition-all">综合</button>
-                            <button class="px-4 py-1.5 rounded-lg text-gray-600 dark:text-gray-400 text-xs font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">单核</button>
-                            <button class="px-4 py-1.5 rounded-lg text-gray-600 dark:text-gray-400 text-xs font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">多核</button>
-                            <button class="px-4 py-1.5 rounded-lg text-gray-600 dark:text-gray-400 text-xs font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">Metal</button>
-                        </div>
-                    </div>
-
-                    <!-- 图表区域 - 专业占位符 -->
-                    <div class="h-56 sm:h-64 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-800 rounded-2xl flex items-center justify-center overflow-hidden">
-                        <div class="text-center">
-                            <!-- 简化的柱状图SVG -->
-                            <svg class="w-48 h-32 mb-3" viewBox="0 0 200 100">
-                                <defs>
-                                    <linearGradient id="barGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" stop-color="#3B82F6"/>
-                                        <stop offset="100%" stop-color="#1D4ED8"/>
-                                    </linearGradient>
-                                </defs>
-                                <rect x="10" y="60" width="20" height="40" rx="4" fill="url(#barGrad)" opacity="0.6"/>
-                                <rect x="40" y="40" width="20" height="60" rx="4" fill="url(#barGrad)" opacity="0.7"/>
-                                <rect x="70" y="20" width="20" height="80" rx="4" fill="url(#barGrad)" opacity="0.85"/>
-                                <rect x="100" y="10" width="20" height="90" rx="4" fill="url(#barGrad)"/>
-                                <rect x="130" y="30" width="20" height="70" rx="4" fill="url(#barGrad)" opacity="0.75"/>
-                                <rect x="160" y="50" width="20" height="50" rx="4" fill="url(#barGrad)" opacity="0.65"/>
-                            </svg>
-                            <p class="text-sm text-gray-400 font-medium">Recharts 性能图表区域</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 4. MacTable 组件 ========== -->
-            <section class="space-y-4 animate-fade-in-up stagger-4">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 text-white flex items-center justify-center font-bold shadow-lg shadow-orange-500/25">4</div>
-                    <div>
-                        <h2 class="text-xl font-bold">MacTable 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">性能天梯主表格 · 已优化</p>
-                    </div>
-                </div>
-
-                <!-- 桌面端表格 -->
-                <div class="hidden md:block overflow-x-auto relative custom-scrollbar bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm">
-                    <table class="w-full text-left border-collapse min-w-[800px]">
-                        <thead>
-                            <tr class="border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/5">
-                                <th class="py-4 pl-4 w-10 text-center"></th>
-                                <th class="py-4 pr-3 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest w-12 text-center">#</th>
-                                <th class="py-4 pr-3 w-16 text-center text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">排名</th>
-                                <th class="py-4 px-3 sticky left-0 z-20 bg-gray-50/80 dark:bg-gray-900/80 shadow-[4px_0_10px_-5px_rgba(0,0,0,0.1)] min-w-[260px] text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">型号/芯片</th>
-                                <th class="py-4 px-2 w-24 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">CPU</th>
-                                <th class="py-4 px-2 w-24 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">GPU</th>
-                                <th class="py-4 px-2 w-28 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">内存</th>
-                                <th class="py-4 px-3 text-right w-36 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">性能</th>
-                                <th class="py-4 px-2 text-right w-24 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">性价比</th>
-                                <th class="py-4 pl-2 pr-4 text-right w-24 text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">价格</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- S+ 级行 - 优化背景一致性 -->
-                            <tr class="border-b border-gray-100/80 dark:border-gray-800/80 group transition-all duration-300 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 relative after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-gradient-to-b after:from-blue-500 after:to-purple-500">
-                                <td class="py-4 pl-4 text-center">
-                                    <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-500/25 animate-bounce-in">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                                        </svg>
-                                    </div>
-                                </td>
-                                <td class="py-4 pr-3 text-center text-[11px] font-black text-gray-300 dark:text-gray-600">01</td>
-                                <td class="py-4 pr-3 text-center">
-                                    <span class="tier-s-plus text-white text-[10px] font-black px-2 py-0.5 rounded-md">S+</span>
-                                </td>
-                                <td class="py-4 px-3 sticky left-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
-                                    <div class="flex flex-col">
-                                        <span class="text-[15px] font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">MacBook Pro 16" M4 Max</span>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded uppercase">M4 Max</span>
-                                            <span class="text-[10px] font-medium text-gray-400">2025</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">16+40</td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">64 <span class="text-[10px] opacity-50">GPU</span></td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">192GB</td>
-                                <td class="py-4 px-3 text-right">
-                                    <div class="flex flex-col items-end gap-1.5">
-                                        <span class="text-lg font-black tabular-nums tracking-tight text-gray-900 dark:text-white">9,850</span>
-                                        <div class="w-24 h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                                            <div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600 progress-animate" style="width: 98%"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-2 text-right">
-                                    <div class="flex flex-col items-end">
-                                        <span class="text-xs font-black text-blue-500">125</span>
-                                        <span class="text-[9px] text-gray-400 uppercase tracking-tight">分/10$</span>
-                                    </div>
-                                </td>
-                                <td class="py-4 pl-2 pr-4 text-right">
-                                    <span class="text-xs font-bold tabular-nums text-gray-500 dark:text-gray-400">$3,499</span>
-                                </td>
-                            </tr>
-
-                            <!-- S 级行 -->
-                            <tr class="border-b border-gray-100/80 dark:border-gray-800/80 group transition-all duration-300 hover:bg-gray-50/80 dark:hover:bg-gray-800/30">
-                                <td class="py-4 pl-4 text-center">
-                                    <button class="w-6 h-6 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-blue-400 dark:hover:border-blue-500 transition-all flex items-center justify-center"></button>
-                                </td>
-                                <td class="py-4 pr-3 text-center text-[11px] font-black text-gray-300 dark:text-gray-600">02</td>
-                                <td class="py-4 pr-3 text-center">
-                                    <span class="tier-s text-white text-[10px] font-black px-2 py-0.5 rounded-md">S</span>
-                                </td>
-                                <td class="py-4 px-3 sticky left-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm group-hover:bg-gray-50/80 dark:group-hover:bg-gray-800/50 transition-colors">
-                                    <div class="flex flex-col">
-                                        <span class="text-[15px] font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Mac Studio M4 Ultra</span>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded uppercase">M4 Ultra</span>
-                                            <span class="text-[10px] font-medium text-gray-400">2025</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">32+64</td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">128 <span class="text-[10px] opacity-50">GPU</span></td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">256GB</td>
-                                <td class="py-4 px-3 text-right">
-                                    <div class="flex flex-col items-end gap-1.5">
-                                        <span class="text-lg font-black tabular-nums tracking-tight text-gray-900 dark:text-white">9,620</span>
-                                        <div class="w-24 h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                                            <div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600 progress-animate" style="width: 96%"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-2 text-right">
-                                    <div class="flex flex-col items-end">
-                                        <span class="text-xs font-black text-blue-500">110</span>
-                                        <span class="text-[9px] text-gray-400 uppercase tracking-tight">分/10$</span>
-                                    </div>
-                                </td>
-                                <td class="py-4 pl-2 pr-4 text-right">
-                                    <span class="text-xs font-bold tabular-nums text-gray-500 dark:text-gray-400">$4,999</span>
-                                </td>
-                            </tr>
-
-                            <!-- A 级行 -->
-                            <tr class="border-b border-gray-100/80 dark:border-gray-800/80 group transition-all duration-300 hover:bg-gray-50/80 dark:hover:bg-gray-800/30">
-                                <td class="py-4 pl-4 text-center">
-                                    <button class="w-6 h-6 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-blue-400 dark:hover:border-blue-500 transition-all flex items-center justify-center"></button>
-                                </td>
-                                <td class="py-4 pr-3 text-center text-[11px] font-black text-gray-300 dark:text-gray-600">03</td>
-                                <td class="py-4 pr-3 text-center">
-                                    <span class="tier-a text-white text-[10px] font-black px-2 py-0.5 rounded-md">A</span>
-                                </td>
-                                <td class="py-4 px-3 sticky left-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm group-hover:bg-gray-50/80 dark:group-hover:bg-gray-800/50 transition-colors">
-                                    <div class="flex flex-col">
-                                        <span class="text-[15px] font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">MacBook Pro 14" M4 Pro</span>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="text-[10px] font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded uppercase">M4 Pro</span>
-                                            <span class="text-[10px] font-medium text-gray-400">2025</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">12+28</td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">40 <span class="text-[10px] opacity-50">GPU</span></td>
-                                <td class="py-4 px-2 text-xs font-medium text-gray-600 dark:text-gray-300">64GB</td>
-                                <td class="py-4 px-3 text-right">
-                                    <div class="flex flex-col items-end gap-1.5">
-                                        <span class="text-lg font-black tabular-nums tracking-tight text-gray-900 dark:text-white">8,450</span>
-                                        <div class="w-24 h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                                            <div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600 progress-animate" style="width: 84%"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-2 text-right">
-                                    <div class="flex flex-col items-end">
-                                        <span class="text-xs font-black text-emerald-500">145</span>
-                                        <span class="text-[9px] text-gray-400 uppercase tracking-tight">分/10$</span>
-                                    </div>
-                                </td>
-                                <td class="py-4 pl-2 pr-4 text-right">
-                                    <span class="text-xs font-bold tabular-nums text-gray-500 dark:text-gray-400">$1,999</span>
-                                </td>
-                            </tr>
-
-                            <!-- 骨架屏行（加载状态） -->
-                            <tr class="border-b border-gray-100/80 dark:border-gray-800/80">
-                                <td class="py-4 pl-4 text-center"><div class="w-6 h-6 rounded-lg skeleton"></div></td>
-                                <td class="py-4 pr-3"><div class="w-6 h-4 rounded skeleton"></div></td>
-                                <td class="py-4 pr-3"><div class="w-8 h-5 rounded skeleton"></div></td>
-                                <td class="py-4 px-3"><div class="flex flex-col gap-1.5"><div class="w-40 h-4 rounded skeleton"></div><div class="w-20 h-3 rounded skeleton"></div></div></td>
-                                <td class="py-4 px-2"><div class="w-10 h-4 rounded skeleton"></div></td>
-                                <td class="py-4 px-2"><div class="w-12 h-4 rounded skeleton"></div></td>
-                                <td class="py-4 px-2"><div class="w-14 h-4 rounded skeleton"></div></td>
-                                <td class="py-4 px-3"><div class="flex flex-col items-end gap-1.5"><div class="w-12 h-4 rounded skeleton"></div><div class="w-20 h-1.5 rounded skeleton"></div></div></td>
-                                <td class="py-4 px-2"><div class="w-8 h-4 rounded skeleton ml-auto"></div></td>
-                                <td class="py-4 pl-2 pr-4"><div class="w-12 h-4 rounded skeleton ml-auto"></div></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 移动端卡片式布局 -->
-                <div class="md:hidden space-y-3">
-                    <!-- 移动端卡片 S+ -->
-                    <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 shadow-sm card-hover relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-blue-500 to-purple-500"></div>
-                        <div class="flex items-start justify-between mb-3 pl-2">
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="tier-s-plus text-white text-[9px] font-black px-1.5 py-0.5 rounded">S+</span>
-                                    <span class="text-[10px] text-gray-400">2025</span>
-                                </div>
-                                <h3 class="font-semibold text-gray-900 dark:text-white">MacBook Pro 16" M4 Max</h3>
-                                <p class="text-xs text-gray-500 mt-0.5">M4 Max · 16+40 CPU · 64 GPU</p>
-                            </div>
-                            <div class="w-6 h-6 rounded-lg bg-blue-500 flex items-center justify-center text-white">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="space-y-2 pl-2">
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-500">性能</span>
-                                <span class="font-bold text-gray-900 dark:text-white">9,850</span>
-                            </div>
-                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                                <div class="h-full w-[98%] rounded-full bg-gradient-to-r from-blue-500 to-blue-600"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 移动端卡片 S -->
-                    <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 shadow-sm card-hover">
-                        <div class="flex items-start justify-between mb-3">
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="tier-s text-white text-[9px] font-black px-1.5 py-0.5 rounded">S</span>
-                                    <span class="text-[10px] text-gray-400">2025</span>
-                                </div>
-                                <h3 class="font-semibold text-gray-900 dark:text-white">Mac Studio M4 Ultra</h3>
-                                <p class="text-xs text-gray-500 mt-0.5">M4 Ultra · 32+64 CPU · 128 GPU</p>
-                            </div>
-                            <button class="w-6 h-6 rounded-lg border-2 border-gray-200 dark:border-gray-700"></button>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-500">性能</span>
-                                <span class="font-bold text-gray-900 dark:text-white">9,620</span>
-                            </div>
-                            <div class="h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-                                <div class="h-full w-[96%] rounded-full bg-gradient-to-r from-blue-500 to-blue-600"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 骨架屏卡片 -->
-                    <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 shadow-sm">
-                        <div class="flex items-start justify-between mb-3">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <div class="w-8 h-4 rounded skeleton"></div>
-                                    <div class="w-8 h-4 rounded skeleton"></div>
-                                </div>
-                                <div class="w-40 h-5 rounded skeleton mb-1"></div>
-                                <div class="w-32 h-3 rounded skeleton"></div>
-                            </div>
-                            <div class="w-6 h-6 rounded skeleton"></div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex justify-between">
-                                <div class="w-12 h-4 rounded skeleton"></div>
-                                <div class="w-12 h-4 rounded skeleton"></div>
-                            </div>
-                            <div class="h-1.5 rounded skeleton"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 5. 模态框组件 ========== -->
-            <section class="space-y-4 animate-fade-in-up stagger-5">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-pink-700 text-white flex items-center justify-center font-bold shadow-lg shadow-pink-500/25">5</div>
-                    <div>
-                        <h2 class="text-xl font-bold">模态框组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">详情弹窗 & 对比弹窗 · 已优化</p>
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-5 sm:gap-6">
-                    <!-- Detail Modal -->
-                    <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden">
-                        <!-- 顶部渐变栏 -->
-                        <div class="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
-
-                        <div class="p-5 sm:p-6">
-                            <div class="flex items-start justify-between mb-5">
-                                <div>
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <span class="tier-s-plus text-white text-[10px] font-black px-2 py-0.5 rounded-md">S+</span>
-                                        <h4 class="font-bold text-lg text-gray-900 dark:text-white">MacBook Pro 16" M4 Max</h4>
-                                    </div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">M4 Max · 2025</p>
-                                </div>
-                                <button class="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="关闭">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <!-- 分数网格 -->
-                            <div class="grid grid-cols-3 gap-3 py-4 border-y border-gray-100 dark:border-gray-800">
-                                <div class="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
-                                    <div class="text-2xl font-black text-gray-900 dark:text-white">3,250</div>
-                                    <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">单核</div>
-                                </div>
-                                <div class="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
-                                    <div class="text-2xl font-black text-gray-900 dark:text-white">28,450</div>
-                                    <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">多核</div>
-                                </div>
-                                <div class="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
-                                    <div class="text-2xl font-black text-gray-900 dark:text-white">215K</div>
-                                    <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Metal</div>
-                                </div>
-                            </div>
-
-                            <!-- 规格列表 -->
-                            <div class="space-y-2.5 py-4">
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">CPU 核心</span><span class="font-medium text-gray-900 dark:text-white">16+40</span></div>
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">GPU 核心</span><span class="font-medium text-gray-900 dark:text-white">64</span></div>
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">内存</span><span class="font-medium text-gray-900 dark:text-white">192GB</span></div>
-                                <div class="flex justify-between text-sm"><span class="text-gray-500">起售价</span><span class="font-bold text-gray-900 dark:text-white">$3,499</span></div>
-                            </div>
-
-                            <button class="w-full py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all btn-press">
-                                <span class="flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                                    </svg>
-                                    分享
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Compare Modal -->
-                    <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden">
-                        <!-- 顶部渐变栏 -->
-                        <div class="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
-
-                        <div class="p-5 sm:p-6">
-                            <div class="flex items-center justify-between mb-5">
-                                <h3 class="font-bold text-lg text-gray-900 dark:text-white">对比</h3>
-                                <button class="w-9 h-9 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="关闭">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <!-- 模型对比头部 -->
-                            <div class="flex items-center justify-between mb-5">
-                                <div class="text-center flex-1">
-                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-lg font-bold shadow-lg mb-2">16"</div>
-                                    <div class="text-xs font-black text-gray-400 uppercase tracking-wider">Model 1</div>
-                                    <div class="font-bold text-sm text-gray-900 dark:text-white mt-1">MBP 16" M4 Max</div>
-                                </div>
-                                <div class="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-sm shadow-lg">
-                                    VS
-                                </div>
-                                <div class="text-center flex-1">
-                                    <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-lg font-bold shadow-lg mb-2">Stu</div>
-                                    <div class="text-xs font-black text-gray-400 uppercase tracking-wider">Model 2</div>
-                                    <div class="font-bold text-sm text-gray-900 dark:text-white mt-1">Mac Studio</div>
-                                </div>
-                            </div>
-
-                            <!-- 雷达图占位 -->
-                            <div class="h-44 bg-gray-50 dark:bg-gray-800/50 rounded-2xl flex items-center justify-center mb-5">
-                                <div class="text-center">
-                                    <svg class="w-24 h-24 mx-auto mb-2 opacity-40" viewBox="0 0 100 100">
-                                        <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="none" stroke="#8B5CF6" stroke-width="2"/>
-                                        <polygon points="50,25 75,37 75,63 50,75 25,63 25,37" fill="#8B5CF6" fill-opacity="0.2"/>
-                                        <circle cx="50" cy="50" r="5" fill="#8B5CF6"/>
-                                    </svg>
-                                    <p class="text-xs text-gray-400">雷达图对比区域</p>
-                                </div>
-                            </div>
-
-                            <!-- 对比按钮 -->
-                            <div class="flex gap-3">
-                                <button class="flex-1 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-press">清除</button>
-                                <button class="flex-1 py-3 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold shadow-lg hover:opacity-90 transition-all btn-press">
-                                    <span class="flex items-center justify-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                                        </svg>
-                                        分享对比
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 6. Compare Bar 组件 ========== -->
-            <section class="space-y-4">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-700 text-white flex items-center justify-center font-bold shadow-lg shadow-cyan-500/25">6</div>
-                    <div>
-                        <h2 class="text-xl font-bold">Compare Bar 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">浮动对比栏 · 已优化</p>
-                    </div>
-                </div>
-
-                <div class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl p-4 border border-gray-200/80 dark:border-gray-800/80 shadow-xl">
-                    <div class="flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <div class="flex -space-x-3">
-                                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold shadow-lg border-3 border-white dark:border-gray-900 ring-2 ring-white dark:ring-gray-900 z-10">16"</div>
-                                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-bold shadow-lg border-3 border-white dark:border-gray-900 ring-2 ring-white dark:ring-gray-900">Stu</div>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">2 款机型已选择</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">点击按钮开始对比</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors btn-press">清除</button>
-                            <button class="px-5 py-2 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold shadow-lg hover:scale-105 active:scale-95 transition-all btn-press">对比</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 7. AI Chat 组件 ========== -->
-            <section class="space-y-4">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center font-bold shadow-lg shadow-amber-500/25">7</div>
-                    <div>
-                        <h2 class="text-xl font-bold">AI Chat 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">Gemini AI 选购助手 · 已优化</p>
-                    </div>
-                </div>
-
-                <div class="max-w-md mx-auto">
-                    <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden">
-                        <!-- Chat Header -->
-                        <div class="bg-gradient-to-r from-blue-600 to-violet-600 p-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
-                                    <span class="text-xl">🤖</span>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-white">AI 选购助手</div>
-                                    <div class="text-xs text-white/70">Powered by Gemini</div>
-                                </div>
-                                <div class="ml-auto flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                    <span class="text-xs text-white/80">在线</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Chat Messages -->
-                        <div class="p-4 h-72 overflow-y-auto space-y-4 custom-scrollbar">
-                            <!-- Assistant Message -->
-                            <div class="flex gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white text-sm flex-shrink-0">🤖</div>
-                                <div class="chat-bubble-assistant px-4 py-3 shadow-sm">
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 leading-relaxed">您好！我是您的 Mac 选购助手。告诉我您的使用场景和预算，我可以为您推荐最合适的机型！</p>
-                                </div>
-                            </div>
-
-                            <!-- User Message -->
-                            <div class="flex gap-3 flex-row-reverse">
-                                <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 text-sm flex-shrink-0">👤</div>
-                                <div class="chat-bubble-user px-4 py-3 shadow-sm">
-                                    <p class="text-sm text-white leading-relaxed">我主要做视频剪辑，预算 $2000 左右，有什么推荐？</p>
-                                </div>
-                            </div>
-
-                            <!-- Assistant Response -->
-                            <div class="flex gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white text-sm flex-shrink-0">🤖</div>
-                                <div class="chat-bubble-assistant px-4 py-3 shadow-sm">
-                                    <p class="text-sm text-gray-900 dark:text-gray-100 leading-relaxed">推荐 <strong class="font-semibold">MacBook Pro 14" M4 Pro</strong>！它的 GPU 性能非常适合视频剪辑，性价比极高。</p>
-                                    <div class="mt-2 p-2 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg">
-                                        <div class="text-xs text-emerald-700 dark:text-emerald-400 font-medium">性价比评分: 145 分/10$</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Typing Indicator -->
-                            <div class="flex gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white text-sm flex-shrink-0">🤖</div>
-                                <div class="chat-bubble-assistant px-4 py-3 shadow-sm">
-                                    <div class="flex gap-1.5 py-1">
-                                        <span class="typing-dot w-2 h-2 bg-gray-400 rounded-full"></span>
-                                        <span class="typing-dot w-2 h-2 bg-gray-400 rounded-full"></span>
-                                        <span class="typing-dot w-2 h-2 bg-gray-400 rounded-full"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Quick Actions -->
-                        <div class="px-4 pb-2 flex gap-2 overflow-x-auto">
-                            <button class="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">💰 预算优先</button>
-                            <button class="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">🎬 视频剪辑</button>
-                            <button class="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">🖥️ 开发环境</button>
-                        </div>
-
-                        <!-- Chat Input -->
-                        <div class="p-4 border-t border-gray-100 dark:border-gray-800">
-                            <div class="flex gap-2">
-                                <input type="text" placeholder="问我任何问题..." class="flex-1 px-4 py-2.5 rounded-full bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-blue-500 focus:bg-white dark:focus:bg-gray-900 text-sm transition-all">
-                                <button class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all btn-press" aria-label="发送消息">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 8. Settings Modal ========== -->
-            <section class="space-y-4">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center font-bold shadow-lg shadow-indigo-500/25">8</div>
-                    <div>
-                        <h2 class="text-xl font-bold">Settings Modal 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">设置弹窗 · 已优化</p>
-                    </div>
-                </div>
-
-                <div class="max-w-md mx-auto bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden">
-                    <!-- 顶部渐变栏 -->
-                    <div class="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-
-                    <div class="p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-bold text-xl text-gray-900 dark:text-white">设置</h3>
-                            <span class="text-xs text-gray-400 dark:text-gray-500">v0.7.6</span>
-                        </div>
-
-                        <div class="space-y-6">
-                            <!-- 主题选择 -->
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">主题</label>
-                                <div class="flex gap-2">
-                                    <button class="flex-1 py-3 rounded-xl bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-bold flex items-center justify-center gap-2 shadow-lg">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-                                        </svg>
-                                        深色
-                                    </button>
-                                    <button class="flex-1 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold flex items-center justify-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-                                        </svg>
-                                        浅色
-                                    </button>
-                                    <button class="flex-1 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold flex items-center justify-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                        </svg>
-                                        自动
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 语言选择 -->
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">语言</label>
-                                <div class="relative">
-                                    <select class="w-full px-4 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 appearance-none cursor-pointer">
-                                        <option>简体中文</option>
-                                        <option>English</option>
-                                        <option>Español</option>
-                                        <option>Français</option>
-                                        <option>Deutsch</option>
-                                        <option>日本語</option>
-                                        <option>Português</option>
-                                        <option>Русский</option>
-                                        <option>한국어</option>
-                                        <option>हिन्दी</option>
-                                    </select>
-                                    <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== 9. 空状态组件 ========== -->
-            <section class="space-y-4" id="empty-states">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-400 to-gray-600 text-white flex items-center justify-center font-bold shadow-lg">+</div>
-                    <div>
-                        <h2 class="text-xl font-bold">空状态 & Toast 组件</h2>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">新增组件</p>
-                    </div>
-                </div>
-
-                <div class="grid sm:grid-cols-2 gap-5">
-                    <!-- 空状态 - 搜索无结果 -->
-                    <div class="bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-200 dark:border-gray-800 shadow-sm text-center">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-5">
-                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">未找到匹配结果</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5 max-w-xs mx-auto">没有找到匹配的 Mac 机型，请尝试调整搜索条件或清除筛选</p>
-                        <button class="px-6 py-2.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-bold shadow-lg hover:opacity-90 transition-all btn-press">
-                            清除所有筛选
-                        </button>
-                    </div>
-
-                    <!-- Toast 通知 -->
-                    <div class="space-y-3">
-                        <!-- Success Toast -->
-                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-emerald-500 text-white shadow-xl animate-fade-in-up">
-                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="text-sm font-medium">链接已复制到剪贴板</span>
-                        </div>
-
-                        <!-- Error Toast -->
-                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-red-500 text-white shadow-xl animate-fade-in-up stagger-1">
-                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="text-sm font-medium">操作失败，请重试</span>
-                        </div>
-
-                        <!-- Info Toast -->
-                        <div class="flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-blue-500 text-white shadow-xl animate-fade-in-up stagger-2">
-                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="text-sm font-medium">AI 助手已离线，切换到本地模式</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 骨架屏加载状态 -->
-                <div class="bg-white dark:bg-gray-900 rounded-3xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">骨架屏加载状态</h3>
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <!-- 卡片骨架 -->
-                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
-                            <div class="flex flex-col gap-3">
-                                <div class="h-32 bg-gray-200 dark:bg-gray-700 rounded-xl skeleton"></div>
-                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-3/4"></div>
-                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-1/2"></div>
-                            </div>
-                        </div>
-                        <!-- 列表骨架 -->
-                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full skeleton"></div>
-                                <div class="flex-1 space-y-2">
-                                    <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
-                                    <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded skeleton w-2/3"></div>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
-                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded skeleton w-4/5"></div>
-                            </div>
-                        </div>
-                        <!-- 文本骨架 -->
-                        <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4">
-                            <div class="space-y-3">
-                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
-                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton"></div>
-                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-3/4"></div>
-                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded skeleton w-1/2"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 错误状态 -->
-                <div class="bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-200 dark:border-gray-800 shadow-sm text-center">
-                    <div class="w-20 h-20 mx-auto rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-5">
-                        <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">加载失败</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5 max-w-md mx-auto">无法加载数据，请检查您的网络连接后重试</p>
-                    <button class="px-6 py-2.5 rounded-full bg-red-500 text-white text-sm font-bold shadow-lg hover:bg-red-600 transition-all btn-press">
-                        重试
-                    </button>
-                </div>
-            </section>
-
-            <!-- ========== 页面底部说明 ========== -->
-            <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-500 dark:text-gray-400 text-sm">
-                <p>MacRank v0.7.6 原型图设计规范 · 顶级设计师优化版</p>
-                <p class="mt-2 text-xs text-gray-400 dark:text-gray-500">基于 Next.js 15 + Tailwind CSS 4 构建 · 所有组件均 1:1 还原实现</p>
-            </footer>
-
-        </main>
+        <div class="mt-10 pt-6 border-t border-gray-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="text-[11px] text-gray-400">
+                © 2025 MacRank. 基于 Apple 产品性能数据的原型演示项目。 · Apple®, Mac®, MacBook Pro® 是 Apple Inc. 的商标。
+            </div>
+            <div class="flex items-center gap-5 text-[11px] text-gray-400">
+                <a href="#" class="hover:text-gray-700 transition-colors">隐私</a>
+                <a href="#" class="hover:text-gray-700 transition-colors">条款</a>
+                <a href="#" class="hover:text-gray-700 transition-colors">返回顶部 ↑</a>
+            </div>
+        </div>
     </div>
+</footer>
 
-    <script>
-        // 深色模式切换演示
-        let isDark = false;
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'd' || e.key === 'D') {
-                isDark = !isDark;
-                document.body.classList.toggle('dark', isDark);
-            }
-        });
-
-        // 交错动画 (模拟滚动入场)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in-up');
+<!-- ============ 滚动渐显脚本 ============ -->
+<script>
+    (function () {
+        var elements = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+            for (var i = 0; i < elements.length; i++) elements[i].classList.add('is-visible');
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    entries[i].target.classList.add('is-visible');
+                    io.unobserve(entries[i].target);
                 }
-            });
-        }, { threshold: 0.1 });
+            }
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        for (var j = 0; j < elements.length; j++) io.observe(elements[j]);
+    })();
+</script>
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-    </script>
 </body>
 </html>
