@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacRank UI Design System - 组件库规范</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; font-feature-settings: "tnum"; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Tier System */
+        .tier-s-plus { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); }
+        .tier-s { background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); }
+        .tier-a { background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); }
+        .tier-b { background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%); }
+        .tier-c { background: linear-gradient(135deg, #eab308 0%, #facc15 100%); }
+        .tier-d { background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%); }
+
+        /* Component Showcase */
+        .component-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            overflow: hidden;
+            background: white;
+            transition: all 0.2s ease;
+        }
+        .component-card:hover {
+            border-color: #6366f1;
+            box-shadow: 0 8px 24px -8px rgba(99, 102, 241, 0.15);
+        }
+        .component-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f3f4f6;
+            background: #fafafa;
+        }
+        .component-showcase {
+            padding: 32px;
+            background: white;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+        .component-showcase.vertical {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .component-code {
+            background: #1a1a1e;
+            color: #d1d5db;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            border-top: 1px solid #27272a;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+        .code-token { color: #818cf8; }
+        .code-string { color: #6ee7b7; }
+        .code-comment { color: #6b7280; font-style: italic; }
+        .code-prop { color: #fbbf24; }
+
+        /* Sidebar */
+        .sidebar-link {
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #4b5563;
+            font-size: 14px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            display: block;
+        }
+        .sidebar-link:hover { background: #f3f4f6; color: #111827; }
+        .sidebar-link.active { background: #eef2ff; color: #4338ca; font-weight: 600; }
+        .sidebar-group-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #9ca3af;
+            letter-spacing: 0.05em;
+            padding: 16px 12px 8px;
+        }
+
+        /* Token Swatches */
+        .color-swatch {
+            height: 64px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .color-swatch-lg { height: 96px; }
+
+        /* Spacing tokens */
+        .space-demo {
+            background: linear-gradient(90deg, rgba(99,102,241,0.2), rgba(168,85,247,0.2));
+            border: 2px dashed #818cf8;
+            border-radius: 4px;
+        }
+
+        /* Hero gradient */
+        .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #fdf4ff 100%); }
+
+        /* Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156,163,175,0.4); border-radius: 3px; }
+
+        /* Toast/Modal demo */
+        .toast-demo {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Custom checkboxes */
+        input[type="checkbox"].custom-check:checked {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg viewBox='0 0 20 20' fill='white' viewBox='0 0 20 20' %3E%3Cpath d='M16.707 5.293a1 1 0 0 0-1.414 0L8 12.586 4.707 9.293a1 1 0 1 0-1.414 1.414l4 4 8-8a1 1 0 0 0 0-1.414z' fill='white'/%3E%3C/svg%3E");
+        </svg>
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Top Nav -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <a href="/workspace/prototype/index.html" class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-black text-sm shadow-lg">M</div>
+                    <div>
+                        <div class="text-base font-bold">MacRank Design System</div>
+                        <div class="text-xs text-gray-500">v2.0 · 组件库规范</div>
+                    </div>
+                </a>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="/workspace/prototype/prototypes.html" class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-100 transition">🎨 查看原型</a>
+                <a href="https://ui.shadcn.com" class="px-4 py-2 rounded-lg text-sm font-semibold bg-gray-900 text-white hover:bg-black transition">shadcn/ui 参考</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex max-w-7xl mx-auto">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto custom-scrollbar py-6 px-4">
+            <div class="sidebar-group-title">设计规范</div>
+            <a href="#overview" class="sidebar-link">📋 概览</a>
+            <a href="#colors" class="sidebar-link">🎨 色彩系统</a>
+            <a href="#typography" class="sidebar-link">🔤 字体排印</a>
+            <a href="#spacing" class="sidebar-link">📐 间距系统</a>
+            <a href="#shadow-radius" class="sidebar-link">✨ 阴影与圆角</a>
+
+            <div class="sidebar-group-title">基础组件</div>
+            <a href="#buttons" class="sidebar-link">Button 按钮</a>
+            <a href="#inputs" class="sidebar-link">Input 输入框</a>
+            <a href="#badges" class="sidebar-link">Badge 徽章</a>
+            <a href="#tier-badges" class="sidebar-link">Tier Badge 评级徽章</a>
+            <a href="#checkbox-radio" class="sidebar-link">Checkbox & Radio 选择</a>
+            <a href="#switch" class="sidebar-link">Switch 开关</a>
+
+            <div class="sidebar-group-title">复合组件</div>
+            <a href="#cards" class="sidebar-link">Card 卡片</a>
+            <a href="#tags" class="sidebar-link">Tags 标签</a>
+            <a href="#alerts" class="sidebar-link">Alert 提示</a>
+            <a href="#toast" class="sidebar-link">Toast 通知</a>
+            <a href="#forms" class="sidebar-link">Form 表单</a>
+            <a href="#pagination" class="sidebar-link">Pagination 分页</a>
+            <a href="#empty" class="sidebar-link">Empty 空状态</a>
+            <a href="#avatar" class="sidebar-link">Avatar 头像</a>
+            <a href="#progress" class="sidebar-link">Progress 进度条</a>
+
+            <div class="sidebar-group-title">业务组件</div>
+            <a href="#product-card" class="sidebar-link">Product Card 产品卡</a>
+            <a href="#price-tag" class="sidebar-link">Price Tag 价格标签</a>
+            <a href="#compare-bar" class="sidebar-link">Compare Bar 对比栏</a>
+            <a href="#search-bar" class="sidebar-link">Search Bar 搜索栏</a>
+            <a href="#hero" class="sidebar-link">Hero 区域</a>
+            <a href="#stat-card" class="sidebar-link">Stat Card 数据卡</a>
+            <a href="#chat-bubble" class="sidebar-link">Chat Bubble 消息气泡</a>
+
+            <div class="sidebar-group-title">交互模式</div>
+            <a href="#interaction" class="sidebar-link">👆 交互指南</a>
+            <a href="#accessibility" class="sidebar-link">♿ 无障碍</a>
+            <a href="#motion" class="sidebar-link">🎬 动效规范</a>
+        </aside>
+
+        <!-- Content -->
+        <main class="flex-1 min-w-0 px-8 py-10">
+
+            <!-- Overview -->
+            <section id="overview" class="mb-16">
+                <div class="rounded-3xl hero-gradient p-12 mb-8">
+                    <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur px-4 py-2 rounded-full text-xs font-semibold text-indigo-700 mb-4">
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                        Design System · v2.0
+                    </div>
+                    <h1 class="text-5xl font-black mb-4 leading-tight">MacRank 组件库</h1>
+                    <p class="text-lg text-gray-600 max-w-2xl mb-8">基于 shadcn/ui + Tailwind CSS 构建的完整设计系统。包含基础组件、复合组件和业务组件，所有组件均使用语义化 tokens，支持深色模式。</p>
+                    <div class="grid grid-cols-4 gap-4 max-w-3xl">
+                        <div class="bg-white/90 backdrop-blur rounded-2xl p-5 border border-white">
+                            <div class="text-3xl font-black text-indigo-600">8+</div>
+                            <div class="text-sm text-gray-600">基础组件</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur rounded-2xl p-5 border border-white">
+                            <div class="text-3xl font-black text-purple-600">12+</div>
+                            <div class="text-sm text-gray-600">复合组件</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur rounded-2xl p-5 border border-white">
+                            <div class="text-3xl font-black text-pink-600">7</div>
+                            <div class="text-sm text-gray-600">业务组件</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur rounded-2xl p-5 border border-white">
+                            <div class="text-3xl font-black text-green-600">100%</div>
+                            <div class="text-sm text-gray-600">语义化 tokens</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Principles -->
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl mb-4">🎯</div>
+                        <h3 class="text-lg font-bold mb-2">一致性</h3>
+                        <p class="text-sm text-gray-600">所有组件遵循统一的间距、圆角、色彩规范，确保跨页面体验一致。</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4">♿</div>
+                        <h3 class="text-lg font-bold mb-2">可访问性</h3>
+                        <p class="text-sm text-gray-600">遵循 WCAG 2.1 AA 标准，提供足够的颜色对比度和键盘支持。</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 border border-gray-200">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl mb-4">⚡</div>
+                        <h3 class="text-lg font-bold mb-2">性能优先</h3>
+                        <p class="text-sm text-gray-600">组件设计轻量，支持懒加载，最小化 bundle 体积。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colors -->
+            <section id="colors" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">🎨 色彩系统</h2>
+                <p class="text-gray-600 mb-8">语义化的颜色 tokens，基于 oklch 色彩空间。所有颜色定义在 <code class="bg-gray-100 px-2 py-1 rounded font-mono text-sm">:root</code> 中。</p>
+
+                <div class="space-y-8">
+                    <!-- Primary colors -->
+                    <div class="component-card">
+                        <div class="component-header flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-gray-900">主色调 Primary</h3>
+                                <p class="text-xs text-gray-500">按钮、链接、强调元素</p>
+                            </div>
+                            <span class="text-xs font-semibold text-indigo-600">6 colors</span>
+                        </div>
+                        <div class="component-showcase">
+                            <div class="grid grid-cols-6 gap-4 w-full">
+                                <div class="text-center">
+                                    <div class="color-swatch bg-gray-100"></div>
+                                    <div class="mt-2 text-xs font-mono text-gray-600">gray-100</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="color-swatch bg-gray-900"></div>
+                                    <div class="mt-2 text-xs font-mono text-gray-600">gray-900</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="color-swatch tier-s-plus"></div>
+                                    <div class="mt-2 text-xs font-mono text-gray-600">Indigo-500</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="color-swatch tier-s"></div>
+                                    <div class="mt-2 text-xs font-mono text-gray-600">Violet-500</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="color-swatch tier-a"></div>
+                                    <div class="mt-2 text-xs font-mono text-gray-600">Blue-500</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="color-swatch tier-b"></div>
+                                    <div class="mt-2 text-xs font-mono text-gray-600">Green-500</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-code">
+<span class="code-comment">/* Semantic tokens */</span>
+--background: <span class="code-token">oklch(1 0 0)</span>;   <span class="code-comment">// white</span>
+--foreground: <span class="code-token">oklch(0.145 0 0)</span>;   <span class="code-comment">// #1c1c1e</span>
+--primary: <span class="code-token">oklch(0.205 0 0)</span>;      <span class="code-comment">// dark gray</span>
+--primary-foreground: <span class="code-token">oklch(0.985 0 0)</span>;
+--accent: <span class="code-token">#6366f1</span>;                 <span class="code-comment">// indigo</span>
+                        </div>
+                    </div>
+
+                    <!-- Status colors -->
+                    <div class="component-card">
+                        <div class="component-header flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-gray-900">状态色 Status Colors</h3>
+                                <p class="text-xs text-gray-500">成功、警告、错误、信息</p>
+                            </div>
+                            <span class="text-xs font-semibold text-indigo-600">4 colors</span>
+                        </div>
+                        <div class="component-showcase">
+                            <div class="grid grid-cols-4 gap-4 w-full">
+                                <div class="p-4 rounded-xl" style="background: #E8F9ED; border: 1px solid #BBF7D0">
+                                    <div class="flex items-center gap-2 text-sm font-bold" style="color: #15803d">
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span>成功 Success
+                                    </div>
+                                    <div class="text-xs font-mono text-green-700 mt-2">#22c55e / #E8F9ED</div>
+                                </div>
+                                <div class="p-4 rounded-xl" style="background: #FFF4E5; border: 1px solid #FDE68A">
+                                    <div class="flex items-center gap-2 text-sm font-bold" style="color: #a16207">
+                                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>警告 Warning
+                                    </div>
+                                    <div class="text-xs font-mono text-yellow-700 mt-2">#eab308 / #FFF4E5</div>
+                                </div>
+                                <div class="p-4 rounded-xl" style="background: #FFEBEA; border: 1px solid #FECACA">
+                                    <div class="flex items-center gap-2 text-sm font-bold" style="color: #b91c1c">
+                                        <span class="w-2 h-2 rounded-full bg-red-500"></span>错误 Error
+                                    </div>
+                                    <div class="text-xs font-mono text-red-700 mt-2">#dc2626 / #FFEBEA</div>
+                                </div>
+                                <div class="p-4 rounded-xl" style="background: #E5F1FF; border: 1px solid #BFDBFE">
+                                    <div class="flex items-center gap-2 text-sm font-bold" style="color: #1d4ed8">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>信息 Info
+                                    </div>
+                                    <div class="text-xs font-mono text-blue-700 mt-2">#3b82f6 / #E5F1FF</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tier colors -->
+                    <div class="component-card">
+                        <div class="component-header flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-gray-900">评级色 Tier Colors</h3>
+                                <p class="text-xs text-gray-500">MacRank 特有的 6 级评分系统</p>
+                            </div>
+                            <span class="text-xs font-semibold text-indigo-600">6 levels</span>
+                        </div>
+                        <div class="component-showcase">
+                            <div class="grid grid-cols-6 gap-4 w-full">
+                                <div><div class="color-swatch color-swatch-lg tier-s-plus flex items-center justify-center text-white font-black text-2xl">S+</div></div>
+                                <div><div class="color-swatch color-swatch-lg tier-s flex items-center justify-center text-white font-black text-2xl">S</div></div>
+                                <div><div class="color-swatch color-swatch-lg tier-a flex items-center justify-center text-white font-black text-2xl">A</div></div>
+                                <div><div class="color-swatch color-swatch-lg tier-b flex items-center justify-center text-white font-black text-2xl">B</div></div>
+                                <div><div class="color-swatch color-swatch-lg tier-c flex items-center justify-center text-white font-black text-2xl">C</div></div>
+                                <div><div class="color-swatch color-swatch-lg tier-d flex items-center justify-center text-white font-black text-2xl">D</div></div>
+                            </div>
+                        </div>
+                        <div class="component-code">
+<span class="code-comment">/* S+ 级 - 幻彩渐变 */</span>
+background: <span class="code-token">linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)</span>;
+<span class="code-comment">/* 对应等级渐变，请参考 tokens 文件 */</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Typography -->
+            <section id="typography" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">🔤 字体排印</h2>
+                <p class="text-gray-600 mb-8">使用 Apple San Francisco 作为首选字体，支持动态响应式字号。</p>
+
+                <div class="space-y-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">字体层级 Typography Scale</h3></div>
+                        <div class="component-showcase vertical">
+                            <div class="w-full space-y-4">
+                                <div class="flex items-baseline gap-6 p-3 border-b border-gray-100"><span class="text-xs font-mono text-gray-400 w-20">4xl / 36</span><span class="text-4xl font-black">标题 Hero</span></div>
+                                <div class="flex items-baseline gap-6 p-3 border-b border-gray-100"><span class="text-xs font-mono text-gray-400 w-20">3xl / 30</span><span class="text-3xl font-black">一级标题</span></div>
+                                <div class="flex items-baseline gap-6 p-3 border-b border-gray-100"><span class="text-xs font-mono text-gray-400 w-20">2xl / 24</span><span class="text-2xl font-bold">二级标题</span></div>
+                                <div class="flex items-baseline gap-6 p-3 border-b border-gray-100"><span class="text-xs font-mono text-gray-400 w-20">xl / 20</span><span class="text-xl font-semibold">三级标题</span></div>
+                                <div class="flex items-baseline gap-6 p-3 border-b border-gray-100"><span class="text-xs font-mono text-gray-400 w-20">base / 16</span><span class="text-base">正文文本 Body Text</span></div>
+                                <div class="flex items-baseline gap-6 p-3 border-b border-gray-100"><span class="text-xs font-mono text-gray-400 w-20">sm / 14</span><span class="text-sm text-gray-600">次要文本 Small text</span></div>
+                                <div class="flex items-baseline gap-6 p-3"><span class="text-xs font-mono text-gray-400 w-20">xs / 12</span><span class="text-xs text-gray-500">辅助文本 Caption</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Spacing -->
+            <section id="spacing" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">📐 间距系统</h2>
+                <p class="text-gray-600 mb-8">基于 4px 网格。组件内间距用 <code class="font-mono text-sm">p-3</code> 系列，组件间用 <code class="font-mono text-sm">gap-*</code> 系列。</p>
+
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">间距层级 Spacing Scale</h3></div>
+                    <div class="component-showcase vertical">
+                        <div class="grid grid-cols-5 gap-4 w-full">
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 4px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">4px · p-1</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 8px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">8px · p-2</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 12px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">12px · p-3</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 16px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">16px · p-4</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 24px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">24px · p-6</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 32px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">32px · p-8</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 48px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">48px · p-12</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 64px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">64px · p-16</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 80px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">80px · p-20</div></div>
+                            <div class="text-center"><div class="space-demo mx-auto" style="height: 96px; width: 40px;"></div><div class="text-xs font-mono text-gray-500 mt-2">96px · p-24</div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shadow & Radius -->
+            <section id="shadow-radius" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">✨ 阴影与圆角</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">圆角 Radius</h3></div>
+                        <div class="component-showcase">
+                            <div class="flex gap-4 items-end flex-wrap justify-center">
+                                <div class="w-20 h-20 bg-gray-100 rounded border border-gray-200 flex items-center justify-center text-xs font-mono text-gray-500">sm<br>4px</div>
+                                <div class="w-20 h-20 bg-gray-100 rounded-lg border border-gray-200 flex items-center justify-center text-xs font-mono text-gray-500">md<br>8px</div>
+                                <div class="w-20 h-20 bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-center text-xs font-mono text-gray-500">xl<br>12px</div>
+                                <div class="w-20 h-20 bg-gray-100 rounded-2xl border border-gray-200 flex items-center justify-center text-xs font-mono text-gray-500">2xl<br>16px</div>
+                                <div class="w-20 h-20 bg-gray-100 rounded-3xl border border-gray-200 flex items-center justify-center text-xs font-mono text-gray-500">3xl<br>24px</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">阴影 Shadow</h3></div>
+                        <div class="component-showcase">
+                            <div class="flex gap-4 items-end flex-wrap justify-center">
+                                <div class="w-24 h-24 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center text-xs font-mono text-gray-500">shadow-sm</div>
+                                <div class="w-24 h-24 bg-white rounded-2xl shadow border border-gray-100 flex items-center justify-center text-xs font-mono text-gray-500">shadow</div>
+                                <div class="w-24 h-24 bg-white rounded-2xl shadow-lg border border-gray-100 flex items-center justify-center text-xs font-mono text-gray-500">shadow-lg</div>
+                                <div class="w-24 h-24 bg-white rounded-2xl shadow-2xl border border-gray-100 flex items-center justify-center text-xs font-mono text-gray-500">shadow-2xl</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Buttons -->
+            <section id="buttons" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Button 按钮</h2>
+                <p class="text-gray-600 mb-8">按钮有 5 种变体和 4 种尺寸。</p>
+
+                <div class="space-y-6">
+                    <!-- Variants -->
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">变体 Variants</h3></div>
+                        <div class="component-showcase flex-wrap gap-4">
+                            <button class="px-5 py-2.5 bg-gray-900 hover:bg-black text-white rounded-xl text-sm font-semibold transition shadow-sm">Primary 主要</button>
+                            <button class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl text-sm font-semibold transition shadow-lg">Gradient 渐变</button>
+                            <button class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-xl text-sm font-semibold transition">Secondary 次要</button>
+                            <button class="px-5 py-2.5 border border-gray-300 hover:border-gray-900 hover:bg-gray-50 text-gray-900 rounded-xl text-sm font-semibold transition">Outline 描边</button>
+                            <button class="px-5 py-2.5 hover:bg-gray-100 text-gray-700 rounded-xl text-sm font-semibold transition">Ghost 幽灵</button>
+                            <button class="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl text-sm font-semibold transition">Destructive 危险</button>
+                        </div>
+                        <div class="component-code">
+<span class="code-prop">&lt;Button</span> <span class="code-token">variant</span>=<span class="code-string">"default|secondary|outline|ghost|destructive"</span><span class="code-prop">&gt;</span>Button Text<span class="code-prop">&lt;/Button&gt;</span>
+                        </div>
+                    </div>
+
+                    <!-- Sizes -->
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">尺寸 Sizes</h3></div>
+                        <div class="component-showcase flex-wrap items-center gap-4">
+                            <button class="px-3 py-1.5 bg-gray-900 text-white rounded-lg text-xs font-semibold">Small</button>
+                            <button class="px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-semibold">Default</button>
+                            <button class="px-6 py-3 bg-gray-900 text-white rounded-xl text-base font-semibold">Large</button>
+                            <button class="w-10 h-10 bg-gray-900 hover:bg-black text-white rounded-xl flex items-center justify-center transition">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </button>
+                        </div>
+                        <div class="component-code">
+<span class="code-prop">&lt;Button</span> <span class="code-token">size</span>=<span class="code-string">"sm|default|lg|icon"</span><span class="code-prop">&gt;</span>Label<span class="code-prop">&lt;/Button&gt;</span>
+                        </div>
+                    </div>
+
+                    <!-- With Icons -->
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">带图标 With Icons</h3></div>
+                        <div class="component-showcase flex-wrap gap-4">
+                            <button class="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                                下载
+                            </button>
+                            <button class="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl text-sm font-semibold shadow-lg">
+                                立即体验
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                            <button class="flex items-center gap-2 px-5 py-2.5 border border-gray-300 text-gray-700 rounded-xl text-sm font-semibold hover:border-gray-900">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                                添加
+                            </button>
+                            <button disabled class="flex items-center gap-2 px-5 py-2.5 bg-gray-200 text-gray-500 rounded-xl text-sm font-semibold cursor-not-allowed">
+                                <svg class="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                                加载中
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inputs -->
+            <section id="inputs" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Input 输入框</h2>
+                <p class="text-gray-600 mb-8">用于表单输入，支持多种状态和图标。</p>
+
+                <div class="space-y-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">基础 Basic</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-md space-y-3">
+                                <input type="text" placeholder="请输入..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition">
+                                <input type="email" placeholder="your@email.com" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:border-indigo-500 transition">
+                                <input type="password" placeholder="password" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">状态 States</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-md space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-2">带标签 Label</label>
+                                    <input type="text" placeholder="产品名称" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-2">错误 Error</label>
+                                    <input type="text" placeholder="请输入正确的邮箱" class="w-full px-4 py-3 bg-red-50 border border-red-300 text-red-900 rounded-xl text-sm outline-none focus:border-red-500 transition" value="invalid-email">
+                                    <p class="text-xs text-red-600 mt-1.5">请输入有效的邮箱地址</p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-2">禁用 Disabled</label>
+                                    <input type="text" placeholder="不可编辑" disabled class="w-full px-4 py-3 bg-gray-100 border border-gray-200 text-gray-400 rounded-xl text-sm cursor-not-allowed">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-600 mb-2">带图标 With Icon</label>
+                                    <div class="relative">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                        <input type="text" placeholder="搜索机型..." class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Badges -->
+            <section id="badges" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Badge 徽章</h2>
+                <p class="text-gray-600 mb-8">用于状态标签和分类标记。</p>
+
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">所有变体 All Variants</h3></div>
+                    <div class="component-showcase flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-gray-900 text-white text-xs font-semibold rounded-full">Default</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-900 text-xs font-semibold rounded-full">Secondary</span>
+                        <span class="px-3 py-1 border border-gray-300 text-gray-700 text-xs font-semibold rounded-full">Outline</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">● Success</span>
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">● Warning</span>
+                        <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">● Error</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">● Info</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">● New</span>
+                        <span class="px-2 py-0.5 bg-gray-900 text-white text-xs font-bold rounded">128</span>
+                        <span class="px-2 py-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold rounded">HOT</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tier Badges -->
+            <section id="tier-badges" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Tier Badge 评级徽章</h2>
+                <p class="text-gray-600 mb-8">MacRank 特有的 S+~D 六级评分系统徽章。</p>
+
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">大号 Large</h3></div>
+                        <div class="component-showcase">
+                            <div class="flex flex-wrap gap-3">
+                                <div class="w-16 h-16 rounded-2xl tier-s-plus flex items-center justify-center text-white font-black text-xl shadow-lg">S+</div>
+                                <div class="w-16 h-16 rounded-2xl tier-s flex items-center justify-center text-white font-black text-xl shadow-lg">S</div>
+                                <div class="w-16 h-16 rounded-2xl tier-a flex items-center justify-center text-white font-black text-xl shadow-lg">A</div>
+                                <div class="w-16 h-16 rounded-2xl tier-b flex items-center justify-center text-white font-black text-xl shadow-lg">B</div>
+                                <div class="w-16 h-16 rounded-2xl tier-c flex items-center justify-center text-white font-black text-xl shadow-lg">C</div>
+                                <div class="w-16 h-16 rounded-2xl tier-d flex items-center justify-center text-white font-black text-xl shadow-lg">D</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">中号 Medium</h3></div>
+                        <div class="component-showcase">
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 rounded-xl tier-s-plus text-white font-bold shadow-lg">S+ · 94</span>
+                                <span class="px-4 py-2 rounded-xl tier-a text-white font-bold shadow-lg">A · 85</span>
+                                <span class="px-4 py-2 rounded-xl tier-b text-white font-bold shadow-lg">B · 78</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">小号 Small</h3></div>
+                        <div class="component-showcase">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 rounded-lg tier-s-plus text-white text-xs font-bold">S+</span>
+                                <span class="px-2.5 py-1 rounded-lg tier-s text-white text-xs font-bold">S</span>
+                                <span class="px-2.5 py-1 rounded-lg tier-a text-white text-xs font-bold">A</span>
+                                <span class="px-2.5 py-1 rounded-lg tier-b text-white text-xs font-bold">B</span>
+                                <span class="px-2.5 py-1 rounded-lg tier-c text-white text-xs font-bold">C</span>
+                                <span class="px-2.5 py-1 rounded-lg tier-d text-white text-xs font-bold">D</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Checkbox & Radio -->
+            <section id="checkbox-radio" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Checkbox & Radio</h2>
+                <p class="text-gray-600 mb-8">用于表单选择的可交互控件。</p>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">Checkbox</h3></div>
+                        <div class="component-showcase vertical">
+                            <div class="space-y-3 w-full max-w-xs">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" checked class="w-5 h-5 rounded-md text-indigo-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-900 font-medium">已选中状态</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" class="w-5 h-5 rounded-md text-indigo-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-900 font-medium">未选中状态</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" disabled class="w-5 h-5 rounded-md bg-gray-100 border-gray-200 text-gray-400">
+                                    <span class="text-sm text-gray-400 font-medium">禁用状态</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">Radio</h3></div>
+                        <div class="component-showcase vertical">
+                            <div class="space-y-3 w-full max-w-xs">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="demo-radio" checked class="w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-900 font-medium">选项 A (选中)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="demo-radio" class="w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-2 focus:ring-indigo-500">
+                                    <span class="text-sm text-gray-900 font-medium">选项 B</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="demo-radio-2" disabled class="w-5 h-5 bg-gray-100 border-gray-200">
+                                    <span class="text-sm text-gray-400 font-medium">禁用选项</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Switch -->
+            <section id="switch" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Switch 开关</h2>
+                <p class="text-gray-600 mb-8">用于控制布尔值的切换控件。</p>
+
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">Switch 开关</h3></div>
+                    <div class="component-showcase">
+                        <div class="flex flex-wrap gap-6 items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-6 bg-gray-300 rounded-full p-0.5 transition"><div class="w-5 h-5 bg-white rounded-full shadow-md transition-transform translate-x-0"></div></div>
+                                <span class="text-sm text-gray-700 font-medium">关</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-6 bg-indigo-600 rounded-full p-0.5 transition"><div class="w-5 h-5 bg-white rounded-full shadow-md transition-transform translate-x-5"></div></div>
+                                <span class="text-sm text-gray-700 font-medium">开</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-6 bg-gray-200 rounded-full p-0.5 opacity-50"><div class="w-5 h-5 bg-white rounded-full shadow-md transition-transform translate-x-0"></div></div>
+                                <span class="text-sm text-gray-400 font-medium">禁用</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cards -->
+            <section id="cards" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Card 卡片</h2>
+                <p class="text-gray-600 mb-8">卡片组件用于组织信息分组。可承载标题、内容和操作区域。</p>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">基础卡片</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm rounded-2xl border border-gray-200 bg-white shadow-sm">
+                                <div class="p-6 border-b border-gray-100">
+                                    <h3 class="text-lg font-bold text-gray-900 mb-1">卡片标题</h3>
+                                    <p class="text-sm text-gray-500">描述性副标题</p>
+                                </div>
+                                <div class="p-6">
+                                    <p class="text-sm text-gray-700 leading-relaxed">卡片内容区域，可以包含任何形式的内容。卡片组件支持灵活的内部布局。</p>
+                                </div>
+                                <div class="px-6 py-4 bg-gray-50 rounded-b-2xl flex justify-end gap-2">
+                                    <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold transition">取消</button>
+                                    <button class="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-semibold transition hover:bg-black">确认</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">高亮卡片</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-0.5 shadow-lg">
+                                <div class="rounded-[14px] bg-white p-6">
+                                    <span class="chip-badge tier-s-plus text-white text-xs font-bold">HOT</span>
+                                    <h3 class="text-xl font-black text-gray-900 mt-3">推荐</h3>
+                                    <p class="text-sm text-gray-500 mt-2">最受欢迎的选择</p>
+                                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                                        <div class="text-3xl font-black text-gray-900">$99<small class="text-sm font-normal text-gray-500">/月</small></div>
+                                        <button class="px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition">开始</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">产品卡骨架 Skeleton</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                                <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200"></div>
+                                <div class="p-5">
+                                    <div class="h-5 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                                    <div class="h-4 bg-gray-100 rounded w-1/2 mb-4 animate-pulse"></div>
+                                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                        <div class="h-8 bg-gray-200 rounded w-24 animate-pulse"></div>
+                                        <div class="h-10 bg-gray-200 rounded-xl w-24 animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">价格卡 Pricing Card</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-2xl p-6 text-center">
+                                <span class="chip-badge tier-s text-white text-xs font-bold">PRO</span>
+                                <h3 class="text-2xl font-black text-gray-900 mt-3">Pro 套餐</h3>
+                                <div class="mt-4">
+                                    <div class="text-5xl font-black text-gray-900 tabular-nums">$199</div>
+                                    <div class="text-sm text-gray-500 mt-1">/月 · 按年付费</div>
+                                </div>
+                                <ul class="mt-6 space-y-2 text-left text-sm text-gray-700">
+                                    <li class="flex items-center gap-2"><span class="text-green-500">✓</span>无限机型对比</li>
+                                    <li class="flex items-center gap-2"><span class="text-green-500">✓</span>实时价格提醒</li>
+                                    <li class="flex items-center gap-2"><span class="text-green-500">✓</span>AI 选购助手</li>
+                                </ul>
+                                <button class="w-full mt-6 px-5 py-3 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition">立即购买</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">推荐卡 Recommendation</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-md bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 border border-indigo-100 rounded-2xl p-6">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-white">⭐</div>
+                                    <div>
+                                        <div class="text-xs text-indigo-600 font-bold">AI 推荐</div>
+                                        <div class="text-sm font-bold text-gray-900">MacRank Pro</div>
+                                    </div>
+                                </div>
+                                <h3 class="text-lg font-bold text-gray-900">适合你的最佳配置</h3>
+                                <p class="text-sm text-gray-600 mt-2">基于你的使用需求和预算，我们推荐以下方案，性价比高。</p>
+                                <div class="mt-5 p-4 bg-white rounded-xl border border-gray-200">
+                                    <div class="flex items-center justify-between">
+                                        <div class="text-sm font-bold text-gray-900">MacBook Pro 14"</div>
+                                        <div class="text-sm text-indigo-600 font-bold">94 分</div>
+                                    </div>
+                                </div>
+                                <button class="w-full mt-5 px-5 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl text-sm font-semibold hover:from-indigo-700 hover:to-purple-700 transition shadow-lg">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tags -->
+            <section id="tags" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Tag 标签</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">标签 Tags</h3></div>
+                    <div class="component-showcase flex-wrap gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-700 font-medium cursor-pointer transition">
+                            Macbook Pro
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-100 hover:bg-indigo-200 rounded-lg text-sm text-indigo-700 font-medium cursor-pointer transition">
+                            M4
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-100 hover:bg-green-200 rounded-lg text-sm text-green-700 font-medium cursor-pointer transition">
+                            2025
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-100 hover:bg-purple-200 rounded-lg text-sm text-purple-700 font-medium cursor-pointer transition">
+                            Gaming
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts -->
+            <section id="alerts" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Alert 提示</h2>
+
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">提示框 Alert Messages</h3></div>
+                    <div class="component-showcase vertical gap-4">
+                        <div class="w-full p-4 rounded-2xl bg-green-50 border border-green-200 flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                            <div>
+                                <h4 class="text-sm font-bold text-green-900">操作成功</h4>
+                                <p class="text-sm text-green-700 mt-0.5">您的数据已成功保存到云端。</p>
+                            </div>
+                        </div>
+                        <div class="w-full p-4 rounded-2xl bg-yellow-50 border border-yellow-200 flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <div>
+                                <h4 class="text-sm font-bold text-yellow-900">注意</h4>
+                                <p class="text-sm text-yellow-700 mt-0.5">您当前的订阅将在 7 天后到期。</p>
+                            </div>
+                        </div>
+                        <div class="w-full p-4 rounded-2xl bg-red-50 border border-red-200 flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            <div>
+                                <h4 class="text-sm font-bold text-red-900">错误</h4>
+                                <p class="text-sm text-red-700 mt-0.5">无法连接到服务器，请检查网络。</p>
+                            </div>
+                        </div>
+                        <div class="w-full p-4 rounded-2xl bg-blue-50 border border-blue-200 flex items-start gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" class="flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            <div>
+                                <h4 class="text-sm font-bold text-blue-900">提示</h4>
+                                <p class="text-sm text-blue-700 mt-0.5">新版本已发布，点击查看更新日志。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="component-card mt-6">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">带关闭按钮的 Alert Dismissible</h3></div>
+                    <div class="component-showcase vertical gap-4">
+                        <div class="w-full p-4 rounded-2xl bg-green-50 border border-green-200 flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-green-200 flex items-center justify-center flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-sm font-bold text-green-900">操作成功</h4>
+                                <p class="text-sm text-green-700 mt-0.5">您的数据已成功保存到云端。</p>
+                            </div>
+                            <button class="text-green-600 hover:text-green-800 transition flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                        <div class="w-full p-4 rounded-2xl bg-red-50 border border-red-200 flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-red-200 flex items-center justify-center flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-sm font-bold text-red-900">错误</h4>
+                                <p class="text-sm text-red-700 mt-0.5">无法连接到服务器，请检查网络。</p>
+                            </div>
+                            <button class="text-red-600 hover:text-red-800 transition flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                        <div class="w-full p-4 rounded-2xl bg-yellow-50 border border-yellow-200 flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-yellow-200 flex items-center justify-center flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-sm font-bold text-yellow-900">注意</h4>
+                                <p class="text-sm text-yellow-700 mt-0.5">您当前的订阅将在 7 天后到期。</p>
+                            </div>
+                            <button class="text-yellow-700 hover:text-yellow-900 transition flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                        <div class="w-full p-4 rounded-2xl bg-blue-50 border border-blue-200 flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-200 flex items-center justify-center flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-sm font-bold text-blue-900">提示</h4>
+                                <p class="text-sm text-blue-700 mt-0.5">新版本已发布，点击查看更新日志。</p>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 transition flex-shrink-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Toast -->
+            <section id="toast" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Toast 通知</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">✅ 成功 Success</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-200 p-4 flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-gray-900">保存成功</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">您的数据已同步到云端</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600 transition">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">❌ 错误 Error</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-red-100 p-4 flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-gray-900">操作失败</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">网络异常，请稍后重试</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600 transition">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">⚠️ 警告 Warning</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-yellow-100 p-4 flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-gray-900">存储空间不足</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">您的云端存储即将耗尽</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600 transition">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">ℹ️ 信息 Info</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-blue-100 p-4 flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-gray-900">系统更新</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">新版本 v2.1.0 已发布</p>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600 transition">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card col-span-2">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">⏳ 加载中 Loading</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl border border-gray-200 p-4 flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center flex-shrink-0">
+                                    <svg class="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-gray-900">正在上传</h4>
+                                    <p class="text-xs text-gray-500 mt-0.5">请稍候，正在处理您的请求...</p>
+                                </div>
+                                <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Forms -->
+            <section id="forms" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Form 表单</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">示例表单 Form Example</h3></div>
+                    <div class="component-showcase">
+                        <form class="w-full max-w-md space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-2">用户名 <span class="text-red-500">*</span></label>
+                                <input type="text" placeholder="请输入用户名" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-2">邮箱 <span class="text-red-500">*</span></label>
+                                <input type="email" placeholder="your@email.com" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-600 mb-2">机型分类</label>
+                                <select class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:bg-white focus:border-indigo-500 transition text-gray-900 font-medium">
+                                    <option>MacBook Pro</option><option>MacBook Air</option><option>Mac mini</option><option>iMac</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center justify-between pt-2">
+                                <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 rounded text-indigo-600">
+                                    <span>记住我</span>
+                                </label>
+                                <button type="submit" class="px-6 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pagination -->
+            <section id="pagination" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Pagination 分页</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">分页控件</h3></div>
+                    <div class="component-showcase">
+                        <nav class="flex items-center gap-1">
+                            <button class="w-10 h-10 rounded-xl border border-gray-200 hover:border-gray-400 text-gray-700 font-semibold transition flex items-center justify-center">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                            </button>
+                            <button class="w-10 h-10 rounded-xl bg-gray-900 text-white font-bold">1</button>
+                            <button class="w-10 h-10 rounded-xl hover:bg-gray-100 text-gray-700 font-semibold transition">2</button>
+                            <button class="w-10 h-10 rounded-xl hover:bg-gray-100 text-gray-700 font-semibold transition">3</button>
+                            <span class="px-2 text-gray-400">…</span>
+                            <button class="w-10 h-10 rounded-xl hover:bg-gray-100 text-gray-700 font-semibold transition">12</button>
+                            <button class="w-10 h-10 rounded-xl border border-gray-200 hover:border-gray-400 text-gray-700 font-semibold transition flex items-center justify-center">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Empty State -->
+            <section id="empty" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Empty 空状态</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">空数据 Empty</h3></div>
+                        <div class="component-showcase">
+                            <div class="py-12 text-center">
+                                <div class="w-20 h-20 mx-auto rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-900">暂无数据</h3>
+                                <p class="text-sm text-gray-500 mt-1">还没有内容被添加</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">无搜索结果</h3></div>
+                        <div class="component-showcase">
+                            <div class="py-12 text-center">
+                                <div class="w-20 h-20 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-900">没有找到匹配结果</h3>
+                                <p class="text-sm text-gray-500 mt-1">试试调整搜索关键词</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Avatar -->
+            <section id="avatar" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Avatar 头像</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">头像与堆叠</h3></div>
+                    <div class="component-showcase flex-wrap gap-6 items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white text-xs font-bold">JD</div>
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-white text-sm font-bold">SM</div>
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-white text-base font-bold">AL</div>
+                            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center text-white font-bold">RK</div>
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white text-lg font-bold">MW</div>
+                        </div>
+                        <div class="flex items-center -space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">A</div>
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">B</div>
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">C</div>
+                            <div class="w-10 h-10 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-gray-600 text-xs font-bold">+5</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress -->
+            <section id="progress" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Progress 进度条</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">进度条 Progress Bars</h3></div>
+                    <div class="component-showcase vertical gap-4">
+                        <div class="w-full space-y-3">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-gray-700 mb-1.5"><span>已完成</span><span>78%</span></div>
+                                <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gray-900 rounded-full" style="width: 78%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-gray-700 mb-1.5"><span>下载中</span><span>45%</span></div>
+                                <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all" style="width: 45%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold text-gray-700 mb-1.5"><span>错误</span><span class="text-red-600">33%</span></div>
+                                <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-red-500 rounded-full" style="width: 33%"></div></div>
+                            </div>
+                            <div class="flex items-center gap-4 pt-2">
+                                <div class="relative w-16 h-16">
+                                    <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                        <path d="M18 2.0845a15.9155 15.9155 0 110 31.831a15.9155 15.9155 0 010-31.831" fill="none" stroke="#f3f4f6" stroke-width="3"/>
+                                        <path d="M18 2.0845a15.9155 15.9155 0 110 31.831a15.9155 15.9155 0 010-31.831" fill="none" stroke="#6366f1" stroke-width="3" stroke-dasharray="75, 100" stroke-linecap="round"/>
+                                    </svg>
+                                    <span class="absolute inset-0 flex items-center justify-center text-xs font-bold text-gray-700">75%</span>
+                                </div>
+                                <div class="text-sm text-gray-700 font-semibold">环形进度</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Business Components -->
+            <!-- Product Card -->
+            <section id="product-card" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Product Card 产品卡片</h2>
+                <p class="text-gray-600 mb-8">业务组件 - 展示 Mac 机型信息。</p>
+
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">产品卡片 Product</h3></div>
+                    <div class="component-showcase">
+                        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
+                            <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 relative flex items-center justify-center">
+                                <span class="chip-badge tier-s-plus text-white absolute top-4 left-4">S+ · 94</span>
+                                <span class="chip-badge bg-green-500 text-white absolute top-4 right-4">↓ 7.4%</span>
+                                <div class="text-6xl font-black text-gray-400">💻</div>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-bold text-gray-900 text-lg">MacBook Pro 16"</h3>
+                                <p class="text-sm text-gray-500 mt-1">M4 Max · 128GB 统一内存</p>
+                                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                                    <div>
+                                        <div class="text-xs text-gray-400 line-through tabular-nums">$2,699</div>
+                                        <div class="text-2xl font-black text-gray-900 tabular-nums">$2,499</div>
+                                    </div>
+                                    <button class="px-4 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"max-w-sm bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-1"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"aspect-video bg-gradient-to-br from-gray-100 to-gray-200 relative flex items-center justify-center"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"chip-badge tier-s-plus text-white absolute top-4 left-4"</span><span class="code-token">&gt;</span>S+ · 94<span class="code-token">&lt;/span&gt;</span>
+    <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"chip-badge bg-green-500 text-white absolute top-4 right-4"</span><span class="code-token">&gt;</span>↓ 7.4%<span class="code-token">&lt;/span&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"p-5"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;h3</span> <span class="code-prop">class</span>=<span class="code-string">"font-bold text-gray-900 text-lg"</span><span class="code-token">&gt;</span>MacBook Pro 16"<span class="code-token">&lt;/h3&gt;</span>
+    <span class="code-token">&lt;p</span> <span class="code-prop">class</span>=<span class="code-string">"text-sm text-gray-500 mt-1"</span><span class="code-token">&gt;</span>M4 Max · 128GB 统一内存<span class="code-token">&lt;/p&gt;</span>
+    <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex items-center justify-between mt-4 pt-4 border-t border-gray-100"</span><span class="code-token">&gt;</span>
+      <span class="code-token">&lt;div&gt;</span>
+        <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-xs text-gray-400 line-through tabular-nums"</span><span class="code-token">&gt;</span>$2,699<span class="code-token">&lt;/div&gt;</span>
+        <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-2xl font-black text-gray-900 tabular-nums"</span><span class="code-token">&gt;</span>$2,499<span class="code-token">&lt;/div&gt;</span>
+      <span class="code-token">&lt;/div&gt;</span>
+      <span class="code-token">&lt;button</span> <span class="code-prop">class</span>=<span class="code-string">"px-4 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition"</span><span class="code-token">&gt;</span>查看详情<span class="code-token">&lt;/button&gt;</span>
+    <span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Price Tag -->
+            <section id="price-tag" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Price Tag 价格标签</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">价格展示 Price Display</h3></div>
+                    <div class="component-showcase flex-wrap gap-6 items-end">
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 line-through tabular-nums">$2,699</div>
+                            <div class="text-4xl font-black text-gray-900 tabular-nums">$2,499</div>
+                        </div>
+                        <div class="flex items-end gap-2">
+                            <span class="text-lg text-green-600 font-bold">↓</span>
+                            <span class="text-xl font-black text-green-600 tabular-nums">-$200</span>
+                            <span class="chip-badge bg-green-100 text-green-700 text-xs font-bold">7.4%</span>
+                        </div>
+                        <div class="px-4 py-2 bg-gray-900 rounded-xl">
+                            <div class="text-xs text-gray-400">性价比</div>
+                            <div class="text-2xl font-black text-white tabular-nums">94分</div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-comment">&lt;!-- 原价与折扣价 --&gt;</span>
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-right"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-xs text-gray-400 line-through tabular-nums"</span><span class="code-token">&gt;</span>$2,699<span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-4xl font-black text-gray-900 tabular-nums"</span><span class="code-token">&gt;</span>$2,499<span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- 降价标签 --&gt;</span>
+<span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"text-xl font-black text-green-600 tabular-nums"</span><span class="code-token">&gt;</span>-$200<span class="code-token">&lt;/span&gt;</span>
+<span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"chip-badge bg-green-100 text-green-700 text-xs font-bold"</span><span class="code-token">&gt;</span>7.4%<span class="code-token">&lt;/span&gt;</span>
+
+<span class="code-comment">&lt;!-- 性价比徽章 --&gt;</span>
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"px-4 py-2 bg-gray-900 rounded-xl"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-xs text-gray-400"</span><span class="code-token">&gt;</span>性价比<span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-2xl font-black text-white tabular-nums"</span><span class="code-token">&gt;</span>94分<span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Compare Bar -->
+            <section id="compare-bar" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Compare Bar 对比栏</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">浮动对比栏</h3></div>
+                    <div class="component-showcase">
+                        <div class="w-full max-w-2xl bg-white border border-gray-200 rounded-2xl shadow-lg p-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="text-sm text-gray-600 font-medium">对比</span>
+                                <div class="flex items-center -space-x-2">
+                                    <span class="w-9 h-9 rounded-xl tier-s-plus text-white text-xs font-bold flex items-center justify-center border-2 border-white">M4</span>
+                                    <span class="w-9 h-9 rounded-xl tier-s text-white text-xs font-bold flex items-center justify-center border-2 border-white">M4P</span>
+                                    <span class="w-9 h-9 rounded-xl tier-a text-white text-xs font-bold flex items-center justify-center border-2 border-white">M2U</span>
+                                    <span class="w-9 h-9 rounded-xl bg-gray-100 border-2 border-dashed border-gray-300 text-gray-400 text-sm font-bold flex items-center justify-center">+</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="px-3 py-2 text-gray-500 text-sm font-semibold hover:text-gray-700 transition">清空</button>
+                                <button class="px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition flex items-center gap-2">
+                                    开始对比
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"max-w-2xl bg-white border border-gray-200 rounded-2xl shadow-lg p-4 flex items-center justify-between"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex items-center gap-3"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"text-sm text-gray-600 font-medium"</span><span class="code-token">&gt;</span>对比<span class="code-token">&lt;/span&gt;</span>
+    <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex items-center -space-x-2"</span><span class="code-token">&gt;</span>
+      <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"w-9 h-9 rounded-xl tier-s-plus text-white text-xs font-bold flex items-center justify-center border-2 border-white"</span><span class="code-token">&gt;</span>M4<span class="code-token">&lt;/span&gt;</span>
+      <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"w-9 h-9 rounded-xl tier-s text-white text-xs font-bold flex items-center justify-center border-2 border-white"</span><span class="code-token">&gt;</span>M4P<span class="code-token">&lt;/span&gt;</span>
+      <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"w-9 h-9 rounded-xl bg-gray-100 border-2 border-dashed border-gray-300 text-gray-400 text-sm font-bold flex items-center justify-center"</span><span class="code-token">&gt;</span>+<span class="code-token">&lt;/span&gt;</span>
+    <span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex items-center gap-2"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;button</span> <span class="code-prop">class</span>=<span class="code-string">"px-3 py-2 text-gray-500 text-sm font-semibold hover:text-gray-700 transition"</span><span class="code-token">&gt;</span>清空<span class="code-token">&lt;/button&gt;</span>
+    <span class="code-token">&lt;button</span> <span class="code-prop">class</span>=<span class="code-string">"px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition"</span><span class="code-token">&gt;</span>开始对比<span class="code-token">&lt;/button&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search Bar -->
+            <section id="search-bar" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Search Bar 搜索栏</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">功能搜索栏</h3></div>
+                    <div class="component-showcase">
+                        <div class="w-full max-w-2xl">
+                            <div class="relative">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                                <input type="text" placeholder="搜索 48+ 款 Mac 机型、芯片..." class="w-full pl-14 pr-28 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-base outline-none focus:bg-white focus:border-indigo-500 transition font-medium text-gray-900">
+                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400 bg-white border border-gray-200 px-2 py-1 rounded-lg">⌘K</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"relative"</span><span class="code-token">&gt;</span>
+  <span class="code-comment">&lt;!-- 搜索图标 --&gt;</span>
+  <span class="code-token">&lt;svg</span> <span class="code-prop">class</span>=<span class="code-string">"absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"</span><span class="code-token">&gt;</span>...<span class="code-token">&lt;/svg&gt;</span>
+
+  <span class="code-token">&lt;input</span> <span class="code-prop">type</span>=<span class="code-string">"text"</span> <span class="code-prop">placeholder</span>=<span class="code-string">"搜索 48+ 款 Mac 机型、芯片..."</span>
+    <span class="code-prop">class</span>=<span class="code-string">"w-full pl-14 pr-28 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-base outline-none focus:bg-white focus:border-indigo-500 transition font-medium text-gray-900"</span><span class="code-token">&gt;</span>
+
+  <span class="code-comment">&lt;!-- 快捷键提示 --&gt;</span>
+  <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400 bg-white border border-gray-200 px-2 py-1 rounded-lg"</span><span class="code-token">&gt;</span>⌘K<span class="code-token">&lt;/span&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hero -->
+            <section id="hero" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Hero 首屏</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">Hero Section</h3></div>
+                    <div class="component-showcase">
+                        <div class="w-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-12 text-center">
+                            <span class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-1.5 text-xs font-semibold text-gray-700 shadow-sm mb-5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                2026 最新数据已更新
+                            </span>
+                            <h1 class="text-5xl font-black text-gray-900 mb-4">找到最适合你的 <span class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">Mac</span></h1>
+                            <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto">基于真实性能跑分与价格数据，以数据驱动的方式帮你做出最优购买决策。</p>
+                            <div class="flex items-center justify-center gap-4 mb-10">
+                                <button class="px-8 py-4 bg-gray-900 text-white rounded-2xl text-base font-semibold hover:bg-black transition shadow-xl flex items-center gap-2">
+                                    浏览排行榜
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                                <button class="px-8 py-4 bg-white border border-gray-200 text-gray-900 rounded-2xl text-base font-semibold hover:border-gray-400 transition flex items-center gap-2">
+                                    AI 选购助手
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-4 gap-6 max-w-2xl mx-auto">
+                                <div><div class="text-3xl font-black text-gray-900 tabular-nums">48</div><div class="text-xs text-gray-500">款机型</div></div>
+                                <div><div class="text-3xl font-black text-indigo-600 tabular-nums">3</div><div class="text-xs text-gray-500">核心跑分</div></div>
+                                <div><div class="text-3xl font-black text-green-600 tabular-nums">24h</div><div class="text-xs text-gray-500">实时更新</div></div>
+                                <div><div class="text-3xl font-black text-pink-600 tabular-nums">10</div><div class="text-xs text-gray-500">种语言</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-token">&lt;h1</span> <span class="code-prop">class</span>=<span class="code-string">"text-5xl font-black text-gray-900 mb-4"</span><span class="code-token">&gt;</span>找到最适合你的
+  <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"</span><span class="code-token">&gt;</span>Mac<span class="code-token">&lt;/span&gt;</span>
+<span class="code-token">&lt;/h1&gt;</span>
+<span class="code-token">&lt;p</span> <span class="code-prop">class</span>=<span class="code-string">"text-lg text-gray-600 mb-8 max-w-xl mx-auto"</span><span class="code-token">&gt;</span>基于真实性能跑分与价格数据...<span class="code-token">&lt;/p&gt;</span>
+<span class="code-token">&lt;button</span> <span class="code-prop">class</span>=<span class="code-string">"px-8 py-4 bg-gray-900 text-white rounded-2xl text-base font-semibold hover:bg-black transition shadow-xl"</span><span class="code-token">&gt;</span>浏览排行榜<span class="code-token">&lt;/button&gt;</span>
+<span class="code-token">&lt;button</span> <span class="code-prop">class</span>=<span class="code-string">"px-8 py-4 bg-white border border-gray-200 text-gray-900 rounded-2xl text-base font-semibold hover:border-gray-400 transition"</span><span class="code-token">&gt;</span>AI 选购助手<span class="code-token">&lt;/button&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stat Card -->
+            <section id="stat-card" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Stat Card 数据卡</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">统计卡片</h3></div>
+                    <div class="component-showcase">
+                        <div class="grid grid-cols-3 gap-4 w-full">
+                            <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs text-gray-500 font-semibold uppercase">单核得分</span>
+                                    <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">⚡</div>
+                                </div>
+                                <div class="text-3xl font-black text-gray-900 tabular-nums">4,852</div>
+                                <div class="text-xs font-semibold text-green-600 mt-1">↑ 12.4%</div>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs text-gray-500 font-semibold uppercase">多核得分</span>
+                                    <div class="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">🔥</div>
+                                </div>
+                                <div class="text-3xl font-black text-gray-900 tabular-nums">28,430</div>
+                                <div class="text-xs font-semibold text-green-600 mt-1">↑ 18.2%</div>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs text-gray-500 font-semibold uppercase">Metal 得分</span>
+                                    <div class="w-8 h-8 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center">🎮</div>
+                                </div>
+                                <div class="text-3xl font-black text-gray-900 tabular-nums">42,108</div>
+                                <div class="text-xs font-semibold text-red-600 mt-1">↓ 2.1%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"grid grid-cols-3 gap-4 w-full"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"bg-white border border-gray-200 rounded-2xl p-5"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex items-center justify-between mb-3"</span><span class="code-token">&gt;</span>
+      <span class="code-token">&lt;span</span> <span class="code-prop">class</span>=<span class="code-string">"text-xs text-gray-500 font-semibold uppercase"</span><span class="code-token">&gt;</span>单核得分<span class="code-token">&lt;/span&gt;</span>
+      <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center"</span><span class="code-token">&gt;</span>⚡<span class="code-token">&lt;/div&gt;</span>
+    <span class="code-token">&lt;/div&gt;</span>
+    <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-3xl font-black text-gray-900 tabular-nums"</span><span class="code-token">&gt;</span>4,852<span class="code-token">&lt;/div&gt;</span>
+    <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-xs font-semibold text-green-600 mt-1"</span><span class="code-token">&gt;</span>↑ 12.4%<span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Bubble -->
+            <section id="chat-bubble" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">Chat Bubble 消息气泡</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">聊天气泡 Chat UI</h3></div>
+                    <div class="component-showcase vertical">
+                        <div class="w-full max-w-lg space-y-4">
+                            <div class="flex gap-3">
+                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">AI</div>
+                                <div class="max-w-sm bg-gray-100 rounded-2xl rounded-tl-md px-4 py-3">
+                                    <p class="text-sm text-gray-800">你好！我是 MacRank AI 助手，根据你的预算和使用需求，我推荐 MacBook Pro 14 寸 (M4 Pro)。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 flex-row-reverse">
+                                <div class="w-9 h-9 rounded-full bg-gray-900 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">你</div>
+                                <div class="max-w-sm bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl rounded-tr-md px-4 py-3">
+                                    <p class="text-sm text-white">它的 GPU 性能怎么样？我需要做一些视频剪辑。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">AI</div>
+                                <div class="max-w-sm bg-gray-100 rounded-2xl rounded-tl-md px-4 py-3">
+                                    <p class="text-sm text-gray-800 mb-3">M4 Pro 的 GPU 性能表现：</p>
+                                    <div class="bg-white rounded-xl p-3 space-y-2 mb-2">
+                                        <div>
+                                            <div class="flex justify-between text-xs text-gray-600 mb-1"><span>GPU 得分</span><span class="font-bold text-gray-900 tabular-nums">36,850</span></div>
+                                            <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" style="width: 85%"></div></div>
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between text-xs text-gray-600 mb-1"><span>视频编码</span><span class="font-bold text-green-600">Excellent</span></div>
+                                            <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-green-500 rounded-full" style="width: 92%"></div></div>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-600 italic">💡 适合 4K/8K 视频剪辑和 3D 渲染工作</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0 flex items-center justify-center">
+                                    <div class="flex gap-1">
+                                        <div class="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                                        <div class="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                                        <div class="w-1.5 h-1.5 bg-white rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-comment">&lt;!-- AI 消息气泡 --&gt;</span>
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex gap-3"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm"</span><span class="code-token">&gt;</span>AI<span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"max-w-sm bg-gray-100 rounded-2xl rounded-tl-md px-4 py-3"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;p</span> <span class="code-prop">class</span>=<span class="code-string">"text-sm text-gray-800"</span><span class="code-token">&gt;</span>消息内容...<span class="code-token">&lt;/p&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- 用户消息气泡 --&gt;</span>
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"flex gap-3 flex-row-reverse"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"w-9 h-9 rounded-full bg-gray-900 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm"</span><span class="code-token">&gt;</span>你<span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"max-w-sm bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl rounded-tr-md px-4 py-3"</span><span class="code-token">&gt;</span>
+    <span class="code-token">&lt;p</span> <span class="code-prop">class</span>=<span class="code-string">"text-sm text-white"</span><span class="code-token">&gt;</span>用户消息...<span class="code-token">&lt;/p&gt;</span>
+  <span class="code-token">&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interaction Guidelines -->
+            <section id="interaction" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">👆 交互指南</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">悬停 Hover</h3></div>
+                        <div class="component-showcase flex-wrap gap-4">
+                            <button class="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02]">悬停我</button>
+                            <div class="group w-48 bg-white border border-gray-200 rounded-2xl p-4 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all">
+                                <div class="w-full aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-3 group-hover:from-indigo-100 group-hover:to-purple-100 transition-all"></div>
+                                <p class="text-sm font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">卡片悬停效果</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">按压 Press</h3></div>
+                        <div class="component-showcase flex-wrap gap-4 items-center">
+                            <button class="px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold active:scale-95 transition-all duration-150">按下缩放</button>
+                            <button class="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl text-sm font-semibold active:scale-95 transition-all duration-150 shadow-lg hover:shadow-xl">渐变按钮</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Keyboard Shortcuts -->
+            <section id="keyboard" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">⌨️ 键盘快捷键 Keyboard Shortcuts</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">全局快捷键 Keyboard Shortcuts</h3></div>
+                    <div class="component-showcase">
+                        <div class="w-full overflow-hidden rounded-2xl border border-gray-200">
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">快捷键</th>
+                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">操作</th>
+                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">上下文</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">⌘</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">K</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">打开全局搜索</td>
+                                        <td class="px-6 py-4 text-gray-500">全局</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">Esc</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">关闭模态框 / 取消操作</td>
+                                        <td class="px-6 py-4 text-gray-500">模态框、菜单</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">Tab</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">切换焦点到下一个元素</td>
+                                        <td class="px-6 py-4 text-gray-500">表单、导航</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">Shift</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">Tab</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">切换焦点到上一个元素</td>
+                                        <td class="px-6 py-4 text-gray-500">表单、导航</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">Enter</kbd> / <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">Space</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">激活按钮或链接</td>
+                                        <td class="px-6 py-4 text-gray-500">按钮、链接</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">⌘</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">S</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">保存当前更改</td>
+                                        <td class="px-6 py-4 text-gray-500">编辑器、表单</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">⌘</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">/</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">切换评论或侧边栏</td>
+                                        <td class="px-6 py-4 text-gray-500">详情页</td>
+                                    </tr>
+                                    <tr class="hover:bg-indigo-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono"><kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">↑</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">↓</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">←</kbd> <kbd class="px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300">→</kbd></td>
+                                        <td class="px-6 py-4 text-gray-900 font-medium">在列表中导航选择</td>
+                                        <td class="px-6 py-4 text-gray-500">列表、下拉</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="component-code font-mono">
+<span class="code-comment">&lt;!-- 按键样式 --&gt;</span>
+<span class="code-token">&lt;kbd</span> <span class="code-prop">class</span>=<span class="code-string">"px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300 font-mono text-xs"</span><span class="code-token">&gt;</span>⌘<span class="code-token">&lt;/kbd&gt;</span>
+<span class="code-token">&lt;kbd</span> <span class="code-prop">class</span>=<span class="code-string">"px-2 py-1 bg-gray-100 rounded-lg text-gray-800 border border-gray-300 font-mono text-xs"</span><span class="code-token">&gt;</span>K<span class="code-token">&lt;/kbd&gt;</span>
+
+<span class="code-comment">&lt;!-- 表格行 hover --&gt;</span>
+<span class="code-token">&lt;tr</span> <span class="code-prop">class</span>=<span class="code-string">"hover:bg-indigo-50 transition-colors"</span><span class="code-token">&gt;</span>...<span class="code-token">&lt;/tr&gt;</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading States -->
+            <section id="loading" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">⏳ 加载状态 Loading States</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">按钮加载 Button Loading</h3></div>
+                        <div class="component-showcase flex-wrap gap-4 flex-col">
+                            <button disabled class="px-6 py-3 bg-gray-300 text-gray-500 rounded-xl text-sm font-semibold cursor-not-allowed flex items-center gap-2">
+                                <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0110 10"/></svg>
+                                <span>正在保存...</span>
+                            </button>
+                            <button disabled class="px-6 py-3 bg-indigo-400 text-white rounded-xl text-sm font-semibold cursor-not-allowed flex items-center gap-2">
+                                <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0110 10"/></svg>
+                                <span>提交中...</span>
+                            </button>
+                            <button class="px-6 py-3 bg-gray-900 text-white rounded-xl text-sm font-semibold flex items-center gap-2 opacity-80">
+                                <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0110 10"/></svg>
+                                <span>加载中</span>
+                            </button>
+                        </div>
+                        <div class="component-code font-mono">
+<span class="code-token">&lt;button</span> <span class="code-prop">disabled</span> <span class="code-prop">class</span>=<span class="code-string">"px-6 py-3 bg-gray-300 text-gray-500 rounded-xl font-semibold cursor-not-allowed flex items-center gap-2"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;svg</span> <span class="code-prop">class</span>=<span class="code-string">"animate-spin h-4 w-4"</span><span class="code-token">&gt;</span>...<span class="code-token">&lt;/svg&gt;</span>
+  <span class="code-token">&lt;span&gt;</span>正在保存...<span class="code-token">&lt;/span&gt;</span>
+<span class="code-token">&lt;/button&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">卡片骨架 Card Skeleton</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                                <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200"></div>
+                                <div class="p-5 space-y-3">
+                                    <div class="h-4 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+                                    <div class="h-3 bg-gray-100 rounded w-1/2 animate-pulse"></div>
+                                    <div class="flex items-center justify-between pt-2">
+                                        <div class="h-6 bg-gray-200 rounded w-20 animate-pulse"></div>
+                                        <div class="h-8 bg-gray-200 rounded-xl w-24 animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-code font-mono">
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"bg-white border border-gray-200 rounded-2xl overflow-hidden"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"aspect-video bg-gradient-to-br from-gray-100 to-gray-200"</span><span class="code-token">&gt;&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"h-4 bg-gray-200 rounded w-3/4 animate-pulse"</span><span class="code-token">&gt;&lt;/div&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"h-3 bg-gray-100 rounded w-1/2 animate-pulse"</span><span class="code-token">&gt;&lt;/div&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="component-card col-span-2">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">页面加载 Full Page Loading</h3></div>
+                        <div class="component-showcase vertical gap-4">
+                            <div class="w-full max-w-2xl mx-auto">
+                                <div class="flex items-center gap-3 mb-6">
+                                    <div class="w-12 h-12 rounded-2xl bg-gray-100 animate-pulse"></div>
+                                    <div class="space-y-2 flex-1">
+                                        <div class="h-4 bg-gray-200 rounded w-1/3 animate-pulse"></div>
+                                        <div class="h-3 bg-gray-100 rounded w-1/4 animate-pulse"></div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 mb-6">
+                                    <div class="h-9 bg-gray-100 rounded-xl w-24 animate-pulse"></div>
+                                    <div class="h-9 bg-gray-100 rounded-xl w-24 animate-pulse"></div>
+                                    <div class="h-9 bg-gray-100 rounded-xl w-32 animate-pulse"></div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="bg-white border border-gray-200 rounded-2xl p-4">
+                                        <div class="h-3 bg-gray-100 rounded w-1/2 mb-3 animate-pulse"></div>
+                                        <div class="h-8 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                                        <div class="h-3 bg-gray-100 rounded w-1/3 animate-pulse"></div>
+                                    </div>
+                                    <div class="bg-white border border-gray-200 rounded-2xl p-4">
+                                        <div class="h-3 bg-gray-100 rounded w-1/2 mb-3 animate-pulse"></div>
+                                        <div class="h-8 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                                        <div class="h-3 bg-gray-100 rounded w-1/3 animate-pulse"></div>
+                                    </div>
+                                    <div class="bg-white border border-gray-200 rounded-2xl p-4">
+                                        <div class="h-3 bg-gray-100 rounded w-1/2 mb-3 animate-pulse"></div>
+                                        <div class="h-8 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                                        <div class="h-3 bg-gray-100 rounded w-1/3 animate-pulse"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-center gap-3 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100">
+                                <svg class="animate-spin h-6 w-6 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0110 10"/></svg>
+                                <span class="text-sm text-gray-600 font-medium">正在加载您的数据，请稍候...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Error States -->
+            <section id="error-states" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">⚠️ 错误状态 Error States</h2>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">表单错误 Form Error</h3></div>
+                        <div class="component-showcase vertical gap-4">
+                            <form class="w-full max-w-md space-y-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-red-600 mb-2">用户名</label>
+                                    <input type="text" placeholder="请输入用户名" value="test@" class="w-full px-4 py-3 bg-red-50 border-2 border-red-300 rounded-xl text-sm outline-none text-gray-900">
+                                    <p class="text-xs text-red-600 mt-2 flex items-center gap-1">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                        请输入有效的邮箱地址
+                                    </p>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-red-600 mb-2">密码</label>
+                                    <input type="password" placeholder="至少 8 个字符" class="w-full px-4 py-3 bg-red-50 border-2 border-red-300 rounded-xl text-sm outline-none text-gray-900">
+                                    <p class="text-xs text-red-600 mt-2 flex items-center gap-1">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+                                        密码不能为空
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="component-code font-mono">
+<span class="code-token">&lt;input</span> <span class="code-prop">type</span>=<span class="code-string">"text"</span> <span class="code-prop">class</span>=<span class="code-string">"w-full px-4 py-3 bg-red-50 border-2 border-red-300 rounded-xl text-sm outline-none"</span><span class="code-token">&gt;</span>
+<span class="code-token">&lt;p</span> <span class="code-prop">class</span>=<span class="code-string">"text-xs text-red-600 mt-2 flex items-center gap-1"</span><span class="code-token">&gt;</span>请输入有效的邮箱地址<span class="code-token">&lt;/p&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">网络错误 Network Error</h3></div>
+                        <div class="component-showcase">
+                            <div class="w-full max-w-md bg-white rounded-2xl border border-gray-200 p-6 text-center">
+                                <div class="w-16 h-16 mx-auto rounded-2xl bg-red-50 flex items-center justify-center mb-4">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M1 1l22 22"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55"/><path d="M5 12.55a10.94 10.94 0 015.17-2.39"/><path d="M10.71 5.05A16 16 0 0122.58 9"/><path d="M1.42 9a15.91 15.91 0 014.7-2.88"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-900 mb-2">无法连接到服务器</h3>
+                                <p class="text-sm text-gray-500 mb-5">请检查您的网络连接，然后重试。</p>
+                                <button class="px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition">重新连接</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="component-card col-span-2">
+                        <div class="component-header"><h3 class="font-bold text-gray-900">错误页面 Error Pages</h3></div>
+                        <div class="component-showcase">
+                            <div class="grid grid-cols-2 gap-6 w-full">
+                                <div class="bg-white border border-gray-200 rounded-2xl p-8 text-center">
+                                    <div class="text-6xl font-black text-gray-300 mb-2 tabular-nums">404</div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-2">页面未找到</h3>
+                                    <p class="text-sm text-gray-500 mb-5">您访问的页面可能已被移动或删除。</p>
+                                    <button class="px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition">返回首页</button>
+                                </div>
+                                <div class="bg-white border border-gray-200 rounded-2xl p-8 text-center">
+                                    <div class="text-6xl font-black text-red-200 mb-2 tabular-nums">500</div>
+                                    <h3 class="text-lg font-bold text-gray-900 mb-2">服务器错误</h3>
+                                    <p class="text-sm text-gray-500 mb-5">出现了一些问题，我们正在努力修复。</p>
+                                    <button class="px-5 py-2.5 bg-red-600 text-white rounded-xl text-sm font-semibold hover:bg-red-700 transition flex items-center gap-2 mx-auto">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                                        重试
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="component-code font-mono">
+<span class="code-comment">&lt;!-- 404 页面 --&gt;</span>
+<span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"bg-white border border-gray-200 rounded-2xl p-8 text-center"</span><span class="code-token">&gt;</span>
+  <span class="code-token">&lt;div</span> <span class="code-prop">class</span>=<span class="code-string">"text-6xl font-black text-gray-300 mb-2 tabular-nums"</span><span class="code-token">&gt;</span>404<span class="code-token">&lt;/div&gt;</span>
+  <span class="code-token">&lt;h3</span> <span class="code-prop">class</span>=<span class="code-string">"text-lg font-bold text-gray-900 mb-2"</span><span class="code-token">&gt;</span>页面未找到<span class="code-token">&lt;/h3&gt;</span>
+  <span class="code-token">&lt;button</span> <span class="code-prop">class</span>=<span class="code-string">"px-5 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition"</span><span class="code-token">&gt;</span>返回首页<span class="code-token">&lt;/button&gt;</span>
+<span class="code-token">&lt;/div&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Accessibility -->
+            <section id="accessibility" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">♿ 无障碍 Accessibility</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">无障碍原则</h3></div>
+                    <div class="component-showcase">
+                        <div class="grid grid-cols-3 gap-4 w-full">
+                            <div class="p-5 bg-gray-50 rounded-xl">
+                                <div class="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center text-xl font-bold mb-3">A</div>
+                                <h4 class="font-bold text-gray-900 mb-2">颜色对比</h4>
+                                <p class="text-xs text-gray-600">正文文本 ≥ 4.5:1, 大字 ≥ 3:1</p>
+                            </div>
+                            <div class="p-5 bg-gray-50 rounded-xl">
+                                <div class="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center text-xl font-bold mb-3">⌨</div>
+                                <h4 class="font-bold text-gray-900 mb-2">键盘导航</h4>
+                                <p class="text-xs text-gray-600">所有交互元素可通过 Tab 访问</p>
+                            </div>
+                            <div class="p-5 bg-gray-50 rounded-xl">
+                                <div class="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center text-xl font-bold mb-3">🎯</div>
+                                <h4 class="font-bold text-gray-900 mb-2">点击区域</h4>
+                                <p class="text-xs text-gray-600">最小点击尺寸 44×44 px</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Motion -->
+            <section id="motion" class="mb-16">
+                <h2 class="text-3xl font-black mb-2">🎬 动效规范 Motion</h2>
+                <div class="component-card">
+                    <div class="component-header"><h3 class="font-bold text-gray-900">动画时长与缓动函数</h3></div>
+                    <div class="component-showcase vertical">
+                        <div class="grid grid-cols-4 gap-4 w-full">
+                            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                                <div class="text-2xl font-black text-gray-900 tabular-nums">150<span class="text-sm text-gray-500">ms</span></div>
+                                <div class="text-xs text-gray-500 mt-1">即时反馈</div>
+                            </div>
+                            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                                <div class="text-2xl font-black text-gray-900 tabular-nums">300<span class="text-sm text-gray-500">ms</span></div>
+                                <div class="text-xs text-gray-500 mt-1">标准过渡</div>
+                            </div>
+                            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                                <div class="text-2xl font-black text-gray-900 tabular-nums">500<span class="text-sm text-gray-500">ms</span></div>
+                                <div class="text-xs text-gray-500 mt-1">复杂动画</div>
+                            </div>
+                            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                                <div class="text-2xl font-black text-gray-900 tabular-nums">700<span class="text-sm text-gray-500">ms</span></div>
+                                <div class="text-xs text-gray-500 mt-1">页面过渡</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="text-center py-12 border-t border-gray-200">
+                <div class="text-sm text-gray-500 mb-2">MacRank Design System v2.0</div>
+                <div class="text-xs text-gray-400">© 2026 Component Library. Built with Tailwind CSS.</div>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>
