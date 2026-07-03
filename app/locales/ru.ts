@@ -1,4 +1,4 @@
-// app/locales/ru.ts v0.7.5
+// app/locales/ru.ts v0.7.8
 export const ru = {
   appTitle: 'MacRank',
   leaderboard: 'Рейтинг',
@@ -49,8 +49,8 @@ export const ru = {
   winner: 'Победитель',
   difference: 'Разница',
   chart_composite: 'Общий',
-  chart_single: 'Single-Core',
-  chart_multi: 'Multi-Core',
+  chart_single: 'Одноядерный',
+  chart_multi: 'Многоядерный',
   chart_metal: 'Metal GPU',
   chart_value: 'Цена/Качество',
   chart_ratio: 'Очки за $',
@@ -68,8 +68,8 @@ export const ru = {
   chart_ratio_desc: 'Очки производительности на доллар (Выше - лучше)',
   avgPrice: 'Ср. цена',
   avgScore: 'Ср. балл',
-  label_single: 'Single',
-  label_multi: 'Multi',
+  label_single: 'Один',
+  label_multi: 'Много',
   cores: 'Ядер',
   core_gpu: 'Ядер GPU',
   genai_assistant: 'Ассистент GenAI',
@@ -163,4 +163,8 @@ export const ru = {
   ports: 'Порты',
   ram_upgrade: 'Апгрейд RAM',
   ssd_upgrade: 'Апгрейд SSD',
+  app_tagline: 'Рейтинг производительности',
+  share_score_label: 'Очки',
+  share_detail_tagline: 'Профессиональная база производительности Apple Silicon',
+  share_compare_tagline: 'Профессиональный инструмент сравнения компьютеров Apple',
 };

@@ -1,6 +1,6 @@
 # MacRank 规范总纲 (Master Index)
 
-当前版本：**v0.7.7**
+当前版本：**v0.7.8**
 状态：**Standard Volumes Finalized (Production Ready)**
 
 本项目规范已达到 **Production Ready** 状态。Standard Volumes (01-04) 包含了重构应用所需的每一行核心逻辑。
@@ -60,6 +60,6 @@
 
 ## 📅 版本控制
 
-- **当前版本**: v0.7.7
-- **最后更新**: 2026-06-09
+- **当前版本**: v0.7.8
+- **最后更新**: 2026-07-03
 - **状态**: 生产就绪

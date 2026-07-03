@@ -1,4 +1,4 @@
-// app/locales/pt.ts v0.7.5
+// app/locales/pt.ts v0.7.8
 export const pt = {
   appTitle: 'MacRank',
   leaderboard: 'Classificação',
@@ -30,8 +30,8 @@ export const pt = {
   ram_type: 'Tipo de RAM',
   display: 'Tela',
   benchmarkScores: 'Pontuações Benchmark',
-  singleCore: 'Single-Core',
-  multiCore: 'Multi-Core',
+  singleCore: 'Núcleo Único',
+  multiCore: 'Multinúcleo',
   metal: 'Metal (GPU)',
   verifiedSpecs: 'Specs Verificadas',
   chatTitle: 'Consultor Mac',
@@ -49,8 +49,8 @@ export const pt = {
   winner: 'Vencedor',
   difference: 'Diferença',
   chart_composite: 'Composto',
-  chart_single: 'Single-Core',
-  chart_multi: 'Multi-Core',
+  chart_single: 'Núcleo Único',
+  chart_multi: 'Multinúcleo',
   chart_metal: 'GPU Metal',
   chart_value: 'Dispersão de Valor',
   chart_ratio: 'Pontos por $',
@@ -68,8 +68,8 @@ export const pt = {
   chart_ratio_desc: 'Pontos de Desempenho por Dólar (Mais alto é melhor)',
   avgPrice: 'Preço Médio',
   avgScore: 'Pontuação Média',
-  label_single: 'Single',
-  label_multi: 'Multi',
+  label_single: 'Único',
+  label_multi: 'Múltiplo',
   cores: 'Núcleos',
   core_gpu: 'Núcleos GPU',
   genai_assistant: 'Assistente GenAI',
@@ -163,4 +163,8 @@ export const pt = {
   ports: 'Portas',
   ram_upgrade: 'Atualização de RAM',
   ssd_upgrade: 'Atualização de SSD',
+  app_tagline: 'Ranking de Desempenho',
+  share_score_label: 'Pontuação',
+  share_detail_tagline: 'Banco de dados profissional de desempenho Apple Silicon',
+  share_compare_tagline: 'Ferramenta profissional de comparação de computadores Apple',
 };

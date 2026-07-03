@@ -1,6 +1,6 @@
 'use client';
 
-// app/components/Footer.tsx v0.7.6
+// app/components/Footer.tsx v0.7.8
 import React, { useContext } from 'react';
 import { Github, Heart } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';

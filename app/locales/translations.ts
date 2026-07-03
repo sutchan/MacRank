@@ -1,5 +1,5 @@
 
-// app/locales/translations.ts v0.5.2
+// app/locales/translations.ts v0.7.8
 import { createContext } from 'react';
 import { en } from './en';
 import { zh } from './zh';

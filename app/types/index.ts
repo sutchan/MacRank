@@ -1,4 +1,4 @@
-// app/types.ts v0.7.6
+// app/types.ts v0.7.8
 export enum ChipFamily {
   M5 = 'M5',
   M4 = 'M4',
@@ -59,6 +59,7 @@ export interface MacModel {
 }
 
 export interface ChatMessage {
+  id?: string;
   role: 'user' | 'model';
   text: string;
   isError?: boolean;

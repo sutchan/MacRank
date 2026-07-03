@@ -1,6 +1,6 @@
 'use client';
 
-// app/components/PerformanceChart.tsx v0.7.6
+// app/components/PerformanceChart.tsx v0.7.8
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';

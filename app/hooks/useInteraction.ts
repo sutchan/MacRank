@@ -1,8 +1,10 @@
-// app/hooks/useInteraction.ts v0.7.6
+// app/hooks/useInteraction.ts v0.7.8
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { macData, refData } from '../data/data';
 import { parseUrlParams, updateUrlHash } from '../lib/urlParams';
 import { MacModel } from '../types';
+
+const TOAST_DURATION_MS = 2000;
 
 export const useInteraction = () => {
     const [selectedModel, setSelectedModel] = useState<MacModel | null>(null);
@@ -12,12 +14,12 @@ export const useInteraction = () => {
     const [showBackToTop, setShowBackToTop] = useState(false);
     const [showToast, setShowToast] = useState(false);
 
-    const initialLoadRef = useRef(true);
+    const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [isTradeInOpen, setIsTradeInOpen] = useState(false);
 
     useEffect(() => {
         const params = parseUrlParams();
-        
+
         if (params.compare?.length) {
             const list = macData.filter(m => params.compare!.includes(m.id)).slice(0, 2);
             setCompareList(list);
@@ -28,14 +30,19 @@ export const useInteraction = () => {
             const found = [...macData, ...refData].find(m => m.id === params.model);
             if (found) setSelectedModel(found);
         }
-        
-        initialLoadRef.current = false;
     }, []);
 
     useEffect(() => {
         const handleScroll = () => setShowBackToTop(window.scrollY > 500);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Clear any pending toast timer on unmount to avoid setState on unmounted component.
+    useEffect(() => {
+        return () => {
+            if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+        };
     }, []);
 
     const handleToggleCompare = useCallback((mac: MacModel) => {
@@ -70,7 +77,8 @@ export const useInteraction = () => {
 
     const handleShowToast = useCallback(() => {
         setShowToast(true);
-        setTimeout(() => setShowToast(false), 2000);
+        if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+        toastTimerRef.current = setTimeout(() => setShowToast(false), TOAST_DURATION_MS);
     }, []);
 
     return {
@@ -88,6 +96,5 @@ export const useInteraction = () => {
         showBackToTop,
         showToast,
         handleShowToast,
-        isInitialLoad: initialLoadRef.current
     };
 };

@@ -1,4 +1,4 @@
-// app/locales/zh.ts v0.7.5
+// app/locales/zh.ts v0.7.8
 export const zh = {
   appTitle: 'MacRank 性能天梯',
   leaderboard: '天梯榜单',
@@ -145,6 +145,10 @@ export const zh = {
   ports: '接口',
   ram_upgrade: '内存升级',
   ssd_upgrade: '硬盘升级',
+  app_tagline: '性能天梯',
+  share_score_label: '评分',
+  share_detail_tagline: '专业级苹果电脑性能数据库',
+  share_compare_tagline: '专业级苹果电脑对比工具',
 
   // --- 硬件详细描述 ---
   'desc_m5-max-16-16-48': '下一代移动工作站。预测将采用更先进的制程，进一步提升端侧 AI 性能。',

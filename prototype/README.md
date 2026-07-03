@@ -10,7 +10,7 @@
 
 ## 设计系统概览
 
-MacRank v0.7.6 使用基于 **shadcn/ui (radix-nova)** + **Tailwind CSS 4** + **Next.js 15** 的完整设计系统。
+MacRank v0.7.8 使用基于 **shadcn/ui (radix-nova)** + **Tailwind CSS 4** + **Next.js 15** 的完整设计系统。
 
 ### 核心设计原则
 
