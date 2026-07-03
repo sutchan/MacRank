@@ -1,4 +1,4 @@
-// app/data/data-reference.ts v0.5.2
+// app/data/data-reference.ts v0.7.8
 import { MacModel, ChipFamily, DeviceType } from '../types';
 
 export const referenceData: MacModel[] = [

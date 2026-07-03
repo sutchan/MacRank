@@ -21,7 +21,7 @@ import { useInteraction } from './hooks/useInteraction';
 
 const AIChat = lazy(() => import('./components/AIChat'));
 
-const APP_VERSION = '0.7.6';
+const APP_VERSION = '0.7.8';
 
 const Page: React.FC = () => {
   const settings = useSettings();

@@ -1,5 +1,5 @@
 
-// app/lib/scoring.ts v0.5.2
+// app/lib/scoring.ts v0.7.8
 import { MacModel, RankingScenario } from '../types';
 
 // Normalization constants (approximate max values in current database)

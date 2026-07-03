@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.8]
+### Security
+- **API Hardening**: Enhanced `/api/chat` route with `validateContextItem` whitelist validation for all client-submitted `contextData` fields, mitigating prompt injection attacks
+- **Prompt Isolation**: Wrapped hardware database context in `<HARDWARE_DATABASE>` tags with explicit system instruction declaring data is non-instructional
+- **Log Sanitization**: Replaced full error logging with `error.message`-only output to prevent sensitive data leakage
+### Performance
+- **React.memo Optimization**: Wrapped `MacTable`, `SortHeader`, `MacRow`, `ChatMessageBubble`, `FilterMenus` components in `React.memo` to prevent unnecessary re-renders
+- **Component Extraction**: Extracted inline `SortHeader` from `MacTable` to module-level (fixes remount-on-render)
+- **useMemo Purity**: Fixed mutation bug in `useMacData` where shared cache objects were mutated inside `useMemo`
+- **Stable Keys**: Replaced array index keys with `crypto.randomUUID()`-based `id` field in `ChatMessage` for stable reconciliation
+- **Timer Cleanup**: Added `toastTimerRef` cleanup in `useInteraction` to clear pending timeouts on unmount
+### Refactor
+- **File Splitting**: Split all source files exceeding 200 lines into cohesive modules:
+  - `app/lib/priceCache.ts` (extracted from `useMacData`)
+  - `app/lib/sorting.ts` (extracted from `useMacData`)
+  - `app/components/SortHeader.tsx` (extracted from `MacTable`)
+  - `app/components/MacRow.tsx` (extracted from `MacTable`)
+  - `app/components/ChatMessageBubble.tsx` (extracted from `AIChat`)
+  - `app/components/FilterMenus.tsx` (extracted `ScenarioMenu` + `ViewMenu`)
+### i18n
+- **Key Coverage**: Backfilled `label_single`/`label_multi`/`singleCore`/`multiCore`/`chart_single`/`chart_multi` across 8 locale files (es/fr/de/ja/ko/hi/pt/ru)
+- **Hardcoded Strings**: Replaced all hardcoded Chinese share text in `DetailModal` and `CompareModal` with 4 new i18n keys (`app_tagline`/`share_score_label`/`share_detail_tagline`/`share_compare_tagline`) propagated to all 10 locales
+- **Hindi Fix**: Corrected `वर्कस्टATION` → `वर्कस्टेशन` spelling typo in `hi.ts`
+### Documentation
+- **README Sync**: Updated README to reflect current v0.7.8 features and usage
+- **Version Sync**: Unified all version numbers across package.json, metadata.json, layout.tsx, openspec docs, and source file headers to v0.7.8
+
 ## [0.7.6]
 ### Fixed
 - **Light Mode**: Fixed issue where light mode wasn't fully applied properly by replacing `classList.toggle` with explicit `classList.add` and `classList.remove`

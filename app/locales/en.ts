@@ -1,4 +1,4 @@
-// app/locales/en.ts v0.7.5
+// app/locales/en.ts v0.7.8
 export const en = {
   appTitle: 'MacRank',
   leaderboard: 'Ladder',
@@ -145,6 +145,10 @@ export const en = {
   ports: 'Ports',
   ram_upgrade: 'RAM Upgrade',
   ssd_upgrade: 'SSD Upgrade',
+  app_tagline: 'Performance Ladder',
+  share_score_label: 'Score',
+  share_detail_tagline: 'Professional Apple Silicon performance database',
+  share_compare_tagline: 'Professional Apple computer comparison tool',
 
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'The next leap in mobile workstation power. On-device AI and real-time ray tracing become effortless.',

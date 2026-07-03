@@ -1,4 +1,4 @@
-// app/locales/ko.ts v0.7.5
+// app/locales/ko.ts v0.7.8
 export const ko = {
   appTitle: 'MacRank',
   leaderboard: '순위표',
@@ -68,8 +68,8 @@ export const ko = {
   chart_ratio_desc: '달러당 성능 점수 (높을수록 좋음)',
   avgPrice: '평균 가격',
   avgScore: '평균 점수',
-  label_single: 'Single',
-  label_multi: 'Multi',
+  label_single: '싱글',
+  label_multi: '멀티',
   cores: '코어',
   core_gpu: '코어 GPU',
   genai_assistant: 'GenAI 어시스턴트',
@@ -163,4 +163,8 @@ export const ko = {
   ports: '포트',
   ram_upgrade: 'RAM 업그레이드',
   ssd_upgrade: 'SSD 업그레이드',
+  app_tagline: '성능 랭킹',
+  share_score_label: '점수',
+  share_detail_tagline: '전문 Apple Silicon 성능 데이터베이스',
+  share_compare_tagline: '전문 Apple 컴퓨터 비교 도구',
 };

@@ -41,8 +41,8 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
     const newUrl = `${baseUrl}#${params.toString()}`;
     
     const result = await shareContent({
-      title: `${mac.name} - MacRank 性能天梯`,
-      text: `🔥 ${mac.name} | MacRank 评分: ${score.toLocaleString()} (${tier}) | ${mac.chip} | 专业级苹果电脑性能数据库`,
+      title: `${mac.name} - ${t('appTitle')} ${t('app_tagline')}`,
+      text: `🔥 ${mac.name} | ${t('appTitle')} ${t('share_score_label')}: ${score.toLocaleString()} (${tier}) | ${mac.chip} | ${t('share_detail_tagline')}`,
       url: newUrl
     });
     if (result === 'copied') { setShowCopied(true); setTimeout(() => setShowCopied(false), 2000); }
@@ -95,7 +95,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                   <TechParam icon={HardDrive} label={t('memory')} value={mac.memory} />
                   {mac.ramType && <TechParam icon={Zap} label={t('ram_type')} value={mac.ramType} fullWidth />}
                   {mac.displayInfo && <TechParam icon={Monitor} label={t('display')} value={mac.displayInfo} fullWidth />}
-                  <TechParam icon={Zap} label="MSRP" value={formatCurrency(mac.basePriceUSD, language)} />
+                  <TechParam icon={Zap} label={t('launchPrice')} value={formatCurrency(mac.basePriceUSD, language)} />
                   {!mac.isReference && mac.releaseYear < new Date().getFullYear() && (
                     <TechParam icon={RotateCcw} label={t('refurbished' as any)} value={`~${formatCurrency(estimateRefurbishedPrice(mac.basePriceUSD, mac.releaseYear), language)}`} />
                   )}

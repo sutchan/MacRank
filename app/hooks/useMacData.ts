@@ -1,40 +1,11 @@
 
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { macData, refData } from '../data/data';
-import { calculateTierScore } from '../lib/scoring';
-import { calculateValueScore, fetchRealTimePrices } from '../services/priceService';
+import { calculateValueScore } from '../services/priceService';
+import { getCachedPrices } from '../lib/priceCache';
+import { sortMacModels } from '../lib/sorting';
 import { parseUrlParams, updateUrlHash } from '../lib/urlParams';
 import { ChipFamily, DeviceType, MacModel, RankingScenario, SortKey } from '../types';
-
-const PRICE_CACHE_TTL_MS = 60 * 1000;
-
-interface PriceCacheEntry {
-  data: MacModel[];
-  timestamp: number;
-}
-
-let priceCache: PriceCacheEntry | null = null;
-let priceFetchPromise: Promise<MacModel[]> | null = null;
-
-async function getCachedPrices(models: MacModel[]): Promise<MacModel[]> {
-  const now = Date.now();
-
-  if (priceCache && now - priceCache.timestamp < PRICE_CACHE_TTL_MS) {
-    return priceCache.data;
-  }
-
-  if (priceFetchPromise) {
-    return priceFetchPromise;
-  }
-
-  priceFetchPromise = fetchRealTimePrices(models).then(result => {
-    priceCache = { data: result, timestamp: Date.now() };
-    priceFetchPromise = null;
-    return result;
-  });
-
-  return priceFetchPromise;
-}
 
 const getDefaultState = () => ({
   search: '',
@@ -118,48 +89,11 @@ export const useMacData = () => {
       return true;
     });
 
-    matches.sort((a, b) => {
-      let valA: number | string = 0;
-      let valB: number | string = 0;
+    const sorted = sortMacModels(matches, sortKey, sortDirection, rankingScenario, cachedValueScores);
 
-      if (sortKey === 'score') {
-        valA = calculateTierScore(a, rankingScenario);
-        valB = calculateTierScore(b, rankingScenario);
-      } else if (sortKey === 'value') {
-        valA = cachedValueScores[a.id] || 0;
-        valB = cachedValueScores[b.id] || 0;
-      } else if (sortKey === 'price') {
-        valA = a.currentPriceUSD || a.basePriceUSD || 0;
-        valB = b.currentPriceUSD || b.basePriceUSD || 0;
-      } else if (sortKey === 'name') {
-        valA = a.name;
-        valB = b.name;
-        return sortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-      } else if (sortKey === 'cpu') {
-        valA = a.multiCoreScore;
-        valB = b.multiCoreScore;
-      } else if (sortKey === 'gpu') {
-        valA = a.metalScore;
-        valB = b.metalScore;
-      } else if (sortKey === 'memory') {
-        valA = parseFloat(String(a.memory)) || 0;
-        valB = parseFloat(String(b.memory)) || 0;
-      } else if (sortKey === 'year') {
-        valA = a.releaseYear;
-        valB = b.releaseYear;
-      }
-
-      if (typeof valA === 'number' && typeof valB === 'number') {
-        return sortDirection === 'asc' ? valA - valB : valB - valA;
-      }
-      return 0;
-    });
-
-    matches.forEach(item => {
-      item.valueScore = cachedValueScores[item.id];
-    });
-
-    return matches;
+    // Return new objects so shared static data is never mutated (prevents
+    // stale valueScore leaking across scenario switches and respects React purity).
+    return sorted.map(item => ({ ...item, valueScore: cachedValueScores[item.id] }));
   }, [
     searchTerm,
     filterType,
