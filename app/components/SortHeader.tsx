@@ -26,7 +26,7 @@ const SortHeader: React.FC<SortHeaderProps> = ({
       className={`flex items-center gap-1 cursor-pointer group ${className} ${align === 'right' ? 'justify-end' : align === 'center' ? 'justify-center' : 'justify-start'}`}
       onClick={() => onSort && onSort(sortKey)}
     >
-      <span className={`transition-colors text-[10px] tracking-widest ${isActive ? 'text-gray-900 dark:text-white font-black' : 'group-hover:text-gray-700 dark:group-hover:text-gray-300'}`}>
+      <span className={`transition-colors text-[10px] tracking-widest whitespace-nowrap ${isActive ? 'text-gray-900 dark:text-white font-black' : 'group-hover:text-gray-700 dark:group-hover:text-gray-300'}`}>
         {label}
       </span>
       <span className="text-gray-400">

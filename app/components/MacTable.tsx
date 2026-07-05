@@ -52,7 +52,7 @@ const MacTable: React.FC<MacTableProps> = ({
       <table id="mac-table-element" className="w-full text-left border-collapse md:min-w-[750px]">
         <thead id="mac-table-header-element">
           <tr className="border-b border-gray-100 dark:border-gray-900 bg-gray-50/30 dark:bg-white/5">
-            <th className="py-4 pl-3 w-8 text-center"></th>
+            <th className="py-4 pl-3 w-10 text-center"></th>
             <th className="py-4 pr-2 text-[10px] font-black text-gray-500 dark:text-gray-400 uppercase tracking-widest w-10 text-center">#</th>
             <th className="py-4 pr-2 w-14 text-center">
                <SortHeader label={t('rank')} sortKey="score" align="center" activeKey={activeKey} direction={direction} onSort={onSort} />
@@ -62,26 +62,26 @@ const MacTable: React.FC<MacTableProps> = ({
                <SortHeader label={t('modelChip')} sortKey="name" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
 
-            <th className="hidden md:table-cell py-4 px-2 w-24">
+            <th className="hidden md:table-cell py-4 px-2 w-28">
                <SortHeader label={t('cpuCores')} sortKey="cpu" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
-            <th className="hidden lg:table-cell py-4 px-2 w-24">
+            <th className="hidden lg:table-cell py-4 px-2 w-28">
                <SortHeader label={t('gpuCores')} sortKey="gpu" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
 
-            <th className="hidden xl:table-cell py-4 px-2 w-28">
+            <th className="hidden xl:table-cell py-4 px-2 w-28 whitespace-nowrap">
                <SortHeader label={t('memory')} sortKey="memory" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
 
-            <th className="py-4 px-3 text-right w-32 md:w-40">
+            <th className="py-4 px-3 text-right w-32 md:w-40 whitespace-nowrap">
                <SortHeader label={t('performance')} sortKey="score" align="right" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
 
-            <th className="hidden sm:table-cell py-4 px-2 text-right w-24">
+            <th className="hidden sm:table-cell py-4 px-2 text-right w-24 whitespace-nowrap">
                <SortHeader label={t('valueScore')} sortKey="value" align="right" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
 
-            <th className="hidden sm:table-cell py-4 pl-2 pr-3 text-right w-24">
+            <th className="hidden sm:table-cell py-4 pl-2 pr-3 text-right w-28 whitespace-nowrap">
                <SortHeader label={t('price')} sortKey="price" align="right" activeKey={activeKey} direction={direction} onSort={onSort} />
             </th>
           </tr>

@@ -130,12 +130,12 @@ const MacRow: React.FC<MacRowProps> = ({
       </td>
 
       <td className="hidden sm:table-cell py-4 pl-2 pr-3 text-right cursor-pointer" onClick={() => !isRef && onSelect(mac)}>
-        <div className="flex flex-col items-end">
-          <span className={`text-xs font-bold tabular-nums ${mac.currentPriceUSD && mac.currentPriceUSD < mac.basePriceUSD ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-400 dark:text-gray-500'}`}>
+        <div className="flex flex-col items-end gap-0.5">
+          <span className={`text-sm font-bold tabular-nums ${isRef ? 'text-gray-400' : 'text-gray-900 dark:text-white'}`}>
             {formatCurrency(mac.currentPriceUSD || mac.basePriceUSD, language)}
           </span>
           {mac.currentPriceUSD && mac.currentPriceUSD < mac.basePriceUSD && (
-            <span className="text-[9px] font-medium text-emerald-500 line-through opacity-50">
+            <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500 line-through opacity-70 tabular-nums">
               {formatCurrency(mac.basePriceUSD, language)}
             </span>
           )}

@@ -60,7 +60,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/10 rounded-3xl">
+      <DialogContent className="!max-w-2xl !max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/10 rounded-3xl p-0 gap-0" showCloseButton={false}>
         <div className="p-6 md:p-8 pb-4 flex justify-between items-start shrink-0 bg-white dark:bg-apple-gray-900">
              <div>
                  <div className="flex items-center gap-3 mb-3">
@@ -73,10 +73,10 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                  </DialogHeader>
              </div>
              <div className="flex gap-2">
-                <Button onClick={handleShare} variant="outline" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-blue-600">
+                <Button onClick={handleShare} variant="ghost" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-blue-600 hover:bg-gray-200 dark:hover:bg-gray-700">
                   {showCopied ? <Check size={20} className="text-green-500"/> : <Share2 size={20} />}
                 </Button>
-                <Button onClick={onClose} variant="outline" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <Button onClick={onClose} variant="ghost" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700">
                   <X size={20} />
                 </Button>
              </div>

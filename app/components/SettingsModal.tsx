@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useContext } from 'react';
-import { Moon, Sun, ChevronRight, RotateCcw, Github } from 'lucide-react';
+import { Moon, Sun, ChevronRight, RotateCcw, Github, X } from 'lucide-react';
 import { LanguageContext, Language, LanguageContextType, languages } from '../locales/translations';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -26,9 +26,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, setThemeM
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-sm max-h-[90vh] flex flex-col">
-        <DialogHeader>
+      <DialogContent className="!max-w-sm !max-h-[90vh] flex flex-col p-0 gap-0" showCloseButton={false}>
+        <DialogHeader className="flex flex-row items-center justify-between p-5 pb-3">
           <DialogTitle className="text-gray-900 dark:text-white">{t('settings')}</DialogTitle>
+          <Button onClick={onClose} variant="ghost" size="icon-sm" className="text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <X size={18} />
+          </Button>
         </DialogHeader>
 
         <div id="settings-modal-scroll-container" className="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-8">

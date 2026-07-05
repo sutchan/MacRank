@@ -117,16 +117,16 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/20 dark:border-white/10 rounded-2xl">
+      <DialogContent className="!max-w-4xl !max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/20 dark:border-white/10 rounded-2xl p-0 gap-0" showCloseButton={false}>
         <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-black/20">
            <DialogHeader>
              <DialogTitle className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</DialogTitle>
            </DialogHeader>
            <div className="flex items-center gap-2">
-             <Button onClick={handleShare} variant="outline" size="icon-sm" className="bg-gray-200 dark:bg-gray-800 text-gray-500 hover:text-blue-500">
+             <Button onClick={handleShare} variant="ghost" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-blue-500 hover:bg-gray-200 dark:hover:bg-gray-700">
                 {showCopied ? <Check size={18} className="text-green-500" /> : <Share2 size={18} />}
              </Button>
-             <Button onClick={onClose} variant="outline" size="icon-sm" className="bg-gray-200 dark:bg-gray-800 text-gray-500 hover:text-red-500">
+             <Button onClick={onClose} variant="ghost" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700">
                <X size={20} />
              </Button>
            </div>
