@@ -167,4 +167,12 @@ export const es = {
   share_score_label: 'Puntuación',
   share_detail_tagline: 'Base de datos profesional de rendimiento de Apple Silicon',
   share_compare_tagline: 'Herramienta profesional de comparación de ordenadores Apple',
+  name: 'Nombre',
+  no_data: 'No hay datos que coincidan con tus criterios',
+  no_results_title: 'Sin resultados',
+  no_results_desc: 'Ajusta tus filtros para ver más modelos',
+  clear_filters: 'Borrar filtros',
+  error_title: 'Algo salió mal',
+  error_desc: 'Ocurrió un error inesperado al cargar la página',
+  retry: 'Reintentar',
 };

@@ -6,7 +6,7 @@ import { calculateTierScore, getTierLabel } from '../lib/scoring';
 import { MacModel, RankingScenario } from '../types';
 import TierBadge from './TierBadge';
 import { Check } from 'lucide-react';
-import { formatCurrency, Language } from '../locales/translations';
+import { formatCurrency, Language, TranslationKey } from '../locales/translations';
 
 interface MacRowProps {
   mac: MacModel;
@@ -19,7 +19,7 @@ interface MacRowProps {
   maxScore: number;
   onSelect: (mac: MacModel) => void;
   onToggleCompare: (mac: MacModel) => void;
-  t: (key: any) => string;
+  t: (key: TranslationKey) => string;
   language: Language;
 }
 

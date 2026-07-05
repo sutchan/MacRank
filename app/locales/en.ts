@@ -149,6 +149,14 @@ export const en = {
   share_score_label: 'Score',
   share_detail_tagline: 'Professional Apple Silicon performance database',
   share_compare_tagline: 'Professional Apple computer comparison tool',
+  name: 'Name',
+  no_data: 'No data matches your criteria',
+  no_results_title: 'No Results Found',
+  no_results_desc: 'Try adjusting your filters to see more models',
+  clear_filters: 'Clear Filters',
+  error_title: 'Something Went Wrong',
+  error_desc: 'An unexpected error occurred while loading the page',
+  retry: 'Retry',
 
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'The next leap in mobile workstation power. On-device AI and real-time ray tracing become effortless.',

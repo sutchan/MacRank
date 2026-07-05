@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { Search, X } from 'lucide-react';
-import { LanguageContext, LanguageContextType } from '../locales/translations';
+import { LanguageContext, LanguageContextType, TranslationKey } from '../locales/translations';
 import { DeviceType, ChipFamily, RankingScenario, SortKey } from '../types';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -94,7 +94,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             <SelectContent>
               {availableFamilies.map(f => (
                 <SelectItem key={f} value={f}>
-                  {f === 'All' ? t('allChips') : t(`family_${f.toLowerCase()}` as any) || `${f} Series`}
+                  {f === 'All' ? t('allChips') : t(`family_${f.toLowerCase()}` as TranslationKey) || `${f} Series`}
                 </SelectItem>
               ))}
             </SelectContent>

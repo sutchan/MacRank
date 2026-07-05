@@ -167,4 +167,12 @@ export const hi = {
   share_score_label: 'स्कोर',
   share_detail_tagline: 'पेशेवर Apple Silicon प्रदर्शन डेटाबेस',
   share_compare_tagline: 'पेशेवर Apple कंप्यूटर तुलना उपकरण',
+  name: 'नाम',
+  no_data: 'आपके मानदंड से मेल खाता कोई डेटा नहीं है',
+  no_results_title: 'कोई परिणाम नहीं मिला',
+  no_results_desc: 'अधिक मॉडल देखने के लिए अपने फ़िल्टर समायोजित करें',
+  clear_filters: 'फ़िल्टर साफ़ करें',
+  error_title: 'कुछ गलत हो गया',
+  error_desc: 'पेज लोड करते समय अप्रत्याशित त्रुटि हुई',
+  retry: 'पुनः प्रयास करें',
 };

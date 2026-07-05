@@ -149,6 +149,14 @@ export const zh = {
   share_score_label: '评分',
   share_detail_tagline: '专业级苹果电脑性能数据库',
   share_compare_tagline: '专业级苹果电脑对比工具',
+  name: '名称',
+  no_data: '没有符合条件的数据',
+  no_results_title: '未找到结果',
+  no_results_desc: '尝试调整筛选条件以查看更多机型',
+  clear_filters: '清除筛选',
+  error_title: '出错了',
+  error_desc: '页面加载时发生意外错误',
+  retry: '重试',
 
   // --- 硬件详细描述 ---
   'desc_m5-max-16-16-48': '下一代移动工作站。预测将采用更先进的制程，进一步提升端侧 AI 性能。',

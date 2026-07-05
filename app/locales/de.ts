@@ -167,4 +167,12 @@ export const de = {
   share_score_label: 'Punktzahl',
   share_detail_tagline: 'Professionelle Apple Silicon Leistungsdatenbank',
   share_compare_tagline: 'Professionelles Apple Computer Vergleichstool',
+  name: 'Name',
+  no_data: 'Keine Daten entsprechen deinen Kriterien',
+  no_results_title: 'Keine Ergebnisse',
+  no_results_desc: 'Passe deine Filter an, um mehr Modelle zu sehen',
+  clear_filters: 'Filter löschen',
+  error_title: 'Etwas ist schiefgelaufen',
+  error_desc: 'Beim Laden der Seite ist ein unerwarteter Fehler aufgetreten',
+  retry: 'Erneut versuchen',
 };

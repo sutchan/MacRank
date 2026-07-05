@@ -114,6 +114,14 @@ export const useMacData = () => {
     }));
   }, []);
 
+  const resetFilters = useCallback(() => {
+    const defaults = getDefaultState();
+    setSearchTerm(defaults.search);
+    setFilterType(defaults.type);
+    setFilterFamily(defaults.family);
+    setFilterOS(defaults.os);
+  }, []);
+
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -150,6 +158,7 @@ export const useMacData = () => {
     showReference,
     setShowReference,
     filteredData,
+    resetFilters,
   }), [
     searchTerm,
     filterType,
@@ -162,5 +171,6 @@ export const useMacData = () => {
     rankingScenario,
     showReference,
     filteredData,
+    resetFilters,
   ]);
 };

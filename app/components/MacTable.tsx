@@ -6,6 +6,8 @@ import { MacModel, RankingScenario, SortKey } from '../types';
 import SortHeader from './SortHeader';
 import MacRow from './MacRow';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
+import { SearchX } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface MacTableProps {
   data: MacModel[];
@@ -16,11 +18,12 @@ interface MacTableProps {
   maxScore?: number;
   sortConfig?: { key: SortKey; direction: 'asc' | 'desc' };
   onSort?: (key: SortKey) => void;
+  onResetFilters?: () => void;
 }
 
 const MacTable: React.FC<MacTableProps> = ({
   data, onSelect, compareList, onToggleCompare, scenario, maxScore = 10000,
-  sortConfig, onSort
+  sortConfig, onSort, onResetFilters
 }) => {
   const { t, language } = useContext(LanguageContext) as LanguageContextType;
 
@@ -28,6 +31,21 @@ const MacTable: React.FC<MacTableProps> = ({
   const isMaxSelected = compareList.length >= 2;
   const activeKey = sortConfig?.key;
   const direction = sortConfig?.direction;
+
+  if (data.length === 0) {
+    return (
+      <div id="mac-table-empty" className="flex flex-col items-center justify-center py-16 px-4 bg-white dark:bg-black rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm text-center">
+        <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center mb-6">
+          <SearchX className="w-10 h-10 text-gray-400 dark:text-gray-500" />
+        </div>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('no_results_title')}</h3>
+        <p className="text-gray-500 dark:text-gray-400 max-w-md mb-6">{t('no_results_desc')}</p>
+        {onResetFilters && (
+          <Button onClick={onResetFilters}>{t('clear_filters')}</Button>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div id="mac-table-wrapper" className="overflow-x-auto relative custom-scrollbar bg-white dark:bg-black rounded-3xl border border-gray-200 dark:border-gray-800 shadow-sm">

@@ -12,6 +12,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import FilterControls from './components/FilterControls';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import { LanguageContext } from './locales/translations';
 import { ArrowUp, Check } from 'lucide-react';
 import { shareContent } from './lib/share';
@@ -40,6 +41,7 @@ const Page: React.FC = () => {
 
   return (
     <LanguageContext.Provider value={settings}>
+      <ErrorBoundary>
       <div id="main-layout-container" className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative selection:bg-blue-100 dark:selection:bg-blue-900/30">
         <Header 
             onScrollToSection={(id) => {
@@ -70,14 +72,15 @@ const Page: React.FC = () => {
           </section>
           
           <section id="leaderboard-section" className="scroll-mt-32">
-            <MacTable 
-              data={data.filteredData} 
-              onSelect={interaction.setSelectedModel} 
-              compareList={interaction.compareList} 
+            <MacTable
+              data={data.filteredData}
+              onSelect={interaction.setSelectedModel}
+              compareList={interaction.compareList}
               onToggleCompare={interaction.handleToggleCompare}
-              scenario={data.rankingScenario} 
-              sortConfig={data.sortConfig} 
+              scenario={data.rankingScenario}
+              sortConfig={data.sortConfig}
               onSort={data.handleSort}
+              onResetFilters={data.resetFilters}
             />
           </section>
           
@@ -131,6 +134,7 @@ const Page: React.FC = () => {
           </div>
         )}
       </div>
+      </ErrorBoundary>
     </LanguageContext.Provider>
   );
 };

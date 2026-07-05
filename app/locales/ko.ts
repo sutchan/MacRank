@@ -167,4 +167,12 @@ export const ko = {
   share_score_label: '점수',
   share_detail_tagline: '전문 Apple Silicon 성능 데이터베이스',
   share_compare_tagline: '전문 Apple 컴퓨터 비교 도구',
+  name: '이름',
+  no_data: '조건과 일치하는 데이터가 없습니다',
+  no_results_title: '결과를 찾을 수 없습니다',
+  no_results_desc: '더 많은 모델을 보려면 필터를 조정하세요',
+  clear_filters: '필터 지우기',
+  error_title: '문제가 발생했습니다',
+  error_desc: '페이지를 로드하는 중 예기치 않은 오류가 발생했습니다',
+  retry: '다시 시도',
 };

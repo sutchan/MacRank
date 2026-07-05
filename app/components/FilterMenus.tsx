@@ -112,7 +112,7 @@ export const ViewMenu = React.memo(function ViewMenu({ sortBy, onSort, showRefer
                           className="w-full text-left text-sm flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
                         >
                             <div className="w-4">{sortBy === option && <Check size={14} className="text-blue-500" />}</div>
-                            {t(option as any) || option}
+                            {t(option)}
                         </Button>
                     ))}
                 </div>

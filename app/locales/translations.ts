@@ -55,10 +55,12 @@ export const translations = {
   en, zh, es, fr, de, ja, pt, ru, ko, hi
 };
 
+export type TranslationKey = keyof typeof en;
+
 export interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof typeof en) => string;
+  t: (key: TranslationKey) => string;
 }
 
 const defaultLanguageContextValue: LanguageContextType = {

@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useContext, useState } from 'react';
-import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw, Wifi, Cable, BoxSelect } from 'lucide-react';
+import { X, Cpu, Layers, HardDrive, CheckCircle2, Share2, Check, Monitor, Zap, RotateCcw, Wifi, Cable, BoxSelect, LucideIcon } from 'lucide-react';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';
 import { estimateRefurbishedPrice } from '../services/priceService';
 import { getMacSpecs } from '../lib/specs';
 import { MacModel, RankingScenario } from '../types';
-import { LanguageContext, LanguageContextType, formatCurrency } from '../locales/translations';
+import { LanguageContext, LanguageContextType, formatCurrency, TranslationKey } from '../locales/translations';
 import TierBadge from './TierBadge';
 import TradeInCalculator from './TradeInCalculator';
 import { shareContent } from '../lib/share';
@@ -30,7 +30,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
   const specs = getMacSpecs(mac);
 
   const descKey = `desc_${mac.id}`;
-  const translatedText = t(descKey as any);
+  const translatedText = t(descKey as TranslationKey);
   const description = translatedText !== descKey ? translatedText : mac.description;
 
   const handleShare = async () => {
@@ -48,7 +48,7 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
     if (result === 'copied') { setShowCopied(true); setTimeout(() => setShowCopied(false), 2000); }
   };
 
-  const TechParam = ({ icon: Icon, label, value, fullWidth = false }: { icon: any, label: string, value: string | number, fullWidth?: boolean }) => (
+  const TechParam = ({ icon: Icon, label, value, fullWidth = false }: { icon: LucideIcon, label: string, value: string | number, fullWidth?: boolean }) => (
     <div className={`flex items-start gap-3 p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 transition-colors ${fullWidth ? 'col-span-2 md:col-span-1' : ''}`}>
       <Icon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0 mt-0.5" strokeWidth={1.5} />
       <div>
@@ -97,19 +97,19 @@ const DetailModal: React.FC<DetailModalProps> = ({ mac, onClose, scenario }) => 
                   {mac.displayInfo && <TechParam icon={Monitor} label={t('display')} value={mac.displayInfo} fullWidth />}
                   <TechParam icon={Zap} label={t('launchPrice')} value={formatCurrency(mac.basePriceUSD, language)} />
                   {!mac.isReference && mac.releaseYear < new Date().getFullYear() && (
-                    <TechParam icon={RotateCcw} label={t('refurbished' as any)} value={`~${formatCurrency(estimateRefurbishedPrice(mac.basePriceUSD, mac.releaseYear), language)}`} />
+                    <TechParam icon={RotateCcw} label={t('refurbished')} value={`~${formatCurrency(estimateRefurbishedPrice(mac.basePriceUSD, mac.releaseYear), language)}`} />
                   )}
               </div>
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{t('connectivity' as any)}</h3>
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1">{t('connectivity')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <TechParam icon={Wifi} label={t('connectivity' as any)} value={specs.connectivity} fullWidth />
-                  <TechParam icon={Cable} label={t('ports' as any)} value={specs.portsDescription} fullWidth />
-                  <TechParam icon={Monitor} label={t('max_displays' as any)} value={`${specs.maxExternalDisplays}x`} />
-                  <TechParam icon={BoxSelect} label={t('ram_upgrade' as any)} value={specs.ramUpgradable ? t('upgradable' as any) : t('not_upgradable' as any)} />
-                  <TechParam icon={HardDrive} label={t('ssd_upgrade' as any)} value={specs.ssdUpgradable ? t('upgradable' as any) : t('not_upgradable' as any)} />
+                  <TechParam icon={Wifi} label={t('connectivity')} value={specs.connectivity} fullWidth />
+                  <TechParam icon={Cable} label={t('ports')} value={specs.portsDescription} fullWidth />
+                  <TechParam icon={Monitor} label={t('max_displays')} value={`${specs.maxExternalDisplays}x`} />
+                  <TechParam icon={BoxSelect} label={t('ram_upgrade')} value={specs.ramUpgradable ? t('upgradable') : t('not_upgradable')} />
+                  <TechParam icon={HardDrive} label={t('ssd_upgrade')} value={specs.ssdUpgradable ? t('upgradable') : t('not_upgradable')} />
               </div>
             </div>
 
