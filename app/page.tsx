@@ -90,7 +90,7 @@ const Page: React.FC = () => {
         <button 
           id="back-to-top-btn"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-          className={`fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full shadow-lg glass-panel flex items-center justify-center transition-all ${interaction.showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}
+          className={`fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full shadow-lg glass-panel flex items-center justify-center transition-[transform,opacity] ${interaction.showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}
           aria-label={t('back_to_top')}
         >
           <ArrowUp size={24} />
@@ -128,7 +128,7 @@ const Page: React.FC = () => {
         </Suspense>
         
         {interaction.showToast && (
-          <div id="toast-notification" className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
+          <div id="toast-notification" aria-live="polite" className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
              <Check size={18} className="text-green-400" />
              <span className="text-sm font-medium">{t('link_copied')}</span>
           </div>

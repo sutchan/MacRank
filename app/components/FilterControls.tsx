@@ -41,7 +41,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   const { t } = useContext(LanguageContext) as LanguageContextType;
 
   return (
-    <section id="filter-controls-section" className="sticky top-12 z-30 bg-gray-50/80 dark:bg-black/80 backdrop-blur-xl py-4 -mx-4 px-4 border-b border-gray-200/80 dark:border-gray-800/80 transition-all duration-300">
+    <section id="filter-controls-section" className="sticky top-12 z-30 bg-gray-50/80 dark:bg-black/80 backdrop-blur-xl py-4 -mx-4 px-4 border-b border-gray-200/80 dark:border-gray-800/80 transition-colors duration-300">
        <div id="filter-controls-top-row" className="max-w-[980px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <div id="search-input-wrapper" className="relative w-full md:flex-1 group">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={16} />
@@ -52,6 +52,8 @@ const FilterControls: React.FC<FilterControlsProps> = ({
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-9 pr-8 py-2.5 text-sm"
               aria-label="Search Models"
+              name="search"
+              autoComplete="off"
             />
             {searchTerm && (
               <Button
@@ -59,6 +61,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
                 variant="ghost"
                 size="icon-xs"
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                aria-label="Clear search"
               >
                 <X size={14} />
               </Button>

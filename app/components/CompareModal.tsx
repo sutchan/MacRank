@@ -99,7 +99,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
         <div className="flex items-center gap-3 mb-2">
            <div className="w-16 md:w-24 text-right text-[10px] font-medium truncate text-gray-500 shrink-0">{m1.chip}</div>
            <div className="relative flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-             <div className={`h-full rounded-full transition-all duration-500 ${val1 >= val2 ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-700'}`} style={{ width: `${p1}%` }}></div>
+             <div className={`h-full rounded-full transition-[width] duration-500 ${val1 >= val2 ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-700'}`} style={{ width: `${p1}%` }}></div>
            </div>
            <div className="w-16 md:w-20 text-right text-xs md:text-sm font-bold text-gray-900 dark:text-white tabular-nums shrink-0">{val1.toLocaleString()}{suffix}</div>
         </div>
@@ -107,7 +107,7 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
         <div className="flex items-center gap-3">
            <div className="w-16 md:w-24 text-right text-[10px] font-medium truncate text-gray-500 shrink-0">{m2.chip}</div>
            <div className="relative flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-             <div className={`h-full rounded-full transition-all duration-500 ${val2 > val1 ? 'bg-purple-500' : 'bg-gray-300 dark:bg-gray-700'}`} style={{ width: `${p2}%` }}></div>
+             <div className={`h-full rounded-full transition-[width] duration-500 ${val2 > val1 ? 'bg-purple-500' : 'bg-gray-300 dark:bg-gray-700'}`} style={{ width: `${p2}%` }}></div>
            </div>
            <div className="w-16 md:w-20 text-right text-xs md:text-sm font-bold text-gray-900 dark:text-white tabular-nums shrink-0">{val2.toLocaleString()}{suffix}</div>
         </div>
@@ -117,16 +117,16 @@ const CompareModal: React.FC<CompareModalProps> = ({ models, onClose, scenario }
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="!max-w-4xl !max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/20 dark:border-white/10 rounded-2xl p-0 gap-0" showCloseButton={false}>
+      <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-apple-gray-900 border border-white/20 dark:border-white/10 rounded-2xl">
         <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-black/20">
            <DialogHeader>
              <DialogTitle className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white">{t('compareModels')}</DialogTitle>
            </DialogHeader>
            <div className="flex items-center gap-2">
-             <Button onClick={handleShare} variant="ghost" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-blue-500 hover:bg-gray-200 dark:hover:bg-gray-700">
+             <Button onClick={handleShare} variant="outline" size="icon-sm" className="bg-gray-200 dark:bg-gray-800 text-gray-500 hover:text-blue-500" aria-label="Share">
                 {showCopied ? <Check size={18} className="text-green-500" /> : <Share2 size={18} />}
              </Button>
-             <Button onClick={onClose} variant="ghost" size="icon-sm" className="bg-gray-100 dark:bg-gray-800 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700">
+             <Button onClick={onClose} variant="outline" size="icon-sm" className="bg-gray-200 dark:bg-gray-800 text-gray-500 hover:text-red-500" aria-label="Close">
                <X size={20} />
              </Button>
            </div>

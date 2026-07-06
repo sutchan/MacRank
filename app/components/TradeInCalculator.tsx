@@ -29,7 +29,7 @@ const TradeInCalculator: React.FC<TradeInCalculatorProps> = ({ targetMac }) => {
     <div className="bg-gray-50 dark:bg-apple-gray-850 rounded-3xl p-6 border border-gray-200 dark:border-white/5">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
-          <Calculator size={20} />
+          <Calculator size={20} aria-hidden="true" />
         </div>
         <div>
           <h3 className="text-sm font-bold text-gray-900 dark:text-white">{t('tradeInCalc')}</h3>
@@ -59,7 +59,7 @@ const TradeInCalculator: React.FC<TradeInCalculatorProps> = ({ targetMac }) => {
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white dark:bg-black p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
             <div className="flex items-center gap-2 mb-1 text-gray-400">
-              <TrendingDown size={14} />
+              <TrendingDown size={14} aria-hidden="true" />
               <span className="text-[10px] font-bold uppercase tracking-tight">{t('estimatedValue')}</span>
             </div>
             <span className="text-lg font-black text-emerald-600 dark:text-emerald-400 tabular-nums">
@@ -69,7 +69,7 @@ const TradeInCalculator: React.FC<TradeInCalculatorProps> = ({ targetMac }) => {
 
           <div className="bg-white dark:bg-black p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
             <div className="flex items-center gap-2 mb-1 text-gray-400">
-              <Wallet size={14} />
+              <Wallet size={14} aria-hidden="true" />
               <span className="text-[10px] font-bold uppercase tracking-tight">{t('netCost')}</span>
             </div>
             <span className="text-lg font-black text-blue-600 dark:text-blue-400 tabular-nums">
@@ -90,7 +90,7 @@ const TradeInCalculator: React.FC<TradeInCalculatorProps> = ({ targetMac }) => {
                   {formatCurrency(targetPrice, language)}
                 </span>
               </div>
-              <ArrowRight size={16} className="text-blue-500" />
+              <ArrowRight size={16} className="text-blue-500" aria-hidden="true" />
             </div>
           </div>
         )}

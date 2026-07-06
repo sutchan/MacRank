@@ -118,7 +118,7 @@ export const ViewMenu = React.memo(function ViewMenu({ sortBy, onSort, showRefer
                 </div>
             </div>
             <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
-            <div onClick={() => setShowReference(!showReference)} className="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+            <button onClick={() => setShowReference(!showReference)} className="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer" role="switch" aria-checked={showReference} aria-label={t('pc_reference')}>
                 <div className="flex items-center gap-3">
                     <Cpu size={16} className="text-gray-500" />
                     <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{t('pc_reference')}</span>
@@ -126,7 +126,7 @@ export const ViewMenu = React.memo(function ViewMenu({ sortBy, onSort, showRefer
                 <div className={`w-10 h-6 rounded-full p-1 transition-colors ${showReference ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
                     <div className={`w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform ${showReference ? 'translate-x-4' : 'translate-x-0'}`}></div>
                 </div>
-            </div>
+            </button>
         </div>
       )}
     </div>

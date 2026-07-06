@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Geist } from 'next/font/google';
 import Script from 'next/script';
 import '../app/globals.css';
 import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -17,8 +18,11 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
-    <html lang="en" className={cn(jetbrainsMono.variable, "font-sans", geist.variable)} suppressHydrationWarning>
+    <html lang="en" className={cn(jetbrainsMono.variable, "font-sans", geist.variable, "dark:[color-scheme:dark]")} suppressHydrationWarning>
       <head>
+        {/* 安全说明: 主题检测脚本使用 dangerouslySetInnerHTML 是为了避免 FOUC (闪烁)。
+            该脚本内容为硬编码常量，不包含任何用户输入，因此不存在 XSS 风险。
+            (REACT-XSS-001: 此处内容为可信静态代码) */}
         <script dangerouslySetInnerHTML={{
           __html: `
             try {
@@ -33,20 +37,26 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           `
         }} />
 
-        {/* Google tag (gtag.js) */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8" />
-        <Script id="google-analytics">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+        {/* Google Analytics - GA Measurement ID 通过环境变量配置 (NEXT-SECRETS-001) */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <Script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`} />
+            <Script id="google-analytics">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
 
-            gtag('config', 'G-YKBHMQRHC8');
-          `}
-        </Script>
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
 
         <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta name="theme-color" content="#F9FAFB" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
         
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="apple-touch-icon" href="/icon.svg" />
@@ -68,7 +78,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <meta property="og:image" content="https://macrank.app/og-image.jpg" />
       </head>
       <body className="bg-gray-50 dark:bg-black text-gray-700 dark:text-gray-100 transition-colors duration-300 overflow-x-hidden">
-        {children}
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );

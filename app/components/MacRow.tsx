@@ -32,8 +32,8 @@ const MacRow: React.FC<MacRowProps> = ({
 
   const isRef = mac.isReference;
   const rowClass = isRef
-      ? 'bg-gray-50/50 dark:bg-gray-800/10 text-gray-500 dark:text-gray-500 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all'
-      : `group border-b border-gray-50 dark:border-gray-900 transition-all duration-300 ${
+      ? 'bg-gray-50/50 dark:bg-gray-800/10 text-gray-500 dark:text-gray-500 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-colors'
+      : `group border-b border-gray-50 dark:border-gray-900 transition-colors duration-300 ${
         isSelected
           ? 'bg-blue-50/70 dark:bg-blue-900/20 relative after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-blue-500'
           : 'hover:bg-gray-50 dark:hover:bg-gray-900/30'
@@ -49,7 +49,9 @@ const MacRow: React.FC<MacRowProps> = ({
          <button
            onClick={(e) => { e.stopPropagation(); onToggleCompare(mac); }}
            disabled={disabled}
-           className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
+           aria-label={isSelected ? `Remove ${mac.name} from comparison` : `Add ${mac.name} to comparison`}
+           aria-checked={isSelected}
+           className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors ${
               isSelected
                 ? 'bg-blue-500 border-blue-500 text-white scale-110 shadow-lg shadow-blue-500/20'
                 : disabled
@@ -109,7 +111,7 @@ const MacRow: React.FC<MacRowProps> = ({
               <span className={`text-base md:text-lg font-black tabular-nums tracking-tighter ${isRef ? 'text-gray-400' : 'text-gray-900 dark:text-white'}`}>{score.toLocaleString()}</span>
               <div className="w-full h-[3px] bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                  <div
-                   className={`h-full rounded-full transition-all duration-1000 ${isRef ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-600 dark:to-blue-400'}`}
+                   className={`h-full rounded-full transition-[width] duration-1000 ${isRef ? 'bg-gray-300 dark:bg-gray-600' : 'bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-600 dark:to-blue-400'}`}
                    style={{ width: `${scoreWidth}%` }}
                  ></div>
               </div>

@@ -18,7 +18,7 @@ const TierBadge: React.FC<TierBadgeProps> = ({ tier }) => {
   };
 
   return (
-    <Badge className={`w-8 h-8 rounded-full text-xs font-bold transition-all duration-300 hover:scale-110 ${getBadgeStyle(tier)}`}>
+    <Badge className={`w-8 h-8 rounded-full text-xs font-bold transition-transform duration-300 hover:scale-110 ${getBadgeStyle(tier)}`}>
       {tier}
     </Badge>
   );

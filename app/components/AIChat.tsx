@@ -93,7 +93,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
     <div id="ai-chat-component-root">
        <div 
          id="ai-suggestion-bubble"
-         className={`fixed bottom-24 right-6 z-40 bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-all duration-500 transform origin-bottom-right ${
+         className={`fixed bottom-24 right-6 z-40 bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-[transform,opacity] duration-500 transform origin-bottom-right ${
             showSuggestion && !isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-4 pointer-events-none'
          }`}
        >
@@ -105,7 +105,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         id="ai-chat-trigger-button"
         onClick={() => setIsOpen(true)}
         aria-label="Open AI Assistant"
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl transition-all duration-500 hover:scale-105 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black ${
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl transition-[transform,opacity] duration-500 hover:scale-105 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black ${
           isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'
         }`}
       >
@@ -114,7 +114,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
       <div 
         id="ai-chat-window-container"
-        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-all duration-500 transform origin-bottom-right overflow-hidden ${
+        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-[transform,opacity] duration-500 transform origin-bottom-right overflow-hidden ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 pointer-events-none translate-y-10'
         }`}
       >
@@ -129,12 +129,12 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button 
+            <Button
               onClick={handleClearChat}
               variant="ghost"
               size="icon-xs"
               className="hover:bg-red-500/10 text-gray-400 hover:text-red-500"
-              title={t('clear_chat')}
+              aria-label={t('clear_chat')}
             >
               <Trash2 size={16} />
             </Button>
@@ -168,14 +168,16 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         </div>
 
         <form id="ai-chat-input-form-element" onSubmit={handleSubmit} className="p-4 bg-white/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-gray-700/50">
-          <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 px-1 py-1 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all shadow-sm">
+          <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 px-1 py-1 focus-within:ring-2 focus-within:ring-blue-500/50 transition-colors shadow-sm">
             <Input
               id="ai-chat-input-field"
               type="text"
+              name="ai-chat-message"
               value={input}
               onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
               placeholder={t('ask_placeholder')}
               maxLength={MAX_INPUT_LENGTH}
+              autoComplete="off"
               className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm rounded-full border-none"
             />
             <Button 
@@ -183,7 +185,8 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
               type="submit"
               disabled={isLoading || !input.trim()}
               size="icon-xs"
-              className={`w-8 h-8 rounded-full text-white disabled:opacity-50 disabled:bg-gray-400 transition-all ${
+              aria-label={isOnline ? 'Send message' : 'Send message (offline)'}
+              className={`w-8 h-8 rounded-full text-white disabled:opacity-50 disabled:bg-gray-400 transition-colors ${
                 isOnline ? 'bg-blue-500 hover:bg-blue-600' : 'bg-orange-500 hover:bg-orange-600'
               }`}
             >

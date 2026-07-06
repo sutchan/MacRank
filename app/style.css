@@ -6,7 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, "Nirmala UI", "Noto Sans Devanagari", "Kohinoor Devanagari", "Mangal", sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", "Nirmala UI", "Noto Sans Devanagari", "Kohinoor Devanagari", "Mangal", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --color-apple-blue: #0071E3;
@@ -34,6 +34,16 @@
 @layer base {
   :root {
     scroll-behavior: smooth;
+  }
+
+  /* Honor prefers-reduced-motion: disable all animations and transitions */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   body {

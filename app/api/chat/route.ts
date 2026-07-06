@@ -10,11 +10,15 @@ export const dynamic = 'force-dynamic';
 const MODEL_NAME = 'gemini-3-flash-preview';
 const MAX_QUERY_LENGTH = 500;
 const MAX_CONTEXT_ITEMS = 45;
+// 请求体大小限制: 防止超大 JSON payload 拒绝服务 (NEXT-DOS-001)
+const MAXRequestBodySizeBytes = 512 * 1024; // 512KB
 
 interface RateLimitEntry {
   count: number;
   resetAt: number;
 }
+// 安全说明: 此速率限制使用内存 Map，在 Edge Runtime 中每个冷启动会重置。
+// 生产环境应使用 Redis/Valkey 等持久化存储作为后端 (NEXT-DOS-001)
 const rateLimitStore = new Map<string, RateLimitEntry>();
 const RATE_LIMIT_REQUESTS = 10;
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
@@ -102,6 +106,12 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // 防止超大请求体导致 DoS (NEXT-DOS-001)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength, 10) > MAXRequestBodySizeBytes) {
+      return NextResponse.json({ error: 'Request body too large' }, { status: 413 });
+    }
+
     const body = await request.json() as { query?: string; contextData?: MacModel[]; language?: string };
 
     const rawQuery = body.query || '';
@@ -177,6 +187,11 @@ export async function POST(request: NextRequest) {
         remaining: rateLimitResult.remaining,
         limit: RATE_LIMIT_REQUESTS,
         resetMs: rateLimitResult.resetMs,
+      },
+    }, {
+      headers: {
+        // 防止 API 响应被缓存 (NEXT-CACHE-001)
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
       },
     });
   } catch (error) {

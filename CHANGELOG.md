@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 
 ## [0.7.8]
+### UI Layout Fixes
+- **Modal Widths**: Fixed DetailModal, CompareModal, SettingsModal being constrained to 384px by default DialogContent `sm:max-w-sm`; used `!max-w-*` overrides + `showCloseButton={false}` to prevent duplicate close buttons
+- **Table Columns**: Adjusted CPU/GPU column widths from w-24 to w-28, price column from w-24 to w-28, checkbox column from w-8 to w-10; added `whitespace-nowrap` to SortHeader labels
+- **Button Consistency**: Unified Share/Close button styles across DetailModal, CompareModal, SettingsModal (consistent ghost variant + hover effects)
+- **Price Column**: Improved price display hierarchy — current price uses primary text color, original price strikethrough uses muted gray
+### Design System
+- **Font Stack**: Extended global font stack with Chinese fallbacks (PingFang SC, Microsoft YaHei) and Indic fallbacks (Nirmala UI, Noto Sans Devanagari, Kohinoor Devanagari, Mangal)
+- **shadcn/ui Components**: Added tooltip, separator, skeleton, card components; wrapped app with TooltipProvider
+### Accessibility (Web Interface Guidelines Compliance — 40 fixes)
+- **aria-label**: Added to all icon-only buttons across Header, FilterControls, CompareBar, DetailModal, CompareModal, SettingsModal, TradeInView, AIChat, MacRow
+- **aria-hidden**: Added to all decorative icons (Zap, Github, Heart, Calculator, TrendingDown, Wallet, ArrowRight, RotateCcw, SVG logos)
+- **aria-live**: Added `aria-live="polite"` to toast notification
+- **Semantic HTML**: Changed `<span onClick>` to `<button>` in Header; `<div onClick>` to `<button role="switch" aria-checked>` in FilterMenus; `<div onClick>` to `<button type="button">` in SortHeader
+- **Focus States**: Ensured all interactive elements have `focus-visible:ring-*` replacements
+- **Forms**: Added `name` and `autoComplete="off"` to search and chat inputs
+- **Transitions**: Replaced all `transition-all` anti-patterns with specific transition properties (`transition-colors`, `transition-transform`, `transition-[width]`, `transition-[transform,opacity]`)
+- **Reduced Motion**: Added global `@media (prefers-reduced-motion: reduce)` CSS rule
+- **Dark Mode**: Added `dark:[color-scheme:dark]` to `<html>`; added `<meta name="theme-color">` for light/dark
+- **Zoom**: Removed `user-scalable=no` and `maximum-scale=1.0` from viewport meta
 ### Security
 - **API Hardening**: Enhanced `/api/chat` route with `validateContextItem` whitelist validation for all client-submitted `contextData` fields, mitigating prompt injection attacks
 - **Prompt Isolation**: Wrapped hardware database context in `<HARDWARE_DATABASE>` tags with explicit system instruction declaring data is non-instructional

@@ -2,7 +2,16 @@
 
 import React from 'react';
 import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ChatMessage } from '../types';
+
+// 安全配置: 禁止渲染原始 HTML，仅允许 Markdown 语法
+// react-markdown v9 默认不允许 HTML，此处显式说明安全策略 (REACT-MARKUP-001)
+const ALLOWED_MARKDOWN_ELEMENTS = [
+  'p', 'br', 'strong', 'em', 'code', 'pre', 'blockquote',
+  'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'a', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'hr',
+];
 
 interface ChatMessageBubbleProps {
   msg: ChatMessage;
@@ -23,7 +32,12 @@ const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ msg, index }) => 
         }`}
       >
         <div className="markdown-body">
-          <Markdown>{msg.text}</Markdown>
+          {/* 安全: allowedTypes 限制仅渲染安全的 Markdown 元素，禁止 HTML 标签 (REACT-MARKUP-001) */}
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            allowedElements={ALLOWED_MARKDOWN_ELEMENTS}
+            unwrapDisallowed
+          >{msg.text}</Markdown>
         </div>
       </div>
     </div>

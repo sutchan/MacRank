@@ -22,7 +22,8 @@ const SortHeader: React.FC<SortHeaderProps> = ({
 }) => {
   const isActive = activeKey === sortKey;
   return (
-    <div
+    <button
+      type="button"
       className={`flex items-center gap-1 cursor-pointer group ${className} ${align === 'right' ? 'justify-end' : align === 'center' ? 'justify-center' : 'justify-start'}`}
       onClick={() => onSort && onSort(sortKey)}
     >
@@ -36,7 +37,7 @@ const SortHeader: React.FC<SortHeaderProps> = ({
           <ChevronsUpDown size={10} className="opacity-30 group-hover:opacity-100 transition-opacity" />
         )}
       </span>
-    </div>
+    </button>
   );
 };
 
