@@ -1,4 +1,4 @@
-// app/locales/es.ts v0.7.8
+// app/locales/es.ts v0.7.5
 export const es = {
   appTitle: 'MacRank',
   leaderboard: 'Clasificación',
@@ -68,8 +68,8 @@ export const es = {
   chart_ratio_desc: 'Puntos de Rendimiento por Dólar (Más alto es mejor)',
   avgPrice: 'Precio Medio',
   avgScore: 'Puntuación Media',
-  label_single: 'Único',
-  label_multi: 'Múltiple',
+  label_single: 'Single',
+  label_multi: 'Multi',
   cores: 'Núcleos',
   core_gpu: 'Núcleos GPU',
   genai_assistant: 'Asistente GenAI',
@@ -163,16 +163,4 @@ export const es = {
   ports: 'Puertos',
   ram_upgrade: 'Actualización de RAM',
   ssd_upgrade: 'Actualización de SSD',
-  app_tagline: 'Ranking de Rendimiento',
-  share_score_label: 'Puntuación',
-  share_detail_tagline: 'Base de datos profesional de rendimiento de Apple Silicon',
-  share_compare_tagline: 'Herramienta profesional de comparación de ordenadores Apple',
-  name: 'Nombre',
-  no_data: 'No hay datos que coincidan con tus criterios',
-  no_results_title: 'Sin resultados',
-  no_results_desc: 'Ajusta tus filtros para ver más modelos',
-  clear_filters: 'Borrar filtros',
-  error_title: 'Algo salió mal',
-  error_desc: 'Ocurrió un error inesperado al cargar la página',
-  retry: 'Reintentar',
 };

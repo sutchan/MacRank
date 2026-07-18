@@ -1,24 +1,10 @@
-'use client';
-
-import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
+// app/components/AIChat.tsx v0.7.5
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { ArrowUp, X, Sparkles, WifiOff, Trash2 } from 'lucide-react';
+import Markdown from 'react-markdown';
 import { ChatMessage, MacModel } from '../types';
 import { getMacAdvice } from '../services/geminiService';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import ChatMessageBubble from './ChatMessageBubble';
-
-const MAX_INPUT_LENGTH = 500;
-const MAX_MESSAGE_LENGTH = 4000;
-
-function sanitizeText(text: string, maxLen: number = MAX_MESSAGE_LENGTH): string {
-  return text
-    .slice(0, maxLen)
-    .replace(/\x00/g, '')
-    .replace(/\r/g, '')
-    .replace(/\t/g, '  ');
-}
 
 interface AIChatProps {
   macData: MacModel[];
@@ -35,8 +21,11 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
   const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
 
   useEffect(() => {
-    setMessages(prev => prev.length === 0 ? [{ id: 'welcome', role: 'model', text: t('chatWelcome') }] : prev);
-  }, [language, t]);
+    // Persistent initial message if no messages exist
+    if (messages.length === 0) {
+      setMessages([{ role: 'model', text: t('chatWelcome') }]);
+    }
+  }, [language, messages, t]);
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -48,6 +37,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
   useEffect(() => {
     if (isOpen) {
       setShowSuggestion(false);
@@ -56,36 +46,33 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         return () => clearTimeout(timer);
     }
   }, [isOpen]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen]);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = input.trim();
-    if (!trimmed || isLoading) return;
-    if (trimmed.length > MAX_INPUT_LENGTH) return;
+    if (!input.trim() || isLoading) return;
 
-    const userMsg = sanitizeText(trimmed, MAX_INPUT_LENGTH);
+    const userMsg = input.trim();
     setInput('');
-    setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'user', text: userMsg }]);
+    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setIsLoading(true);
 
     const responseText = await getMacAdvice(userMsg, macData, language);
 
-    setMessages(prev => [
-      ...prev,
-      { id: crypto.randomUUID(), role: 'model', text: sanitizeText(responseText, MAX_MESSAGE_LENGTH) },
-    ]);
+    setMessages(prev => [...prev, { role: 'model', text: responseText }]);
     setIsLoading(false);
-  }, [input, isLoading, macData, language]);
+  };
 
   const handleClearChat = () => {
     if (confirm(t('clear_chat_confirm'))) {
-      setMessages([{ id: 'welcome', role: 'model', text: t('chatWelcome') }]);
+      setMessages([{ role: 'model', text: t('chatWelcome') }]);
     }
   };
 
@@ -93,7 +80,7 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
     <div id="ai-chat-component-root">
        <div 
          id="ai-suggestion-bubble"
-         className={`fixed bottom-24 right-6 z-40 bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-[transform,opacity] duration-500 transform origin-bottom-right ${
+         className={`fixed bottom-24 right-6 z-40 bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-all duration-500 transform origin-bottom-right ${
             showSuggestion && !isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-4 pointer-events-none'
          }`}
        >
@@ -101,20 +88,20 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
          {t('ai_suggestion')}
        </div>
 
-      <Button
+      <button
         id="ai-chat-trigger-button"
         onClick={() => setIsOpen(true)}
         aria-label="Open AI Assistant"
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl transition-[transform,opacity] duration-500 hover:scale-105 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black ${
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl transition-all duration-500 hover:scale-105 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black ${
           isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'
         }`}
       >
         <Sparkles size={24} strokeWidth={1.5} />
-      </Button>
+      </button>
 
       <div 
         id="ai-chat-window-container"
-        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-[transform,opacity] duration-500 transform origin-bottom-right overflow-hidden ${
+        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-all duration-500 transform origin-bottom-right overflow-hidden ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 pointer-events-none translate-y-10'
         }`}
       >
@@ -129,31 +116,43 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button
+            <button 
               onClick={handleClearChat}
-              variant="ghost"
-              size="icon-xs"
-              className="hover:bg-red-500/10 text-gray-400 hover:text-red-500"
-              aria-label={t('clear_chat')}
+              className="w-8 h-8 rounded-full hover:bg-red-500/10 text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center"
+              title={t('clear_chat')}
             >
               <Trash2 size={16} />
-            </Button>
-            <Button 
+            </button>
+            <button 
               id="ai-chat-close-btn"
               onClick={() => setIsOpen(false)}
-              variant="outline"
-              size="icon-xs"
-              className="bg-gray-200/50 dark:bg-gray-700/50 text-gray-500 hover:text-gray-900 dark:hover:text-white"
               aria-label={t('close')}
+              className="w-8 h-8 rounded-full bg-gray-200/50 dark:bg-gray-700/50 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               <X size={16} />
-            </Button>
+            </button>
           </div>
         </div>
 
         <div id="ai-chat-messages-scroll-container" className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/30 dark:bg-black/10 custom-scrollbar">
           {messages.map((msg, idx) => (
-            <ChatMessageBubble key={msg.id || idx} msg={msg} index={idx} />
+            <div 
+              key={idx} 
+              id={`message-row-${idx}`}
+              className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
+            >
+              <div 
+                className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
+                  msg.role === 'user' 
+                    ? 'bg-blue-500 text-white rounded-br-none' 
+                    : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-bl-none border border-gray-100 dark:border-gray-700'
+                }`}
+              >
+                <div className="markdown-body">
+                  <Markdown>{msg.text}</Markdown>
+                </div>
+              </div>
+            </div>
           ))}
           {isLoading && (
             <div id="ai-chat-loading-indicator" className="flex justify-start">
@@ -168,30 +167,25 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
         </div>
 
         <form id="ai-chat-input-form-element" onSubmit={handleSubmit} className="p-4 bg-white/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-gray-700/50">
-          <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 px-1 py-1 focus-within:ring-2 focus-within:ring-blue-500/50 transition-colors shadow-sm">
-            <Input
+          <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 px-1 py-1 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all shadow-sm">
+            <input
               id="ai-chat-input-field"
               type="text"
-              name="ai-chat-message"
               value={input}
-              onChange={(e) => setInput(e.target.value.slice(0, MAX_INPUT_LENGTH))}
+              onChange={(e) => setInput(e.target.value)}
               placeholder={t('ask_placeholder')}
-              maxLength={MAX_INPUT_LENGTH}
-              autoComplete="off"
-              className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm rounded-full border-none"
+              className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
             />
-            <Button 
+            <button 
               id="ai-chat-send-btn"
               type="submit"
               disabled={isLoading || !input.trim()}
-              size="icon-xs"
-              aria-label={isOnline ? 'Send message' : 'Send message (offline)'}
-              className={`w-8 h-8 rounded-full text-white disabled:opacity-50 disabled:bg-gray-400 transition-colors ${
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-white disabled:opacity-50 disabled:bg-gray-400 transition-all ${
                 isOnline ? 'bg-blue-500 hover:bg-blue-600' : 'bg-orange-500 hover:bg-orange-600'
               }`}
             >
               {isOnline ? <ArrowUp size={16} strokeWidth={2.5} /> : <WifiOff size={14} />}
-            </Button>
+            </button>
           </div>
         </form>
       </div>

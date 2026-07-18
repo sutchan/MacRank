@@ -1,4 +1,4 @@
-// app/data/data-silicon.ts v0.7.8
+// app/data/data-silicon.ts v0.7.5
 import { MacModel, ChipFamily, DeviceType } from '../types';
 
 export const siliconData: MacModel[] = [

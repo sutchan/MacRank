@@ -1,4 +1,4 @@
-// app/services/priceService.ts v0.7.8
+// app/services/priceService.ts v0.7.0
 import { MacModel, RankingScenario } from '../types';
 
 /**

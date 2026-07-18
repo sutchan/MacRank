@@ -1,4 +1,4 @@
-// app/locales/zh.ts v0.7.8
+// app/locales/zh.ts v0.7.5
 export const zh = {
   appTitle: 'MacRank 性能天梯',
   leaderboard: '天梯榜单',
@@ -113,8 +113,8 @@ export const zh = {
   status_offline: '离线模式',
   offline_response_prefix: '⚡ **离线顾问**：当前无网络，为您检索本地硬件参数库：',
   offline_no_match: '未在本地库找到匹配机型，请尝试搜索 M3, M4 等关键词。',
-  share_message: '🔥 MacRank 苹果电脑性能天梯榜 - 全网最全的 M1-M5 系列跑分数据库！专业级硬件对比工具，选 Mac 不再纠结。快来看看哪款适合你！',
-  share_compare_msg: '⚔️ MacRank 对决：',
+  share_message: '🚀 分享这个苹果电脑性能天梯榜！涵盖 M4 Max/Ultra 等最新跑分参数。',
+  share_compare_msg: '⚔️ 苹果硬件参数对决：',
   view_options: '视图控制',
   sort_by: '天梯排序',
   compare_bar_title: '已选对比型号',
@@ -145,18 +145,6 @@ export const zh = {
   ports: '接口',
   ram_upgrade: '内存升级',
   ssd_upgrade: '硬盘升级',
-  app_tagline: '性能天梯',
-  share_score_label: '评分',
-  share_detail_tagline: '专业级苹果电脑性能数据库',
-  share_compare_tagline: '专业级苹果电脑对比工具',
-  name: '名称',
-  no_data: '没有符合条件的数据',
-  no_results_title: '未找到结果',
-  no_results_desc: '尝试调整筛选条件以查看更多机型',
-  clear_filters: '清除筛选',
-  error_title: '出错了',
-  error_desc: '页面加载时发生意外错误',
-  retry: '重试',
 
   // --- 硬件详细描述 ---
   'desc_m5-max-16-16-48': '下一代移动工作站。预测将采用更先进的制程，进一步提升端侧 AI 性能。',

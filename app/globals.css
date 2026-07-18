@@ -1,2 +1,2 @@
-/* app/globals.css v0.7.8 */
-@import "./style.css";
+@import "tailwindcss";
+@plugin "tailwindcss-animate";

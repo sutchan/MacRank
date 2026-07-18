@@ -1,4 +1,4 @@
-// app/locales/fr.ts v0.7.8
+// app/locales/fr.ts v0.7.5
 export const fr = {
   appTitle: 'MacRank',
   leaderboard: 'Classement',
@@ -68,7 +68,7 @@ export const fr = {
   chart_ratio_desc: 'Points de performance par dollar (Plus élevé est mieux)',
   avgPrice: 'Prix Moyen',
   avgScore: 'Score Moyen',
-  label_single: 'Unique',
+  label_single: 'Single',
   label_multi: 'Multi',
   cores: 'Cœurs',
   core_gpu: 'Cœurs GPU',
@@ -163,16 +163,4 @@ export const fr = {
   ports: 'Ports',
   ram_upgrade: 'Mise à niveau RAM',
   ssd_upgrade: 'Mise à niveau SSD',
-  app_tagline: 'Classement de Performance',
-  share_score_label: 'Score',
-  share_detail_tagline: 'Base de données professionnelle des performances Apple Silicon',
-  share_compare_tagline: 'Outil professionnel de comparaison d\'ordinateurs Apple',
-  name: 'Nom',
-  no_data: 'Aucune donnée ne correspond à vos critères',
-  no_results_title: 'Aucun résultat',
-  no_results_desc: 'Ajustez vos filtres pour voir plus de modèles',
-  clear_filters: 'Effacer les filtres',
-  error_title: 'Une erreur est survenue',
-  error_desc: 'Une erreur inattendue s\'est produite lors du chargement de la page',
-  retry: 'Réessayer',
 };

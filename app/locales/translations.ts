@@ -1,5 +1,5 @@
 
-// app/locales/translations.ts v0.7.8
+// app/locales/translations.ts v0.5.2
 import { createContext } from 'react';
 import { en } from './en';
 import { zh } from './zh';
@@ -55,12 +55,10 @@ export const translations = {
   en, zh, es, fr, de, ja, pt, ru, ko, hi
 };
 
-export type TranslationKey = keyof typeof en;
-
 export interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: keyof typeof en) => string;
 }
 
 const defaultLanguageContextValue: LanguageContextType = {

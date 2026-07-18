@@ -1,0 +1,65 @@
+// app/types.ts v0.7.5
+export enum ChipFamily {
+  M5 = 'M5',
+  M4 = 'M4',
+  M3 = 'M3',
+  M2 = 'M2',
+  M1 = 'M1',
+  A17 = 'A17',
+  Intel = 'Intel',
+  Reference = 'Reference'
+}
+
+export enum DeviceType {
+  Laptop = 'Laptop',
+  Desktop = 'Desktop',
+  Tablet = 'Tablet',
+  GPU = 'GPU',
+  CPU = 'CPU'
+}
+
+export type RankingScenario = 'balanced' | 'developer' | 'creative' | 'daily';
+
+export type SortKey = 'score' | 'price' | 'year' | 'name' | 'cpu' | 'gpu' | 'memory' | 'value';
+
+export interface MacModel {
+  id: string;
+  name: string;
+  type: DeviceType;
+  chip: string;
+  family: ChipFamily;
+  cores_cpu: string;
+  cores_gpu: number;
+  memory: string;
+  ramType?: string;
+  displayInfo?: string;
+  os?: string; // Added in v0.6.2
+  releaseYear: number;
+  singleCoreScore: number;
+  multiCoreScore: number;
+  metalScore: number;
+  basePriceUSD: number;
+  currentPriceUSD?: number; // Real-time or tracked price
+  valueScore?: number; // Performance per dollar
+  
+  // Memory & Storage Details
+  ramDetails?: {
+    type: string; // e.g., LPDDR5, LPDDR5X
+    bandwidth: number; // GB/s
+    capacity: string; // e.g., "8/16/24 GB"
+  };
+  storageDetails?: {
+    type: string; // e.g., SSD
+    readSpeed: number; // MB/s
+    writeSpeed: number; // MB/s
+  };
+
+  description: string;
+  isReference?: boolean;
+}
+
+export interface ChatMessage {
+  role: 'user' | 'model';
+  text: string;
+  isError?: boolean;
+}

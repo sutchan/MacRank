@@ -1,4 +1,4 @@
-// app/locales/ko.ts v0.7.8
+// app/locales/ko.ts v0.7.5
 export const ko = {
   appTitle: 'MacRank',
   leaderboard: '순위표',
@@ -68,8 +68,8 @@ export const ko = {
   chart_ratio_desc: '달러당 성능 점수 (높을수록 좋음)',
   avgPrice: '평균 가격',
   avgScore: '평균 점수',
-  label_single: '싱글',
-  label_multi: '멀티',
+  label_single: 'Single',
+  label_multi: 'Multi',
   cores: '코어',
   core_gpu: '코어 GPU',
   genai_assistant: 'GenAI 어시스턴트',
@@ -163,16 +163,4 @@ export const ko = {
   ports: '포트',
   ram_upgrade: 'RAM 업그레이드',
   ssd_upgrade: 'SSD 업그레이드',
-  app_tagline: '성능 랭킹',
-  share_score_label: '점수',
-  share_detail_tagline: '전문 Apple Silicon 성능 데이터베이스',
-  share_compare_tagline: '전문 Apple 컴퓨터 비교 도구',
-  name: '이름',
-  no_data: '조건과 일치하는 데이터가 없습니다',
-  no_results_title: '결과를 찾을 수 없습니다',
-  no_results_desc: '더 많은 모델을 보려면 필터를 조정하세요',
-  clear_filters: '필터 지우기',
-  error_title: '문제가 발생했습니다',
-  error_desc: '페이지를 로드하는 중 예기치 않은 오류가 발생했습니다',
-  retry: '다시 시도',
 };

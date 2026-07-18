@@ -1,4 +1,4 @@
-// app/locales/ja.ts v0.7.8
+// app/locales/ja.ts v0.7.5
 export const ja = {
   appTitle: 'MacRank',
   leaderboard: 'ランキング',
@@ -68,8 +68,8 @@ export const ja = {
   chart_ratio_desc: '1ドルあたりのパフォーマンス (高いほど良い)',
   avgPrice: '平均価格',
   avgScore: '平均スコア',
-  label_single: 'シングル',
-  label_multi: 'マルチ',
+  label_single: 'Single',
+  label_multi: 'Multi',
   cores: 'コア',
   core_gpu: 'コアGPU',
   genai_assistant: 'GenAI アシスタント',
@@ -163,16 +163,4 @@ export const ja = {
   ports: 'ポート',
   ram_upgrade: 'RAMアップグレード',
   ssd_upgrade: 'SSDアップグレード',
-  app_tagline: '性能ランキング',
-  share_score_label: 'スコア',
-  share_detail_tagline: 'プロフェッショナルなApple Silicon性能データベース',
-  share_compare_tagline: 'プロフェッショナルなAppleパソコン比較ツール',
-  name: '名称',
-  no_data: '条件に一致するデータがありません',
-  no_results_title: '結果が見つかりません',
-  no_results_desc: 'フィルターを調整して他のモデルを表示してください',
-  clear_filters: 'フィルターをクリア',
-  error_title: 'エラーが発生しました',
-  error_desc: 'ページの読み込み中に予期しないエラーが発生しました',
-  retry: '再試行',
 };

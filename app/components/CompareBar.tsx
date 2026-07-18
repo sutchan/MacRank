@@ -1,10 +1,8 @@
-'use client';
-
+// app/components/CompareBar.tsx v0.6.1
 import React, { useContext } from 'react';
 import { X, ArrowRightLeft, Trash2 } from 'lucide-react';
 import { MacModel } from '../types';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
-import { Button } from '@/components/ui/button';
 
 interface CompareBarProps {
   models: MacModel[];
@@ -22,7 +20,7 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
   return (
     <div 
       id="compare-bar-root"
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[55] w-[95%] max-w-2xl transition-[transform,opacity] duration-500 transform ${
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[55] w-[95%] max-w-2xl transition-all duration-500 transform ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-24 opacity-0 pointer-events-none'
       }`}
     >
@@ -42,15 +40,12 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
                   <span className="text-[10px] font-bold text-gray-900 dark:text-white leading-tight truncate max-w-[80px] md:max-w-[120px]">{m.name}</span>
                   <span className="text-[9px] text-gray-600 dark:text-gray-400 uppercase tracking-tighter">{m.chip}</span>
                 </div>
-                <Button
+                <button 
                   onClick={() => onRemove(m.id)}
-                  variant="ghost"
-                  size="icon-xs"
-                  className="text-gray-400 hover:text-red-500"
-                  aria-label={`Remove ${m.name} from comparison`}
+                  className="text-gray-400 hover:text-red-500 transition-colors"
                 >
                   <X size={14} />
-                </Button>
+                </button>
               </div>
             ))}
             
@@ -63,28 +58,25 @@ const CompareBar: React.FC<CompareBarProps> = ({ models, onRemove, onClear, onCo
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <Button
+          <button 
             onClick={onClear}
-            variant="ghost"
-            size="icon-sm"
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-            aria-label={t('clear_all')}
+            className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            title={t('clear_all')}
           >
             <Trash2 size={18} />
-          </Button>
+          </button>
           
-          <Button 
+          <button 
             onClick={onCompare}
             disabled={models.length < 2}
-            size="sm"
-            className={`px-4 md:px-6 py-2 rounded-xl text-xs md:text-sm font-bold transition-[background-color,transform] shadow-lg active:scale-95 ${
+            className={`px-4 md:px-6 py-2 rounded-xl text-xs md:text-sm font-bold transition-all shadow-lg active:scale-95 ${
               models.length === 2 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20' 
                 : 'bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
             }`}
           >
             {t('compare_now')}
-          </Button>
+          </button>
         </div>
       </div>
     </div>

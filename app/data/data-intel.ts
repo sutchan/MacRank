@@ -1,4 +1,4 @@
-// app/data/data-intel.ts v0.7.8
+// app/data/data-intel.ts v0.6.2
 import { MacModel, ChipFamily, DeviceType } from '../types';
 
 export const intelData: MacModel[] = [

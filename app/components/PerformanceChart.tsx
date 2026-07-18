@@ -1,6 +1,4 @@
-'use client';
-
-// app/components/PerformanceChart.tsx v0.7.8
+// app/components/PerformanceChart.tsx v0.6.1
 import React, { useContext, useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, ScatterChart, Scatter } from 'recharts';
 import { calculateTierScore, getTierLabel } from '../lib/scoring';
@@ -13,18 +11,6 @@ interface PerformanceChartProps {
   data: MacModel[];
   onSelect: (mac: MacModel) => void;
   scenario: RankingScenario;
-}
-
-type ChartItem = MacModel & {
-  displayName: string;
-  compositeScore: number;
-  tier: string;
-  price: number;
-  valueRatio: number;
-};
-
-interface ChartClickEvent {
-  activePayload?: Array<{ payload: ChartItem }>;
 }
 
 type Metric = 'composite' | 'single' | 'multi' | 'metal' | 'value' | 'value-ratio';
@@ -69,7 +55,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
     return { chartData: processedData.slice(0, 15), stats };
   }, [data, metric, scenario]);
 
-  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ payload: ChartItem }> }) => {
+  const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const d = payload[0].payload;
       return (
@@ -106,7 +92,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
         {chartData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             {metric === 'value' ? (
-               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: ChartClickEvent) => { if (e?.activePayload) onSelect(e.activePayload[0].payload); }}>
+               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }} onClick={(e: any) => e?.activePayload && onSelect(e.activePayload[0].payload)}>
                  <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
                  <XAxis type="number" dataKey="price" name="Price" unit="$" tick={{ fontSize: 10 }} label={{ value: t('price'), position: 'bottom', offset: 0, fontSize: 10 }} />
                  <YAxis type="number" dataKey="compositeScore" name="Score" tick={{ fontSize: 10 }} label={{ value: t('score'), angle: -90, position: 'left', fontSize: 10 }} />
@@ -118,7 +104,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
                  </Scatter>
                </ScatterChart>
             ) : (
-               <BarChart data={chartData} layout="vertical" margin={{ top: 5, right: 30, left: 10, bottom: 5 }} onClick={(e: ChartClickEvent) => { if (e?.activePayload) onSelect(e.activePayload[0].payload); }}>
+               <BarChart data={chartData} layout="vertical" margin={{ top: 5, right: 30, left: 10, bottom: 5 }} onClick={(e: any) => e?.activePayload && onSelect(e.activePayload[0].payload)}>
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="displayName" width={160} tick={{ fontSize: 11, fill: '#6b7280' }} />
                 <Tooltip content={<CustomTooltip />} />
@@ -131,7 +117,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({ data, onSelect, sce
         ) : (
           <div id="chart-empty-state" className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
             <Info size={40} className="mb-2 opacity-20" />
-            <p className="text-sm font-medium opacity-50">{t('no_data')}</p>
+            <p className="text-sm font-medium opacity-50">No data matches your criteria</p>
           </div>
         )}
       </div>

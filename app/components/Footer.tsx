@@ -1,6 +1,4 @@
-'use client';
-
-// app/components/Footer.tsx v0.7.8
+// app/components/Footer.tsx v0.5.3
 import React, { useContext } from 'react';
 import { Github, Heart } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
@@ -21,17 +19,17 @@ const Footer: React.FC<FooterProps> = ({ version }) => {
               href="https://github.com/sutchan/MacRank" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 hover:text-black dark:hover:text-white transition-colors duration-200 group text-sm font-medium shadow-sm hover:shadow-md"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-500 hover:text-black dark:hover:text-white transition-all duration-200 group text-sm font-medium shadow-sm hover:shadow-md"
               aria-label={t('view_on_github')}
             >
-              <Github size={16} className="group-hover:scale-110 transition-transform" aria-hidden="true" />
+              <Github size={16} className="group-hover:scale-110 transition-transform" />
               <span>{t('star_on_github')}</span>
             </a>
             
             <div className="flex items-center gap-2 text-xs text-gray-400">
                <span>Created by</span>
                <a href="https://github.com/sutchan" target="_blank" rel="noopener noreferrer" className="font-bold hover:text-blue-500 transition-colors">Sut</a>
-               <Heart size={10} className="text-red-500 fill-current" aria-hidden="true" />
+               <Heart size={10} className="text-red-500 fill-current" />
             </div>
          </div>
 
