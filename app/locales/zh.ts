@@ -146,6 +146,17 @@ export const zh = {
   ram_upgrade: '内存升级',
   ssd_upgrade: '硬盘升级',
 
+  // --- Error & Empty States ---
+  name: '名称',
+  error_title: '出错了',
+  error_desc: '发生了意外错误，请重试。',
+  retry: '重试',
+  no_data: '暂无数据',
+  no_results_title: '未找到型号',
+  no_results_desc: '尝试调整筛选条件或搜索词。',
+  clear_filters: '清除所有筛选',
+  app_tagline: 'Apple Mac 性能天梯榜',
+
   // --- 硬件详细描述 ---
   'desc_m5-max-16-16-48': '下一代移动工作站。预测将采用更先进的制程，进一步提升端侧 AI 性能。',
   'desc_m4-max-16-16-40': '目前的移动端性能天花板。在 3D 渲染和本地大型语言模型训练中表现惊人。',

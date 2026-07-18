@@ -1,10 +1,12 @@
-// app/components/AIChat.tsx v0.7.5
+// app/components/AIChat.tsx v0.8.0
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { ArrowUp, X, Sparkles, WifiOff, Trash2 } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { ChatMessage, MacModel } from '../types';
 import { getMacAdvice } from '../services/geminiService';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface AIChatProps {
   macData: MacModel[];
@@ -78,74 +80,81 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
 
   return (
     <div id="ai-chat-component-root">
-       <div 
+       <div
          id="ai-suggestion-bubble"
-         className={`fixed bottom-24 right-6 z-40 bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-all duration-500 transform origin-bottom-right ${
+         className={`fixed bottom-24 right-6 z-40 bg-popover px-4 py-2 rounded-xl shadow-lg border border-border text-sm font-medium text-foreground transition-[transform,opacity] duration-500 transform origin-bottom-right ${
             showSuggestion && !isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-4 pointer-events-none'
          }`}
        >
-         <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white dark:bg-gray-800 border-r border-b border-gray-100 dark:border-gray-700 transform rotate-45"></div>
+         <div className="absolute -bottom-2 right-4 w-4 h-4 bg-popover border-r border-b border-border transform rotate-45" aria-hidden="true"></div>
          {t('ai_suggestion')}
        </div>
 
-      <button
+      <Button
         id="ai-chat-trigger-button"
+        variant="default"
+        size="icon"
         onClick={() => setIsOpen(true)}
         aria-label="Open AI Assistant"
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl transition-all duration-500 hover:scale-105 flex items-center justify-center bg-black dark:bg-white text-white dark:text-black ${
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl transition-[transform,opacity] duration-500 hover:scale-105 bg-primary text-primary-foreground ${
           isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'
         }`}
       >
         <Sparkles size={24} strokeWidth={1.5} />
-      </button>
+      </Button>
 
-      <div 
+      <div
         id="ai-chat-window-container"
-        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 dark:border-white/10 flex flex-col transition-all duration-500 transform origin-bottom-right overflow-hidden ${
+        className={`fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-[380px] h-[75vh] sm:h-[600px] max-h-[85vh] bg-frost-light-chat dark:bg-frost-dark-chat backdrop-blur-2xl rounded-3xl shadow-2xl border border-border flex flex-col transition-[transform,opacity] duration-500 transform origin-bottom-right overflow-hidden ${
           isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 pointer-events-none translate-y-10'
         }`}
       >
-        <div id="ai-chat-header-container" className="px-6 py-4 border-b border-gray-200/50 dark:border-gray-700/50 flex justify-between items-center bg-white/50 dark:bg-black/20">
+        <div id="ai-chat-header-container" className="px-6 py-4 border-b border-border flex justify-between items-center bg-background/50">
           <div className="flex flex-col">
-            <h3 className="font-semibold text-gray-900 dark:text-white text-base">{t('chatTitle')}</h3>
+            <h3 className="font-semibold text-foreground text-base">{t('chatTitle')}</h3>
             <div className="flex items-center gap-1.5">
-               <span className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-green-500' : 'bg-orange-500'}`}></span>
-               <span className="text-[10px] text-gray-600 dark:text-gray-300 font-medium tracking-wide uppercase">
+               <span className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-chart-2' : 'bg-chart-3'}`} aria-hidden="true"></span>
+               <span className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase">
                  {isOnline ? t('genai_assistant') : t('status_offline')}
                </span>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button 
+            <Button
+              variant="ghost"
+              size="icon-sm"
               onClick={handleClearChat}
-              className="w-8 h-8 rounded-full hover:bg-red-500/10 text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center"
+              className="text-muted-foreground hover:text-destructive"
               title={t('clear_chat')}
+              aria-label={t('clear_chat')}
             >
               <Trash2 size={16} />
-            </button>
-            <button 
+            </Button>
+            <Button
               id="ai-chat-close-btn"
+              variant="ghost"
+              size="icon-sm"
               onClick={() => setIsOpen(false)}
               aria-label={t('close')}
-              className="w-8 h-8 rounded-full bg-gray-200/50 dark:bg-gray-700/50 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+              className="text-muted-foreground hover:text-foreground"
             >
               <X size={16} />
-            </button>
+            </Button>
           </div>
         </div>
 
-        <div id="ai-chat-messages-scroll-container" className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/30 dark:bg-black/10 custom-scrollbar">
+        <div id="ai-chat-messages-scroll-container" className="flex-1 overflow-y-auto p-4 space-y-4 bg-background/30 custom-scrollbar">
           {messages.map((msg, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               id={`message-row-${idx}`}
               className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
             >
-              <div 
+              <div
                 className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed shadow-sm ${
-                  msg.role === 'user' 
-                    ? 'bg-blue-500 text-white rounded-br-none' 
-                    : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-bl-none border border-gray-100 dark:border-gray-700'
+                  msg.role === 'user'
+                    ? 'bg-primary text-primary-foreground rounded-br-none'
+                    : 'bg-popover text-popover-foreground rounded-bl-none border border-border'
                 }`}
               >
                 <div className="markdown-body">
@@ -156,36 +165,39 @@ const AIChat: React.FC<AIChatProps> = ({ macData }) => {
           ))}
           {isLoading && (
             <div id="ai-chat-loading-indicator" className="flex justify-start">
-               <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl rounded-bl-none px-4 py-3 flex gap-1 items-center">
-                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
-                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-75"></div>
-                 <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></div>
+               <div className="bg-popover border border-border rounded-2xl rounded-bl-none px-4 py-3 flex gap-1 items-center">
+                 <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-bounce" aria-hidden="true"></div>
+                 <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-bounce delay-75" aria-hidden="true"></div>
+                 <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-bounce delay-150" aria-hidden="true"></div>
                </div>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
-        <form id="ai-chat-input-form-element" onSubmit={handleSubmit} className="p-4 bg-white/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-gray-700/50">
-          <div className="relative flex items-center bg-white dark:bg-gray-800 rounded-full border border-gray-200 dark:border-gray-700 px-1 py-1 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all shadow-sm">
-            <input
+        <form id="ai-chat-input-form-element" onSubmit={handleSubmit} className="p-4 bg-background/50 border-t border-border">
+          <div className="relative flex items-center bg-background rounded-full border border-input px-1 py-1 focus-within:ring-2 focus-within:ring-ring/50 transition-colors shadow-sm">
+            <Input
               id="ai-chat-input-field"
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={t('ask_placeholder')}
-              className="flex-1 bg-transparent pl-4 pr-2 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+              className="flex-1 bg-transparent border-0 pl-4 pr-2 h-8 focus-visible:ring-0 focus-visible:border-0"
             />
-            <button 
+            <Button
               id="ai-chat-send-btn"
               type="submit"
+              variant="default"
+              size="icon-sm"
               disabled={isLoading || !input.trim()}
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-white disabled:opacity-50 disabled:bg-gray-400 transition-all ${
-                isOnline ? 'bg-blue-500 hover:bg-blue-600' : 'bg-orange-500 hover:bg-orange-600'
+              className={`rounded-full ${
+                isOnline ? 'bg-primary hover:bg-primary/80' : 'bg-chart-3 hover:bg-chart-3/80'
               }`}
+              aria-label={t('share')}
             >
               {isOnline ? <ArrowUp size={16} strokeWidth={2.5} /> : <WifiOff size={14} />}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

@@ -1,7 +1,11 @@
-// app/components/SettingsModal.tsx v0.6.1
+// app/components/SettingsModal.tsx v0.8.0
 import React, { useContext } from 'react';
-import { X, Moon, Sun, ChevronRight, RotateCcw, Github, ChevronDown } from 'lucide-react';
+import { X, Moon, Sun, ChevronRight, RotateCcw, Github } from 'lucide-react';
 import { LanguageContext, Language, LanguageContextType, languages } from '../locales/translations';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 
 interface SettingsModalProps {
   onClose: () => void;
@@ -21,123 +25,124 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ onClose, theme, setThemeM
   };
 
   return (
-    <div id="settings-modal-overlay-container" className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div 
-        className="absolute inset-0 bg-scrim dark:bg-frost-dark backdrop-blur-sm transition-opacity"
-        onClick={onClose}
-      />
-      
-      <div id="settings-modal-content-wrapper" className="relative w-full max-w-sm bg-white dark:bg-apple-gray-900 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 flex flex-col max-h-[90vh]">
-        
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center bg-gray-50 dark:bg-black/20">
-           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('settings')}</h2>
-           <button 
-              onClick={onClose}
-              aria-label={t('close')}
-              className="bg-gray-200 dark:bg-gray-800 p-2 rounded-full text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-           >
-              <X size={18} />
-           </button>
+    <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="!max-w-md p-0 gap-0 overflow-hidden flex flex-col max-h-[90vh]" showCloseButton={false}>
+        <div className="p-4 border-b border-border flex justify-between items-center bg-muted">
+           <h2 className="text-lg font-semibold text-foreground">{t('settings')}</h2>
+           <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label={t('close')}>
+              <X size={18} aria-hidden="true" />
+           </Button>
         </div>
 
         <div id="settings-modal-scroll-container" className="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-8">
-          
+
           <div className="space-y-4">
-             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('general')}</h3>
-             
+             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-1">{t('general')}</h3>
+
              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 px-1">{t('language')}</label>
-                <div className="relative">
-                  <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value as Language)}
-                    className="w-full appearance-none bg-gray-100 dark:bg-gray-800 border-none rounded-xl px-4 py-3 pr-10 text-sm font-medium text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                  >
+                <label className="text-sm font-medium text-foreground px-1">{t('language')}</label>
+                <Select value={language} onValueChange={(val) => setLanguage(val as Language)}>
+                  <SelectTrigger className="w-full h-10">
+                    <SelectValue placeholder={t('language')} />
+                  </SelectTrigger>
+                  <SelectContent>
                     {languages.map((lang) => (
-                      <option key={lang.code} value={lang.code}>
-                        {lang.flag} &nbsp; {lang.label}
-                      </option>
+                      <SelectItem key={lang.code} value={lang.code}>
+                        {lang.flag} {lang.label}
+                      </SelectItem>
                     ))}
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={16} />
-                </div>
+                  </SelectContent>
+                </Select>
              </div>
 
              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 px-1">{t('appearance')}</label>
-                <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-xl flex">
-                    <button
+                <label className="text-sm font-medium text-foreground px-1">{t('appearance')}</label>
+                <div className="bg-muted p-1 rounded-xl flex">
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setThemeMode('light')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
-                        theme === 'light' 
-                          ? 'bg-white text-gray-900 shadow-sm' 
-                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        theme === 'light'
+                          ? 'bg-background text-foreground shadow-sm'
+                          : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >
-                      <Sun size={16} />
+                      <Sun size={16} aria-hidden="true" />
                       {t('theme_light')}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setThemeMode('dark')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all ${
-                        theme === 'dark' 
-                          ? 'bg-gray-700 text-white shadow-sm' 
-                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        theme === 'dark'
+                          ? 'bg-foreground text-background shadow-sm'
+                          : 'text-muted-foreground hover:text-foreground'
                       }`}
                     >
-                      <Moon size={16} />
+                      <Moon size={16} aria-hidden="true" />
                       {t('theme_dark')}
-                    </button>
+                    </Button>
                 </div>
+             </div>
+
+             <div className="flex items-center justify-between p-3 rounded-xl bg-muted">
+                <span className="text-sm font-medium text-foreground">{t('theme_dark')}</span>
+                <Switch
+                  checked={theme === 'dark'}
+                  onCheckedChange={(checked) => setThemeMode(checked ? 'dark' : 'light')}
+                  aria-label={t('appearance')}
+                />
              </div>
           </div>
 
           <div className="space-y-4">
-             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1">{t('about')}</h3>
-             
-             <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800">
-                
-                <button 
+             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-1">{t('about')}</h3>
+
+             <div className="bg-muted rounded-xl overflow-hidden border border-border">
+
+                <button
                   onClick={handleReset}
-                  className="w-full flex items-center justify-between p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-b border-gray-100 dark:border-gray-800 text-left group"
+                  className="w-full flex items-center justify-between p-4 hover:bg-accent transition-colors border-b border-border text-left group"
                 >
                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center text-red-600 dark:text-red-400">
-                         <RotateCcw size={16} />
+                      <div className="w-8 h-8 rounded-full bg-destructive/10 flex items-center justify-center text-destructive">
+                         <RotateCcw size={16} aria-hidden="true" />
                       </div>
                       <div>
-                         <p className="text-sm font-medium text-gray-900 dark:text-white">{t('reset_data')}</p>
-                         <p className="text-xs text-gray-500">{t('reset_desc')}</p>
+                         <p className="text-sm font-medium text-foreground">{t('reset_data')}</p>
+                         <p className="text-xs text-muted-foreground">{t('reset_desc')}</p>
                       </div>
                    </div>
-                   <ChevronRight size={16} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+                   <ChevronRight size={16} className="text-muted-foreground group-hover:text-foreground" aria-hidden="true" />
                 </button>
 
-                <a 
-                  href="https://github.com/sutchan/MacRank" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/sutchan/MacRank"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-between p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-left group"
+                  className="w-full flex items-center justify-between p-4 hover:bg-accent transition-colors text-left group"
                 >
                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300">
-                         <Github size={16} />
+                      <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground">
+                         <Github size={16} aria-hidden="true" />
                       </div>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">{t('source_code')}</p>
+                      <p className="text-sm font-medium text-foreground">{t('source_code')}</p>
                    </div>
-                   <ChevronRight size={16} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+                   <ChevronRight size={16} className="text-muted-foreground group-hover:text-foreground" aria-hidden="true" />
                 </a>
 
              </div>
 
              <div className="text-center pt-2">
-                <p className="text-xs text-gray-400 font-mono">MacRank v{version}</p>
+                <p className="text-xs text-muted-foreground font-mono">MacRank v{version}</p>
              </div>
           </div>
 
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

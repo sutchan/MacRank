@@ -59,6 +59,7 @@ export interface MacModel {
 }
 
 export interface ChatMessage {
+  id?: string;
   role: 'user' | 'model';
   text: string;
   isError?: boolean;

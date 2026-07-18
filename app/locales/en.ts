@@ -13,6 +13,7 @@ export const en = {
   score: 'Score',
   price: 'Price',
   year: 'Year',
+  name: 'Name',
   showing: 'Showing',
   models: 'Models',
   rank: 'Rank',
@@ -145,6 +146,16 @@ export const en = {
   ports: 'Ports',
   ram_upgrade: 'RAM Upgrade',
   ssd_upgrade: 'SSD Upgrade',
+
+  // --- Error & Empty States ---
+  error_title: 'Something went wrong',
+  error_desc: 'An unexpected error occurred. Please try again.',
+  retry: 'Try Again',
+  no_data: 'No data available',
+  no_results_title: 'No models found',
+  no_results_desc: 'Try adjusting your filters or search terms.',
+  clear_filters: 'Clear all filters',
+  app_tagline: 'Apple Mac Performance Leaderboard',
 
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'The next leap in mobile workstation power. On-device AI and real-time ray tracing become effortless.',

@@ -123,6 +123,17 @@ export const ko = {
   clear_chat: '채팅 지우기',
   clear_chat_confirm: '채팅 기록을 지우시겠습니까? 이 작업은 되돌릴 수 없습니다.',
 
+  // --- Error & Empty States ---
+  name: '이름',
+  error_title: '오류가 발생했습니다',
+  error_desc: '예상치 못한 오류가 발생했습니다. 다시 시도해주세요.',
+  retry: '다시 시도',
+  no_data: '데이터가 없습니다',
+  no_results_title: '모델을 찾을 수 없습니다',
+  no_results_desc: '필터 또는 검색어를 조정해 보세요.',
+  clear_filters: '모든 필터 지우기',
+  app_tagline: 'Apple Mac 성능 순위',
+
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': '모바일 워크스테이션 파워의 차세대 도약. 온디바이스 AI와 실시간 레이 트레이싱이 간편해집니다.',
   'desc_m4-max-16-16-40': '모바일 컴퓨팅의 절대적인 정점. 3D 렌더링 및 LLM 훈련 작업에서 데스크탑 워크스테이션을 압도합니다.',

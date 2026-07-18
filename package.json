@@ -1,6 +1,6 @@
 {
   "name": "macrank",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -12,12 +12,17 @@
     "@google/genai": "^1.41.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^25.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.564.0",
     "next": "^15.5.18",
+    "radix-ui": "^1.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.1.0",
     "recharts": "^2.12.0",
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {

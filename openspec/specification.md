@@ -1,9 +1,22 @@
 # MacRank 规范总纲 (Master Index)
 
-当前版本：**v0.7.5**
+当前版本：**v0.8.0**
 状态：**Standard Volumes Finalized (Production Ready)**
 
 本项目规范已达到 **Production Ready** 状态。Standard Volumes (01-04) 包含了重构应用所需的每一行核心逻辑。
+
+## 🎨 v0.8.0 UI/UX 重大改版
+
+v0.8.0 完成了全面的 UI/UX 改版，确立 shadcn/ui 设计系统：
+
+- **设计系统**: 基于 shadcn/ui (radix-nova) + Tailwind CSS v4，采用 oklch 色彩令牌实现 Apple 极简美学，支持浅色/深色模式与 `prefers-reduced-motion`。
+- **组件迁移**: 全部 14 个组件从原生 HTML 迁移至 shadcn/ui (Button, Dialog, Input, Select, Badge, Card, Tooltip, Switch)。
+- **字体**: 通过 next/font 引入 Inter (sans) 与 JetBrains Mono (mono)。
+- **安全**: 新增 HTTP 安全响应头 (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, HSTS)。
+- **无障碍**: 修正 aria-checked → aria-pressed，为图标按钮补充 aria-label，装饰性图标添加 aria-hidden。
+- **基础设施**: 修正路径别名 (@/* → ./app/*)，安装 radix-ui/clsx/tailwind-merge/class-variance-authority/remark-gfm。
+
+详细设计规范见 [prototype/UI_DESIGN_SPEC.md](../prototype/UI_DESIGN_SPEC.md)。
 
 ## 📚 核心规范卷 (The Standard Volumes)
 

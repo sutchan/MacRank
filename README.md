@@ -13,13 +13,16 @@
 - **Detailed Specs**: Deep dive into CPU/GPU cores, memory configurations, and benchmark scores (Geekbench 6 & Metal).
 - **AI Advisor**: Integrated chat interface powered by **Google Gemini 3 Flash** to answer buying questions and provide technical advice.
 - **Tier System**: Visual ranking from S+ (Top Tier) to D, based on a weighted composite score of Single-Core, Multi-Core, and GPU performance.
+- **设计系统**: 基于 shadcn/ui 的 Apple 极简设计系统，采用 oklch 色彩令牌，支持深色模式与 `prefers-reduced-motion`。
 - **Dark Mode**: Fully responsive UI with automatic and manual light/dark theme switching.
 - **Internationalization**: Support for 10 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese, Russian, Korean, Hindi).
 
 ## 🛠 技术栈
 
 - **核心框架**: [Next.js 15](https://nextjs.org/)
-- **样式库**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI 组件**: [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/)
+- **样式库**: [Tailwind CSS v4](https://tailwindcss.com/) (oklch 色彩令牌)
+- **样式工具**: [class-variance-authority](https://cva.style/) + clsx + tailwind-merge
 - **AI SDK**: [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)
 - **图表库**: [Recharts](https://recharts.org/)
 - **图标库**: [Lucide React](https://lucide.dev/)

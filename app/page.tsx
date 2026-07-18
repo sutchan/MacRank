@@ -13,14 +13,16 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import FilterControls from './components/FilterControls';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import { LanguageContext } from './locales/translations';
 import { ArrowUp, Check } from 'lucide-react';
 import { shareContent } from './lib/share';
 import { useSettings } from './hooks/useSettings';
 import { useMacData } from './hooks/useMacData';
 import { useInteraction } from './hooks/useInteraction';
+import { Button } from '@/components/ui/button';
 
-const APP_VERSION = '0.7.6';
+const APP_VERSION = '0.8.0';
 
 const Page: React.FC = () => {
   const settings = useSettings();
@@ -39,20 +41,21 @@ const Page: React.FC = () => {
 
   return (
     <LanguageContext.Provider value={settings}>
-      <div id="main-layout-container" className="min-h-screen pb-32 bg-gray-50 dark:bg-black transition-colors duration-500 font-sans relative selection:bg-blue-100 dark:selection:bg-blue-900/30">
-        <Header 
+      <div id="main-layout-container" className="min-h-screen pb-32 bg-background transition-colors duration-500 font-sans relative selection:bg-primary/20">
+        <Header
             onScrollToSection={(id) => {
                 const el = document.getElementById(id);
                 if (el) window.scrollTo({ top: el.offsetTop - 140, behavior: 'smooth' });
-            }} 
+            }}
             onOpenSettings={() => interaction.setIsSettingsOpen(true)}
             onOpenTradeIn={() => interaction.setIsTradeInOpen(true)}
         />
 
+        <ErrorBoundary>
         <main id="app-main-content" className="max-w-[980px] mx-auto px-4 pt-28 space-y-12">
           <Hero onShare={handleAppShare} />
-          
-          <FilterControls 
+
+          <FilterControls
             searchTerm={data.searchTerm} setSearchTerm={data.setSearchTerm}
             filterType={data.filterType} setFilterType={data.setFilterType}
             filterFamily={data.filterFamily} setFilterFamily={data.setFilterFamily}
@@ -63,36 +66,39 @@ const Page: React.FC = () => {
             rankingScenario={data.rankingScenario} setRankingScenario={data.setRankingScenario}
             showReference={data.showReference} setShowReference={data.setShowReference}
           />
-          
+
           <section id="charts-section" className="scroll-mt-32">
             <PerformanceChart data={data.filteredData} onSelect={interaction.setSelectedModel} scenario={data.rankingScenario} />
           </section>
-          
+
           <section id="leaderboard-section" className="scroll-mt-32">
-            <MacTable 
-              data={data.filteredData} 
-              onSelect={interaction.setSelectedModel} 
-              compareList={interaction.compareList} 
+            <MacTable
+              data={data.filteredData}
+              onSelect={interaction.setSelectedModel}
+              compareList={interaction.compareList}
               onToggleCompare={interaction.handleToggleCompare}
-              scenario={data.rankingScenario} 
-              sortConfig={data.sortConfig} 
+              scenario={data.rankingScenario}
+              sortConfig={data.sortConfig}
               onSort={data.handleSort}
             />
           </section>
-          
+
           <Footer version={APP_VERSION} />
         </main>
+        </ErrorBoundary>
 
-        <button 
+        <Button
           id="back-to-top-btn"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-          className={`fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full shadow-lg glass-panel flex items-center justify-center transition-all ${interaction.showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}
+          variant="ghost"
+          size="icon"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className={`fixed bottom-6 left-6 z-40 w-12 h-12 rounded-full shadow-lg glass-panel transition-[transform,opacity] ${interaction.showBackToTop ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0 pointer-events-none'}`}
           aria-label={t('back_to_top')}
         >
           <ArrowUp size={24} />
-        </button>
+        </Button>
 
-        <CompareBar 
+        <CompareBar
           models={interaction.compareList}
           isVisible={interaction.compareList.length > 0 && !interaction.isCompareModalOpen}
           onRemove={(id) => interaction.setCompareList(prev => prev.filter(p => p.id !== id))}
@@ -101,16 +107,16 @@ const Page: React.FC = () => {
         />
 
         <DetailModal mac={interaction.selectedModel} onClose={() => interaction.setSelectedModel(null)} scenario={data.rankingScenario} />
-        
+
         {interaction.compareList.length === 2 && interaction.isCompareModalOpen && (
           <CompareModal models={interaction.compareList} onClose={() => interaction.setIsCompareModalOpen(false)} scenario={data.rankingScenario} />
         )}
-        
+
         {interaction.isSettingsOpen && (
-          <SettingsModal 
-            onClose={() => interaction.setIsSettingsOpen(false)} 
-            theme={settings.theme} 
-            setThemeMode={settings.setThemeMode} 
+          <SettingsModal
+            onClose={() => interaction.setIsSettingsOpen(false)}
+            theme={settings.theme}
+            setThemeMode={settings.setThemeMode}
             version={APP_VERSION}
           />
         )}
@@ -120,9 +126,9 @@ const Page: React.FC = () => {
         )}
 
         <AIChat macData={data.filteredData} />
-        
+
         {interaction.showToast && (
-          <div id="toast-notification" className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
+          <div id="toast-notification" className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-foreground text-background px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
              <Check size={18} className="text-green-400" />
              <span className="text-sm font-medium">{t('link_copied')}</span>
           </div>

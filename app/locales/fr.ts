@@ -123,6 +123,17 @@ export const fr = {
   clear_chat: 'Effacer le chat',
   clear_chat_confirm: 'Êtes-vous sûr de vouloir effacer l\'historique du chat ? Cette action est irréversible.',
 
+  // --- Error & Empty States ---
+  name: 'Nom',
+  error_title: 'Une erreur est survenue',
+  error_desc: 'Une erreur inattendue s\'est produite. Veuillez réessayer.',
+  retry: 'Réessayer',
+  no_data: 'Aucune donnée disponible',
+  no_results_title: 'Aucun modèle trouvé',
+  no_results_desc: 'Essayez d\'ajuster vos filtres ou termes de recherche.',
+  clear_filters: 'Effacer tous les filtres',
+  app_tagline: 'Classement de performance Apple Mac',
+
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'Le prochain bond en avant des performances des stations de travail mobiles. L\'IA sur appareil et le ray tracing en temps réel deviennent sans effort.',
   'desc_m4-max-16-16-40': 'Le summum absolu de l\'informatique mobile. Écrase les stations de travail de bureau dans le rendu 3D et les tâches de formation LLM.',

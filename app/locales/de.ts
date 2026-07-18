@@ -123,6 +123,17 @@ export const de = {
   clear_chat: 'Chat löschen',
   clear_chat_confirm: 'Möchten Sie den Chatverlauf wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
   
+  // --- Error & Empty States ---
+  name: 'Name',
+  error_title: 'Etwas ist schiefgelaufen',
+  error_desc: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.',
+  retry: 'Erneut versuchen',
+  no_data: 'Keine Daten verfügbar',
+  no_results_title: 'Keine Modelle gefunden',
+  no_results_desc: 'Versuchen Sie, Ihre Filter oder Suchbegriffe anzupassen.',
+  clear_filters: 'Alle Filter löschen',
+  app_tagline: 'Apple Mac Performance-Rangliste',
+
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'Der nächste Sprung in der mobilen Workstation-Leistung. On-Device AI und Echtzeit-Raytracing werden mühelos.',
   'desc_m4-max-16-16-40': 'Der absolute Höhepunkt des mobilen Computing. Zerstört Desktop-Workstations bei 3D-Rendering- und LLM-Trainingsaufgaben.',

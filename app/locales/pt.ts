@@ -123,6 +123,17 @@ export const pt = {
   clear_chat: 'Limpar chat',
   clear_chat_confirm: 'Tem certeza de que deseja limpar o histórico do chat? Esta ação não pode ser desfeita.',
 
+  // --- Error & Empty States ---
+  name: 'Nome',
+  error_title: 'Algo deu errado',
+  error_desc: 'Ocorreu um erro inesperado. Por favor, tente novamente.',
+  retry: 'Tentar novamente',
+  no_data: 'Nenhum dado disponível',
+  no_results_title: 'Nenhum modelo encontrado',
+  no_results_desc: 'Tente ajustar seus filtros ou termos de busca.',
+  clear_filters: 'Limpar todos os filtros',
+  app_tagline: 'Ranking de desempenho Apple Mac',
+
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'O próximo salto em potência de estação de trabalho móvel. IA no dispositivo e ray tracing em tempo real tornam-se fáceis.',
   'desc_m4-max-16-16-40': 'O auge absoluto da computação móvel. Destrói estações de trabalho desktop em tarefas de renderização 3D e treinamento de LLM.',

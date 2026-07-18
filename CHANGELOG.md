@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.0]
+### Added
+- **Design System**: Established shadcn/ui design system with oklch color tokens (Apple-inspired minimalist aesthetic), including light/dark mode support and `prefers-reduced-motion` support.
+- **Typography**: Introduced Inter (sans) and JetBrains Mono (mono) via next/font.
+- **i18n**: Added 9 new translation keys (error states, empty states, app_tagline) across all 10 locale files.
+### Changed
+- **UI/UX Overhaul**: Migrated all components from native HTML to shadcn/ui (Button, Dialog, Input, Select, Badge, Card, Tooltip, Switch). DialogContent used for all modals (DetailModal, CompareModal, SettingsModal, TradeInView); Button used throughout Header, Hero, FilterControls, CompareBar, AIChat, and page.tsx.
+- **MacTable**: Inlined compare button rendering with `aria-pressed` attribute and design tokens (border-border, bg-background, hover:border-primary).
+- **Radius**: Standardized border radius to 0.75rem.
+- **Infrastructure**: Fixed path aliases (@/* → ./app/*) and installed radix-ui, clsx, tailwind-merge, class-variance-authority, and remark-gfm.
+### Security
+- **Headers**: Added HTTP security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, HSTS).
+### Accessibility
+- **ARIA**: Fixed aria-checked → aria-pressed, added aria-labels to icon-only buttons, and aria-hidden to decorative icons.
+### Removed
+- **Dead Code**: Removed unused component files (MacRow.tsx, ChatMessageBubble.tsx, SortHeader.tsx, FilterMenus.tsx) that were superseded by inline implementations in their parent components (MacTable, AIChat, FilterControls).
+- **Cleanup**: Removed redundant prototype HTML files, old security report, and empty .gitkeep files.
+### Tested
+- **E2E**: Playwright dogfood testing - 17/17 tests passed (page structure, table interaction, search filter, compare feature, mobile responsiveness, a11y, console error check).
+
 ## [0.7.4]
 ### Security
 - **Next.js**: Upgraded to v15.5.18 to patch CVE-2025-66478 (Critical RCE vulnerability)

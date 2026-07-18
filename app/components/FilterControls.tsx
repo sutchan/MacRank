@@ -1,8 +1,11 @@
-// app/components/FilterControls.tsx v0.6.2
+// app/components/FilterControls.tsx v0.8.0
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Search, X, ChevronDown, Scale, Code, Palette, Coffee, Cpu, Settings2, Check } from 'lucide-react';
 import { LanguageContext, LanguageContextType } from '../locales/translations';
 import { DeviceType, ChipFamily, RankingScenario, SortKey } from '../types';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface FilterControlsProps {
   searchTerm: string;
@@ -36,7 +39,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   const { t } = useContext(LanguageContext) as LanguageContextType;
   const [isScenarioMenuOpen, setIsScenarioMenuOpen] = useState(false);
   const [isViewMenuOpen, setIsViewMenuOpen] = useState(false);
-  
+
   const scenarioRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<HTMLDivElement>(null);
 
@@ -58,74 +61,73 @@ const FilterControls: React.FC<FilterControlsProps> = ({
 
   const currentScenario = scenarios.find(s => s.key === rankingScenario);
 
-  const FilterSelect: React.FC<{ label: string; value: string; onChange: (val: any) => void; options: {value: string; label: string}[]; className?: string }> = 
-  ({ label, value, onChange, options, className }) => (
-    <div className={`relative ${className}`}>
-        <select
-          aria-label={label}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg px-3 py-2 text-xs font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
-        >
-          {options.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-        </select>
-        <ChevronDown size={14} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-    </div>
-  );
-
   return (
-    <section id="filter-controls-section" className="sticky top-12 z-30 bg-gray-50/80 dark:bg-black/80 backdrop-blur-xl py-4 -mx-4 px-4 border-b border-gray-200/80 dark:border-gray-800/80 transition-all duration-300">
+    <section id="filter-controls-section" className="sticky top-12 z-30 bg-background/80 backdrop-blur-xl py-4 -mx-4 px-4 border-b border-border transition-colors duration-300">
        <div id="filter-controls-top-row" className="max-w-[980px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <div id="search-input-wrapper" className="relative w-full md:flex-1 group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 group-focus-within:text-blue-500 transition-colors" size={16} />
-            <input type="text" placeholder={t('searchPlaceholder')} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-8 py-2.5 bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 transition-all"
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors pointer-events-none" size={16} aria-hidden="true" />
+            <Input
+              type="text"
+              placeholder={t('searchPlaceholder')}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-8 h-9"
               aria-label="Search Models"
             />
-            {searchTerm && <button onClick={() => setSearchTerm('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><X size={14} /></button>}
+            {searchTerm && (
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={() => setSearchTerm('')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label={t('clear_all')}
+              >
+                <X size={14} />
+              </Button>
+            )}
           </div>
 
           <div className="flex items-center gap-2 w-full md:w-auto justify-end">
             <div id="scenario-menu-wrapper" className="relative" ref={scenarioRef}>
-              <button onClick={() => setIsScenarioMenuOpen(!isScenarioMenuOpen)} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300 transition-colors">
-                {currentScenario?.icon && <currentScenario.icon size={14} />} <span>{currentScenario?.label}</span> <ChevronDown size={14} className={`transition-transform ${isScenarioMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
+              <Button variant="outline" size="sm" onClick={() => setIsScenarioMenuOpen(!isScenarioMenuOpen)} className="flex items-center gap-2">
+                {currentScenario?.icon && <currentScenario.icon size={14} aria-hidden="true" />} <span>{currentScenario?.label}</span> <ChevronDown size={14} className={`transition-transform ${isScenarioMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+              </Button>
               {isScenarioMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-64 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-10 p-2 animate-in fade-in zoom-in-95 origin-top-right">
+                <div className="absolute top-full right-0 mt-2 w-64 bg-popover/95 backdrop-blur-md rounded-xl shadow-lg border border-border z-10 p-2 animate-in fade-in zoom-in-95 origin-top-right">
                   {scenarios.map(({ key, icon: Icon, label, desc }) => (
-                    <button key={key} onClick={() => { setRankingScenario(key); setIsScenarioMenuOpen(false); }} className="w-full text-left p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 flex items-start gap-3">
-                      <Icon size={16} className="mt-1 text-gray-500 dark:text-gray-400" />
-                      <div> <p className="text-sm font-semibold text-gray-900 dark:text-white">{label}</p> <p className="text-[10px] text-gray-600 dark:text-gray-300">{desc}</p> </div>
+                    <button key={key} onClick={() => { setRankingScenario(key); setIsScenarioMenuOpen(false); }} className="w-full text-left p-2 rounded-md hover:bg-accent flex items-start gap-3 transition-colors">
+                      <Icon size={16} className="mt-1 text-muted-foreground" aria-hidden="true" />
+                      <div> <p className="text-sm font-semibold text-foreground">{label}</p> <p className="text-[10px] text-muted-foreground">{desc}</p> </div>
                     </button>
                   ))}
                 </div>
               )}
             </div>
-            
+
             <div id="view-menu-wrapper" className="relative" ref={viewRef}>
-              <button onClick={() => setIsViewMenuOpen(!isViewMenuOpen)} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300 transition-colors">
-                <Settings2 size={14} /> <span>{t('view_options')}</span> <ChevronDown size={14} className={`transition-transform ${isViewMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
+              <Button variant="outline" size="sm" onClick={() => setIsViewMenuOpen(!isViewMenuOpen)} className="flex items-center gap-2">
+                <Settings2 size={14} aria-hidden="true" /> <span>{t('view_options')}</span> <ChevronDown size={14} className={`transition-transform ${isViewMenuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+              </Button>
               {isViewMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-10 p-2 animate-in fade-in zoom-in-95 origin-top-right">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-popover/95 backdrop-blur-md rounded-xl shadow-lg border border-border z-10 p-2 animate-in fade-in zoom-in-95 origin-top-right">
                     <div className="p-2">
-                        <label className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{t('sort_by')}</label>
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{t('sort_by')}</label>
                         <div className="flex flex-col items-start gap-1 mt-2">
                             {(['score', 'price', 'year', 'name'] as const).map(option => (
-                                <button key={option} onClick={() => onSort(option)} className="w-full text-left text-sm flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200">
-                                    <div className="w-4">{sortBy === option && <Check size={14} className="text-blue-500" />}</div>
+                                <button key={option} onClick={() => onSort(option)} className="w-full text-left text-sm flex items-center gap-2 p-1.5 rounded-md hover:bg-accent text-foreground transition-colors">
+                                    <div className="w-4">{sortBy === option && <Check size={14} className="text-primary" />}</div>
                                     {t(option as any) || option}
                                 </button>
                             ))}
                         </div>
                     </div>
-                    <div className="h-px bg-gray-200 dark:bg-gray-700 my-1"></div>
-                    <div onClick={() => setShowReference(!showReference)} className="w-full flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                    <div className="h-px bg-border my-1"></div>
+                    <div onClick={() => setShowReference(!showReference)} className="w-full flex items-center justify-between p-2 rounded-md hover:bg-accent cursor-pointer transition-colors">
                         <div className="flex items-center gap-3">
-                            <Cpu size={16} className="text-gray-500" /> <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{t('pc_reference')}</span>
+                            <Cpu size={16} className="text-muted-foreground" aria-hidden="true" /> <span className="text-sm font-medium text-foreground">{t('pc_reference')}</span>
                         </div>
-                        <div className={`w-10 h-6 rounded-full p-1 transition-colors ${showReference ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`}>
-                            <div className={`w-4 h-4 bg-white rounded-full shadow-sm transform transition-transform ${showReference ? 'translate-x-4' : 'translate-x-0'}`}></div>
+                        <div className={`w-10 h-6 rounded-full p-1 transition-colors ${showReference ? 'bg-primary' : 'bg-input'}`}>
+                            <div className={`w-4 h-4 bg-background rounded-full shadow-sm transform transition-transform ${showReference ? 'translate-x-4' : 'translate-x-0'}`}></div>
                         </div>
                     </div>
                 </div>
@@ -134,20 +136,39 @@ const FilterControls: React.FC<FilterControlsProps> = ({
           </div>
        </div>
        <div id="filter-controls-bottom-row" className="max-w-[980px] mx-auto grid grid-cols-3 gap-2 mt-3">
-          <FilterSelect label="Filter by Type" value={filterType} onChange={setFilterType} className="w-full"
-            options={[
-              { value: 'All', label: t('all') },
-              { value: DeviceType.Laptop, label: t('laptops') },
-              { value: DeviceType.Desktop, label: t('desktops') },
-              { value: DeviceType.Tablet, label: t('tablets') },
-            ]}
-          />
-          <FilterSelect label="Filter by Family" value={filterFamily} onChange={setFilterFamily} className="w-full"
-            options={availableFamilies.map(f => ({ value: f, label: f === 'All' ? t('allChips') : t(`family_${f.toLowerCase()}` as any) || `${f} Series`}))}
-          />
-          <FilterSelect label="Filter by OS" value={filterOS} onChange={setFilterOS} className="w-full"
-            options={availableOS.map(os => ({ value: os, label: os === 'All' ? '所有系统' : os }))}
-          />
+          <Select value={filterType} onValueChange={(val) => setFilterType(val as DeviceType | 'All')}>
+            <SelectTrigger className="w-full" aria-label="Filter by Type">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="All">{t('all')}</SelectItem>
+              <SelectItem value={DeviceType.Laptop}>{t('laptops')}</SelectItem>
+              <SelectItem value={DeviceType.Desktop}>{t('desktops')}</SelectItem>
+              <SelectItem value={DeviceType.Tablet}>{t('tablets')}</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={filterFamily} onValueChange={(val) => setFilterFamily(val as ChipFamily | 'All')}>
+            <SelectTrigger className="w-full" aria-label="Filter by Family">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {availableFamilies.map(f => (
+                <SelectItem key={f} value={f}>{f === 'All' ? t('allChips') : t(`family_${f.toLowerCase()}` as any) || `${f} Series`}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={filterOS} onValueChange={setFilterOS}>
+            <SelectTrigger className="w-full" aria-label="Filter by OS">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {availableOS.map(os => (
+                <SelectItem key={os} value={os}>{os === 'All' ? '所有系统' : os}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
        </div>
     </section>
   );

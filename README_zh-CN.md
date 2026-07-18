@@ -13,13 +13,16 @@
 - **Detailed Specs**: Deep dive into CPU/GPU cores, memory configurations, and benchmark scores (Geekbench 6 & Metal).
 - **AI Advisor**: Integrated chat interface powered by **Google Gemini 3 Flash** to answer buying questions and provide technical advice.
 - **Tier System**: Visual ranking from S+ (Top Tier) to D, based on a weighted composite score of Single-Core, Multi-Core, and GPU performance.
+- **Design System**: Apple-inspired minimalist design system built on shadcn/ui with oklch color tokens, dark mode, and `prefers-reduced-motion` support.
 - **Dark Mode**: Fully responsive UI with automatic and manual light/dark theme switching.
 - **Internationalization**: Support for 10 languages (English, Chinese, Spanish, French, German, Japanese, Portuguese, Russian, Korean, Hindi).
 
 ## 🛠 Tech Stack
 
 - **Framework**: [Next.js 15](https://nextjs.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) (oklch color tokens)
+- **Style Utilities**: [class-variance-authority](https://cva.style/) + clsx + tailwind-merge
 - **AI SDK**: [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)
 - **Charts**: [Recharts](https://recharts.org/)
 - **Icons**: [Lucide React](https://lucide.dev/)

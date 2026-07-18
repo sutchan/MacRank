@@ -123,6 +123,17 @@ export const ja = {
   clear_chat: 'チャットをクリア',
   clear_chat_confirm: 'チャット履歴をクリアしてもよろしいですか？この操作は元に戻せません。',
 
+  // --- Error & Empty States ---
+  name: '名前',
+  error_title: 'エラーが発生しました',
+  error_desc: '予期しないエラーが発生しました。再試行してください。',
+  retry: '再試行',
+  no_data: 'データがありません',
+  no_results_title: 'モデルが見つかりません',
+  no_results_desc: 'フィルターまたは検索条件を調整してください。',
+  clear_filters: 'すべてのフィルターをクリア',
+  app_tagline: 'Apple Mac パフォーマンスランキング',
+
   // --- Product Descriptions ---
   'desc_m5-max-16-16-48': 'モバイルワークステーション性能の次なる飛躍。オンデバイスAIとリアルタイムレイトレーシングが簡単に。',
   'desc_m4-max-16-16-40': 'モバイルコンピューティングの絶対的な頂点。3DレンダリングやLLMトレーニングタスクでデスクトップワークステーションを圧倒します。',

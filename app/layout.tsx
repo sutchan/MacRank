@@ -1,17 +1,23 @@
 import React from 'react';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
-import '../app/globals.css'; // Global styles
+import { TooltipProvider } from '@/components/ui/tooltip';
+import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
+  display: 'swap',
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
+  display: 'swap',
 });
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
+const APP_VERSION = '0.8.0';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -35,42 +41,47 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
           `
         }} />
 
-        {/* Google tag (gtag.js) */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YKBHMQRHC8" />
-        <Script id="google-analytics">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-YKBHMQRHC8');
-          `}
-        </Script>
+        {GA_ID && (
+          <>
+            <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
 
         <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="apple-touch-icon" href="/icon.svg" />
-        
+
         {/* Primary Meta Tags */}
-        <title>MacRank 2025: 苹果电脑性能天梯榜 v0.7.5</title>
-        <meta name="title" content="MacRank 2025: 苹果电脑性能天梯榜 v0.7.5" />
-        <meta name="description" content="最全的苹果电脑性能天梯查询表。包含 AI 选购助手、硬件深度对比、Geekbench 6 跑分与性价比分析。版本: 0.7.5" />
-        <meta name="keywords" content="苹果性能天梯, Mac天梯图, MacBook跑分, M4 Max跑分, Apple Silicon排行榜, MacRank" />
+        <title>MacRank: Apple Mac Performance Leaderboard</title>
+        <meta name="title" content={`MacRank: Apple Mac Performance Leaderboard v${APP_VERSION}`} />
+        <meta name="description" content="Interactive Apple Mac performance ranking with AI buying assistant, hardware comparison, Geekbench 6 scores and value analysis." />
+        <meta name="keywords" content="Mac ranking, Apple Silicon benchmarks, MacBook scores, M4 Max benchmarks, MacRank, Geekbench 6" />
         <meta name="author" content="MacRank" />
         <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content="#0071E3" />
         <link rel="canonical" href="https://macrank.app/" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://macrank.app/" />
-        <meta property="og:title" content="MacRank 2025: Mac 性能天梯榜 v0.7.5" />
-        <meta property="og:description" content="交互式苹果电脑性能排名与 AI 选购顾问。" />
+        <meta property="og:title" content={`MacRank: Mac Performance Leaderboard v${APP_VERSION}`} />
+        <meta property="og:description" content="Interactive Apple Mac performance ranking with AI buying advisor." />
         <meta property="og:image" content="https://macrank.app/og-image.jpg" />
       </head>
-      <body className="bg-gray-50 dark:bg-black text-gray-700 dark:text-gray-100 transition-colors duration-300 overflow-x-hidden">
-        {children}
+      <body className="bg-background text-foreground transition-colors duration-300 overflow-x-hidden">
+        <TooltipProvider delayDuration={300}>
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );

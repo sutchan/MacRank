@@ -1,4 +1,4 @@
-# 02. 技术规格 (Technical Specification) v0.7.5
+# 02. 技术规格 (Technical Specification) v0.8.0
 
 ## 1. 评分算法 (Normalization Algorithm)
 ### 1.1 性能锚点 (Anchors)
@@ -39,5 +39,8 @@
 
 ## 4. 前端架构
 - **React 19**: 利用并发渲染优化长列表。
-- **Zero-Bundle**: 依赖 `importmap` 指向 `esm.sh` 锁定版本。
+- **UI 组件库**: [shadcn/ui](https://ui.shadcn.com/) (radix-nova 风格) 基于 [Radix UI](https://www.radix-ui.com/) 原语构建，覆盖 Button、Dialog、Input、Select、Badge、Card、Tooltip、Switch 等 14 个组件。
+- **样式系统**: [Tailwind CSS v4](https://tailwindcss.com/) 配合 oklch 色彩令牌 (`--background`、`--foreground`、`--primary`、`--muted`、`--accent`、`--border`、`--destructive` 等)，支持浅色/深色模式。
+- **样式工具**: [class-variance-authority](https://cva.style/) 管理组件变体，配合 [clsx](https://github.com/lukeed/clsx) 与 [tailwind-merge](https://github.com/dcastil/tailwind-merge) 合并 className。
+- **字体**: 通过 `next/font` 加载 Inter (sans) 与 JetBrains Mono (mono)，圆角令牌 `--radius: 0.75rem`。
 - **Custom Hooks**: 状态逻辑通过 `useSettings`, `useMacData`, `useInteraction` 进行封装，实现关注点分离。

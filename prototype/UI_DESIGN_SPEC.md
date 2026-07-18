@@ -1,9 +1,9 @@
-# MacRank v0.7.8 设计系统规范
+# MacRank v0.8.0 设计系统规范
 
 ## 文档信息
 - **版本**: v2.0
-- **更新日期**: 2026-06-16
-- **状态**: 完整设计系统已定义
+- **更新日期**: 2026-07-18
+- **状态**: v0.8.0 设计系统已实现 (shadcn/ui + oklch 色彩令牌)
 - **框架**: shadcn/ui (radix-nova) + Tailwind CSS 4 + Next.js 15
 
 ---
@@ -32,7 +32,7 @@ MacRank 使用 oklch 色彩空间确保跨设备一致性。
   --popover-foreground: oklch(0.145 0 0);
   
   /* 主色调 */
-  --primary: oklch(0.205 0 0);         /* Apple Gray - 按钮/强调 */
+  --primary: oklch(0.599 0.208 253);  /* Apple Blue #0071E3 - 按钮/强调 */
   --primary-foreground: oklch(0.985 0 0);
   
   /* 次要色 */
@@ -54,6 +54,9 @@ MacRank 使用 oklch 色彩空间确保跨设备一致性。
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  
+  /* 圆角令牌 */
+  --radius: 0.75rem;
   
   /* 图表色 */
   --chart-1: oklch(0.87 0 0);
@@ -200,14 +203,14 @@ MacRank 使用 oklch 色彩空间确保跨设备一致性。
 ### 1.2.1 字体栈
 
 ```css
-/* 正文字体 - Apple San Francisco */
---font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+/* 正文字体 - Inter (通过 next/font 加载) */
+--font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-/* 等宽字体 - 用于代码/数字 */
+/* 等宽字体 - JetBrains Mono (通过 next/font 加载，用于代码/数字) */
 --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
 /* 中文回退 */
-font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Microsoft YaHei", sans-serif;
 ```
 
 ### 1.2.2 字号系统
@@ -705,6 +708,82 @@ shadcn/ui 规范要求使用 `data-icon` 属性。
   /* 而非 left: 100px; */
 }
 ```
+
+---
+
+## 1.6 无障碍规范 (Accessibility)
+
+### 1.6.1 ARIA 属性标准
+
+v0.8.0 起统一无障碍属性约定：
+
+```tsx
+// 切换类组件使用 aria-pressed（而非 aria-checked）
+<Button aria-pressed={isActive} onClick={toggle}>
+  Filter
+</Button>
+
+// 图标按钮必须提供 aria-label
+<Button size="icon" aria-label="Close dialog">
+  <XIcon aria-hidden="true" />
+</Button>
+
+// 装饰性图标添加 aria-hidden，避免屏幕阅读器读取
+<SearchIcon aria-hidden="true" />
+<span className="sr-only">Search</span>
+
+// 屏幕阅读器专用文本
+<span className="sr-only">当前评级：S+</span>
+```
+
+### 1.6.2 键盘导航
+
+| 按键 | 行为 |
+|-----|------|
+| Tab / Shift+Tab | 在可交互元素间顺序移动焦点 |
+| Enter / Space | 激活当前聚焦的按钮或触发器 |
+| Esc | 关闭 Dialog / Popover / DropdownMenu，焦点返回触发器 |
+| Arrow Keys | 在 Tabs、DropdownMenu、Select 内移动选项 |
+| Home / End | 跳到首项 / 末项 |
+
+- **Focus Trap**: Dialog 打开时焦点锁定在内容区内，关闭后返回触发器。
+- 所有可交互元素必须存在可见的 focus 环：
+
+```css
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+```
+
+### 1.6.3 prefers-reduced-motion
+
+v0.8.0 起尊重用户的动效偏好，当用户启用「减少动态效果」时禁用非必要动画：
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* 关闭 S+ 级发光动画 */
+  .tier-s-plus { animation: none; }
+}
+
+/* 仅为偏好动效的用户启用强调动画 */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-in-up { animation: fade-in-up 0.5s var(--ease-out) forwards; }
+}
+```
+
+### 1.6.4 色彩对比度
+
+详见 1.1.6 节，所有文本与 UI 组件需满足 WCAG AA (4.5:1) 标准，主要正文需满足 AAA (7:1)。
 
 ---
 
@@ -1675,6 +1754,7 @@ useEffect(() => {
 
 | 版本 | 日期 | 变更 |
 |-----|------|------|
+| v2.1 | 2026-07-18 | v0.8.0 同步：Inter/JetBrains Mono (next/font)、Apple Blue 主色、--radius 令牌、无障碍与 prefers-reduced-motion 章节 |
 | v2.0 | 2026-06-16 | 完整设计系统文档 |
 | v1.0 | 2026-06-06 | 初始文档 |
 
