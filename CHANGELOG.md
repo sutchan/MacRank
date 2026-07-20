@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 - **Design System**: Established shadcn/ui design system with oklch color tokens (Apple-inspired minimalist aesthetic), including light/dark mode support and `prefers-reduced-motion` support.
 - **Typography**: Introduced Inter (sans) and JetBrains Mono (mono) via next/font.
 - **i18n**: Added 9 new translation keys (error states, empty states, app_tagline) across all 10 locale files.
+- **SEO**: Added comprehensive SEO infrastructure including:
+  - **robots.txt**: Search engine crawler control with sitemap location.
+  - **sitemap.ts**: Dynamic sitemap generation using Next.js MetadataRoute API.
+  - **Structured Data**: JSON-LD markup for WebSite, SoftwareApplication, Breadcrumb, and FAQ schemas.
+  - **Twitter Cards**: Complete Twitter Card meta tags for social sharing.
+  - **Mobile App**: PWA manifest.json with app metadata and icons.
+- **GEO**: Added geographic meta tags for global audience targeting (geo.region, geo.position, coverage, distribution, audience).
 ### Changed
 - **UI/UX Overhaul**: Migrated all components from native HTML to shadcn/ui (Button, Dialog, Input, Select, Badge, Card, Tooltip, Switch). DialogContent used for all modals (DetailModal, CompareModal, SettingsModal, TradeInView); Button used throughout Header, Hero, FilterControls, CompareBar, AIChat, and page.tsx.
 - **MacTable**: Inlined compare button rendering with `aria-pressed` attribute and design tokens (border-border, bg-background, hover:border-primary).

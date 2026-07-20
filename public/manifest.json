@@ -1,0 +1,31 @@
+{
+  "name": "MacRank - Apple Mac Performance Leaderboard",
+  "short_name": "MacRank",
+  "description": "Interactive Apple Mac performance ranking with AI buying assistant, hardware comparison, Geekbench 6 scores and value analysis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0071E3",
+  "theme_color": "#0071E3",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "reference", "productivity"],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "label": "MacRank Homepage"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
